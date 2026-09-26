@@ -1024,21 +1024,72 @@
     <div class="fixed inset-0" onclick="closeAdminModal()"></div>
     <div id="admin-modal-card" class="bg-slate-900 border border-slate-800 rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
       
-      <!-- Admin Login State (Password Gate) -->
-      <div id="admin-login-view" class="p-8 max-w-md mx-auto w-full my-auto space-y-5 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-3xl mx-auto shadow-inner">
-          🔐
-        </div>
-        <div>
-          <h3 class="text-xl font-black text-white">অ্যাডমিন কন্ট্রোল প্যানেল</h3>
-          <p class="text-xs text-slate-400 mt-1">পেমেন্ট রিকোয়েস্ট যাচাই ও অনুমোদনের জন্য পাসওয়ার্ড দিন</p>
+      <!-- Admin Login State (4-Step Security Gate) -->
+      <div id="admin-login-view" class="p-6 sm:p-8 max-w-lg mx-auto w-full my-auto space-y-4">
+        <div class="text-center space-y-1.5">
+          <div class="w-14 h-14 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-3xl mx-auto shadow-inner">
+            🛡️
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-white">অ্যাডমিন ৪-ধাপ নিরাপত্তা যাচাই</h3>
+            <p class="text-xs text-slate-400">অনুমোদিত অ্যাডমিন এক্সেসের জন্য ৪টি সিকিউরিটি লেয়ার পূরণ করুন</p>
+          </div>
         </div>
 
-        <form onsubmit="event.preventDefault(); handleAdminLoginSubmit();" class="space-y-3">
-          <input id="admin-input-password" type="password" placeholder="অ্যাডমিন পাসওয়ার্ড লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 text-center font-mono">
+        <!-- 4 Step Mini Cards -->
+        <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold">
+          <div class="p-1.5 rounded-xl bg-slate-950 border border-brand-500/40 text-brand-400">
+            <span class="block text-xs">🔑</span>ধাপ ১: Master
+          </div>
+          <div class="p-1.5 rounded-xl bg-slate-950 border border-teal-500/40 text-teal-400">
+            <span class="block text-xs">🛡️</span>ধাপ ২: Secondary
+          </div>
+          <div class="p-1.5 rounded-xl bg-slate-950 border border-purple-500/40 text-purple-400">
+            <span class="block text-xs">🔢</span>ধাপ ৩: PIN
+          </div>
+          <div class="p-1.5 rounded-xl bg-slate-950 border border-amber-500/40 text-amber-400">
+            <span class="block text-xs">🤐</span>ধাপ ৪: Secret
+          </div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); handleAdminLoginSubmit();" class="space-y-3 pt-1">
+          <!-- Step 1: Master Password 1 -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">
+              🔑 ধাপ ১: Master Password 1
+            </label>
+            <input id="admin-input-master" type="password" required placeholder="Master Password 1 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+          </div>
+
+          <!-- Step 2: Secondary Password 2 -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">
+              🛡️ ধাপ ২: Secondary Password 2
+            </label>
+            <input id="admin-input-secondary" type="password" required placeholder="Secondary Password 2 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+          </div>
+
+          <!-- Step 3 & 4 in 2 columns -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">
+                🔢 ধাপ ৩: Security PIN
+              </label>
+              <input id="admin-input-pin" type="password" inputmode="numeric" required placeholder="Security PIN" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono text-center">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">
+                🤐 ধাপ ৪: Secret Word
+              </label>
+              <input id="admin-input-word" type="text" required placeholder="Secret Word" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-center font-mono">
+            </div>
+          </div>
+
           <div id="admin-login-feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
-          <button id="btn-admin-login-submit" type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg transition">
-            লগইন করুন
+
+          <button id="btn-admin-login-submit" type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand transition flex items-center justify-center gap-2">
+            <span>🛡️ ৪-ধাপ নিরাপত্তা যাচাই ও প্রবেশ</span>
           </button>
         </form>
       </div>
@@ -3438,8 +3489,14 @@
       } else {
         document.getElementById('admin-login-view').classList.remove('hidden');
         document.getElementById('admin-dashboard-view').classList.add('hidden');
-        const pwdInput = document.getElementById('admin-input-password');
-        if (pwdInput) { pwdInput.value = ''; }
+        const m = document.getElementById('admin-input-master');
+        const s = document.getElementById('admin-input-secondary');
+        const p = document.getElementById('admin-input-pin');
+        const w = document.getElementById('admin-input-word');
+        if (m) m.value = '';
+        if (s) s.value = '';
+        if (p) p.value = '';
+        if (w) w.value = '';
       }
 
       modal.classList.remove('hidden');
@@ -3467,27 +3524,39 @@
     }
 
     async function handleAdminLoginSubmit() {
-      const pwdInput = document.getElementById('admin-input-password');
+      const masterInput = document.getElementById('admin-input-master');
+      const secondaryInput = document.getElementById('admin-input-secondary');
+      const pinInput = document.getElementById('admin-input-pin');
+      const wordInput = document.getElementById('admin-input-word');
       const feedback = document.getElementById('admin-login-feedback');
       const btn = document.getElementById('btn-admin-login-submit');
-      const password = pwdInput ? pwdInput.value.trim() : '';
 
-      if (!password) {
+      const master_password_1 = masterInput ? masterInput.value.trim() : '';
+      const secondary_password_2 = secondaryInput ? secondaryInput.value.trim() : '';
+      const security_pin = pinInput ? pinInput.value.trim() : '';
+      const security_word = wordInput ? wordInput.value.trim() : '';
+
+      if (!master_password_1 || !secondary_password_2 || !security_pin || !security_word) {
         if (feedback) {
           feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "পাসওয়ার্ড প্রবেশ করান।";
+          feedback.innerText = "৪টি সিকিউরিটি ফিল্ডই পূরণ করা আবশ্যক!";
         }
         return;
       }
 
       btn.disabled = true;
-      btn.innerText = "যাচাই করা হচ্ছে...";
+      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> নিরাপত্তা যাচাই চলছে...`;
 
       try {
         const res = await fetch('/api/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password })
+          body: JSON.stringify({
+            master_password_1,
+            secondary_password_2,
+            security_pin,
+            security_word
+          })
         });
         const data = await res.json();
         if (res.ok && data.success) {
@@ -3496,10 +3565,11 @@
           document.getElementById('admin-login-view').classList.add('hidden');
           document.getElementById('admin-dashboard-view').classList.remove('hidden');
           loadAdminData();
+          showToast("৪-ধাপ নিরাপত্তা যাচাই সফল! অ্যাডমিন প্যানেলে স্বাগতম।", "success");
         } else {
           if (feedback) {
             feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-            feedback.innerText = data.error || "ভুল পাসওয়ার্ড! পুনরায় চেষ্টা করুন।";
+            feedback.innerText = data.message || "নিরাপত্তা যাচাই ব্যর্থ হয়েছে! তথ্য পরীক্ষা করুন।";
           }
         }
       } catch (e) {
@@ -3509,7 +3579,7 @@
         }
       } finally {
         btn.disabled = false;
-        btn.innerText = "লগইন করুন";
+        btn.innerHTML = `<span>🛡️ ৪-ধাপ নিরাপত্তা যাচাই ও প্রবেশ</span>`;
       }
     }
 

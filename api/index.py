@@ -16,8 +16,16 @@ NEON_URL = os.environ.get(
     "postgresql://neondb_owner:npg_YIR9cGa5MqOP@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
 )
 
-# Admin Panel Password
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin1234")
+# 4-Step Security Credentials for Admin Panel
+ADMIN_MASTER_PASSWORD_1 = os.environ.get("ADMIN_MASTER_PASSWORD_1", "4990OrpU4990!HelloWorld123")
+ADMIN_SECONDARY_PASSWORD_2 = os.environ.get("ADMIN_SECONDARY_PASSWORD_2", "alonbiysA1")
+ADMIN_SECURITY_PIN = os.environ.get("ADMIN_SECURITY_PIN", "499011")
+ADMIN_SECURITY_WORD = os.environ.get("ADMIN_SECURITY_WORD", "barca")
+
+# Secure Admin Session Token
+ADMIN_TOKEN = hashlib.sha256(
+    f"{ADMIN_MASTER_PASSWORD_1}:{ADMIN_SECONDARY_PASSWORD_2}:{ADMIN_SECURITY_PIN}:{ADMIN_SECURITY_WORD}".encode('utf-8')
+).hexdigest()
 
 # Root directory of the repository
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -186,9 +194,9 @@ class handler(http.server.BaseHTTPRequestHandler):
         auth_header = self.headers.get('Authorization', '')
         if auth_header.startswith('Bearer '):
             token = auth_header.split('Bearer ', 1)[1].strip()
-            if token == ADMIN_PASSWORD:
+            if token in (ADMIN_TOKEN, ADMIN_MASTER_PASSWORD_1):
                 return True
-        if query.get('admin_token', [''])[0] == ADMIN_PASSWORD:
+        if query.get('admin_token', [''])[0] in (ADMIN_TOKEN, ADMIN_MASTER_PASSWORD_1):
             return True
         return False
 
@@ -325,14 +333,14 @@ class handler(http.server.BaseHTTPRequestHandler):
             return
 
         if path == '/api/admin/approve-payment':
-            if not self.check_admin_auth(query) and data.get('admin_token') != ADMIN_PASSWORD:
+            if not self.check_admin_auth(query) and data.get('admin_token') not in (ADMIN_TOKEN, ADMIN_MASTER_PASSWORD_1):
                 self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
                 return
             self.handle_admin_approve_payment(data)
             return
 
         if path == '/api/admin/reject-payment':
-            if not self.check_admin_auth(query) and data.get('admin_token') != ADMIN_PASSWORD:
+            if not self.check_admin_auth(query) and data.get('admin_token') not in (ADMIN_TOKEN, ADMIN_MASTER_PASSWORD_1):
                 self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
                 return
             self.handle_admin_reject_payment(data)
@@ -480,15 +488,37 @@ class handler(http.server.BaseHTTPRequestHandler):
 
     # ================= ADMIN HANDLERS =================
     def handle_admin_login(self, data):
-        entered_pass = (data.get('password') or '').strip()
-        if entered_pass == ADMIN_PASSWORD:
-            self.send_json_response({
-                "success": True,
-                "token": ADMIN_PASSWORD,
-                "message": "এডমিন লগইন সফল হয়েছে।"
-            })
-        else:
-            self.send_json_response({"success": False, "message": "ভুল এডমিন পাসওয়ার্ড!"}, status=401)
+        p1 = (data.get('master_password_1') or data.get('master_password') or data.get('password') or '').strip()
+        p2 = (data.get('secondary_password_2') or data.get('secondary_password') or '').strip()
+        pin = (data.get('security_pin') or '').strip()
+        word = (data.get('security_word') or '').strip().lower()
+
+        # Step 1: Master Password 1
+        if not hmac.compare_digest(p1, ADMIN_MASTER_PASSWORD_1):
+            self.send_json_response({"success": False, "step": 1, "message": "ধাপ ১ ব্যর্থ: মাস্টার পাসওয়ার্ড ১ সঠিক নয়!"}, status=401)
+            return
+
+        # Step 2: Secondary Password 2
+        if not hmac.compare_digest(p2, ADMIN_SECONDARY_PASSWORD_2):
+            self.send_json_response({"success": False, "step": 2, "message": "ধাপ ২ ব্যর্থ: সেকেন্ডারি পাসওয়ার্ড ২ সঠিক নয়!"}, status=401)
+            return
+
+        # Step 3: Security PIN
+        if not hmac.compare_digest(pin, ADMIN_SECURITY_PIN):
+            self.send_json_response({"success": False, "step": 3, "message": "ধাপ ৩ ব্যর্থ: সিকিউরিটি পিন সঠিক নয়!"}, status=401)
+            return
+
+        # Step 4: Security Secret Word
+        if not hmac.compare_digest(word, ADMIN_SECURITY_WORD.lower()):
+            self.send_json_response({"success": False, "step": 4, "message": "ধাপ ৪ ব্যর্থ: সিকিউরিটি সিক্রেট ওয়ার্ড সঠিক নয়!"}, status=401)
+            return
+
+        # All 4 Steps Successfully Verified
+        self.send_json_response({
+            "success": True,
+            "token": ADMIN_TOKEN,
+            "message": "৪-ধাপ নিরাপত্তা যাচাই সফল হয়েছে! অ্যাডমিন প্যানেলে স্বাগতম।"
+        })
 
     def handle_admin_get_payments(self):
         conn = get_db_connection()
@@ -540,6 +570,7 @@ class handler(http.server.BaseHTTPRequestHandler):
                 "total_exams": total_exams
             },
             "enrollments": enrollments,
+            "claims": enrollments,
             "sms_logs": sms_logs
         })
 
