@@ -143,8 +143,9 @@ class handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def get_route_path(self):
-        """Extracts the actual route path, accounting for rewrites."""
-        raw_path = self.headers.get('x-forwarded-uri') or self.headers.get('x-matched-path') or self.path
+        """Extracts the actual route path from incoming request URL."""
+        # Use self.path directly as standard BaseHTTPRequestHandler.
+        raw_path = self.path or '/'
         parsed = urllib.parse.urlparse(raw_path)
         path = parsed.path.rstrip('/')
         return path, urllib.parse.parse_qs(parsed.query)
@@ -180,21 +181,28 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.serve_static_file(html_path, 'text/html; charset=utf-8')
             return
 
-        # 2. Data Stores (JSON test banks)
+        # 2. Static Assets & Images (Support both /web/assets/ and /assets/)
+        if path.startswith('/web/assets/') or path.startswith('/assets/'):
+            clean_rel = path.lstrip('/')
+            file_path = os.path.join(BASE_DIR, clean_rel)
+            if not os.path.isfile(file_path):
+                if path.startswith('/assets/'):
+                    file_path = os.path.join(BASE_DIR, 'web', clean_rel)
+                elif path.startswith('/web/assets/'):
+                    file_path = os.path.join(BASE_DIR, clean_rel.replace('web/', ''))
+            if os.path.isfile(file_path):
+                ctype = 'image/jpeg' if file_path.lower().endswith(('.jpg', '.jpeg')) else ('image/png' if file_path.lower().endswith('.png') else 'application/octet-stream')
+                self.serve_static_file(file_path, ctype)
+                return
+            else:
+                self.send_json_response({"status": "error", "message": f"Asset not found: {file_path}"}, status=404)
+                return
+
+        # 3. Data Stores (JSON test banks)
         if path.startswith('/data/'):
             clean_rel = path.lstrip('/')
             file_path = os.path.join(BASE_DIR, clean_rel)
             self.serve_static_file(file_path, 'application/json; charset=utf-8')
-            return
-
-        # 3. Static Assets & Images
-        if path.startswith('/web/assets/') or path.startswith('/assets/'):
-            clean_rel = path.lstrip('/')
-            file_path = os.path.join(BASE_DIR, clean_rel)
-            if not os.path.exists(file_path) and path.startswith('/assets/'):
-                file_path = os.path.join(BASE_DIR, 'web', clean_rel)
-            ctype = 'image/jpeg' if file_path.lower().endswith(('.jpg', '.jpeg')) else ('image/png' if file_path.lower().endswith('.png') else 'application/octet-stream')
-            self.serve_static_file(file_path, ctype)
             return
 
         # 4. API Endpoints
@@ -227,11 +235,12 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.handle_get_stats()
             return
 
-        # Fallback to index.html if user navigates to a custom sub-path
-        html_path = os.path.join(BASE_DIR, 'index.html')
-        if os.path.exists(html_path):
-            self.serve_static_file(html_path, 'text/html; charset=utf-8')
-            return
+        # Fallback for unknown web routes to index.html (SPA routing)
+        if not path.startswith('/api/'):
+            html_path = os.path.join(BASE_DIR, 'index.html')
+            if os.path.exists(html_path):
+                self.serve_static_file(html_path, 'text/html; charset=utf-8')
+                return
 
         self.send_json_response({"status": "error", "message": f"Endpoint not found: {path}"}, status=404)
 
