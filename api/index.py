@@ -123,39 +123,64 @@ def ensure_database_schema(conn):
 def parse_bkash_sms(text):
     """
     Parses official bKash incoming SMS for payment verification.
-    Common formats:
-    - 'You have received Tk 499.00 from 01644265766. Ref ... Fee Tk 0.00. Balance Tk ... TrxID 9K27X89 at 26/09/2026 05:30'
-    - 'You have received Tk 499 from 01712345678. Ref Admission. Fee Tk 0.00. Balance Tk 10499.00. TrxID BL7A2X99 at 26/09/2026'
-    - 'Received Tk 499.00 from 01812345678. TrxID 8A291ZX'
+    Supports English & Bengali SMS, variations in TrxID / TxnID / Trx ID,
+    +88 phone numbers, and flexible amount placements.
     """
     if not text:
         return None
-    amount = None
-    amt_match = re.search(r'(?:received|recharge)\s+(?:tk\.?|bdt)?\s*([0-9,]+(?:\.[0-9]{1,2})?)', text, re.IGNORECASE)
-    if amt_match:
-        try:
-            amount = float(amt_match.group(1).replace(',', ''))
-        except ValueError:
-            pass
 
-    sender = None
-    sender_match = re.search(r'from\s+(01[3-9]\d{8})', text, re.IGNORECASE)
-    if sender_match:
-        sender = sender_match.group(1)
+    clean_text = ' '.join(str(text).split())
 
+    # 1. TrxID extraction (TrxID, Trx ID, TxnID, TxID, Transaction ID, ট্রানজেকশন আইডি)
     trx_id = None
-    trx_match = re.search(r'TrxID[:\s]+([A-Z0-9]{6,16})', text, re.IGNORECASE)
+    trx_match = re.search(
+        r'(?:Trx\s*ID|Txn\s*ID|TxID|Transaction\s*ID|ট্রানজেকশন\s*আইডি)[:\s]+([A-Za-z0-9]{6,20})',
+        clean_text,
+        re.IGNORECASE
+    )
     if trx_match:
-        trx_id = trx_match.group(1).strip().upper()
+        trx_id = trx_match.group(1).strip().strip('.!,:;').upper()
+
+    # 2. Amount extraction
+    amount = None
+    amt_patterns = [
+        r'(?:received|recharge|পেয়েছেন|পাওয়া\s*গেছে)\s+(?:tk\.?|bdt|টাকা|৳)?\s*([0-9,]+(?:\.[0-9]{1,2})?)',
+        r'(?:tk\.?|bdt|টাকা|৳)\s*([0-9,]+(?:\.[0-9]{1,2})?)\s*(?:received|recharge|পেয়েছেন)?',
+        r'([0-9,]+(?:\.[0-9]{1,2})?)\s*(?:tk\.?|bdt|টাকা|৳)\s*(?:received|recharge|পেয়েছেন)?'
+    ]
+    for pat in amt_patterns:
+        m = re.search(pat, clean_text, re.IGNORECASE)
+        if m:
+            try:
+                val = float(m.group(1).replace(',', ''))
+                if val > 0:
+                    amount = val
+                    break
+            except ValueError:
+                pass
+
+    # 3. Sender mobile number extraction
+    sender = None
+    sender_patterns = [
+        r'(?:from|থেকে)\s*(?:\+?88)?\s*(01[3-9]\d{8})',
+        r'(?:\+?88)?\s*(01[3-9]\d{8})\s*(?:থেকে|from)',
+        r'(?:\+?88)?(01[3-9]\d{8})'
+    ]
+    for pat in sender_patterns:
+        m = re.search(pat, clean_text, re.IGNORECASE)
+        if m:
+            sender = m.group(1)
+            break
 
     if trx_id:
         return {
             "amount": amount or 0.0,
             "sender": sender or "unknown",
             "trx_id": trx_id,
-            "raw": text
+            "raw": clean_text
         }
     return None
+
 
 
 class handler(http.server.BaseHTTPRequestHandler):
@@ -266,12 +291,21 @@ class handler(http.server.BaseHTTPRequestHandler):
             return
 
         if path == '/api/payment/sms-webhook':
+            # Check if this GET request contains SMS parameters (e.g. from SMS forwarder apps)
+            has_sms_param = any(k.lower() in ('message', 'text', 'body', 'msg', 'content', 'sms', 'm', 'raw', 'data') for k in query.keys())
+            if has_sms_param or ('sender' in query or 'from' in query or 's' in query or 'phone' in query or 'address' in query):
+                flattened_query = {k: (v[0] if isinstance(v, list) and v else v) for k, v in query.items()}
+                self.handle_sms_webhook(flattened_query)
+                return
+
             self.send_json_response({
+                "error_code": 0,
                 "status": "active",
-                "message": "bKash SMS Webhook endpoint is active and listening for POST requests.",
+                "message": "bKash SMS Webhook endpoint is active and listening for POST & GET requests.",
                 "webhook_target": "/api/payment/sms-webhook"
             })
             return
+
 
         if path == '/api/payment/status':
             self.handle_payment_status(query)
@@ -355,8 +389,20 @@ class handler(http.server.BaseHTTPRequestHandler):
 
         # Payment & Exam Routes
         if path == '/api/payment/sms-webhook':
-            self.handle_sms_webhook(data)
+            webhook_data = {}
+            if isinstance(data, dict):
+                webhook_data = dict(data)
+            has_known_key = any(k.lower() in ('message', 'text', 'msg', 'body', 'content', 'sms', 'm', 'sender', 'from', 's', 'phone', 'address') for k in webhook_data.keys())
+            if not has_known_key and post_body:
+                webhook_data['message'] = post_body.strip()
+            if query:
+                for qk, qv in query.items():
+                    val = qv[0] if isinstance(qv, list) and qv else qv
+                    if qk not in webhook_data or not webhook_data[qk]:
+                        webhook_data[qk] = val
+            self.handle_sms_webhook(webhook_data)
             return
+
 
         if path == '/api/payment/verify-trx':
             self.handle_verify_trx(data)
@@ -536,7 +582,10 @@ class handler(http.server.BaseHTTPRequestHandler):
 
             # 1. Enrollments list
             c.execute("""
-                SELECT id, student_id, student_name, student_email, package_type, amount, sender_number, trx_id, status, enrolled_at
+                SELECT id, student_id, student_name, student_email,
+                       package_type, package_type AS package,
+                       amount, sender_number, trx_id, status,
+                       enrolled_at, enrolled_at AS created_at
                 FROM student_enrollments
                 ORDER BY enrolled_at DESC
                 LIMIT 100;
@@ -545,12 +594,19 @@ class handler(http.server.BaseHTTPRequestHandler):
 
             # 2. Raw SMS logs
             c.execute("""
-                SELECT id, sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id, is_claimed, claimed_by_student_id, received_at
+                SELECT id, sender,
+                       raw_message, raw_message AS raw_sms,
+                       parsed_amount, parsed_amount AS amount,
+                       parsed_sender,
+                       parsed_trx_id, parsed_trx_id AS trx_id,
+                       is_claimed, claimed_by_student_id, claimed_by_student_id AS matched_claim_id,
+                       received_at
                 FROM received_sms_logs
                 ORDER BY received_at DESC
                 LIMIT 100;
             """)
             sms_logs = [dict(r) for r in c.fetchall()]
+
 
             # 3. Metrics
             c.execute("SELECT COALESCE(SUM(amount), 0) FROM student_enrollments WHERE status = 'verified';")
@@ -769,65 +825,142 @@ class handler(http.server.BaseHTTPRequestHandler):
         })
 
     def handle_sms_webhook(self, data):
-        sender = data.get('sender') or data.get('from') or data.get('address') or data.get('phone') or 'bKash'
-        raw_message = (
-            data.get('message') or 
-            data.get('text') or 
-            data.get('body') or 
-            data.get('msg') or 
-            data.get('content') or 
-            data.get('sms') or ''
-        )
+        if not isinstance(data, dict):
+            if isinstance(data, str):
+                data = {"message": data}
+            else:
+                data = {}
 
-        if not raw_message and isinstance(data, str):
-            raw_message = data
+        # Case-insensitive key lookup
+        norm_data = {str(k).lower(): v for k, v in data.items()}
+
+        sender = (
+            norm_data.get('sender') or 
+            norm_data.get('from') or 
+            norm_data.get('phone') or 
+            norm_data.get('address') or 
+            norm_data.get('s') or 
+            norm_data.get('c') or 
+            norm_data.get('from_number') or 
+            norm_data.get('mobile') or 
+            'bKash'
+        )
+        if isinstance(sender, list) and sender:
+            sender = sender[0]
+        sender = str(sender).strip()
+
+        raw_message = (
+            norm_data.get('message') or 
+            norm_data.get('text') or 
+            norm_data.get('body') or 
+            norm_data.get('msg') or 
+            norm_data.get('content') or 
+            norm_data.get('sms') or 
+            norm_data.get('m') or 
+            norm_data.get('payload') or 
+            norm_data.get('raw') or 
+            ''
+        )
+        if isinstance(raw_message, list) and raw_message:
+            raw_message = raw_message[0]
+        raw_message = str(raw_message).strip()
+
+        # If still empty, check inside any nested dictionary or find text containing TrxID/received
+        if not raw_message:
+            for val in data.values():
+                if isinstance(val, dict):
+                    nested_msg = val.get('message') or val.get('text') or val.get('body') or val.get('msg')
+                    if nested_msg:
+                        raw_message = str(nested_msg).strip()
+                        break
+                elif isinstance(val, str) and any(keyword in val.lower() for keyword in ('trxid', 'trx id', 'received', 'bkash', 'bdt', 'tk')):
+                    raw_message = val.strip()
+                    break
+
+        if not raw_message and data:
+            raw_message = json.dumps(data, ensure_ascii=False)
 
         parsed = parse_bkash_sms(raw_message)
+
+        matched_student = None
+        auto_verified = False
 
         conn = get_db_connection()
         try:
             ensure_database_schema(conn)
-            c = conn.cursor()
-            if parsed:
+            import psycopg2.extras
+            c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+            if parsed and parsed.get('trx_id'):
+                trx_id = parsed['trx_id']
+                amount = parsed.get('amount') or 0.0
+                sender_mobile = parsed.get('sender') or sender
+
+                # 1. Check if a student already submitted a pending claim for this TrxID
                 c.execute("""
-                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
-                    VALUES (%s, %s, %s, %s, %s)
+                    SELECT id, student_id, student_name, student_email, package_type, status
+                    FROM student_enrollments
+                    WHERE UPPER(trx_id) = %s;
+                """, (trx_id,))
+                existing_enrollment = c.fetchone()
+
+                if existing_enrollment:
+                    c.execute("""
+                        UPDATE student_enrollments
+                        SET status = 'verified'
+                        WHERE id = %s;
+                    """, (existing_enrollment['id'],))
+                    matched_student = existing_enrollment['student_id']
+                    auto_verified = True
+
+                # 2. Insert into received_sms_logs
+                c.execute("""
+                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id, is_claimed, claimed_by_student_id)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (parsed_trx_id) DO UPDATE SET
+                        raw_message = EXCLUDED.raw_message,
                         parsed_amount = EXCLUDED.parsed_amount,
-                        parsed_sender = EXCLUDED.parsed_sender;
-                """, (sender, raw_message, parsed['amount'], parsed['sender'], parsed['trx_id']))
-
-                # Also automatically verify any pending enrollment matching this TrxID
-                c.execute("""
-                    UPDATE student_enrollments
-                    SET status = 'verified'
-                    WHERE trx_id = %s AND status = 'pending';
-                """, (parsed['trx_id'],))
-
+                        parsed_sender = EXCLUDED.parsed_sender,
+                        is_claimed = COALESCE(received_sms_logs.is_claimed, EXCLUDED.is_claimed),
+                        claimed_by_student_id = COALESCE(received_sms_logs.claimed_by_student_id, EXCLUDED.claimed_by_student_id);
+                """, (
+                    sender, 
+                    raw_message, 
+                    amount, 
+                    sender_mobile, 
+                    trx_id, 
+                    bool(matched_student), 
+                    matched_student
+                ))
             else:
+                # Log raw message even if regex didn't extract a TrxID (for complete audit logging)
                 c.execute("""
-                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
-                    VALUES (%s, %s, NULL, NULL, NULL);
-                """, (sender, raw_message or json.dumps(data)))
+                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id, is_claimed)
+                    VALUES (%s, %s, NULL, %s, NULL, FALSE);
+                """, (sender, raw_message or "Unknown SMS content", sender))
+
             conn.commit()
         except Exception as e:
-            self.send_json_response({"status": "error", "message": str(e)}, status=500)
+            print(f"[ERROR] sms-webhook error: {e}")
+            self.send_json_response({
+                "error_code": 1,
+                "status": "error",
+                "message": str(e)
+            }, status=500)
             return
         finally:
             conn.close()
 
-        if parsed:
-            self.send_json_response({
-                "status": "success",
-                "message": "bKash SMS successfully recorded and logged.",
-                "parsed": parsed
-            })
-        else:
-            self.send_json_response({
-                "status": "received",
-                "message": "Test SMS received and logged successfully (no real bKash TrxID).",
-                "raw": raw_message or data
-            })
+        # Returns error_code: 0 and status: "success" so Android SMS Forwarders record delivery as success
+        self.send_json_response({
+            "error_code": 0,
+            "status": "success",
+            "message": "bKash SMS successfully recorded and logged.",
+            "auto_verified": auto_verified,
+            "matched_student": matched_student,
+            "parsed": parsed or {"raw": raw_message}
+        })
+
 
     def handle_verify_trx(self, data):
         student_id = data.get('student_id', '').strip()
@@ -902,7 +1035,7 @@ class handler(http.server.BaseHTTPRequestHandler):
                 return
 
             # 3. Check received SMS logs
-            c.execute("SELECT * FROM received_sms_logs WHERE parsed_trx_id = %s;", (trx_id,))
+            c.execute("SELECT * FROM received_sms_logs WHERE UPPER(parsed_trx_id) = %s;", (trx_id,))
             sms_log = c.fetchone()
 
             is_auto_verified = False
@@ -913,7 +1046,7 @@ class handler(http.server.BaseHTTPRequestHandler):
                         "message": "এই TrxID-এর পেমেন্ট ইতিপূর্বে অন্য একাউন্টে ক্লেইম করা হয়েছে।"
                     }, status=400)
                     return
-                if sms_log['parsed_amount'] is not None and float(sms_log['parsed_amount']) < required_price:
+                if sms_log['parsed_amount'] is not None and float(sms_log['parsed_amount']) > 0 and float(sms_log['parsed_amount']) < required_price:
                     self.send_json_response({
                         "success": False,
                         "message": f"পেমেন্ট ফি অপর্যাপ্ত! এই প্যাকেজের জন্য ৳{int(required_price)} প্রয়োজন, কিন্তু TrxID-তে পাওয়া গেছে ৳{float(sms_log['parsed_amount'])}।"
@@ -924,9 +1057,10 @@ class handler(http.server.BaseHTTPRequestHandler):
                 c.execute("""
                     UPDATE received_sms_logs
                     SET is_claimed = TRUE, claimed_by_student_id = %s
-                    WHERE parsed_trx_id = %s;
+                    WHERE UPPER(parsed_trx_id) = %s;
                 """, (student_id, trx_id))
                 is_auto_verified = True
+
 
             # 4. Insert or update student enrollment
             status_val = 'verified' if is_auto_verified else 'pending'
