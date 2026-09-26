@@ -14,6 +14,9 @@ NEON_URL = os.environ.get(
     "postgresql://neondb_owner:npg_YIR9cGa5MqOP@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
 )
 
+# Root directory of the repository
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Lazy schema check
 _SCHEMA_ENSURED = False
 
@@ -127,15 +130,12 @@ def parse_bkash_sms(text):
 
 
 class handler(http.server.BaseHTTPRequestHandler):
-    """Vercel Serverless Function HTTP Handler."""
+    """Vercel Serverless Function & Full-Stack Handler."""
 
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
         super().end_headers()
 
     def do_OPTIONS(self):
@@ -149,9 +149,55 @@ class handler(http.server.BaseHTTPRequestHandler):
         path = parsed.path.rstrip('/')
         return path, urllib.parse.parse_qs(parsed.query)
 
+    def serve_static_file(self, file_path, content_type):
+        """Streams a static file (HTML, JSON, Images) with correct caching and headers."""
+        try:
+            if not os.path.isfile(file_path):
+                self.send_json_response({"status": "error", "message": f"File not found: {file_path}"}, status=404)
+                return
+            with open(file_path, 'rb') as f:
+                content = f.read()
+            self.send_response(200)
+            self.send_header('Content-Type', content_type)
+            self.send_header('Content-Length', str(len(content)))
+            if content_type.startswith('text/html'):
+                self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0')
+                self.send_header('Pragma', 'no-cache')
+                self.send_header('Expires', '0')
+            else:
+                self.send_header('Cache-Control', 'public, max-age=86400')
+            self.end_headers()
+            self.wfile.write(content)
+        except Exception as e:
+            self.send_json_response({"status": "error", "message": str(e)}, status=500)
+
     def do_GET(self):
         path, query = self.get_route_path()
 
+        # 1. Root & HTML Page
+        if path in ('', '/', '/index', '/index.html'):
+            html_path = os.path.join(BASE_DIR, 'index.html')
+            self.serve_static_file(html_path, 'text/html; charset=utf-8')
+            return
+
+        # 2. Data Stores (JSON test banks)
+        if path.startswith('/data/'):
+            clean_rel = path.lstrip('/')
+            file_path = os.path.join(BASE_DIR, clean_rel)
+            self.serve_static_file(file_path, 'application/json; charset=utf-8')
+            return
+
+        # 3. Static Assets & Images
+        if path.startswith('/web/assets/') or path.startswith('/assets/'):
+            clean_rel = path.lstrip('/')
+            file_path = os.path.join(BASE_DIR, clean_rel)
+            if not os.path.exists(file_path) and path.startswith('/assets/'):
+                file_path = os.path.join(BASE_DIR, 'web', clean_rel)
+            ctype = 'image/jpeg' if file_path.lower().endswith(('.jpg', '.jpeg')) else ('image/png' if file_path.lower().endswith('.png') else 'application/octet-stream')
+            self.serve_static_file(file_path, ctype)
+            return
+
+        # 4. API Endpoints
         if path in ('/api', '/api/health', '/api/index'):
             self.send_json_response({
                 "status": "healthy",
@@ -179,6 +225,12 @@ class handler(http.server.BaseHTTPRequestHandler):
 
         if path == '/api/stats':
             self.handle_get_stats()
+            return
+
+        # Fallback to index.html if user navigates to a custom sub-path
+        html_path = os.path.join(BASE_DIR, 'index.html')
+        if os.path.exists(html_path):
+            self.serve_static_file(html_path, 'text/html; charset=utf-8')
             return
 
         self.send_json_response({"status": "error", "message": f"Endpoint not found: {path}"}, status=404)
@@ -225,6 +277,7 @@ class handler(http.server.BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(response_bytes)))
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
         self.end_headers()
         self.wfile.write(response_bytes)
 
@@ -328,7 +381,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             }, status=400)
             return
 
-        # Validate Bangladeshi 11-digit mobile number
         clean_num = re.sub(r'[\s\-+]', '', sender_number)
         if clean_num.startswith('880'):
             clean_num = clean_num[2:]
@@ -360,7 +412,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             ensure_database_schema(conn)
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-            # 1. Check if already enrolled
             c.execute("""
                 SELECT package_type FROM student_enrollments
                 WHERE student_id = %s AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
@@ -375,7 +426,6 @@ class handler(http.server.BaseHTTPRequestHandler):
                 })
                 return
 
-            # 2. Check if TrxID was claimed by another student
             c.execute("SELECT student_id FROM student_enrollments WHERE trx_id = %s AND status = 'verified';", (trx_id,))
             claimed_other = c.fetchone()
             if claimed_other and claimed_other['student_id'] != student_id:
@@ -385,7 +435,6 @@ class handler(http.server.BaseHTTPRequestHandler):
                 }, status=400)
                 return
 
-            # 3. Check received SMS logs
             c.execute("SELECT * FROM received_sms_logs WHERE parsed_trx_id = %s;", (trx_id,))
             sms_log = c.fetchone()
             if sms_log:
@@ -402,14 +451,12 @@ class handler(http.server.BaseHTTPRequestHandler):
                     }, status=400)
                     return
 
-                # Mark claimed in SMS logs
                 c.execute("""
                     UPDATE received_sms_logs
                     SET is_claimed = TRUE, claimed_by_student_id = %s
                     WHERE parsed_trx_id = %s;
                 """, (student_id, trx_id))
 
-            # 4. Insert or update student enrollment
             c.execute("""
                 INSERT INTO student_enrollments (student_id, student_name, package_type, amount, sender_number, trx_id, status)
                 VALUES (%s, %s, %s, %s, %s, %s, 'verified')
@@ -483,7 +530,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             ensure_database_schema(conn)
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-            # Upsert student
             c.execute("""
                 INSERT INTO students (student_id, name, roll_number, target_college, session)
                 VALUES (%s, %s, %s, %s, %s)
@@ -494,7 +540,6 @@ class handler(http.server.BaseHTTPRequestHandler):
                     session=EXCLUDED.session;
             """, (student_id, student_name, roll, target, session))
 
-            # Insert submission
             c.execute("""
                 INSERT INTO exam_submissions
                 (submission_code, student_id, student_name, target_college, session, test_id, test_code, subject_mode,
@@ -504,7 +549,6 @@ class handler(http.server.BaseHTTPRequestHandler):
                   total_questions, correct_count, wrong_count, unanswered_count, score, percentage, time_taken_seconds))
             conn.commit()
 
-            # Session Rank
             c.execute("""
                 SELECT COUNT(*) + 1 AS rank FROM exam_submissions
                 WHERE test_id = %s AND subject_mode = %s AND session = %s
@@ -517,7 +561,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             session_total = c.fetchone()['total']
             session_percentile = round(((session_total - session_rank) / session_total) * 100, 2) if session_total > 0 else 100.0
 
-            # All-Time National Rank
             c.execute("""
                 SELECT COUNT(*) + 1 AS rank FROM exam_submissions
                 WHERE test_id = %s AND subject_mode = %s
@@ -530,7 +573,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             all_time_total = c.fetchone()['total']
             all_time_percentile = round(((all_time_total - all_time_rank) / all_time_total) * 100, 2) if all_time_total > 0 else 100.0
 
-            # Leaderboards
             c.execute("""
                 SELECT student_id, student_name, target_college, session, score, percentage, time_taken_seconds, submitted_at
                 FROM exam_submissions
@@ -653,8 +695,8 @@ class handler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     import socketserver
-    server = socketserver.ThreadingTCPServer(("127.0.0.1", 8085), handler)
-    print("Test Vercel API Handler running at http://127.0.0.1:8085")
+    server = socketserver.ThreadingTCPServer(("127.0.0.1", 8089), handler)
+    print("Test Vercel API Handler running at http://127.0.0.1:8089")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
