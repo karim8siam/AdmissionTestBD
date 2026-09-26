@@ -1,0 +1,1956 @@
+
+const tailwind = { config: {} };
+let capturedHtml = {};
+let paywallTriggered = false;
+
+const mockDoc = {
+    getElementById: (id) => ({
+        id,
+        classList: { add: ()=>{}, remove: ()=>{}, contains: ()=>false },
+        style: {},
+        set innerHTML(val) { capturedHtml[id] = val; },
+        get innerHTML() { return capturedHtml[id] || ''; },
+        set innerText(val) { capturedHtml[id] = val; },
+        get innerText() { return capturedHtml[id] || ''; },
+        appendChild: ()=>{}
+    }),
+    querySelectorAll: () => [],
+    createElement: (tag) => ({ tagName: tag, classList: { add: ()=>{}, remove: ()=>{}, contains: ()=>false }, style: {}, innerHTML: '', innerText: '', appendChild: ()=>{} }),
+    addEventListener: () => {}
+};
+const window = { addEventListener: ()=>{}, scrollTo: ()=>{} };
+const document = mockDoc;
+
+// User state from screenshot: previously unlockedMed was 6, unpaid!
+const localStorage = {
+    store: {
+        'admission_unlocked_med': '6',
+        'admission_selected_session': '2025-26'
+    },
+    getItem: function(k) { return this.store[k] || null; },
+    setItem: function(k, v) { this.store[k] = String(v); }
+};
+const fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve({ medical_enrolled: false }) });
+
+    const DEFAULT_MED_TEST_1 = {"test_id": 1, "test_code": "MED-001", "test_name_bn": "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট 01", "stream": "medical", "total_questions": 100, "duration_minutes": 60, "questions": [{"id": "MT-001-Q01", "test_id": 1, "question_num": 1, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "যে ফল পাকলে নিচ থেকে উপর বরাবর ফেটে যায় তাকে কি বলে?", "option_a": "লিগিউম", "option_b": "ক‍্যাপসিউল", "option_c": "সিলিকুয়া", "option_d": "বেরি", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): সিলিকুয়া। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["লিগিউম", "ক‍্যাপসিউল", "সিলিকুয়া", "বেরি"]}, {"id": "MT-001-Q02", "test_id": 1, "question_num": 2, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "question_bn": "অষ্টম করোটিক স্নায়ুর কাজ কি?", "option_a": "স্বাদ", "option_b": "দর্শন", "option_c": "শ্রবণ", "option_d": "ঘ্রাণ", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): শ্রবণ। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["স্বাদ", "দর্শন", "শ্রবণ", "ঘ্রাণ"]}, {"id": "MT-001-Q03", "test_id": 1, "question_num": 3, "subject": "Biology", "sub_discipline": "Botany", "chapter": "জীবপ্রযুক্তি", "question_bn": "রিকম্বিনেন্ট ডিএনএ (rDNA) তৈরিতে ডিএনএ অণুর নির্দিষ্ট অংশ কাটতে কোন এনজাইমটি আণবিক কাঁচি হিসেবে কাজ করে?", "option_a": "ডিএনএ লাইগেজ", "option_b": "রেস্ট্রিকশন এন্ডোনিউক্লিয়েজ", "option_c": "ডিএনএ পলিমারেজ", "option_d": "টপোআইসোমারেজ", "correct_option": "খ", "correct_index": 1, "explanation": "রেস্ট্রিকশন এন্ডোনিউক্লিয়েজ নির্দিষ্ট নাইট্রোজেন বেস সিকোয়েন্স চিনে ডিএনএ সূত্রক কাটে বলে একে আণবিক কাঁচি বা Molecular Scissors বলা হয়।", "book_reference": "ড. আবুল হাসান, ১১শ অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Paper (2022-2023)", "created_at": "2026-09-17 22:33:55", "options": ["ডিএনএ লাইগেজ", "রেস্ট্রিকশন এন্ডোনিউক্লিয়েজ", "ডিএনএ পলিমারেজ", "টপোআইসোমারেজ"]}, {"id": "MT-001-Q04", "test_id": 1, "question_num": 4, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানবদেহের প্রতিরক্ষা", "question_bn": "কোন অঙ্গটি মানবদেহের প্রথম প্রতিরক্ষা স্তরের অন্তর্ভুক্ত?", "option_a": "ত্বক", "option_b": "পরিপাকগ্রন্থি", "option_c": "রক্ত", "option_d": "Antibody", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): ত্বক। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানবদেহের প্রতিরক্ষা)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানবদেহের প্রতিরক্ষা", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["ত্বক", "পরিপাকগ্রন্থি", "রক্ত", "Antibody"]}, {"id": "MT-001-Q05", "test_id": 1, "question_num": 5, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "যে ভাজক টিসু‍্য বিভাজিত হয়ে উদ্ভিদের ত্বক সৃষ্টি করে তাকে কি বলে?", "option_a": "প্রোটোডার্ম", "option_b": "প্রোক‍্যাম্বিয়াম", "option_c": "মাস মেরিস্টেম", "option_d": "গ্রাউন্ড মেরিস্টেম", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): প্রোটোডার্ম। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["প্রোটোডার্ম", "প্রোক‍্যাম্বিয়াম", "মাস মেরিস্টেম", "গ্রাউন্ড মেরিস্টেম"]}, {"id": "MT-001-Q06", "test_id": 1, "question_num": 6, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", "question_bn": "Arthropoda পর্বের প‍্রাণীতে পাওয়া যায়-", "option_a": "প‍্যারাপোডিয়া", "option_b": "র‍্যাডুলা", "option_c": "হিমোসিল", "option_d": "নালিকা পদ", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): হিমোসিল। রেফারেন্স: গাজী আজমল ও গাজী আসমত (প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস)।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", "difficulty": "Easy", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["প‍্যারাপোডিয়া", "র‍্যাডুলা", "হিমোসিল", "নালিকা পদ"]}, {"id": "MT-001-Q07", "test_id": 1, "question_num": 7, "subject": "Biology", "sub_discipline": "Botany", "chapter": "উদ্ভিদ প্রজনন", "question_bn": "“তিনটি ভ্রূণীয় স্তর” গঠিত হয় কোন ধাপে?", "option_a": "নিষেক", "option_b": "ক্লিভেজ", "option_c": "গ্যাস্ট্রুলেশন", "option_d": "অর্গানোজেনেসিস", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): গ্যাস্ট্রুলেশন। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (উদ্ভিদ প্রজনন)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদ প্রজনন", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["নিষেক", "ক্লিভেজ", "গ্যাস্ট্রুলেশন", "অর্গানোজেনেসিস"]}, {"id": "MT-001-Q08", "test_id": 1, "question_num": 8, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "question_bn": "থাইরয়েড গ্রন্থি থেকে নিঃসৃত হরমোন নয় কোনটি?", "option_a": "থাইরক্সিন", "option_b": "ক‍্যালসিটোনিন", "option_c": "ট্রাই আয়োডো থাইরোনিন", "option_d": "থাইরয়েড স্টিমুলেটিং হরমোন", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): থাইরয়েড স্টিমুলেটিং হরমোন। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["থাইরক্সিন", "ক‍্যালসিটোনিন", "ট্রাই আয়োডো থাইরোনিন", "থাইরয়েড স্টিমুলেটিং হরমোন"]}, {"id": "MT-001-Q09", "test_id": 1, "question_num": 9, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "স্তন‍্যপায়ীর প্রাধান‍্য ছিল কোন যুগে? -", "option_a": "ইওসিন", "option_b": "মায়োসিন", "option_c": "প‍্যালিওসিন", "option_d": "ওলিগোসিন", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): মায়োসিন। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["ইওসিন", "মায়োসিন", "প‍্যালিওসিন", "ওলিগোসিন"]}, {"id": "MT-001-Q10", "test_id": 1, "question_num": 10, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "question_bn": "চোখের একমাত্র আলোক সংবেদী অংশ কোনটি?", "option_a": "রেটিনা", "option_b": "পিউপিল", "option_c": "আইরিশ", "option_d": "অন্ধবিন্দু", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): রেটিনা। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["রেটিনা", "পিউপিল", "আইরিশ", "অন্ধবিন্দু"]}, {"id": "MT-001-Q11", "test_id": 1, "question_num": 11, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "১ম শ্রেণীর লিভারের ক্ষেত্রে কোনটি সঠিক?", "option_a": "বল →ভার →ফ‍্যালক্রাম", "option_b": "ভার →ফ‍্যালক্রাম→বল", "option_c": "ফ‍্যালক্রাম →বল →ভার", "option_d": "ভার →বল →ফ‍্যালক্রাম", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): ভার →ফ‍্যালক্রাম→বল। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["বল →ভার →ফ‍্যালক্রাম", "ভার →ফ‍্যালক্রাম→বল", "ফ‍্যালক্রাম →বল →ভার", "ভার →বল →ফ‍্যালক্রাম"]}, {"id": "MT-001-Q12", "test_id": 1, "question_num": 12, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: পরিপাক ও শোষণ", "question_bn": "পাকস্থলীর প্যারাইটাল বা অক্সিন্টিক কোষ থেকে নিচের কোনটি ক্ষরিত হয়?", "option_a": "পেপসিনোজেন", "option_b": "মিউকাস", "option_c": "হাইড্রোক্লোরিক এসিড (HCl)", "option_d": "গ্যাস্ট্রিন", "correct_option": "গ", "correct_index": 2, "explanation": "প্যারাইটাল/অক্সিন্টিক কোষ থেকে HCl এবং ইন্ট্রিনসিক ফ্যাক্টর ক্ষরিত হয়। চিফ/জাইমোজেনিক কোষ থেকে পেপসিনোজেন ক্ষরিত হয়।", "book_reference": "গাজী আজমল, পরিপাক ও শোষণ অধ্যায়", "difficulty": "Easy", "is_confusing_standard": 0, "source": "DGME Past Paper (2010-2011)", "created_at": "2026-09-17 22:33:55", "options": ["পেপসিনোজেন", "মিউকাস", "হাইড্রোক্লোরিক এসিড (HCl)", "গ্যাস্ট্রিন"]}, {"id": "MT-001-Q13", "test_id": 1, "question_num": 13, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "নিচের কোন উদ্ভিদের স্পোরোফাইট থ‍্যালাসে নিমজ্জিত থাকে?", "option_a": "Semibarbula", "option_b": "Funaria", "option_c": "Riccia", "option_d": "Marchantia", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): Riccia। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["Semibarbula", "Funaria", "Riccia", "Marchantia"]}, {"id": "MT-001-Q14", "test_id": 1, "question_num": 14, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন", "question_bn": "নেফ্রনের কোন অংশে অধিকাংশ পুনঃশোষণ ঘটে?", "option_a": "প্রক্সিমাল প‍্যাচানো নালিকা", "option_b": "হেনলির লুপ", "option_c": "ডিস্টাল প‍্যাচানো নালিকা", "option_d": "সংগ্রাহক নালিকা", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): প্রক্সিমাল প‍্যাচানো নালিকা। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["প্রক্সিমাল প‍্যাচানো নালিকা", "হেনলির লুপ", "ডিস্টাল প‍্যাচানো নালিকা", "সংগ্রাহক নালিকা"]}, {"id": "MT-001-Q15", "test_id": 1, "question_num": 15, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন", "question_bn": "ডান ফুসফুস কতটি লোবিউলে বিভক্ত?", "option_a": "২", "option_b": "৩", "option_c": "১০", "option_d": "৮", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): ১০। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["২", "৩", "১০", "৮"]}, {"id": "MT-001-Q16", "test_id": 1, "question_num": 16, "subject": "Biology", "sub_discipline": "Botany", "chapter": "উদ্ভিদ প্রজনন", "question_bn": "নিষেকের পর গর্ভাশয় কীসে পরিণত হয়?", "option_a": "ফল", "option_b": "বীজত্বক", "option_c": "বীজ", "option_d": "ভ্রূণ", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): ফল। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (উদ্ভিদ প্রজনন)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদ প্রজনন", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["ফল", "বীজত্বক", "বীজ", "ভ্রূণ"]}, {"id": "MT-001-Q17", "test_id": 1, "question_num": 17, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "খাদ‍্যবস্তু গ্রাসনালিতে প্রবেশে সহায়তা করে নিচের কোনটি?", "option_a": "ক্রপ", "option_b": "মুখছিদ্র", "option_c": "গলবিল", "option_d": "হেপাটিক সিকা", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): গলবিল। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["ক্রপ", "মুখছিদ্র", "গলবিল", "হেপাটিক সিকা"]}, {"id": "MT-001-Q18", "test_id": 1, "question_num": 18, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানবদেহের প্রতিরক্ষা", "question_bn": "মায়ের দুধের মাধ্যমে নবজাতকের দেহে কোন অ্যান্টিবডি প্রবেশ করে নিষ্ক্রিয় অনাক্রম্যতা প্রদান করে?", "option_a": "IgG", "option_b": "IgM", "option_c": "IgA", "option_d": "IgE", "correct_option": "গ", "correct_index": 2, "explanation": "মায়ের শালদুধে (Colostrum) প্রচুর পরিমাণে সিক্রেটরি IgA অ্যান্টিবডি থাকে যা নবজাতকের অন্ত্রে রোগ প্রতিরোধ ক্ষমতা গড়ে তোলে। অমরা (Placenta) ভেদ করে IgG।", "book_reference": "গাজী আজমল, অধ্যায় ১০: মানবদেহের প্রতিরক্ষা", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Paper (2013-2014)", "created_at": "2026-09-17 22:33:55", "options": ["IgG", "IgM", "IgA", "IgE"]}, {"id": "MT-001-Q19", "test_id": 1, "question_num": 19, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "মানবদেহে মূত্র নিষ্কাশনের সঠিক গতিপথ কোনটি?", "option_a": "পেলভিস →ইউরেটার →মূত্রথলি → নির্গমন", "option_b": "নির্গমন→ পেলভিস →ইউরেটার →মূত্রথলি", "option_c": "ইউরেটার →পেলভিস →মূত্রথলি → নির্গমন", "option_d": "পেলভিস → মূত্রথলি → ইউরেটার → নির্গমন", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): পেলভিস →ইউরেটার →মূত্রথলি → নির্গমন। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["পেলভিস →ইউরেটার →মূত্রথলি → নির্গমন", "নির্গমন→ পেলভিস →ইউরেটার →মূত্রথলি", "ইউরেটার →পেলভিস →মূত্রথলি → নির্গমন", "পেলভিস → মূত্রথলি → ইউরেটার → নির্গমন"]}, {"id": "MT-001-Q20", "test_id": 1, "question_num": 20, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "question_bn": "হাইড্রার পরিস্ফুটনের সঠিক ধাপ কোনটি?", "option_a": "জাইগোট➡ব্লাস্টুলা➡মরুলা➡ গ‍্যাস্ট্রুলা➡হ‍্যাড্রুলা➡পূর্ণাঙ্গ", "option_b": "জাইগোট➡গ‍্যাস্ট্রুলা➡মরুলা➡ হ‍্যাড্রুলা➡ব্লাস্টুলা➡পূর্ণাঙ্গ", "option_c": "জাইগোট➡মরুলা➡ব্লাস্টুলা➡ গ‍্যাস্টুলা➡হ‍্যাড্রুলা➡পূর্ণাঙ্গ", "option_d": "জাইগোট➡মরুলা➡গ‍্যাস্ট্রুলা➡ হ‍্যাড্রুলা➡ব্লাস্টুলা➡পূর্ণাঙ্গ", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): জাইগোট➡মরুলা➡ব্লাস্টুলা➡ গ‍্যাস্টুলা➡হ‍্যাড্রুলা➡পূর্ণাঙ্গ। রেফারেন্স: গাজী আজমল ও গাজী আসমত (প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui))।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["জাইগোট➡ব্লাস্টুলা➡মরুলা➡ গ‍্যাস্ট্রুলা➡হ‍্যাড্রুলা➡পূর্ণাঙ্গ", "জাইগোট➡গ‍্যাস্ট্রুলা➡মরুলা➡ হ‍্যাড্রুলা➡ব্লাস্টুলা➡পূর্ণাঙ্গ", "জাইগোট➡মরুলা➡ব্লাস্টুলা➡ গ‍্যাস্টুলা➡হ‍্যাড্রুলা➡পূর্ণাঙ্গ", "জাইগোট➡মরুলা➡গ‍্যাস্ট্রুলা➡ হ‍্যাড্রুলা➡ব্লাস্টুলা➡পূর্ণাঙ্গ"]}, {"id": "MT-001-Q21", "test_id": 1, "question_num": 21, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "question_bn": "রুই মাছের কানকুয়ার পিছনের পাখনাকে বলা হয় -", "option_a": "শ্রোণি পাখনা", "option_b": "বক্ষ পাখনা", "option_c": "পৃষ্ঠীয় পাখনা", "option_d": "পায়ু পাখনা", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): বক্ষ পাখনা। রেফারেন্স: গাজী আজমল ও গাজী আসমত (প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui))।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["শ্রোণি পাখনা", "বক্ষ পাখনা", "পৃষ্ঠীয় পাখনা", "পায়ু পাখনা"]}, {"id": "MT-001-Q22", "test_id": 1, "question_num": 22, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "মানুষের অক্ষিগোলকের স্তর কতটি?", "option_a": "1", "option_b": "2", "option_c": "3", "option_d": "4", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): 3। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["1", "2", "3", "4"]}, {"id": "MT-001-Q23", "test_id": 1, "question_num": 23, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "জবা ফুলের স্ত্রী কেশরের সংখ‍্যা কত?", "option_a": "দুই", "option_b": "তিন", "option_c": "পাঁচ", "option_d": "চার", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): পাঁচ। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["দুই", "তিন", "পাঁচ", "চার"]}, {"id": "MT-001-Q24", "test_id": 1, "question_num": 24, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "জিনতত্ত্ব ও বিবর্তন", "question_bn": "মেন্ডেলের দ্বিতীয় সূত্রের এপিস্ট্যাসিস জনিত দ্বৈত প্রচ্ছন্ন এপিস্ট্যাসিসের অনুপাত কোনটি?", "option_a": "১৩:৩", "option_b": "৯:৭", "option_c": "১২:৩:১", "option_d": "৯:৩:৪", "correct_option": "খ", "correct_index": 1, "explanation": "দ্বৈত প্রচ্ছন্ন এপিস্ট্যাসিসের (যেমন মানুষের জন্মগত মূক-বধিরতা) অনুপাত হলো ৯:৭। প্রকট এপিস্ট্যাসিসের অনুপাত ১৩:৩।", "book_reference": "গাজী আজমল, জিনতত্ত্ব ও বিবর্তন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Paper (2018-2019)", "created_at": "2026-09-17 22:33:55", "options": ["১৩:৩", "৯:৭", "১২:৩:১", "৯:৩:৪"]}, {"id": "MT-001-Q25", "test_id": 1, "question_num": 25, "subject": "Biology", "sub_discipline": "Botany", "chapter": "উদ্ভিদ শারীরতত্ত্ব", "question_bn": "প্রস্বেদনের হার বাড়ে কোন অবস্থায়?", "option_a": "বায়ুর চাপ বাড়লে", "option_b": "লুকায়িত পত্ররন্ধ্র থাকলে", "option_c": "আর্দ্রতা বাড়লে", "option_d": "তাপমাত্রা বাড়লে", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): তাপমাত্রা বাড়লে। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (উদ্ভিদ শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদ শারীরতত্ত্ব", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["বায়ুর চাপ বাড়লে", "লুকায়িত পত্ররন্ধ্র থাকলে", "আর্দ্রতা বাড়লে", "তাপমাত্রা বাড়লে"]}, {"id": "MT-001-Q26", "test_id": 1, "question_num": 26, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "জিনতত্ত্ব ও বিবর্তন", "question_bn": "মেন্ডেলের দ্বিতীয় সূত্রের এপিস্ট্যাসিস জনিত দ্বৈত প্রচ্ছন্ন এপিস্ট্যাসিসের অনুপাত কোনটি?", "option_a": "১৩:৩", "option_b": "৯:৭", "option_c": "১২:৩:১", "option_d": "৯:৩:৪", "correct_option": "খ", "correct_index": 1, "explanation": "দ্বৈত প্রচ্ছন্ন এপিস্ট্যাসিসের (যেমন মানুষের জন্মগত মূক-বধিরতা) অনুপাত হলো ৯:৭। প্রকট এপিস্ট্যাসিসের অনুপাত ১৩:৩।", "book_reference": "গাজী আজমল, জিনতত্ত্ব ও বিবর্তন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Paper (2012-2013)", "created_at": "2026-09-17 22:33:55", "options": ["১৩:৩", "৯:৭", "১২:৩:১", "৯:৩:৪"]}, {"id": "MT-001-Q27", "test_id": 1, "question_num": 27, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "question_bn": "রুই মাছ কোন বর্গভুক্ত প্রাণী?", "option_a": "Anguillidae", "option_b": "Cynoglossidae", "option_c": "Bagridae", "option_d": "Cyprinidae", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): Cyprinidae। রেফারেন্স: গাজী আজমল ও গাজী আসমত (প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui))।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণীর পরিচিতি (Hydra, Grasshopper, Rui)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["Anguillidae", "Cynoglossidae", "Bagridae", "Cyprinidae"]}, {"id": "MT-001-Q28", "test_id": 1, "question_num": 28, "subject": "Biology", "sub_discipline": "Botany", "chapter": "কোষ বিভাজন", "question_bn": "মিয়োসিস-১ এর প্রফেজ-১ উপপর্যায়ে কোন পর্যায়ে কায়াজমা ও ক্রসিং ওভার সংঘটিত হয়?", "option_a": "লেপ্টোটিন", "option_b": "জাইগোটিন", "option_c": "প্যাকাইটিন", "option_d": "ডিপ্লোটিন", "correct_option": "গ", "correct_index": 2, "explanation": "প্যাকাইটিন (Pachytene) উপপর্যায়ে টেট্রাডের নন-সিস্টার ক্রোমাটিডদ্বয়ের মধ্যে 'X' আকৃতির কায়াজমা সৃষ্টি হয় এবং ক্রসিং ওভারের মাধ্যমে জেনেটিক রিকম্বিনেশন ঘটে।", "book_reference": "ড. আবুল হাসান, কোষ বিভাজন অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Paper (2018-2019)", "created_at": "2026-09-17 22:33:55", "options": ["লেপ্টোটিন", "জাইগোটিন", "প্যাকাইটিন", "ডিপ্লোটিন"]}, {"id": "MT-001-Q29", "test_id": 1, "question_num": 29, "subject": "Biology", "sub_discipline": "Zoology", "chapter": "মানবদেহের প্রতিরক্ষা", "question_bn": "প্রথম প্রতিরক্ষা স্তরের উদাহরণ নিচের কোনটি?", "option_a": "ইন্টারফেরন", "option_b": "সহজাত মারণ কোষ", "option_c": "সিরুমেন", "option_d": "ম‍্যাক্রোফেজ", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): সিরুমেন। রেফারেন্স: গাজী আজমল ও গাজী আসমত (মানবদেহের প্রতিরক্ষা)।", "book_reference": "গাজী আজমল ও গাজী আসমত, মানবদেহের প্রতিরক্ষা", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["ইন্টারফেরন", "সহজাত মারণ কোষ", "সিরুমেন", "ম‍্যাক্রোফেজ"]}, {"id": "MT-001-Q30", "test_id": 1, "question_num": 30, "subject": "Biology", "sub_discipline": "Botany", "chapter": "সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "question_bn": "বাংলাদেশে কত প্রজাতির বাঁশ পাওয়া যায়?[আজিবুর স্যার]", "option_a": "২৬", "option_b": "২৭", "option_c": "২৮", "option_d": "২৯", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): ২৮। রেফারেন্স: ড. মোহাম্মদ আবুল হাসান (সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, সাধারণ উদ্ভিদবিজ্ঞান ও শারীরতত্ত্ব", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Standard Tricky Bank", "created_at": "2026-09-17 22:33:55", "options": ["২৬", "২৭", "২৮", "২৯"]}, {"id": "CHEM-001-Q01", "test_id": 1, "question_num": 31, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "কর্মমুখী রসায়ন", "question_bn": "খাদ্য সংরক্ষণে ব্যবহৃত ভিনেগারে কত শতাংশ অ্যাসিটিক এসিড বিদ্যমান থাকে?", "option_a": "২ - ৩%", "option_b": "৬ - ১০%", "option_c": "১২ - ১৫%", "option_d": "২০ - ২৫%", "correct_option": "খ", "correct_index": 1, "explanation": "ভিনেগার হলো অ্যাসিটিক এসিডের ৬ - ১০% জলীয় দ্রবণ যা খাদ্যের জীবাণু ধ্বংস করে খাদ্য সংরক্ষণ করে।", "book_reference": "হাজারী ও নাগ, ১ম পত্র ৫ম অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2013-2014)", "created_at": "2026-09-17 22:36:46", "options": ["২ - ৩%", "৬ - ১০%", "১২ - ১৫%", "২০ - ২৫%"]}, {"id": "CHEM-001-Q02", "test_id": 1, "question_num": 32, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "তড়িৎ রসায়ন", "question_bn": "১ ফ্যারাডে (1 Faraday) বিদ্যুতের পরিমাণ কত কুলম্ব (Coulomb)?", "option_a": "96,500 C", "option_b": "9,650 C", "option_c": "6.023 × 10^23 C", "option_d": "1.6 × 10^-19 C", "correct_option": "ক", "correct_index": 0, "explanation": "এক মোল ইলেকট্রনের মোট চার্জ হলো 1 Faraday ≈ 96,485 C (পরীক্ষায় 96,500 C ধরা হয়)।", "book_reference": "হাজারী ও নাগ, তড়িৎ রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2023-2024)", "created_at": "2026-09-17 22:36:46", "options": ["96,500 C", "9,650 C", "6.023 × 10^23 C", "1.6 × 10^-19 C"]}, {"id": "CHEM-001-Q03", "test_id": 1, "question_num": 33, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "পেপার ক্রোমাটোগ্রাফির Rf এর মান নিচের কোনটি?", "option_a": "2.0", "option_b": "1.0", "option_c": "1.5", "option_d": "0.5", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): 0.5। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["2.0", "1.0", "1.5", "0.5"]}, {"id": "CHEM-001-Q04", "test_id": 1, "question_num": 34, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিবেশ রসায়ন", "question_bn": "ল্যাবরেটরিতে আদর্শ গ্যাস সমীকরণ PV = nRT অনুসরণের ক্ষেত্রে কোন শর্তে বাস্তব গ্যাস আদর্শ গ্যাসের মতো আচরণ করে?", "option_a": "উচ্চ চাপ ও নিম্ন তাপমাত্রা", "option_b": "নিম্ন চাপ ও উচ্চ তাপমাত্রা", "option_c": "উচ্চ চাপ ও উচ্চ তাপমাত্রা", "option_d": "নিম্ন চাপ ও নিম্ন তাপমাত্রা", "correct_option": "খ", "correct_index": 1, "explanation": "অত্যন্ত নিম্ন চাপ এবং উচ্চ তাপমাত্রায় গ্যাসের অণুগুলোর আন্তঃআণবিক আকর্ষণ নগণ্য হয় এবং আয়তন পাত্রের তুলনায় উপেক্ষণীয় হয়, ফলে বাস্তব গ্যাস আদর্শ গ্যাসের ন্যায় আচরণ করে।", "book_reference": "হাজারী ও নাগ, পরিবেশ রসায়ন", "difficulty": "Easy", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2021-2022)", "created_at": "2026-09-17 22:36:46", "options": ["উচ্চ চাপ ও নিম্ন তাপমাত্রা", "নিম্ন চাপ ও উচ্চ তাপমাত্রা", "উচ্চ চাপ ও উচ্চ তাপমাত্রা", "নিম্ন চাপ ও নিম্ন তাপমাত্রা"]}, {"id": "CHEM-001-Q05", "test_id": 1, "question_num": 35, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "নিচের কোন যৌগটি আয়োডোফর্ম (Iodoform - CHI3) পরীক্ষা দেয় না?", "option_a": "ইথানল (CH3CH2OH)", "option_b": "অ্যাসিটোন (CH3COCH3)", "option_c": "ইথান্যাল (CH3CHO)", "option_d": "মিথানল (CH3OH)", "correct_option": "ঘ", "correct_index": 3, "explanation": "আয়োডোফর্ম পরীক্ষা দেওয়ার জন্য CH3-CO- বা CH3-CH(OH)- মূলক থাকা আবশ্যক। মিথানলে এই মূলক না থাকায় এটি আয়োডোফর্ম পরীক্ষা দেয় না।", "book_reference": "হাজারী ও নাগ, জৈব রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2020-2021)", "created_at": "2026-09-17 22:36:46", "options": ["ইথানল (CH3CH2OH)", "অ্যাসিটোন (CH3COCH3)", "ইথান্যাল (CH3CHO)", "মিথানল (CH3OH)"]}, {"id": "CHEM-001-Q06", "test_id": 1, "question_num": 36, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "মেসোস্ফিয়ারের উচ্চতা কত কি.মি. পর্যন্ত বিস্তৃত?", "option_a": "5-10 km", "option_b": "10-40 km", "option_c": "50-85 km", "option_d": "150-200 km", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): 50-85 km। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["5-10 km", "10-40 km", "50-85 km", "150-200 km"]}, {"id": "CHEM-001-Q07", "test_id": 1, "question_num": 37, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "তড়িৎ রসায়ন (Electrochemistry)", "question_bn": "CuSO₄ দ্রবণে 1F চার্জ দ্বারা ক্যাথোডে কত গ্রাম Cu ধাতু জমা হবে,?", "option_a": "23.0g", "option_b": "26.52 g", "option_c": "31. 75 g", "option_d": "33.68 g", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): 31. 75 g। রেফারেন্স: প্রফেসর হাজারী ও নাগ (তড়িৎ রসায়ন (Electrochemistry))।", "book_reference": "হাজারী ও নাগ, তড়িৎ রসায়ন (Electrochemistry)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["23.0g", "26.52 g", "31. 75 g", "33.68 g"]}, {"id": "CHEM-001-Q08", "test_id": 1, "question_num": 38, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "কয়লা খনির মধ্যে কোনটির কয়লা সবচেয়ে বেশি উন্নতমানের?", "option_a": "বড়পুকুরিয়া", "option_b": "দীঘিপাড়া", "option_c": "খলিসপুর", "option_d": "জামালগঞ্জ", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): দীঘিপাড়া। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["বড়পুকুরিয়া", "দীঘিপাড়া", "খলিসপুর", "জামালগঞ্জ"]}, {"id": "CHEM-001-Q09", "test_id": 1, "question_num": 39, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন", "question_bn": "নিচের কোনটি প্রাথমিক প্রমাণ পদার্থ (Primary Standard Substance)?", "option_a": "NaOH", "option_b": "KMnO4", "option_c": "Na2C2O4 (সোডিয়াম অক্সালেট)", "option_d": "HCl", "correct_option": "গ", "correct_index": 2, "explanation": "সোডিয়াম অক্সালেট (Na2C2O4), অ্যানহাইড্রাস Na2CO3, এবং অক্সালিক এসিড হলো প্রাইমারি স্ট্যান্ডার্ড পদার্থ। NaOH, HCl, KMnO4 বাতাসে আর্দ্রতা/CO2 শোষণ করে বিধায় সেকেন্ডারি স্ট্যান্ডার্ড।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2012-2013)", "created_at": "2026-09-17 22:36:46", "options": ["NaOH", "KMnO4", "Na2C2O4 (সোডিয়াম অক্সালেট)", "HCl"]}, {"id": "CHEM-001-Q10", "test_id": 1, "question_num": 40, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "ইথিলিনে কার্বন - কার্বন কি সংকরণ বিদ্যামান?", "option_a": "sp", "option_b": "sp2", "option_c": "sp3", "option_d": "sp3d", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): sp2। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["sp", "sp2", "sp3", "sp3d"]}, {"id": "CHEM-001-Q11", "test_id": 1, "question_num": 41, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "২৫ ডিগ্রি সেলসিয়াস তাপমাত্রায় পানির আয়নিক গুণফল (Kw) এর মান কত?", "option_a": "1.0 × 10^-7", "option_b": "1.0 × 10^-14", "option_c": "1.0 × 10^7", "option_d": "1.0 × 10^14", "correct_option": "খ", "correct_index": 1, "explanation": "২৫°C তাপমাত্রায় বিশুদ্ধ পানিতে [H+][OH-] = 1.0 × 10^-14 mol^2 L^-2 হয়।", "book_reference": "হাজারী ও নাগ, ৪র্থ অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2015-2016)", "created_at": "2026-09-17 22:36:46", "options": ["1.0 × 10^-7", "1.0 × 10^-14", "1.0 × 10^7", "1.0 × 10^14"]}, {"id": "CHEM-001-Q12", "test_id": 1, "question_num": 42, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন (Quantitative Chemistry)", "question_bn": "1 মোল গ্যাসের গতিশক্তি কোনটি?", "option_a": "3RT/2Na", "option_b": "3nRT/2", "option_c": "3R/2", "option_d": "3RT/2", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): 3RT/2। রেফারেন্স: প্রফেসর হাজারী ও নাগ (পরিমাণগত রসায়ন (Quantitative Chemistry))।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন (Quantitative Chemistry)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["3RT/2Na", "3nRT/2", "3R/2", "3RT/2"]}, {"id": "CHEM-001-Q13", "test_id": 1, "question_num": 43, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন", "question_bn": "নিচের কোনটি প্রাথমিক প্রমাণ পদার্থ (Primary Standard Substance)?", "option_a": "NaOH", "option_b": "KMnO4", "option_c": "Na2C2O4 (সোডিয়াম অক্সালেট)", "option_d": "HCl", "correct_option": "গ", "correct_index": 2, "explanation": "সোডিয়াম অক্সালেট (Na2C2O4), অ্যানহাইড্রাস Na2CO3, এবং অক্সালিক এসিড হলো প্রাইমারি স্ট্যান্ডার্ড পদার্থ। NaOH, HCl, KMnO4 বাতাসে আর্দ্রতা/CO2 শোষণ করে বিধায় সেকেন্ডারি স্ট্যান্ডার্ড।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2020-2021)", "created_at": "2026-09-17 22:36:46", "options": ["NaOH", "KMnO4", "Na2C2O4 (সোডিয়াম অক্সালেট)", "HCl"]}, {"id": "CHEM-001-Q14", "test_id": 1, "question_num": 44, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "কোনটির ব্যাপন হার বেশি?", "option_a": "C2H6", "option_b": "NH3", "option_c": "CO2", "option_d": "O2", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): NH3। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["C2H6", "NH3", "CO2", "O2"]}, {"id": "CHEM-001-Q15", "test_id": 1, "question_num": 45, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন (Quantitative Chemistry)", "question_bn": "কোনটি জারণ বিজারণ অর্ধকোষ?", "option_a": "Pt, Cl₂/Cl⁻", "option_b": "Ag, AgCl(s)/Cl⁻", "option_c": "Na, Hg/Na⁺", "option_d": "Pt, Fe²⁺,Fe³⁺", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): Pt, Fe²⁺,Fe³⁺। রেফারেন্স: প্রফেসর হাজারী ও নাগ (পরিমাণগত রসায়ন (Quantitative Chemistry))।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন (Quantitative Chemistry)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["Pt, Cl₂/Cl⁻", "Ag, AgCl(s)/Cl⁻", "Na, Hg/Na⁺", "Pt, Fe²⁺,Fe³⁺"]}, {"id": "CHEM-001-Q16", "test_id": 1, "question_num": 46, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "বায়ুমন্ডলে স্ট্র্যাস্টোস্ফিয়ার স্তরের প্রধান উপাদান কোনটি?", "option_a": "অক্সিজেন", "option_b": "নিয়ন", "option_c": "ওজোন", "option_d": "কার্বন ডাই অক্সাইড", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): ওজোন। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["অক্সিজেন", "নিয়ন", "ওজোন", "কার্বন ডাই অক্সাইড"]}, {"id": "CHEM-001-Q17", "test_id": 1, "question_num": 47, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "নিম্নমানের কয়লা কোনটি?", "option_a": "অ্যানথ্রাসাইট", "option_b": "পিট", "option_c": "লিগনাইট", "option_d": "বিটুমিনাস কয়লা", "correct_option": "খ", "correct_index": 1, "explanation": "পিট কয়লায় কার্বনের শতকরা পরিমাণ সর্বনিম্ন (প্রায় ৫০-৬০%) এবং আর্দ্রতা সর্বাধিক, তাই এটি সবচেয়ে নিম্নমানের কয়লা। (রেফারেন্স: হাজারী ও নাগ, অর্থনৈতিক রসায়ন)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["অ্যানথ্রাসাইট", "পিট", "লিগনাইট", "বিটুমিনাস কয়লা"]}, {"id": "CHEM-001-Q18", "test_id": 1, "question_num": 48, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন (Quantitative Chemistry)", "question_bn": "LiAlH4 যৌগে হাইড্রোজেনের জারণ মান কত?", "option_a": "+1", "option_b": "-1", "option_c": "+2", "option_d": "-2", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): -1। রেফারেন্স: প্রফেসর হাজারী ও নাগ (পরিমাণগত রসায়ন (Quantitative Chemistry))।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন (Quantitative Chemistry)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["+1", "-1", "+2", "-2"]}, {"id": "CHEM-001-Q19", "test_id": 1, "question_num": 49, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "তত্বীয় ভাবে কোন তাপমাত্রায় গ্যাসের আয়তন শূন্য হয়?", "option_a": "-270°C", "option_b": "-273°C", "option_c": "-100°C", "option_d": "-100K", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): -273°C। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["-270°C", "-273°C", "-100°C", "-100K"]}, {"id": "CHEM-001-Q20", "test_id": 1, "question_num": 50, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "নিচের কোন যৌগটি আয়োডোফর্ম (Iodoform - CHI3) পরীক্ষা দেয় না?", "option_a": "ইথানল (CH3CH2OH)", "option_b": "অ্যাসিটোন (CH3COCH3)", "option_c": "ইথান্যাল (CH3CHO)", "option_d": "মিথানল (CH3OH)", "correct_option": "ঘ", "correct_index": 3, "explanation": "আয়োডোফর্ম পরীক্ষা দেওয়ার জন্য CH3-CO- বা CH3-CH(OH)- মূলক থাকা আবশ্যক। মিথানলে এই মূলক না থাকায় এটি আয়োডোফর্ম পরীক্ষা দেয় না।", "book_reference": "হাজারী ও নাগ, জৈব রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2021-2022)", "created_at": "2026-09-17 22:36:46", "options": ["ইথানল (CH3CH2OH)", "অ্যাসিটোন (CH3COCH3)", "ইথান্যাল (CH3CHO)", "মিথানল (CH3OH)"]}, {"id": "CHEM-001-Q21", "test_id": 1, "question_num": 51, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "জৈব রসায়ন (Organic Chemistry)", "question_bn": "অসম্পৃক্ত জৈব যৌগ শনাক্তকরণে ব্যবহৃত বিকারক কোনটি?", "option_a": "NaHCO3 দ্রবণ", "option_b": "FeCl3 দ্রবণ", "option_c": "Br2 দ্রবণ", "option_d": "BaCl2 দ্রবণ", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): Br2 দ্রবণ। রেফারেন্স: প্রফেসর হাজারী ও নাগ (জৈব রসায়ন (Organic Chemistry))।", "book_reference": "হাজারী ও নাগ, জৈব রসায়ন (Organic Chemistry)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["NaHCO3 দ্রবণ", "FeCl3 দ্রবণ", "Br2 দ্রবণ", "BaCl2 দ্রবণ"]}, {"id": "CHEM-001-Q22", "test_id": 1, "question_num": 52, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন (Chemical Changes)", "question_bn": "মানবদেহের রক্তে কোন বাফারটি pH নিয়ন্ত্রণ করে?", "option_a": "CH3COOH/CH3COONa", "option_b": "NH4OH/NH4Cl", "option_c": "H2CO3/NaHCO3", "option_d": "CH3COOH/HCO3^-", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): H2CO3/NaHCO3। রেফারেন্স: প্রফেসর হাজারী ও নাগ (রাসায়নিক পরিবর্তন (Chemical Changes))।", "book_reference": "হাজারী ও নাগ, রাসায়নিক পরিবর্তন (Chemical Changes)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["CH3COOH/CH3COONa", "NH4OH/NH4Cl", "H2CO3/NaHCO3", "CH3COOH/HCO3^-"]}, {"id": "CHEM-001-Q23", "test_id": 1, "question_num": 53, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "সাধারণ রসায়ন ও পর্যায় সারণি", "question_bn": "নিচের কোন অনুতে পোলারায়ন বেশি ঘটে?", "option_a": "AgF", "option_b": "AgCl", "option_c": "AgBr", "option_d": "AgI", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): AgI। রেফারেন্স: প্রফেসর হাজারী ও নাগ (সাধারণ রসায়ন ও পর্যায় সারণি)।", "book_reference": "হাজারী ও নাগ, সাধারণ রসায়ন ও পর্যায় সারণি", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Chemistry Standard Bank", "created_at": "2026-09-17 22:36:46", "options": ["AgF", "AgCl", "AgBr", "AgI"]}, {"id": "CHEM-001-Q24", "test_id": 1, "question_num": 54, "subject": "Chemistry", "sub_discipline": "2nd Paper", "chapter": "পরিমাণগত রসায়ন", "question_bn": "নিচের কোনটি প্রাথমিক প্রমাণ পদার্থ (Primary Standard Substance)?", "option_a": "NaOH", "option_b": "KMnO4", "option_c": "Na2C2O4 (সোডিয়াম অক্সালেট)", "option_d": "HCl", "correct_option": "গ", "correct_index": 2, "explanation": "সোডিয়াম অক্সালেট (Na2C2O4), অ্যানহাইড্রাস Na2CO3, এবং অক্সালিক এসিড হলো প্রাইমারি স্ট্যান্ডার্ড পদার্থ। NaOH, HCl, KMnO4 বাতাসে আর্দ্রতা/CO2 শোষণ করে বিধায় সেকেন্ডারি স্ট্যান্ডার্ড।", "book_reference": "হাজারী ও নাগ, পরিমাণগত রসায়ন", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2016-2017)", "created_at": "2026-09-17 22:36:46", "options": ["NaOH", "KMnO4", "Na2C2O4 (সোডিয়াম অক্সালেট)", "HCl"]}, {"id": "CHEM-001-Q25", "test_id": 1, "question_num": 55, "subject": "Chemistry", "sub_discipline": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "২৫ ডিগ্রি সেলসিয়াস তাপমাত্রায় পানির আয়নিক গুণফল (Kw) এর মান কত?", "option_a": "1.0 × 10^-7", "option_b": "1.0 × 10^-14", "option_c": "1.0 × 10^7", "option_d": "1.0 × 10^14", "correct_option": "খ", "correct_index": 1, "explanation": "২৫°C তাপমাত্রায় বিশুদ্ধ পানিতে [H+][OH-] = 1.0 × 10^-14 mol^2 L^-2 হয়।", "book_reference": "হাজারী ও নাগ, ৪র্থ অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2024-2025)", "created_at": "2026-09-17 22:36:46", "options": ["1.0 × 10^-7", "1.0 × 10^-14", "1.0 × 10^7", "1.0 × 10^14"]}, {"id": "PHYS-001-Q01", "test_id": 1, "question_num": 56, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "তরঙ্গ (Waves)", "question_bn": "কোন তরঙ্গ পোলারায়িত হয়না?", "option_a": "রেডিও তরঙ্গ", "option_b": "অবহেলিত তরঙ্গ", "option_c": "এক্সরে", "option_d": "শব্দ তরঙ্গ", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): শব্দ তরঙ্গ। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (তরঙ্গ (Waves))।", "book_reference": "মোহাম্মদ ইসহাক, তরঙ্গ (Waves)", "difficulty": "Easy", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["রেডিও তরঙ্গ", "অবহেলিত তরঙ্গ", "এক্সরে", "শব্দ তরঙ্গ"]}, {"id": "PHYS-001-Q02", "test_id": 1, "question_num": 57, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "আধুনিক পদার্থবিজ্ঞানের সূচনা", "question_bn": "ফটোইলেকট্রিক ক্রিয়ার ব্যাখ্যা প্রদানের জন্য আলবার্ট আইনস্টাইন কত সালে পদার্থবিজ্ঞানে নোবেল পুরস্কার লাভ করেন?", "option_a": "1905", "option_b": "1915", "option_c": "1921", "option_d": "1932", "correct_option": "গ", "correct_index": 2, "explanation": "আইনস্টাইন ১৯০৫ সালে আলোক তড়িৎ ক্রিয়ার কোয়ান্টাম ব্যাখ্যা দেন এবং এই যুগান্তকারী কাজের জন্য ১৯২১ সালে নোবেল পুরস্কার লাভ করেন।", "book_reference": "ড. শাহজাহান তপন ও মোহাম্মদ ইসহাক, আধুনিক পদার্থবিজ্ঞান", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2023-2024)", "created_at": "2026-09-17 22:39:25", "options": ["1905", "1915", "1921", "1932"]}, {"id": "PHYS-001-Q03", "test_id": 1, "question_num": 58, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স", "question_bn": "একটি p-n জংশন ডায়োডে ফরওয়ার্ড বায়াস (Forward Bias) প্রয়োগ করলে ডিপ্লেশন স্তরের বেধ কী হয়?", "option_a": "বৃদ্ধি পায়", "option_b": "হ্রাস পায়", "option_c": "অপরিবর্তিত থাকে", "option_d": "শূন্য হয়ে বিপরীতমুখী হয়", "correct_option": "খ", "correct_index": 1, "explanation": "সম্মুখী ঝোঁক বা ফরওয়ার্ড বায়াস দিলে বহিঃস্থ ভোল্টেজ রোধক বিভব প্রাচীর কমিয়ে দেয়, ফলে ডিপ্লেশন লেয়ার সরু হয় এবং তড়িৎ প্রবাহিত হয়।", "book_reference": "মোহাম্মদ ইসহাক, সেমিকন্ডাক্টর", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2021-2022)", "created_at": "2026-09-17 22:39:25", "options": ["বৃদ্ধি পায়", "হ্রাস পায়", "অপরিবর্তিত থাকে", "শূন্য হয়ে বিপরীতমুখী হয়"]}, {"id": "PHYS-001-Q04", "test_id": 1, "question_num": 59, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "কার পরীক্ষায় ইথারের অস্তিত্ব ভুল প্রমাণিত হয়?", "option_a": "মাইকেলসন মর্লি", "option_b": "আইনস্টাইন", "option_c": "ইয়ং", "option_d": "গ‍্যালিলিও", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): মাইকেলসন মর্লি। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["মাইকেলসন মর্লি", "আইনস্টাইন", "ইয়ং", "গ‍্যালিলিও"]}, {"id": "PHYS-001-Q05", "test_id": 1, "question_num": 60, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "আধুনিক পদার্থবিজ্ঞানের সূচনা", "question_bn": "ফটোইলেকট্রিক ক্রিয়ার ব্যাখ্যা প্রদানের জন্য আলবার্ট আইনস্টাইন কত সালে পদার্থবিজ্ঞানে নোবেল পুরস্কার লাভ করেন?", "option_a": "1905", "option_b": "1915", "option_c": "1921", "option_d": "1932", "correct_option": "গ", "correct_index": 2, "explanation": "আইনস্টাইন ১৯০৫ সালে আলোক তড়িৎ ক্রিয়ার কোয়ান্টাম ব্যাখ্যা দেন এবং এই যুগান্তকারী কাজের জন্য ১৯২১ সালে নোবেল পুরস্কার লাভ করেন।", "book_reference": "ড. শাহজাহান তপন ও মোহাম্মদ ইসহাক, আধুনিক পদার্থবিজ্ঞান", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2022-2023)", "created_at": "2026-09-17 22:39:25", "options": ["1905", "1915", "1921", "1932"]}, {"id": "PHYS-001-Q06", "test_id": 1, "question_num": 61, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "ভেক্টর (Vectors)", "question_bn": "একই পাদবিন্দুবিশিষ্ট ভেক্টরসমূহকে কী বলে?", "option_a": "সম-প্রারম্ভিক ভেক্টর", "option_b": "সমতলীয় ভেক্টর", "option_c": "সমরেখ ভেক্টর", "option_d": "সীমাবদ্ধ ভেক্টর", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): সম-প্রারম্ভিক ভেক্টর। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (ভেক্টর (Vectors))।", "book_reference": "মোহাম্মদ ইসহাক, ভেক্টর (Vectors)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["সম-প্রারম্ভিক ভেক্টর", "সমতলীয় ভেক্টর", "সমরেখ ভেক্টর", "সীমাবদ্ধ ভেক্টর"]}, {"id": "PHYS-001-Q07", "test_id": 1, "question_num": 62, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "স্থির তড়িৎ (Static Electricity)", "question_bn": "কোনো p-n জাংশনে 0.1V বিভব পার্থক্য পরিবর্তনের জন্য আনুষাঙ্গিক তড়িৎ প্রবাহের পরিবর্তন পাওয়া গেলো 400mA এর গতীয় রোধ কত ওহম?(মে.ভ.প. ০৮-০৯)", "option_a": "0.25", "option_b": "2.5", "option_c": "25", "option_d": "250", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): 0.25। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (স্থির তড়িৎ (Static Electricity))।", "book_reference": "মোহাম্মদ ইসহাক, স্থির তড়িৎ (Static Electricity)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["0.25", "2.5", "25", "250"]}, {"id": "PHYS-001-Q08", "test_id": 1, "question_num": 63, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "কোন ক্ষেত্রে হুইস্টোন ব্রীজের নিস্পন্দ অবস্থাটি পরিবর্তিত হবে?", "option_a": "বিভিন্ন বাহুর রোধগুলি পরিবর্তিত করা হলে", "option_b": "ব্যাটারি ও গ্যালভানোমিটারের অবস্থান অদল বদল করা হলে", "option_c": "অন্য তড়িচ্চালক বলের ব্যাটারি নিলে", "option_d": "অন্য রোধের গ্যালভানোমিটার নিলে", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): ব্যাটারি ও গ্যালভানোমিটারের অবস্থান অদল বদল করা হলে। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["বিভিন্ন বাহুর রোধগুলি পরিবর্তিত করা হলে", "ব্যাটারি ও গ্যালভানোমিটারের অবস্থান অদল বদল করা হলে", "অন্য তড়িচ্চালক বলের ব্যাটারি নিলে", "অন্য রোধের গ্যালভানোমিটার নিলে"]}, {"id": "PHYS-001-Q09", "test_id": 1, "question_num": 64, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "নিচের কোন ধাতু থেকে ফটোইলেক্ট্রন নির্গত হবে না?(ডে.ভ.প. ১৭-১৮)", "option_a": "সিজিয়াম", "option_b": "পটাশিয়াম", "option_c": "এ্যলুমিনিয়াম", "option_d": "সোডিয়াম", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): এ্যলুমিনিয়াম। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["সিজিয়াম", "পটাশিয়াম", "এ্যলুমিনিয়াম", "সোডিয়াম"]}, {"id": "PHYS-001-Q10", "test_id": 1, "question_num": 65, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "চল তড়িৎ", "question_bn": "হুইটস্টোন ব্রিজের সাম্যাবস্থার শর্ত কোনটি?", "option_a": "P/Q = R/S", "option_b": "P·Q = R·S", "option_c": "P+Q = R+S", "option_d": "P-Q = R-S", "correct_option": "ক", "correct_index": 0, "explanation": "চারটি রোধ P, Q, R, S দিয়ে গঠিত হুইটস্টোন ব্রিজে গ্যালভানোমিটারের মধ্য দিয়ে তড়িৎ না গেলে P/Q = R/S হয়।", "book_reference": "মোহাম্মদ ইসহাক, চল তড়িৎ", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2012-2013)", "created_at": "2026-09-17 22:39:25", "options": ["P/Q = R/S", "P·Q = R·S", "P+Q = R+S", "P-Q = R-S"]}, {"id": "PHYS-001-Q11", "test_id": 1, "question_num": 66, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "পরমাণু মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান", "question_bn": "নিউট্রিনো ও বিটা কণার নির্গমন কোন মৌলিক বলের কারনে ঘটে?", "option_a": "মহাকর্ষ বল", "option_b": "দূর্বল নিউক্লীয় বল", "option_c": "সবল নিউক্লিয় বল", "option_d": "তড়িৎ চৌম্বকীয় বল", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): দূর্বল নিউক্লীয় বল। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (পরমাণু মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান)।", "book_reference": "মোহাম্মদ ইসহাক, পরমাণু মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান", "difficulty": "Hard", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["মহাকর্ষ বল", "দূর্বল নিউক্লীয় বল", "সবল নিউক্লিয় বল", "তড়িৎ চৌম্বকীয় বল"]}, {"id": "PHYS-001-Q12", "test_id": 1, "question_num": 67, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "নিচের কোন রাশি 1 কুরি নির্দেশ করে?", "option_a": "3.7×10^7 decay/s", "option_b": "3.7×10^8 decay/s", "option_c": "3.7×10^9 decay/s", "option_d": "3.7×10^10 decay/s", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): 3.7×10^10 decay/s। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["3.7×10^7 decay/s", "3.7×10^8 decay/s", "3.7×10^9 decay/s", "3.7×10^10 decay/s"]}, {"id": "PHYS-001-Q13", "test_id": 1, "question_num": 68, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "আধুনিক পদার্থবিজ্ঞানের সূচনা", "question_bn": "ফটোইলেকট্রিক ক্রিয়ার ব্যাখ্যা প্রদানের জন্য আলবার্ট আইনস্টাইন কত সালে পদার্থবিজ্ঞানে নোবেল পুরস্কার লাভ করেন?", "option_a": "1905", "option_b": "1915", "option_c": "1921", "option_d": "1932", "correct_option": "গ", "correct_index": 2, "explanation": "আইনস্টাইন ১৯০৫ সালে আলোক তড়িৎ ক্রিয়ার কোয়ান্টাম ব্যাখ্যা দেন এবং এই যুগান্তকারী কাজের জন্য ১৯২১ সালে নোবেল পুরস্কার লাভ করেন।", "book_reference": "ড. শাহজাহান তপন ও মোহাম্মদ ইসহাক, আধুনিক পদার্থবিজ্ঞান", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2017-2018)", "created_at": "2026-09-17 22:39:25", "options": ["1905", "1915", "1921", "1932"]}, {"id": "PHYS-001-Q14", "test_id": 1, "question_num": 69, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "কোনো বস্তুকণা আলোর দ্রুতিতে চললে এর ভর -", "option_a": "দ্বিগুণ হবে", "option_b": "অর্ধেক হবে", "option_c": "শূন‍্য হবে", "option_d": "অসীম হবে", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): অসীম হবে। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["দ্বিগুণ হবে", "অর্ধেক হবে", "শূন‍্য হবে", "অসীম হবে"]}, {"id": "PHYS-001-Q15", "test_id": 1, "question_num": 70, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "নিউটনিয়ান বলবিদ্যা", "question_bn": "ঘূর্ণনরত কোনো দৃঢ় বস্তুর জড়তার ভ্রামক (I) এবং কৌণিক ত্বরণ (alpha) এর গুণফলকে কী বলা হয়?", "option_a": "কৌণিক ভরবেগ", "option_b": "টর্ক (Torque)", "option_c": "বল", "option_d": "কাজ", "correct_option": "খ", "correct_index": 1, "explanation": "রৈখিক গতিতে F = ma এর অনুরূপ কৌণিক গতিতে টর্ক τ = I × α।", "book_reference": "আমির হোসেন খান ও মোহাম্মদ ইসহাক, ৪র্থ অধ্যায়", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2019-2020)", "created_at": "2026-09-17 22:39:25", "options": ["কৌণিক ভরবেগ", "টর্ক (Torque)", "বল", "কাজ"]}, {"id": "PHYS-001-Q16", "test_id": 1, "question_num": 71, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "আধুনিক পদার্থবিজ্ঞানের সূচনা", "question_bn": "ফটোইলেকট্রিক ক্রিয়ার ব্যাখ্যা প্রদানের জন্য আলবার্ট আইনস্টাইন কত সালে পদার্থবিজ্ঞানে নোবেল পুরস্কার লাভ করেন?", "option_a": "1905", "option_b": "1915", "option_c": "1921", "option_d": "1932", "correct_option": "গ", "correct_index": 2, "explanation": "আইনস্টাইন ১৯০৫ সালে আলোক তড়িৎ ক্রিয়ার কোয়ান্টাম ব্যাখ্যা দেন এবং এই যুগান্তকারী কাজের জন্য ১৯২১ সালে নোবেল পুরস্কার লাভ করেন।", "book_reference": "ড. শাহজাহান তপন ও মোহাম্মদ ইসহাক, আধুনিক পদার্থবিজ্ঞান", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2018-2019)", "created_at": "2026-09-17 22:39:25", "options": ["1905", "1915", "1921", "1932"]}, {"id": "PHYS-001-Q17", "test_id": 1, "question_num": 72, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "চল তড়িৎ", "question_bn": "হুইটস্টোন ব্রিজের সাম্যাবস্থার শর্ত কোনটি?", "option_a": "P/Q = R/S", "option_b": "P·Q = R·S", "option_c": "P+Q = R+S", "option_d": "P-Q = R-S", "correct_option": "ক", "correct_index": 0, "explanation": "চারটি রোধ P, Q, R, S দিয়ে গঠিত হুইটস্টোন ব্রিজে গ্যালভানোমিটারের মধ্য দিয়ে তড়িৎ না গেলে P/Q = R/S হয়।", "book_reference": "মোহাম্মদ ইসহাক, চল তড়িৎ", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2023-2024)", "created_at": "2026-09-17 22:39:25", "options": ["P/Q = R/S", "P·Q = R·S", "P+Q = R+S", "P-Q = R-S"]}, {"id": "PHYS-001-Q18", "test_id": 1, "question_num": 73, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "গতিবিদ্যা (Dynamics)", "question_bn": "তাপগতিবিদ্যার শূন্যতম সূত্রের মূল বক্তব্য কী?", "option_a": "তাপমাত্রা", "option_b": "চাপ", "option_c": "এনট্রপি", "option_d": "অভ্যন্তরীণ শক্তি", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): তাপমাত্রা। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (গতিবিদ্যা (Dynamics))।", "book_reference": "মোহাম্মদ ইসহাক, গতিবিদ্যা (Dynamics)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["তাপমাত্রা", "চাপ", "এনট্রপি", "অভ্যন্তরীণ শক্তি"]}, {"id": "PHYS-001-Q19", "test_id": 1, "question_num": 74, "subject": "Physics", "sub_discipline": "2nd Paper", "chapter": "তাপগতিবিদ্যা", "question_bn": "কোন তাপমাত্রায় সেলসিয়াস ও ফারেনহাইট স্কেলে পাঠ একই দেখায়?", "option_a": "40°", "option_b": "-40°", "option_c": "0°", "option_d": "-273°", "correct_option": "খ", "correct_index": 1, "explanation": "C/5 = (F-32)/9 সমীকরণে C = F = x বসালে সমাধান করে পাওয়া যায় x = -40°।", "book_reference": "মোহাম্মদ ইসহাক, পদার্থবিজ্ঞান ২য় পত্র, তাপগতিবিদ্যা", "difficulty": "Easy", "is_confusing_standard": 0, "source": "DGME Past Medical Exam (2010-2011)", "created_at": "2026-09-17 22:39:25", "options": ["40°", "-40°", "0°", "-273°"]}, {"id": "PHYS-001-Q20", "test_id": 1, "question_num": 75, "subject": "Physics", "sub_discipline": "1st Paper", "chapter": "সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "question_bn": "সুষম দ্রুতিতে গতিশীল আধান উৎপন্ন করে-", "option_a": "তড়িৎক্ষেত্র", "option_b": "চৌম্বকক্ষেত্র", "option_c": "তড়িৎ ও চৌম্বক উভয়ই", "option_d": "কোনোটিই নয়", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): তড়িৎ ও চৌম্বক উভয়ই। রেফারেন্স: প্রফেসর মোহাম্মদ ইসহাক (সাধারণ পদার্থবিজ্ঞান ও পরিমাপ)।", "book_reference": "মোহাম্মদ ইসহাক, সাধারণ পদার্থবিজ্ঞান ও পরিমাপ", "difficulty": "Medium", "is_confusing_standard": 1, "source": "Tricky Medical Physics Standard Bank", "created_at": "2026-09-17 22:39:25", "options": ["তড়িৎক্ষেত্র", "চৌম্বকক্ষেত্র", "তড়িৎ ও চৌম্বক উভয়ই", "কোনোটিই নয়"]}, {"id": "MT-ENG-001-Q01", "test_id": 1, "question_num": 76, "subject": "English", "sub_discipline": "Grammar", "chapter": "Right Form of Verbs & Conditionals", "question_bn": "Choose the right form of verb: I have the (little) money", "option_a": "slightest", "option_b": "little", "option_c": "least", "option_d": "less", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): least। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Right Form of Verbs & Conditionals)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["slightest", "little", "least", "less"]}, {"id": "MT-ENG-001-Q02", "test_id": 1, "question_num": 77, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Spelling & Pinpoint Errors", "question_bn": "Which of the following is the correct spelling?", "option_a": "Lieutennant", "option_b": "Lieutenant", "option_c": "Leutenant", "option_d": "Lieutanant", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক বানান হলো 'Lieutenant' (স্মরণ রাখার সহজ কৌশল: Lie-u-ten-ant = মিথ্যা-তুমি-দশ-পিপঁড়া)।", "book_reference": "Apex Medical English / English For Competitive Exams", "difficulty": "Easy", "is_confusing_standard": 0, "source": "DGME Medical Past Question (2022-2023)", "created_at": "2026-09-17 22:42:39", "options": ["Lieutennant", "Lieutenant", "Leutenant", "Lieutanant"]}, {"id": "MT-ENG-001-Q03", "test_id": 1, "question_num": 78, "subject": "English", "sub_discipline": "Grammar", "chapter": "Right Form of Verbs & Conditionals", "question_bn": "I went to the library with a view to (read) there", "option_a": "Read", "option_b": "Reading", "option_c": "Have read", "option_d": "Reads", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): Reading। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Right Form of Verbs & Conditionals)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["Read", "Reading", "Have read", "Reads"]}, {"id": "MT-ENG-001-Q04", "test_id": 1, "question_num": 79, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "I finally killed the fly ___a rolled up newspaper.", "option_a": "by", "option_b": "with", "option_c": "through", "option_d": "from", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): with। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["by", "with", "through", "from"]}, {"id": "MT-ENG-001-Q05", "test_id": 1, "question_num": 80, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Synonyms & Antonyms", "question_bn": "The phrase\" Achilles heel\" means??", "option_a": "A strong point", "option_b": "A serious idea", "option_c": "A permanent solution", "option_d": "A weak point", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): A weak point। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Synonyms & Antonyms)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["A strong point", "A serious idea", "A permanent solution", "A weak point"]}, {"id": "MT-ENG-001-Q06", "test_id": 1, "question_num": 81, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "There is ---- milk in the bottle.", "option_a": "very few", "option_b": "few", "option_c": "very little", "option_d": "many", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): very little। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["very few", "few", "very little", "many"]}, {"id": "MT-ENG-001-Q07", "test_id": 1, "question_num": 82, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Spelling Correction", "question_bn": "Choose the correctly spelled word-", "option_a": "Tuberculosis", "option_b": "Tuberculisis", "option_c": "Tubarculosis", "option_d": "Tubarculisis", "correct_option": "ক", "correct_index": 0, "explanation": "সঠিক উত্তর (ক): Tuberculosis। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Spelling Correction)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["Tuberculosis", "Tuberculisis", "Tubarculosis", "Tubarculisis"]}, {"id": "MT-ENG-001-Q08", "test_id": 1, "question_num": 83, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "The sun went down.Here down is a/an:", "option_a": "Preposition", "option_b": "Adjective", "option_c": "Adverb", "option_d": "Noun", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): Adverb। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["Preposition", "Adjective", "Adverb", "Noun"]}, {"id": "MT-ENG-001-Q09", "test_id": 1, "question_num": 84, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "Many a man __ succumbed to such temptation.", "option_a": "Get", "option_b": "Are", "option_c": "Have", "option_d": "Has", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): Has। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["Get", "Are", "Have", "Has"]}, {"id": "MT-ENG-001-Q10", "test_id": 1, "question_num": 85, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Idioms & Phrases", "question_bn": "What does the idiom 'At a stretch' mean?", "option_a": "Frequently", "option_b": "Without stopping / Continuously", "option_c": "Slowly", "option_d": "With difficulty", "correct_option": "খ", "correct_index": 1, "explanation": "'At a stretch' অর্থ বিরতিহীনভাবে বা একনাগাড়ে (Continuously without pause)।", "book_reference": "Master English / Competitive Idioms", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Medical Past Question (2023-2024)", "created_at": "2026-09-17 22:42:39", "options": ["Frequently", "Without stopping / Continuously", "Slowly", "With difficulty"]}, {"id": "MT-ENG-001-Q11", "test_id": 1, "question_num": 86, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "What are you so angry.........?(BCS qs)", "option_a": "at", "option_b": "for", "option_c": "about", "option_d": "with", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): about। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["at", "for", "about", "with"]}, {"id": "MT-ENG-001-Q12", "test_id": 1, "question_num": 87, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Synonyms & Antonyms", "question_bn": "'To meet trouble half-way'-means-", "option_a": "to get nervous", "option_b": "to be disappointed", "option_c": "to bear up", "option_d": "to be puzzled", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): to be puzzled। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Synonyms & Antonyms)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["to get nervous", "to be disappointed", "to bear up", "to be puzzled"]}, {"id": "MT-ENG-001-Q13", "test_id": 1, "question_num": 88, "subject": "English", "sub_discipline": "Grammar", "chapter": "Voice & Narration", "question_bn": "Change into passive: 'Who wrote Hamlet?'", "option_a": "By whom was Hamlet written?", "option_b": "By whom Hamlet was written?", "option_c": "Who was written Hamlet?", "option_d": "Whom was Hamlet written by?", "correct_option": "ক", "correct_index": 0, "explanation": "Interrogative বাক্যে 'Who' থাকলে প্যাসিভ করার সময় 'By whom' + auxiliary verb (was) + object (Hamlet) + V3 (written)? হয়।", "book_reference": "Medical English Grammar", "difficulty": "Medium", "is_confusing_standard": 0, "source": "DGME Medical Past Question (2023-2024)", "created_at": "2026-09-17 22:42:39", "options": ["By whom was Hamlet written?", "By whom Hamlet was written?", "Who was written Hamlet?", "Whom was Hamlet written by?"]}, {"id": "MT-ENG-001-Q14", "test_id": 1, "question_num": 89, "subject": "English", "sub_discipline": "Grammar", "chapter": "General English Usage & Grammar", "question_bn": "Sheep শব্দটি____", "option_a": "singular", "option_b": "Plural", "option_c": "Singular & plural", "option_d": "None of these", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): Singular & plural। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (General English Usage & Grammar)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["singular", "Plural", "Singular & plural", "None of these"]}, {"id": "MT-ENG-001-Q15", "test_id": 1, "question_num": 90, "subject": "English", "sub_discipline": "Vocabulary & Usage", "chapter": "Spelling Correction", "question_bn": "Find the correctly spelt word-", "option_a": "Parallelled", "option_b": "Parralleled", "option_c": "Paralleled", "option_d": "Paraleled", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): Paralleled। রেফারেন্স: Chowdhury & Hossain Advanced English Grammar / Michael Swan Practical English Usage।", "book_reference": "Standard Medical English Grammar & Vocabulary (Spelling Correction)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:42:39", "options": ["Parallelled", "Parralleled", "Paralleled", "Paraleled"]}, {"id": "MT-GK-001-Q01", "test_id": 1, "question_num": 91, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "বাংলাদেশ বিষয়াবলী", "question_bn": "Previous Year Questionপ্রাচীন পুণ্ড্রবর্ধন নগর কোন স্থানে অবস্থিত?", "option_a": "ময়নামতি", "option_b": "বিক্রমপুর", "option_c": "মহাস্থানগড়", "option_d": "পাহাড়পুর", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): মহাস্থানগড়। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (বাংলাদেশ বিষয়াবলী)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["ময়নামতি", "বিক্রমপুর", "মহাস্থানগড়", "পাহাড়পুর"]}, {"id": "MT-GK-001-Q02", "test_id": 1, "question_num": 92, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "সংবিধান, সংসদ ও জাতীয় প্রতীক", "question_bn": "Question Solveপ্রধানমন্ত্রী নিয়োগের বাইরে রাষ্ট্রপতি প্রধানমন্ত্রীর পরামর্শ ব্যতীত কোন কাজ এককভাবে করতে পারেন?", "option_a": "প্রধান নির্বাচন কমিশনার নিয়োগ", "option_b": "প্রধান বিচারপতি নিয়োগ", "option_c": "অডিটর জেনারেল নিয়োগ", "option_d": "পাবলিক সার্ভিস কমিশনের চেয়ারম্যান নিয়োগ", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): প্রধান বিচারপতি নিয়োগ। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (সংবিধান, সংসদ ও জাতীয় প্রতীক)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["প্রধান নির্বাচন কমিশনার নিয়োগ", "প্রধান বিচারপতি নিয়োগ", "অডিটর জেনারেল নিয়োগ", "পাবলিক সার্ভিস কমিশনের চেয়ারম্যান নিয়োগ"]}, {"id": "MT-GK-001-Q03", "test_id": 1, "question_num": 93, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "মুক্তিযুদ্ধ ও স্বাধীনতা (1971)", "question_bn": "Previous Year Questionশহীদ বুদ্ধিজীবী দিবস কবে পালন করা হয়?", "option_a": "১৪ ডিসেম্বর", "option_b": "১৩ ডিসেম্বর", "option_c": "১২ ডিসেম্বর", "option_d": "১১ ডিসেম্বর", "correct_option": "ক", "correct_index": 0, "explanation": "মুক্তিযুদ্ধ: ১৯৭১ সালের ১৪ ডিসেম্বর পাকিস্তানি হানাদার বাহিনী বাংলাদেশের শ্রেষ্ঠ শিক্ষাবিদ, চিকিৎসক, প্রকৌশলী ও সাংবাদিকদের নির্মমভাবে হত্যা করে। তাই ১৪ ডিসেম্বর শহীদ বুদ্ধিজীবী দিবস।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (মুক্তিযুদ্ধ ও স্বাধীনতা (1971))", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["১৪ ডিসেম্বর", "১৩ ডিসেম্বর", "১২ ডিসেম্বর", "১১ ডিসেম্বর"]}, {"id": "MT-GK-001-Q04", "test_id": 1, "question_num": 94, "subject": "General Knowledge", "sub_discipline": "আন্তর্জাতিক বিষয়াবলী ও সংস্থা", "chapter": "আন্তর্জাতিক বিষয়াবলী ও বৈশ্বিক ভূগোল", "question_bn": "Previous Year Questionএশিয়াকে আফ্রিকা মহাদেশ থেকে পৃথক করেছে কোন প্রণালী?", "option_a": "জিব্রাল্টার প্রণালী", "option_b": "বসফরাস প্রণালী", "option_c": "বাব এল মান্দেব প্রণালী", "option_d": "বেরিং প্রণালী", "correct_option": "গ", "correct_index": 2, "explanation": "ভূগোল তথ্য: বাব এল মান্দেব প্রণালী এবং লোহিত সাগর এশিয়া মহাদেশকে আফ্রিকা মহাদেশ থেকে পৃথক করেছে। জিব্রাল্টার প্রণালী ইউরোপ ও আফ্রিকাকে পৃথক করেছে। (রেফারেন্স: বাংলাপিডিয়া / মাধ্যমিক ভূগোল)।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (আন্তর্জাতিক বিষয়াবলী ও বৈশ্বিক ভূগোল)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["জিব্রাল্টার প্রণালী", "বসফরাস প্রণালী", "বাব এল মান্দেব প্রণালী", "বেরিং প্রণালী"]}, {"id": "MT-GK-001-Q05", "test_id": 1, "question_num": 95, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "বাংলাদেশ বিষয়াবলী", "question_bn": "Previous Year Questionবিশ্বখ্যাত 'মোনালিসা' চিত্রটির চিত্রকর কে?", "option_a": "মাইকেল অ্যাঞ্জেলা", "option_b": "লিওনার্দো দ্য ভিঞ্চি", "option_c": "পাবলো পিকাসো", "option_d": "ভ্যানগণ", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): লিওনার্দো দ্য ভিঞ্চি। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (বাংলাদেশ বিষয়াবলী)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["মাইকেল অ্যাঞ্জেলা", "লিওনার্দো দ্য ভিঞ্চি", "পাবলো পিকাসো", "ভ্যানগণ"]}, {"id": "MT-GK-001-Q06", "test_id": 1, "question_num": 96, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "সংবিধান, সংসদ ও জাতীয় প্রতীক", "question_bn": "বাংলাদেশের সংবিধানের কতটি ভাগ?", "option_a": "৭", "option_b": "১১", "option_c": "১২", "option_d": "১৭", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): ১১। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (সংবিধান, সংসদ ও জাতীয় প্রতীক)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["৭", "১১", "১২", "১৭"]}, {"id": "MT-GK-001-Q07", "test_id": 1, "question_num": 97, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "ইতিহাস, ঐতিহ্য ও প্রাচীন জনপদ", "question_bn": "Previous Year Questionবঙ্গভঙ্গের ফলে কোন নতুন প্রদেশ সৃষ্টি হয়েছিল?", "option_a": "পূর্ববঙ্গ", "option_b": "পশ্চিমবঙ্গ ও ত্রিপুরা", "option_c": "পূর্ববঙ্গ ও পশ্চিমবঙ্গ", "option_d": "পূর্ববঙ্গ ও আসাম", "correct_option": "ঘ", "correct_index": 3, "explanation": "সঠিক উত্তর (ঘ): পূর্ববঙ্গ ও আসাম। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (ইতিহাস, ঐতিহ্য ও প্রাচীন জনপদ)", "difficulty": "Hard", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["পূর্ববঙ্গ", "পশ্চিমবঙ্গ ও ত্রিপুরা", "পূর্ববঙ্গ ও পশ্চিমবঙ্গ", "পূর্ববঙ্গ ও আসাম"]}, {"id": "MT-GK-001-Q08", "test_id": 1, "question_num": 98, "subject": "General Knowledge", "sub_discipline": "আন্তর্জাতিক বিষয়াবলী ও সংস্থা", "chapter": "আন্তর্জাতিক সংস্থা ও বিশ্ব স্বাস্থ্য", "question_bn": "Previous Year Questionজাতিসংঘ সাধারণ পরিষদের প্রথম বাংলাদেশী সভাপতি কে?", "option_a": "বি এ সিদ্দিকী", "option_b": "খাজা ওয়াসিউদ্দিন", "option_c": "হুমায়ুন রশীদ চৌধুরী", "option_d": "শমসের মবিন চৌধুরী", "correct_option": "গ", "correct_index": 2, "explanation": "সঠিক উত্তর (গ): হুমায়ুন রশীদ চৌধুরী। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (আন্তর্জাতিক সংস্থা ও বিশ্ব স্বাস্থ্য)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["বি এ সিদ্দিকী", "খাজা ওয়াসিউদ্দিন", "হুমায়ুন রশীদ চৌধুরী", "শমসের মবিন চৌধুরী"]}, {"id": "MT-GK-001-Q09", "test_id": 1, "question_num": 99, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "বাংলাদেশ বিষয়াবলী", "question_bn": "Previous Year QuestionNASA এর সদর দপ্তর কোথায়?", "option_a": "ফ্লোরিডা", "option_b": "ওয়াশিংটন ডিসি", "option_c": "কেপ কেনেডি", "option_d": "টেকসাস", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): ওয়াশিংটন ডিসি। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (বাংলাদেশ বিষয়াবলী)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["ফ্লোরিডা", "ওয়াশিংটন ডিসি", "কেপ কেনেডি", "টেকসাস"]}, {"id": "MT-GK-001-Q10", "test_id": 1, "question_num": 100, "subject": "General Knowledge", "sub_discipline": "বাংলাদেশ বিষয়াবলী ও মুক্তিযুদ্ধ", "chapter": "বাংলাদেশ বিষয়াবলী", "question_bn": "Previous Year Questionব্রহ্মপুত্র নদ হিমালয়ের কোন শৃঙ্গ থেকে উৎপন্ন হয়েছে?", "option_a": "বরাইল", "option_b": "কৈলাস", "option_c": "কাঞ্চনজঙ্গা", "option_d": "গডউইন অস্টিন", "correct_option": "খ", "correct_index": 1, "explanation": "সঠিক উত্তর (খ): কৈলাস। রেফারেন্স: বাংলাদেশ জাতীয় তথ্য বাতায়ন ও বাংলাপিডিয়া।", "book_reference": "মেডিকেল প্রামাণ্য সাধারণ জ্ঞান ও মুক্তিযুদ্ধ (বাংলাদেশ বিষয়াবলী)", "difficulty": "Medium", "is_confusing_standard": 1, "source": "DGME Medical Confusing Questions Bank", "created_at": "2026-09-17 22:46:05", "options": ["বরাইল", "কৈলাস", "কাঞ্চনজঙ্গা", "গডউইন অস্টিন"]}]};
+    const DEFAULT_VAR_TEST_1 = {"test_id": 1, "test_code": "MT-VAR-001", "test_name_bn": "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান পূর্ণাঙ্গ মডেল টেস্ট 01", "questions": [{"id": "VAR-001-Q001", "test_id": 1, "question_num": 1, "subject": "HigherMath", "paper": "1st Paper", "chapter": "ম্যাট্রিক্স ও নির্ণায়ক", "question_bn": "একটি $3\\times 3$ ম্যাট্রিক্সের মুখ্য কর্ণের ভুক্তিগুলো $2, 3$ এবং $x$। ম্যাট্রিক্সটির ট্রেস (Trace) 11 হলে, $x$-এর মান কত?", "options": ["5", "6", "8", "11"], "correct_option": "খ", "correct_index": 1, "explanation": "ট্রেস হলো মুখ্য কর্ণের ভুক্তিগুলোর যোগফল: $2 + 3 + x = 11 \\Rightarrow x = 6$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q002", "test_id": 1, "question_num": 2, "subject": "HigherMath", "paper": "1st Paper", "chapter": "ভেক্টর", "question_bn": "$\\vec{A} = 2\\hat{i} + 2\\hat{j} - \\hat{k}$ এবং $\\vec{B} = 6\\hat{i} - 3\\hat{j} + 2\\hat{k}$ ভেক্টরদ্বয়ের মধ্যবর্তী কোণ কত?", "options": ["$\\cos^{-1}(4/21)$", "$\\cos^{-1}(2/7)$", "$\\cos^{-1}(5/14)$", "$\\pi/2$"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\vec{A}\\cdot\\vec{B} = 12 - 6 - 2 = 4$। $|\\vec{A}| = \\sqrt{4+4+1}=3$ এবং $|\\vec{B}| = \\sqrt{36+9+4}=7$। অতএব $\\cos\\theta = 4/(3 \\times 7) = 4/21$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q003", "test_id": 1, "question_num": 3, "subject": "HigherMath", "paper": "1st Paper", "chapter": "সরলরেখা", "question_bn": "$(1, 2)$ বিন্দুগামী এবং $3x - 4y + 7 = 0$ রেখার সমান্তরাল সরলরেখার সমীকরণ কোনটি?", "options": ["$3x - 4y + 5 = 0$", "$3x - 4y - 5 = 0$", "$4x + 3y - 10 = 0$", "$3x + 4y - 11 = 0$"], "correct_option": "ক", "correct_index": 0, "explanation": "সমান্তরাল রেখার সমীকরণ $3x - 4y + k = 0$। $(1,2)$ বিন্দুর জন্য: $3(1) - 4(2) + k = 0 \\Rightarrow k = 5$। সুতরাং রেখাটি $3x - 4y + 5 = 0$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q004", "test_id": 1, "question_num": 4, "subject": "HigherMath", "paper": "1st Paper", "chapter": "সরলরেখা", "question_bn": "$3x + 4y - 7 = 0$ এবং $3x + 4y + 8 = 0$ সমান্তরাল সরলরেখাদ্বয়ের মধ্যবর্তী লম্ব দূরত্ব কত?", "options": ["$3$ একক", "$1$ একক", "$5$ একক", "$15$ একক"], "correct_option": "ক", "correct_index": 0, "explanation": "লম্ব দূরত্ব $d = \\frac{|c_1 - c_2|}{\\sqrt{a^2+b^2}} = \\frac{|-7 - 8|}{\\sqrt{3^2+4^2}} = \\frac{15}{5} = 3$ একক।", "book_reference": "অসীম কুমার সাহা (১ম পত্র)"}, {"id": "VAR-001-Q005", "test_id": 1, "question_num": 5, "subject": "HigherMath", "paper": "1st Paper", "chapter": "বৃত্ত", "question_bn": "$x^2 + y^2 - 6x - 8y = 0$ বৃত্তটি দ্বারা $x$-অক্ষ থেকে কর্তিত অংশের দৈর্ঘ্য কত?", "options": ["$6$ একক", "$8$ একক", "$10$ একক", "$3$ একক"], "correct_option": "ক", "correct_index": 0, "explanation": "$x$-অক্ষ থেকে কর্তিত অংশের দৈর্ঘ্য $= 2\\sqrt{g^2 - c} = 2\\sqrt{(-3)^2 - 0} = 2 \\times 3 = 6$ একক।", "book_reference": "প্রফেসর কেতাব উদ্দিন (১ম পত্র)"}, {"id": "VAR-001-Q006", "test_id": 1, "question_num": 6, "subject": "HigherMath", "paper": "1st Paper", "chapter": "বিন্যাস ও সমাবেশ", "question_bn": "একটি সমতলে ১০টি বিন্দু আছে যার কোনো ৩টি সমরেখ নয়। বিন্দুগুলো সংযোগ করে কতটি ত্রিভুজ গঠন করা যায়?", "options": ["$120$ টি", "$720$ টি", "$45$ টি", "$90$ টি"], "correct_option": "ক", "correct_index": 0, "explanation": "ত্রিভুজ সংখ্যা $= ^{10}C_3 = \\frac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} = 120$ টি।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q007", "test_id": 1, "question_num": 7, "subject": "HigherMath", "paper": "1st Paper", "chapter": "ত্রিকোণমিতিক অনুপাত", "question_bn": "যদি $\\tan\\theta = \\frac{3}{4}$ এবং $\\theta$ সূক্ষ্মকোণ হয়, তবে $\\sin 2\\theta$-এর মান কত?", "options": ["$\\frac{24}{25}$", "$\\frac{7}{25}$", "$\\frac{12}{25}$", "$\\frac{3}{5}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\sin 2\\theta = \\frac{2\\tan\\theta}{1+\\tan^2\\theta} = \\frac{2(3/4)}{1 + 9/16} = \\frac{3/2}{25/16} = \\frac{24}{25}$।", "book_reference": "প্রফেসর কেতাব উদ্দিন (১ম পত্র)"}, {"id": "VAR-001-Q008", "test_id": 1, "question_num": 8, "subject": "HigherMath", "paper": "1st Paper", "chapter": "ফাংশন ও লেখচিত্র", "question_bn": "$f(x) = \\frac{2x + 1}{x - 3}$ ($x \\ne 3$) হলে, বিপরীত ফাংশন $f^{-1}(x)$ কোনটি?", "options": ["$\\frac{3x + 1}{x - 2}$", "$\\frac{x - 3}{2x + 1}$", "$\\frac{2x - 1}{x + 3}$", "$\\frac{3x - 1}{x - 2}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$y = \\frac{2x+1}{x-3} \\Rightarrow xy - 3y = 2x + 1 \\Rightarrow x(y-2) = 3y+1 \\Rightarrow x = \\frac{3y+1}{y-2}$। সুতরাং $f^{-1}(x) = \\frac{3x+1}{x-2}$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q009", "test_id": 1, "question_num": 9, "subject": "HigherMath", "paper": "1st Paper", "chapter": "অন্তরীকরণ (Calculus)", "question_bn": "$\\lim_{x \\to 0} \\frac{1 - \\cos 3x}{x^2}$-এর মান কত?", "options": ["$9/2$", "$3$", "$9$", "$3/2$"], "correct_option": "ক", "correct_index": 0, "explanation": "ল' হসপিটাল রুল প্রয়োগ করে: $\\lim_{x \\to 0} \\frac{3\\sin 3x}{2x} = \\lim_{x \\to 0} \\frac{3^2\\cos 3x}{2} = \\frac{3^2}{2} = 9/2$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q010", "test_id": 1, "question_num": 10, "subject": "HigherMath", "paper": "1st Paper", "chapter": "অন্তরীকরণ (Calculus)", "question_bn": "যদি $y = e^{\\sin x}$ হয়, তবে $\\frac{dy}{dx}$ কত?", "options": ["$\\cos x \\cdot e^{\\sin x}$", "$-\\cos x \\cdot e^{\\sin x}$", "$\\sin x \\cdot e^{\\sin x}$", "$e^{\\cos x}$"], "correct_option": "ক", "correct_index": 0, "explanation": "চেইন রুল অনুসারে: $\\frac{dy}{dx} = e^{\\sin x} \\cdot \\frac{d}{dx}(\\sin x) = \\cos x \\cdot e^{\\sin x}$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (১ম পত্র)"}, {"id": "VAR-001-Q011", "test_id": 1, "question_num": 11, "subject": "HigherMath", "paper": "1st Paper", "chapter": "অন্তরীকরণ (Calculus)", "question_bn": "$y = x^2 - 4x + 3$ পরাবৃত্তের $(2, -1)$ বিন্দুতে স্পর্শকের ঢাল কত?", "options": ["$0$", "$2$", "$-4$", "$1$"], "correct_option": "ক", "correct_index": 0, "explanation": "ঢাল $\\frac{dy}{dx} = 2x - 4$। $(2, -1)$ বিন্দুতে ঢাল $= 2(2) - 4 = 0$।", "book_reference": "অসীম কুমার সাহা (১ম পত্র)"}, {"id": "VAR-001-Q012", "test_id": 1, "question_num": 12, "subject": "HigherMath", "paper": "1st Paper", "chapter": "যোগজীকরণ (Integration)", "question_bn": "$\\int \\frac{dx}{1 + x^2}$-এর সঠিক যোগজ কোনটি?", "options": ["$\\tan^{-1}x + c$", "$\\sin^{-1}x + c$", "$\\ln|1+x^2| + c$", "$\\cot^{-1}x + c$"], "correct_option": "ক", "correct_index": 0, "explanation": "মৌলিক সমাকলন সূত্র: $\\int \\frac{dx}{1+x^2} = \\tan^{-1}x + c$।", "book_reference": "প্রফেসর কেতাব উদ্দিন (১ম পত্র)"}, {"id": "VAR-001-Q013", "test_id": 1, "question_num": 13, "subject": "HigherMath", "paper": "1st Paper", "chapter": "যোগজীকরণ (Integration)", "question_bn": "$\\int_0^1 \\frac{x}{1 + x^4} dx$-এর মান কত?", "options": ["$\\frac{\\pi}{8}$", "$\\frac{\\pi}{4}$", "$\\frac{\\pi}{2}$", "$1$"], "correct_option": "ক", "correct_index": 0, "explanation": "ধরি $z = x^2 \\Rightarrow dz = 2x dx$। সমাকলন $= \\frac{1}{2}\\int_0^1 \\frac{dz}{1+z^2} = \\frac{1}{2}[\\tan^{-1}z]_0^1 = \\frac{1}{2}(\\frac{\\pi}{4}) = \\frac{\\pi}{8}$।", "book_reference": "প্রফেসর কেতাব উদ্দিন (১ম পত্র)"}, {"id": "VAR-001-Q014", "test_id": 1, "question_num": 14, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "বাস্তব সংখ্যা ও অসমতা", "question_bn": "$|2x - 3| < 5$ অসমতাটির সমাধান সেট কোনটি?", "options": ["$(-1, 4)$", "$[-1, 4]$", "$(1, 4)$", "$(-4, 1)$"], "correct_option": "ক", "correct_index": 0, "explanation": "$-5 < 2x - 3 < 5 \\Rightarrow -2 < 2x < 8 \\Rightarrow -1 < x < 4$। সেট $(-1, 4)$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q015", "test_id": 1, "question_num": 15, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "রৈখিক প্রোগ্রামিং", "question_bn": "সীমাবদ্ধতা $x + y \\le 4$, $x \\ge 0$, $y \\ge 0$ সাপেক্ষে $Z = 3x + 2y$-এর সর্বোচ্চ মান কত?", "options": ["$12$", "$8$", "$10$", "$14$"], "correct_option": "ক", "correct_index": 0, "explanation": "কৌণিক বিন্দু $(4,0)$-তে $Z(4,0) = 3(4) + 0 = 12$, যা সম্ভাব্য সর্বোচ্চ মান।", "book_reference": "অসীম কুমার সাহা (২য় পত্র)"}, {"id": "VAR-001-Q016", "test_id": 1, "question_num": 16, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "জটিল সংখ্যা", "question_bn": "যদি $\\omega$ এককের কাল্পনিক ঘনমূল হয়, তবে $(1 - \\omega + \\omega^2)^4$-এর মান কত?", "options": ["$16\\omega$", "$-16\\omega$", "$16$", "$\\omega$"], "correct_option": "ক", "correct_index": 0, "explanation": "$1 + \\omega^2 = -\\omega$, তাই $(-\\omega - \\omega)^4 = (-2\\omega)^4 = 16\\omega^4 = 16\\omega$।", "book_reference": "প্রফেসর কেতাব উদ্দিন (২য় পত্র)"}, {"id": "VAR-001-Q017", "test_id": 1, "question_num": 17, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "বহুপদী ও বহুপদী সমীকরণ", "question_bn": "$x^2 - 5x + 6 = 0$ সমীকরণের মূলদ্বয় $\\alpha, \\beta$ হলে, $\\frac{1}{\\alpha} + \\frac{1}{\\beta}$-এর মান কত?", "options": ["$\\frac{5}{6}$", "$\\frac{6}{5}$", "$-\\frac{5}{6}$", "$5$"], "correct_option": "ক", "correct_index": 0, "explanation": "মূলদ্বয়ের যোগফল $\\alpha+\\beta = 5$, গুণফল $\\alpha\\beta = 6$। অতএব $\\frac{1}{\\alpha} + \\frac{1}{\\beta} = \\frac{5}{6}$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q018", "test_id": 1, "question_num": 18, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "দ্বিপদী বিস্তৃতি", "question_bn": "$\\left(x + \\frac{1}{x}\\right)^{10}$-এর বিস্তৃতিতে $x$-বর্জিত পদটির মান কত?", "options": ["$252$", "$210$", "$120$", "$1$"], "correct_option": "ক", "correct_index": 0, "explanation": "সাধারণ পদ $T_{r+1} = ^{10}C_r x^{10-2r}$। $x$-বর্জিত পদের জন্য $10 - 2r = 0 \\Rightarrow r = 5$। পদটি $= ^{10}C_5 = 252$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q019", "test_id": 1, "question_num": 19, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "কণিক (পরাবৃত্ত)", "question_bn": "$(y - 2)^2 = 8(x + 1)$ পরাবৃত্তের শীর্ষবিন্দু (Vertex) কোনটি?", "options": ["$(-1, 2)$", "$(1, -2)$", "$(2, -1)$", "$(0, 0)$"], "correct_option": "ক", "correct_index": 0, "explanation": "প্রমিত সমীকরণ $(y-k)^2 = 4a(x-h)$-এর শীর্ষবিন্দু $(h, k) = (-1, 2)$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q020", "test_id": 1, "question_num": 20, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "কণিক (উপবৃত্ত ও অধিবৃত্ত)", "question_bn": "একটি সমপরাবৃত্তের (Rectangular Hyperbola) উৎকেন্দ্রিকতার মান সর্বদা কত?", "options": ["$\\sqrt{2}$", "$1$", "$2$", "$0$"], "correct_option": "ক", "correct_index": 0, "explanation": "সমপরাবৃত্তে $a = b$, তাই উৎকেন্দ্রিকতা $e = \\sqrt{1 + b^2/a^2} = \\sqrt{1 + 1} = \\sqrt{2}$।", "book_reference": "অসীম কুমার সাহা (২য় পত্র)"}, {"id": "VAR-001-Q021", "test_id": 1, "question_num": 21, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "বিপরীত ত্রিকোণমিতিক ফাংশন", "question_bn": "$\\tan^{-1}(1/2) + \\tan^{-1}(1/3)$-এর মান কত?", "options": ["$\\frac{\\pi}{4}$", "$\\frac{\\pi}{2}$", "$\\frac{\\pi}{6}$", "$\\frac{\\pi}{3}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\tan^{-1}\\left(\\frac{1/2 + 1/3}{1 - 1/6}\\right) = \\tan^{-1}(1) = \\frac{\\pi}{4}$।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q022", "test_id": 1, "question_num": 22, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "ত্রিকোণমিতিক সমীকরণ", "question_bn": "$\\cos\\theta = 0$ সমীকরণটির সাধারণ সমাধান কোনটি ($n \\in \\mathbb{Z}$)?", "options": ["$(2n + 1)\\frac{\\pi}{2}$", "$n\\pi$", "$2n\\pi \\pm \\frac{\\pi}{2}$", "$n\\pi + \\frac{\\pi}{4}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\cos\\theta = 0$ হলে $\\theta = (2n + 1)\\frac{\\pi}{2}$।", "book_reference": "অসীম কুমার সাহা (২য় পত্র)"}, {"id": "VAR-001-Q023", "test_id": 1, "question_num": 23, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "স্থিতিবিদ্যা", "question_bn": "কোনো বিন্দুতে ক্রিয়ারত দুটি বলের লব্ধি ক্ষুদ্রতম বলটির সাথে সমকোণে থাকে। বৃহত্তর বলটি $13$ N এবং লব্ধি $12$ N হলে, ক্ষুদ্রতম বলটি কত?", "options": ["$5$ N", "$8$ N", "$10$ N", "$1$ N"], "correct_option": "ক", "correct_index": 0, "explanation": "সমকোণী ত্রিভুজ সম্পর্ক থেকে: $P^2 + R^2 = Q^2 \\Rightarrow P^2 + 144 = 169 \\Rightarrow P = 5$ N।", "book_reference": "এস ইউ আহাম্মদ ও এম এ জব্বার (২য় পত্র)"}, {"id": "VAR-001-Q024", "test_id": 1, "question_num": 24, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "গতিবিদ্যা", "question_bn": "যদি সর্বাধিক অনুভূমিক পাল্লা $R_{\\max}$ এবং সর্বোচ্চ উচ্চতা $H$ হয়, তবে $\\alpha = 45^\\circ$-এ তাদের সম্পর্ক কোনটি?", "options": ["$R_{\\max} = 4H$", "$R_{\\max} = 2H$", "$R_{\\max} = H$", "$H = 4R_{\\max}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$R_{\\max} = \\frac{u^2}{g}$ এবং $H = \\frac{u^2}{4g}$। অতএব $R_{\\max} = 4H$।", "book_reference": "প্রফেসর কেতাব উদ্দিন (২য় পত্র)"}, {"id": "VAR-001-Q025", "test_id": 1, "question_num": 25, "subject": "HigherMath", "paper": "2nd Paper", "chapter": "সম্ভাবনা ও বিস্তার", "question_bn": "একটি বাক্সে ৫টি লাল ও ৪টি সাদা বল আছে। দৈবভাবে একটি বল তুললে বলটি লাল হওয়ার সম্ভাবনা কত?", "options": ["$\\frac{5}{9}$", "$\\frac{4}{9}$", "$\\frac{1}{9}$", "$\\frac{5}{4}$"], "correct_option": "ক", "correct_index": 0, "explanation": "মোট বল ৯টি, লাল বল ৫টি। সম্ভাবনা $P = \\frac{5}{9}$।", "book_reference": "অসীম কুমার সাহা (২য় পত্র)"}, {"id": "VAR-001-Q026", "test_id": 1, "question_num": 26, "subject": "Physics", "paper": "1st Paper", "chapter": "ভেক্টর", "question_bn": "স্রোতের বেগ $u$ এবং নৌকার বেগ $v$ ($v > u$)। নদী সোজা পার হতে হলে নৌকাটিকে কত কোণে চালাতে হবে?", "options": ["$\\alpha = \\cos^{-1}(-u/v)$", "$\\alpha = \\sin^{-1}(-u/v)$", "$\\alpha = \\cos^{-1}(u/v)$", "$90^\\circ$"], "correct_option": "ক", "correct_index": 0, "explanation": "লব্ধি বেগ নদী তীরের সাথে $90^\\circ$ কোণে থাকবে: $\\tan 90^\\circ = \\frac{v\\sin\\alpha}{u+v\\cos\\alpha} \\Rightarrow u + v\\cos\\alpha = 0 \\Rightarrow \\cos\\alpha = -u/v$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q027", "test_id": 1, "question_num": 27, "subject": "Physics", "paper": "1st Paper", "chapter": "গতিবিদ্যা", "question_bn": "একটি বস্তুকে $40\\text{ m/s}$ বেগে অনুভূমিকের সাথে $30^\\circ$ কোণে নিক্ষেপ করা হলো। এর বিচরণকাল (Time of Flight) কত? ($g = 10\\text{ m/s}^2$)", "options": ["$4$ সেকেন্ড", "$2$ সেকেন্ড", "$8$ সেকেন্ড", "$2\\sqrt{3}$ সেকেন্ড"], "correct_option": "ক", "correct_index": 0, "explanation": "বিচরণকাল $T = \\frac{2u\\sin\\alpha}{g} = \\frac{2 \\times 40 \\times \\sin 30^\\circ}{10} = \\frac{80 \\times 0.5}{10} = 4$ সেকেন্ড। ক্যালকুলেটর ছাড়াই সরাসরি নির্ণয় সম্ভব।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q028", "test_id": 1, "question_num": 28, "subject": "Physics", "paper": "1st Paper", "chapter": "নিউটনিয়ান বলবিদ্যা", "question_bn": "একটি রকেটের ভর $M$ এবং এর থেকে গ্যাস নির্গমনের হার $\\frac{dm}{dt}$ ও নির্গমন বেগ $v_r$ হলে রকেটের ওপর প্রযুক্ত ধাক্কা বল (Thrust) কত?", "options": ["$F = v_r \\frac{dm}{dt}$", "$F = \\frac{v_r}{M}\\frac{dm}{dt}$", "$F = \\frac{1}{2}v_r^2 \\frac{dm}{dt}$", "$F = M v_r$"], "correct_option": "ক", "correct_index": 0, "explanation": "নিউটনের ২য় সূত্রানুসারে রকেটের ওপর ঊর্ধ্বমুখী ধাক্কা বল $F = v_r \\frac{dm}{dt}$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q029", "test_id": 1, "question_num": 29, "subject": "Physics", "paper": "1st Paper", "chapter": "নিউটনিয়ান বলবিদ্যা", "question_bn": "একটি বৃত্তাকার বাঁকের ব্যাসার্ধ $r$ এবং সেখানে নিরাপদে চলাচলের গতি $v$ হলে রাস্তার ব্যাংকিং কোণ $\\theta$ কোনটি?", "options": ["$\\tan\\theta = \\frac{v^2}{rg}$", "$\\tan\\theta = \\frac{rg}{v^2}$", "$\\sin\\theta = \\frac{v^2}{rg}$", "$\\tan\\theta = \\frac{v}{rg}$"], "correct_option": "ক", "correct_index": 0, "explanation": "ব্যাংকিং কোণ নির্ণয়ের আদর্শ সূত্র: $\\tan\\theta = \\frac{v^2}{rg}$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q030", "test_id": 1, "question_num": 30, "subject": "Physics", "paper": "1st Paper", "chapter": "কাজ, শক্তি ও ক্ষমতা", "question_bn": "একটি স্প্রিংকে সংকুচিত করে দৈর্ঘ্য $x$ পরিমাণ পরিবর্তন করলে এতে সঞ্চিত বিভব শক্তি কত?", "options": ["$E_p = \\frac{1}{2}kx^2$", "$E_p = kx^2$", "$E_p = \\frac{1}{2}kx$", "$E_p = 2kx^2$"], "correct_option": "ক", "correct_index": 0, "explanation": "স্প্রিং বল $F = -kx$ একটি পরিবর্তনশীল বল হওয়ায় সঞ্চিত স্থিতিশক্তি $W = \\int_0^x kx dx = \\frac{1}{2}kx^2$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q031", "test_id": 1, "question_num": 31, "subject": "Physics", "paper": "1st Paper", "chapter": "মহাকর্ষ ও অভিকর্ষ", "question_bn": "পৃথিবী পৃষ্ঠ থেকে কত গভীরতায় অভিকর্ষজ ত্বরণের মান ভূপৃষ্ঠের মানের অর্ধেক হবে?", "options": ["$h = \\frac{R}{2}$", "$h = \\frac{R}{4}$", "$h = R$", "$h = 2R$"], "correct_option": "ক", "correct_index": 0, "explanation": "গভীরতায় অভিকর্ষজ ত্বরণ $g' = g\\left(1 - \\frac{h}{R}\\right)$। $g' = \\frac{g}{2} \\Rightarrow \\frac{1}{2} = 1 - \\frac{h}{R} \\Rightarrow \\frac{h}{R} = \\frac{1}{2} \\Rightarrow h = \\frac{R}{2}$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q032", "test_id": 1, "question_num": 32, "subject": "Physics", "paper": "1st Paper", "chapter": "মহাকর্ষ ও অভিকর্ষ", "question_bn": "ভূপৃষ্ঠে কোনো বস্তুর মুক্তিবেগ $v_e = \\sqrt{2gR}$। যে গ্রহের ভর পৃথিবীর ৪ গুণ এবং ব্যাসার্ধ পৃথিবীর ২ গুণ, সেখানে মুক্তিবেগ কত গুণ হবে?", "options": ["$\\sqrt{2}$ গুণ", "$2$ গুণ", "$4$ গুণ", "$1$ গুণ (একই)"], "correct_option": "ক", "correct_index": 0, "explanation": "মুক্তিবেগ $v_e = \\sqrt{\\frac{2GM}{R}}$। নতুন গ্রহের ক্ষেত্রে $v_e' = \\sqrt{\\frac{2G(4M)}{2R}} = \\sqrt{2}\\sqrt{\\frac{2GM}{R}} = \\sqrt{2}v_e$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q033", "test_id": 1, "question_num": 33, "subject": "Physics", "paper": "1st Paper", "chapter": "পদার্থের গাঠনিক ধর্ম", "question_bn": "একটি তারের দৈর্ঘ্য টেনে দ্বিগুণ করা হলে তারটির অনুদৈর্ঘ্য বিকৃতি (Strain) কত হবে?", "options": ["$1$", "$2$", "$0.5$", "$0$"], "correct_option": "ক", "correct_index": 0, "explanation": "দৈর্ঘ্য বৃদ্ধি $l = 2L - L = L$। অনুদৈর্ঘ্য বিকৃতি $= \\frac{l}{L} = \\frac{L}{L} = 1$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q034", "test_id": 1, "question_num": 34, "subject": "Physics", "paper": "1st Paper", "chapter": "পর্যায়বৃত্ত গতি", "question_bn": "একটি সরল দোলকের কার্যকর দৈর্ঘ্য ৪ গুণ বৃদ্ধি করা হলে এর দোলনকাল (Time Period) কত গুণ বৃদ্ধি পাবে?", "options": ["$2$ গুণ", "$4$ গুণ", "$16$ গুণ", "$0.5$ গুণ"], "correct_option": "ক", "correct_index": 0, "explanation": "সরল দোলকের দোলনকাল $T \\propto \\sqrt{L}$। দৈর্ঘ্য ৪ গুণ হলে দোলনকাল $\\sqrt{4} = 2$ গুণ হবে।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q035", "test_id": 1, "question_num": 35, "subject": "Physics", "paper": "1st Paper", "chapter": "তরঙ্গ", "question_bn": "শব্দের উৎস ও শ্রোতা উভয়েই স্থির থাকলে এবং তাপমাত্রা বৃদ্ধি পেলে শব্দের বেগের কী পরিবর্তন ঘটে?", "options": ["বেগ বৃদ্ধি পায়", "বেগ হ্রাস পায়", "অপরিবর্তিত থাকে", "শূন্য হয়"], "correct_option": "ক", "correct_index": 0, "explanation": "গ্যাসে শব্দের বেগ পরম তাপমাত্রার বর্গমূলের সমানুপাতিক ($v \\propto \\sqrt{T}$)। তাপমাত্রা বাড়লে শব্দের বেগ বৃদ্ধি পায়।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q036", "test_id": 1, "question_num": 36, "subject": "Physics", "paper": "1st Paper", "chapter": "আদর্শ গ্যাস ও গতিতত্ত্ব", "question_bn": "পরম শূন্য তাপমাত্রায় ($0$ K) আদর্শ গ্যাসের অণুসমূহের মূল-গড়-বর্গ বেগ ($c_{\\text{rms}}$) কত?", "options": ["$0$", "$273\text{ m/s}$", "$100\text{ m/s}$", "অসীম"], "correct_option": "ক", "correct_index": 0, "explanation": "$c_{\\text{rms}} = \\sqrt{\\frac{3RT}{M}}$। $T = 0$ K হলে $c_{\\text{rms}} = 0$ হয় অর্থাৎ অণুগুলোর গতি সম্পূর্ণরূপে থেমে যায়।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q037", "test_id": 1, "question_num": 37, "subject": "Physics", "paper": "1st Paper", "chapter": "আদর্শ গ্যাস ও গতিতত্ত্ব", "question_bn": "নির্দিষ্ট ভরের কোনো গ্যাসের তাপমাত্রা অপরিবর্তিত রেখে চাপ দ্বিগুণ করা হলে এর আয়তন কত হবে?", "options": ["অর্ধেক হবে", "দ্বিগুণ হবে", "চারগুণ হবে", "অপরিবর্তিত থাকবে"], "correct_option": "ক", "correct_index": 0, "explanation": "বয়েলের সূত্রানুসারে স্থির তাপমাত্রায় $V \\propto \\frac{1}{P}$। চাপ দ্বিগুণ করলে আয়তন অর্ধেক হবে।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (১ম পত্র)"}, {"id": "VAR-001-Q038", "test_id": 1, "question_num": 38, "subject": "Physics", "paper": "1st Paper", "chapter": "ভেক্টর ও পরিমাপ", "question_bn": "একটি ভেক্টর ক্ষেত্র $\\vec{V}$ সলিনয়েডাল (Solenoidal) হবে যদি—", "options": ["$\\nabla \\cdot \\vec{V} = 0$", "$\\nabla \\times \\vec{V} = 0$", "$\\nabla \\vec{V} = 0$", "$\\vec{V} = 0$"], "correct_option": "ক", "correct_index": 0, "explanation": "কোনো ভেক্টর ক্ষেত্রের ডাইভারজেন্স শূন্য হলে ($\\nabla \\cdot \\vec{V} = 0$) তাকে সলিনয়েডাল বলে। কার্ল শূন্য হলে ঘূর্ণনহীন বলে।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (১ম পত্র)"}, {"id": "VAR-001-Q039", "test_id": 1, "question_num": 39, "subject": "Physics", "paper": "2nd Paper", "chapter": "তাপগতিবিদ্যা", "question_bn": "রুদ্ধতাপীয় (Adiabatic) প্রক্রিয়ার ক্ষেত্রে চাপ ও আয়তনের মধ্যে সঠিক সম্পর্ক কোনটি?", "options": ["$PV^\\gamma = \\text{ধ্রুবক}$", "$PV = \\text{ধ্রুবক}$", "$P/V^\\gamma = \\text{ধ্রুবক}$", "$TV = \\text{ধ্রুবক}$"], "correct_option": "ক", "correct_index": 0, "explanation": "রুদ্ধতাপীয় প্রক্রিয়ায় কোনো তাপ বিনিময় হয় না ($dQ = 0$) এবং সমীকরণ $PV^\\gamma = \\text{ধ্রুবক}$ যেখানে $\\gamma = C_p/C_v$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q040", "test_id": 1, "question_num": 40, "subject": "Physics", "paper": "2nd Paper", "chapter": "তাপগতিবিদ্যা", "question_bn": "একটি কার্নো ইঞ্জিনের উৎসের তাপমাত্রা $500$ K এবং গ্রাহকের তাপমাত্রা $300$ K হলে এর কর্মদক্ষতা কত?", "options": ["$40\\%$", "$60\\%$", "$20\\%$", "$50\\%$"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\eta = \\left(1 - \\frac{T_2}{T_1}\\right) \\times 100\\% = \\left(1 - \\frac{300}{500}\\right) \\times 100\\% = \\frac{200}{500} \\times 100\\% = 40\\%$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q041", "test_id": 1, "question_num": 41, "subject": "Physics", "paper": "2nd Paper", "chapter": "স্থির তড়িৎ", "question_bn": "শূন্যস্থানে দুটি চার্জের মধ্যকার বল $F$। এদের মধ্যবর্তী স্থানে $k$ পরাবৈদ্যুতিক ধ্রুবকের মাধ্যম রাখলে বল কত হবে?", "options": ["$F/k$", "$kF$", "$F/k^2$", "$F$"], "correct_option": "ক", "correct_index": 0, "explanation": "পরাবৈদ্যুতিক মাধ্যমে কুলম্ব বল $F_m = \\frac{F_{\\text{air}}}{k}$ অর্থাৎ $k$ গুণ হ্রাস পায়।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q042", "test_id": 1, "question_num": 42, "subject": "Physics", "paper": "2nd Paper", "chapter": "স্থির তড়িৎ", "question_bn": "সমান্তরাল পাত ধারকের পাতদ্বয়ের মধ্যবর্তী দূরত্ব অর্ধেক করা হলে ধারকত্ব (Capacitance) কত গুণ হবে?", "options": ["দ্বিগুণ হবে", "অর্ধেক হবে", "চারগুণ হবে", "অপরিবর্তিত থাকবে"], "correct_option": "ক", "correct_index": 0, "explanation": "ধারকত্ব $C = \\frac{\\epsilon_0 A}{d}$। দূরত্ব $d$ অর্ধেক করা হলে ধারকত্ব দ্বিগুণ হবে।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q043", "test_id": 1, "question_num": 43, "subject": "Physics", "paper": "2nd Paper", "chapter": "চল তড়িৎ", "question_bn": "হুইটস্টোন ব্রিজের চারটি বাহুর রোধ যথাক্রমে $2\\ \\Omega, 4\\ \\Omega, 6\\ \\Omega$ এবং $R$। ব্রিজটি সাম্যাবস্থায় থাকলে $R$-এর মান কত?", "options": ["$12\\ \\Omega$", "$8\\ \\Omega$", "$3\\ \\Omega$", "$18\\ \\Omega$"], "correct_option": "ক", "correct_index": 0, "explanation": "সাম্যাবস্থার নীতি: $\\frac{P}{Q} = \\frac{R_1}{R_2} \\Rightarrow \\frac{2}{4} = \\frac{6}{R} \\Rightarrow \\frac{1}{2} = \\frac{6}{R} \\Rightarrow R = 12\\ \\Omega$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q044", "test_id": 1, "question_num": 44, "subject": "Physics", "paper": "2nd Paper", "chapter": "চল তড়িৎ", "question_bn": "$2$ V তড়িচ্চালক শক্তির একটি কোষের অভ্যন্তরীণ রোধ $0.5\\ \\Omega$। একে $9.5\\ \\Omega$ বহিঃরোধের সাথে যুক্ত করলে তড়িৎ প্রবাহ কত?", "options": ["$0.2$ A", "$0.5$ A", "$2$ A", "$0.1$ A"], "correct_option": "ক", "correct_index": 0, "explanation": "$I = \\frac{E}{R + r} = \\frac{2}{9.5 + 0.5} = \\frac{2}{10} = 0.2$ A।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q045", "test_id": 1, "question_num": 45, "subject": "Physics", "paper": "2nd Paper", "chapter": "চৌম্বক ক্রিয়া ও চুম্বকত্ব", "question_bn": "একটি চার্জিত কণা চৌম্বক ক্ষেত্রের সমান্তরালে গতিশীল হলে এর ওপর ক্রিয়াশীল চৌম্বক বলের মান কত?", "options": ["শূন্য ($0$)", "$qvB$", "সর্বোচ্চ", "$qvB/2$"], "correct_option": "ক", "correct_index": 0, "explanation": "লরেন্টজ চৌম্বক বল $F = qvB\\sin\\theta$। সমান্তরাল গতিতে $\\theta = 0^\\circ \\Rightarrow \\sin 0^\\circ = 0 \\Rightarrow F = 0$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q046", "test_id": 1, "question_num": 46, "subject": "Physics", "paper": "2nd Paper", "chapter": "তাড়িৎচৌম্বক আবেশ", "question_bn": "একটি স্টেপ-আপ ট্রান্সফরমারের মুখ্য কুণ্ডলীর পাকসংখ্যা $100$ ও গৌণ কুণ্ডলীর পাকসংখ্যা $500$। মুখ্য ভোল্টেজ $20$ V হলে গৌণ ভোল্টেজ কত?", "options": ["$100$ V", "$500$ V", "$4$ V", "$40$ V"], "correct_option": "ক", "correct_index": 0, "explanation": "$\\frac{V_s}{V_p} = \\frac{N_s}{N_p} \\Rightarrow V_s = 20 \\times \\frac{500}{100} = 20 \\times 5 = 100$ V।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q047", "test_id": 1, "question_num": 47, "subject": "Physics", "paper": "2nd Paper", "chapter": "জ্যামিতিক আলোকবিজ্ঞান", "question_bn": "একটি উত্তল লেন্সের ফোকাস দূরত্ব $+25\\text{ cm}$ হলে এর ক্ষমতা কত ডায়োপ্টার (D)?", "options": ["$+4$ D", "$+2.5$ D", "$-4$ D", "$+0.25$ D"], "correct_option": "ক", "correct_index": 0, "explanation": "ক্ষমতা $P = \\frac{1}{f\\text{ (m)}} = \\frac{1}{0.25} = +4$ D।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q048", "test_id": 1, "question_num": 48, "subject": "Physics", "paper": "2nd Paper", "chapter": "ভৌত আলোকবিজ্ঞান", "question_bn": "ইয়ং-এর দ্বি-চির পরীক্ষায় আলোর তরঙ্গদৈর্ঘ্য দ্বিগুণ করলে ডোরা প্রস্থের (Fringe Width) কী পরিবর্তন ঘটবে?", "options": ["দ্বিগুণ হবে", "অর্ধেক হবে", "চারগুণ হবে", "অপরিবর্তিত থাকবে"], "correct_option": "ক", "correct_index": 0, "explanation": "ডোরা প্রস্থ $\\beta = \\frac{\\lambda D}{d}$। তরঙ্গদৈর্ঘ্য $\\lambda$ দ্বিগুণ হলে ডোরা প্রস্থ দ্বিগুণ হবে।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q049", "test_id": 1, "question_num": 49, "subject": "Physics", "paper": "2nd Paper", "chapter": "আধুনিক পদার্থবিজ্ঞান", "question_bn": "একটি ফোটনের শক্তি $E$ এবং কম্পাঙ্ক $f$ হলে তাদের সঠিক সম্পর্ক কোনটি? ($h$ = প্ল্যাঙ্কের ধ্রুবক)", "options": ["$E = hf$", "$E = h/f$", "$E = hf^2$", "$E = c/hf$"], "correct_option": "ক", "correct_index": 0, "explanation": "প্ল্যাঙ্কের কোয়ান্টাম তত্ত্বানুসারে প্রতিটি ফোটনের শক্তি $E = hf = \\frac{hc}{\\lambda}$।", "book_reference": "প্রফেসর মোহাম্মদ ইসহাক (২য় পত্র)"}, {"id": "VAR-001-Q050", "test_id": 1, "question_num": 50, "subject": "Physics", "paper": "2nd Paper", "chapter": "পরমাণু মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান", "question_bn": "একটি তেজস্ক্রিয় মৌলের ক্ষয় ধ্রুবক $\\lambda$ হলে এর অর্ধায়ু $T_{1/2}$-এর সাথে সম্পর্ক কোনটি?", "options": ["$T_{1/2} = \\frac{0.693}{\\lambda}$", "$T_{1/2} = 0.693\\lambda$", "$T_{1/2} = \\frac{\\lambda}{0.693}$", "$T_{1/2} = \\frac{1}{\\lambda}$"], "correct_option": "ক", "correct_index": 0, "explanation": "অর্ধায়ুর সমীকরণ: $T_{1/2} = \\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda}$।", "book_reference": "প্রফেসর ড. শাহজাহান তপন (২য় পত্র)"}, {"id": "VAR-001-Q051", "test_id": 1, "question_num": 51, "subject": "Chemistry", "paper": "1st Paper", "chapter": "গুণগত রসায়ন", "question_bn": "$n = 3$ প্রধান শক্তিস্তরে মোট অরবিটাল সংখ্যা কয়টি?", "options": ["$9$ টি", "$18$ টি", "$6$ টি", "$3$ টি"], "correct_option": "ক", "correct_index": 0, "explanation": "প্রধান শক্তিস্তর $n$-এ মোট অরবিটাল সংখ্যা $= n^2 = 3^2 = 9$ টি (এবং সর্বোচ্চ ইলেকট্রন ধারণক্ষমতা $2n^2 = 18$ টি)।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q052", "test_id": 1, "question_num": 52, "subject": "Chemistry", "paper": "1st Paper", "chapter": "গুণগত রসায়ন", "question_bn": "ক্রোমিয়ামের ($_{24}\\text{Cr}$) সর্ববহিস্থ স্তরের সঠিক ইলেকট্রন বিন্যাস কোনটি?", "options": ["$3d^5 4s^1$", "$3d^4 4s^2$", "$3d^6 4s^0$", "$3d^3 4s^2 4p^1$"], "correct_option": "ক", "correct_index": 0, "explanation": "অর্ধপূর্ণ $d^5$ অরবিটালের স্থিতিশীলতার কারণে ক্রোমিয়ামের ইলেকট্রন বিন্যাস $3d^5 4s^1$ হয়।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q053", "test_id": 1, "question_num": 53, "subject": "Chemistry", "paper": "1st Paper", "chapter": "গুণগত রসায়ন", "question_bn": "$A_2B$ স্বল্প দ্রাব্য লবণের দ্রাব্যতা $S\\text{ mol/L}$ হলে এর দ্রাব্যতা গুণফল ($K_{sp}$) কত?", "options": ["$4S^3$", "$S^3$", "$2S^2$", "$27S^4$"], "correct_option": "ক", "correct_index": 0, "explanation": "$A_2B \\rightleftharpoons 2A^+ + B^{2-}$। $[A^+] = 2S, [B^{2-}] = S$। $K_{sp} = [A^+]^2[B^{2-}] = (2S)^2(S) = 4S^3$।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q054", "test_id": 1, "question_num": 54, "subject": "Chemistry", "paper": "1st Paper", "chapter": "পর্যায়বৃত্ত ধর্ম", "question_bn": "নাইট্রোজেন ($N$) ও অক্সিজেন ($O$)-এর মধ্যে কার ১ম আয়নীকরণ শক্তি বেশি এবং কেন?", "options": ["$N$-এর বেশি, কারণ $2p^3$ অর্ধপূর্ণ স্থিতিশীল", "$O$-এর বেশি, কারণ আকার ছোট", "উভয়ের সমান", "কোনোটিই নয়"], "correct_option": "ক", "correct_index": 0, "explanation": "নাইট্রোজেনের $2p^3$ উপশক্তিস্তর অর্ধপূর্ণ থাকায় এটি অধিক স্থিতিশীল, তাই অক্সিজেন অপেক্ষা নাইট্রোজেনের ১ম আয়নীকরণ শক্তি বেশি।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q055", "test_id": 1, "question_num": 55, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক বন্ধন", "question_bn": "$PCl_5$ অণুর কেন্দ্রীয় পরমাণু ফসফরাস ($P$)-এর সংকরায়ন ও জ্যামিতিক আকৃতি কোনটি?", "options": ["$sp^3d$, ত্রিকোণীয় দ্বিপিরামিডীয়", "$sp^3$, চতুস্তলকীয়", "$sp^3d^2$, অষ্টতলকীয়", "$dsp^2$, সমতলীয় বর্গাকার"], "correct_option": "ক", "correct_index": 0, "explanation": "সংকরায়ন সংখ্যা $H = \\frac{1}{2}(5+5) = 5$। সংকরায়ন $sp^3d$ এবং আকৃতি ত্রিকোণীয় দ্বিপিরামিডীয়।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q056", "test_id": 1, "question_num": 56, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক বন্ধন", "question_bn": "পানি ($H_2O$) অণুতে $H-O-H$ বন্ধন কোণ $104.5^\\circ$ হওয়ার কারণ কোনটি?", "options": ["২টি মুক্তজোড় ইলেকট্রনের বিকর্ষণ", "১টি মুক্তজোড় ইলেকট্রন", "অক্সিজেনের উচ্চ ব্যাসার্ধ", "পাই বন্ধন উপস্থিতি"], "correct_option": "ক", "correct_index": 0, "explanation": "VSEPR তত্ত্ব অনুসারে মুক্তজোড়-মুক্তজোড় বিকর্ষণ সর্বাধিক হওয়ায় চতুস্তলকীয় কোণ $109.5^\\circ$ থেকে কমে $104.5^\\circ$ হয়।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q057", "test_id": 1, "question_num": 57, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "$N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$ ($\\Delta H = -92\\text{ kJ}$) বিক্রিয়ায় চাপ বৃদ্ধি করলে সাম্যাবস্থা কোন দিকে যাবে?", "options": ["ডান দিকে (উৎপাদ বৃদ্ধি পাবে)", "বাম দিকে যাবে", "অপরিবর্তিত থাকবে", "বিক্রিয়া বন্ধ হবে"], "correct_option": "ক", "correct_index": 0, "explanation": "বিক্রিয়কের মোট মোল সংখ্যা $1+3=4$ এবং উৎপাদের মোল সংখ্যা ২। চাপ বৃদ্ধি করলে সাম্যাবস্থা কম মোল সংখ্যার দিকে (ডান দিকে) সরে যাবে।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q058", "test_id": 1, "question_num": 58, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "যে রাসায়নিক বিক্রিয়ায় $\\Delta n = 0$ হয়, সেখানে $K_p$ ও $K_c$-এর সম্পর্ক কোনটি?", "options": ["$K_p = K_c$", "$K_p > K_c$", "$K_p < K_c$", "$K_p = K_c RT$"], "correct_option": "ক", "correct_index": 0, "explanation": "$K_p = K_c(RT)^{\\Delta n}$। $\\Delta n = 0$ হলে $(RT)^0 = 1 \\Rightarrow K_p = K_c$।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q059", "test_id": 1, "question_num": 59, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "$0.005\\text{ M } H_2SO_4$ দ্রবণের pH কত?", "options": ["$2.0$", "$2.3$", "$1.7$", "$3.0$"], "correct_option": "ক", "correct_index": 0, "explanation": "$H_2SO_4$ দ্বি-ক্ষারকীয় এসিড হওয়ায় $[H^+] = 2 \\times 0.005 = 0.01 = 10^{-2}\\text{ M}$। $\\text{pH} = -\\log(10^{-2}) = 2.0$।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q060", "test_id": 1, "question_num": 60, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "অম্লীয় বাফার দ্রবণের pH নির্ণয়ের হেন্ডারসন-হ্যাসেলবালখ সমীকরণ কোনটি?", "options": ["$\\text{pH} = \\text{pK}_a + \\log\\frac{[\\text{লবণ}]}{[\\text{অম্ল}]}$", "$\\text{pH} = \\text{pK}_a - \\log\\frac{[\\text{লবণ}]}{[\\text{অম্ল}]}$", "$\\text{pH} = \\text{pK}_b + \\log\\frac{[\\text{ক্ষার}]}{[\\text{লবণ}]}$", "$\\text{pH} = \\text{pK}_a + \\log\\frac{[\\text{অম্ল}]}{[\\text{লবণ}]}$"], "correct_option": "ক", "correct_index": 0, "explanation": "অম্লীয় বাফারের ক্ষেত্রে সঠিক সমীকরণ: $\\text{pH} = \\text{pK}_a + \\log\\frac{[\\text{লবণ}]}{[\\text{অম্ল}]}$।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q061", "test_id": 1, "question_num": 61, "subject": "Chemistry", "paper": "1st Paper", "chapter": "রাসায়নিক পরিবর্তন", "question_bn": "কোনো বিক্রিয়ায় ধনাত্মক প্রভাবক (Catalyst) ব্যবহার করলে বিক্রিয়ার হারের কী পরিবর্তন ঘটে এবং কেন?", "options": ["হার বৃদ্ধি পায়, কারণ সক্রিয়ণ শক্তি হ্রাস পায়", "হার হ্রাস পায়, কারণ সক্রিয়ণ শক্তি বৃদ্ধি পায়", "হার অপরিবর্তিত থাকে", "সাম্যধ্রুবক বৃদ্ধি পায়"], "correct_option": "ক", "correct_index": 0, "explanation": "প্রভাবক একটি বিকল্প নিম্ন শক্তির পথ সৃষ্টি করে সক্রিয়ণ শক্তি ($E_a$) হ্রাস করে, যার ফলে বিক্রিয়ার গতি বৃদ্ধি পায়।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q062", "test_id": 1, "question_num": 62, "subject": "Chemistry", "paper": "1st Paper", "chapter": "কর্মমুখী রসায়ন", "question_bn": "ভিনেগারে অ্যাসিটিক এসিডের ($CH_3COOH$) শতকরা পরিমাণ কত থাকে?", "options": ["$6\\% - 10\\%$", "$4\\% - 5\\%$", "$15\\% - 20\\%$", "$1\\% - 2\\%$"], "correct_option": "ক", "correct_index": 0, "explanation": "ভিনেগার হলো অ্যাসিটিক এসিডের ৬-১০% জলীয় দ্রবণ যা প্রাকৃতিক খাদ্য সংরক্ষক হিসেবে ব্যবহৃত হয়।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q063", "test_id": 1, "question_num": 63, "subject": "Chemistry", "paper": "1st Paper", "chapter": "ল্যাবরেটরি সুরক্ষা", "question_bn": "ল্যাবরেটরিতে ক্ষয়কারী (Corrosive) রাসায়নিক পদার্থের আন্তর্জাতিক হ্যাজার্ড প্রতীক কোনটি?", "options": ["ধাতু ও ত্বকে এসিড পড়ার চিহ্ন", "আগুন শিখা", "করোটি ও আড়াআড়ি হাড়", "গাছ ও মরা মাছ"], "correct_option": "ক", "correct_index": 0, "explanation": "Corrosive পদার্থের প্রতীকে টেস্টটিউব থেকে ত্বক ও ধাতুর ওপর তরল পড়ে ক্ষয় হওয়ার দৃশ্য দেখানো হয়।", "book_reference": "হাজারী ও নাগ, রসায়ন ১ম পত্র"}, {"id": "VAR-001-Q064", "test_id": 1, "question_num": 64, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "পরিবেশ রসায়ন", "question_bn": "STP-তে যেকোনো গ্যাসের মোলার আয়তন কত?", "options": ["$22.4\text{ L}$", "$24.789\text{ L}$", "$22.7\text{ L}$", "$20.0\text{ L}$"], "correct_option": "ক", "correct_index": 0, "explanation": "আদর্শ তাপমাত্রা ও চাপে (STP: $0^\\circ\\text{C}$ ও $1\\text{ atm}$) যেকোনো গ্যাসের ১ মোলের আয়তন $22.414\\text{ L}$ বা $22.4\\text{ dm}^3$।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q065", "test_id": 1, "question_num": 65, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "পরিবেশ রসায়ন", "question_bn": "$CH_4$ ($M=16$) এবং $SO_2$ ($M=64$) গ্যাসের মধ্যে কার ব্যাপন হার কত গুণ বেশি?", "options": ["$CH_4$-এর ব্যাপন হার $SO_2$-এর ২ গুণ", "$SO_2$-এর ব্যাপন হার ২ গুণ", "$CH_4$-এর ব্যাপন হার ৪ গুণ", "উভয়ের সমান"], "correct_option": "ক", "correct_index": 0, "explanation": "গ্রাহামের ব্যাপন সূত্র: $\\frac{r_1}{r_2} = \\sqrt{\\frac{M_2}{M_1}} = \\sqrt{\\frac{64}{16}} = \\sqrt{4} = 2$। সুতরাং মিথেন গ্যাসের ব্যাপন হার ২ গুণ বেশি।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q066", "test_id": 1, "question_num": 66, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "পরিবেশ রসায়ন", "question_bn": "১ মোল বাস্তব গ্যাসের ক্ষেত্রে ভ্যান ডার ওয়ালস সমীকরণ কোনটি?", "options": ["$\\left(P + \\frac{a}{V^2}\\right)(V - b) = RT$", "$\\left(P - \\frac{a}{V^2}\\right)(V + b) = RT$", "$\\left(P + \\frac{an^2}{V^2}\\right)(V - nb) = RT$", "$PV = RT$"], "correct_option": "ক", "correct_index": 0, "explanation": "আণবিক আকর্ষণ বলের জন্য চাপ সংশোধন $a/V^2$ এবং কার্যকর আয়তনের জন্য আয়তন সংশোধন $b$। সমীকরণ: $\\left(P + \\frac{a}{V^2}\\right)(V - b) = RT$।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q067", "test_id": 1, "question_num": 67, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "ল্যাকটিক এসিডে ($CH_3-CH(OH)-COOH$) কয়টি কাইরাল (Chiral) কার্বন পরমাণু উপস্থিত?", "options": ["$1$ টি", "$2$ টি", "$0$ টি", "$3$ টি"], "correct_option": "ক", "correct_index": 0, "explanation": "ল্যাকটিক এসিডের কেন্দ্রীয় কার্বনের সাথে ৪টি ভিন্ন মূলক ($-H, -OH, -CH_3, -COOH$) যুক্ত থাকায় এতে ১টি কাইরাল কার্বন রয়েছে এবং এটি আলোক সক্রিয়।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q068", "test_id": 1, "question_num": 68, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "হাকেল নীতি অনুসারে একটি অ্যারোমেটিক যৌগে সঞ্চরণশীল পাই ($\\pi$) ইলেকট্রন সংখ্যা কত হতে হবে?", "options": ["$(4n + 2)$ টি ($n = 0, 1, 2, ...$)", "$4n$ টি", "$(2n + 2)$ টি", "$2n$ টি"], "correct_option": "ক", "correct_index": 0, "explanation": "চাক্রিক, সমতলীয় এবং $(4n+2)$ সংখ্যক ডিলোকালাইজড $\\pi$-ইলেকট্রন বিশিষ্ট যৌগসমূহ অ্যারোমেটিক হয়।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q069", "test_id": 1, "question_num": 69, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "বেনজিনের নাইট্রেশন বিক্রিয়ায় সক্রিয় ইলেকট্রোফাইল (Electrophile) কোনটি?", "options": ["$NO_2^+$ (নাইট্রোনিয়াম আয়ন)", "$NO_2^-$", "$NO_3^-$", "$NO^+$"], "correct_option": "ক", "correct_index": 0, "explanation": "গাঢ় $HNO_3$ ও গাঢ় $H_2SO_4$-এর বিক্রিয়ায় নাইট্রোনিয়াম আয়ন ($NO_2^+$) উৎপন্ন হয় যা বেনজিন বলয়ে আক্রমণ করে।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q070", "test_id": 1, "question_num": 70, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "$S_N1$ বিক্রিয়ার সক্রিয়তার সঠিক ক্রম কোনটি?", "options": ["$3^\\circ > 2^\\circ > 1^\\circ > CH_3X$", "$1^\\circ > 2^\\circ > 3^\\circ$", "$CH_3X > 1^\\circ > 2^\\circ > 3^\\circ$", "$2^\\circ > 3^\\circ > 1^\\circ$"], "correct_option": "ক", "correct_index": 0, "explanation": "$S_N1$ বিক্রিয়া কার্বোক্যাটায়ন তৈরির মাধ্যমে ঘটে। $3^\\circ$ কার্বোক্যাটায়নের স্থায়িত্ব সবচেয়ে বেশি হওয়ায় এর সক্রিয়তা সর্বোচ্চ ($3^\\circ > 2^\\circ > 1^\\circ$)।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q071", "test_id": 1, "question_num": 71, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "লুকাস বিকারকের (অনার্দ্র $ZnCl_2 + \\text{গাঢ় } HCl$) সাথে তৎক্ষণাৎ ঘোলাটে অধঃক্ষেপ দেয় কোনটি?", "options": ["$3^\\circ$ অ্যালকোহল", "$2^\\circ$ অ্যালকোহল", "$1^\\circ$ অ্যালকোহল", "মিথানল"], "correct_option": "ক", "correct_index": 0, "explanation": "লুকাস বিকারকের সাথে $3^\\circ$ অ্যালকোহল সাথে সাথে, $2^\\circ$ অ্যালকোহল ৫-১০ মিনিটে এবং $1^\\circ$ অ্যালকোহল সাধারণ তাপমাত্রায় কোনো বিক্রিয়া দেয় না।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q072", "test_id": 1, "question_num": 72, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "জৈব রসায়ন", "question_bn": "প্রোপিনের সাথে $HBr$-এর সংযোজন বিক্রিয়ায় প্রধান উৎপাদ কোনটি?", "options": ["২-ব্রোমোপ্রোপেন", "১-ব্রোমোপ্রোপেন", "১,২-ডাইব্রোমোপ্রোপেন", "প্রোপানল"], "correct_option": "ক", "correct_index": 0, "explanation": "মারকনিকভের নিয়মানুসারে অসম অসম্পৃক্ত হাইড্রোকার্বনে বিকারকের ঋণাত্মক অংশ ($Br^-$) কম হাইড্রোজেনযুক্ত কার্বনে যুক্ত হয়। অতএব প্রধান উৎপাদ ২-ব্রোমোপ্রোপেন।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q073", "test_id": 1, "question_num": 73, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "পরিমাণগত রসায়ন", "question_bn": "$100\\text{ mL } 0.5\\text{ M } HCl$ দ্রবণকে পানি যোগ করে $250\\text{ mL}$ করলে পরিবর্তিত মোলারিটি কত হবে?", "options": ["$0.2\text{ M}$", "$0.1\text{ M}$", "$0.25\text{ M}$", "$0.05\text{ M}$"], "correct_option": "ক", "correct_index": 0, "explanation": "$V_1S_1 = V_2S_2 \\Rightarrow 100 \\times 0.5 = 250 \\times S_2 \\Rightarrow 50 = 250 S_2 \\Rightarrow S_2 = \\frac{50}{250} = 0.2\\text{ M}$।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q074", "test_id": 1, "question_num": 74, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "পরিমাণগত রসায়ন", "question_bn": "অম্লীয় মাধ্যমে ১ মোল $KMnO_4$ কত মোল ইলেকট্রন গ্রহণ করে?", "options": ["$5$ মোল", "$3$ মোল", "$1$ মোল", "$6$ মোল"], "correct_option": "ক", "correct_index": 0, "explanation": "অম্লীয় মাধ্যমে $MnO_4^- + 8H^+ + 5e^- \\rightarrow Mn^{2+} + 4H_2O$। এখানে ম্যাঙ্গানিজের জারণ মান $+7$ থেকে $+2$ এ পরিবর্তিত হতে ৫টি ইলেকট্রন গ্রহণ করে।", "book_reference": "কবীর পাবলিকেশন্স, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q075", "test_id": 1, "question_num": 75, "subject": "Chemistry", "paper": "2nd Paper", "chapter": "তড়িৎ রসায়ন", "question_bn": "একটি ড্যানিয়েল কোষে ক্যাথোড হিসেবে কোনটি ব্যবহৃত হয় এবং এর প্রমাণ বিভব কত?", "options": ["$Cu$ তড়িৎদ্বার ($E^\\circ = +0.34\\text{ V}$)", "$Zn$ তড়িৎদ্বার ($E^\\circ = -0.76\\text{ V}$)", "$Pt$ তড়িৎদ্বার", "$Ag$ তড়িৎদ্বার"], "correct_option": "ক", "correct_index": 0, "explanation": "ড্যানিয়েল কোষে অ্যানোড হলো $Zn$ এবং ক্যাথোড হলো $Cu$। প্রমাণ কোষে বিভব $E^\\circ_{\\text{cell}} = 0.34 - (-0.76) = 1.10\\text{ V}$।", "book_reference": "হাজারী ও নাগ, রসায়ন ২য় পত্র"}, {"id": "VAR-001-Q076", "test_id": 1, "question_num": 76, "subject": "Biology", "paper": "Botany", "chapter": "কোষ ও এর গঠন", "question_bn": "প্লাজমামেমব্রেনের ফ্লুইড মোজাইক মডেল কত সালে সিঙ্গার ও নিকলসন প্রস্তাব করেন?", "options": ["১৯৭২ সালে", "১৯৬৫ সালে", "১৯৩৫ সালে", "১৯৮২ সালে"], "correct_option": "ক", "correct_index": 0, "explanation": "১৯৭২ সালে বিজ্ঞানী এস. জে. সিঙ্গার এবং জি. এল. নিকলসন কোষঝিল্লির সর্বাধিক গ্রহণযোগ্য 'ফ্লুইড মোজাইক মডেল' প্রস্তাব করেন।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q077", "test_id": 1, "question_num": 77, "subject": "Biology", "paper": "Botany", "chapter": "কোষের রাসায়নিক গঠন", "question_bn": "ডিএনএ (DNA) অণুতে অ্যাডিনিন ($A$) ও থাইমিন ($T$)-এর মধ্যে কয়টি হাইড্রোজেন বন্ধন থাকে?", "options": ["২টি", "৩টি", "১টি", "৪টি"], "correct_option": "ক", "correct_index": 0, "explanation": "ওয়াটসন ও ক্রিক মডেল অনুসারে ডিএনএ-তে অ্যাডিনিন ও থাইমিনের মধ্যে ২টি হাইড্রোজেন বন্ধন ($A=T$) এবং গুয়ানিন ও সাইটোসিনের মধ্যে ৩টি বন্ধন ($G\\equiv C$) থাকে।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q078", "test_id": 1, "question_num": 78, "subject": "Biology", "paper": "Botany", "chapter": "কোষ বিভাজন", "question_bn": "মায়োসিস-১ এর প্রফেজ-১ এর কোন উপপর্যায়ে ক্রসিং ওভার (Crossing Over) ঘটে?", "options": ["প্যাকাইটিন (Pachytene)", "লেপ্টোটিন", "জাইগোটিন", "ডিপ্লোটিন"], "correct_option": "ক", "correct_index": 0, "explanation": "প্রফেজ-১ এর প্যাকাইটিন উপপর্যায়ে নন-সিস্টার ক্রোমাটিডের মধ্যে অংশের বিনিময় অর্থাৎ ক্রসিং ওভার ঘটে এবং কায়াজমা সৃষ্টি হয়।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q079", "test_id": 1, "question_num": 79, "subject": "Biology", "paper": "Botany", "chapter": "অণুজীব", "question_bn": "টি২ ($T_2$) ব্যাকটেরিওফায ভাইরাসের মাথার আকৃতি কেমন এবং এতে কোন নিউক্লিক এসিড থাকে?", "options": ["প্রিজম আকৃতির, দ্বিসূত্রক DNA", "গোলাকার, একসূত্রক RNA", "দণ্ডাকার, দ্বিসূত্রক RNA", "ডিম্বাকার, DNA"], "correct_option": "ক", "correct_index": 0, "explanation": "$T_2$ ব্যাকটেরিওফাযের মাথাটি ষড়ভুজাকার প্রিজমের মতো এবং এর কেন্দ্রে রৈখিক দ্বিসূত্রক DNA বিদ্যমান।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q080", "test_id": 1, "question_num": 80, "subject": "Biology", "paper": "Botany", "chapter": "শৈবাল ও ছত্রাক", "question_bn": "লাইকেন (Lichen) হলো শৈবাল ও ছত্রাকের কোন ধরনের সহাবস্থান?", "options": ["মিউচুয়ালিজম (Mutualism)", "পরজীবিতা (Parasitism)", "কমেনসালিজম", "অ্যামেনসালিজম"], "correct_option": "ক", "correct_index": 0, "explanation": "লাইকেনে শৈবাল খাদ্য তৈরি করে এবং ছত্রাক পানি ও খনিজ লবণ সরবরাহ ও আশ্রয় দিয়ে পরস্পর উপকৃত হয়, যা সিমবায়োসিস বা মিউচুয়ালিজমের উদাহরণ।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q081", "test_id": 1, "question_num": 81, "subject": "Biology", "paper": "Botany", "chapter": "ব্রায়োফাইটা ও টেরিডোফাইটা", "question_bn": "ফার্ন প্রোথ্যালাস (Prothallus) কোন ধরনের প্রকৃতির?", "options": ["হৃদপিণ্ডাকার, সবুজ ও সহবাসী", "গোলাকার ও পরজীবী", "ফিতাকৃতি ও ভিন্নবাসী", "রঙহীন"], "correct_option": "ক", "correct_index": 0, "explanation": "টেরিস ফার্নের গ্যামিটোফাইট বা প্রোথ্যালাস হলো সবুজ, স্বভোজী, হৃদপিণ্ডাকার এবং এর একই অঙ্গে পুং ও স্ত্রী জননাঙ্গ থাকায় এটি সহবাসী।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q082", "test_id": 1, "question_num": 82, "subject": "Biology", "paper": "Botany", "chapter": "নগ্নবীজী ও আবৃতবীজী", "question_bn": "Cycas উদ্ভিদের শস্য (Endosperm) কোন প্রকৃতির এবং এটি কখন তৈরি হয়?", "options": ["হ্যাপ্লয়েড ($n$), নিষেকের পূর্বে", "ট্রিপ্লয়েড ($3n$), নিষেকের পরে", "ডিপ্লয়েড ($2n$), নিষেকের সাথে", "পলিপ্লয়েড"], "correct_option": "ক", "correct_index": 0, "explanation": "নগ্নবীজী উদ্ভিদ Cycas-এর শস্য নিষেকের পূর্বে গঠিত হয়, তাই এটি সর্বদা হ্যাপ্লয়েড ($n$)। আবৃতবীজীতে নিষেকের পরে ট্রিপ্লয়েড ($3n$) শস্য গঠিত হয়।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q083", "test_id": 1, "question_num": 83, "subject": "Biology", "paper": "Botany", "chapter": "নগ্নবীজী ও আবৃতবীজী", "question_bn": "একগুচ্ছক পুংকেশর (Monadelphous) এবং বৃক্কাকার পরাগধানী কোন গোত্রের প্রধান শনাক্তকারী বৈশিষ্ট্য?", "options": ["Malvaceae (মালভেসি)", "Poaceae (পোয়াসি)", "Solanaceae", "Fabaceae"], "correct_option": "ক", "correct_index": 0, "explanation": "জবা ও ঢেঁড়শের গোত্র Malvaceae-র প্রধান বৈশিষ্ট্য হলো পুংকেশরগুলো একটি নালিকা গঠন করে একগুচ্ছক হয় এবং পরাগধানী বৃক্কাকার (Kidney-shaped) হয়।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q084", "test_id": 1, "question_num": 84, "subject": "Biology", "paper": "Botany", "chapter": "টিস্যু ও টিস্যুতন্ত্র", "question_bn": "একবীজপত্রী উদ্ভিদের কান্ডের ভাস্কুলার বান্ডল কোন ধরনের?", "options": ["সংযুক্ত, সমপার্শ্বীয় ও বদ্ধ", "সংযুক্ত, সমপার্শ্বীয় ও মুক্ত", "অরীয়", "সমদ্বিপার্শ্বীয়"], "correct_option": "ক", "correct_index": 0, "explanation": "একবীজপত্রী কান্ডে জাইলেম ও ফ্লোয়েমের মাঝে কোনো ক্যাম্বিয়াম থাকে না, তাই এটি সংযুক্ত, সমপার্শ্বীয় ও বদ্ধ (Closed Collateral)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q085", "test_id": 1, "question_num": 85, "subject": "Biology", "paper": "Botany", "chapter": "উদ্ভিদ শারীরতত্ত্ব", "question_bn": "পত্ররন্ধ্র (Stomata) খোলা ও বন্ধ হওয়ার আধুনিক প্রোটন প্রবাহ মতবাদ কে দেন?", "options": ["ইমামুরা ও লেভিট", "ভন মোল", "লয়েড", "স্কোফিল্ড"], "correct_option": "ক", "correct_index": 0, "explanation": "বিজ্ঞানী ইমামুরা ও পরবর্তীতে লেভিট (Levitt, 1974) পটাশিয়াম আয়ন ($K^+$) ও প্রোটন প্রবাহ মতবাদের মাধ্যমে পত্ররন্ধ্র খোলা ও বন্ধের ব্যাখ্যা দেন।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q086", "test_id": 1, "question_num": 86, "subject": "Biology", "paper": "Botany", "chapter": "উদ্ভিদ শারীরতত্ত্ব", "question_bn": "$C_4$ উদ্ভিদে প্রথম স্থায়ী পদার্থ কোনটি?", "options": ["অক্সালোঅ্যাসিটিক এসিড (OAA - ৪ কার্বন)", "৩-ফসফোগ্লিসারিক এসিড (PGA)", "ম্যালিক এসিড", "পাইরুভিক এসিড"], "correct_option": "ক", "correct_index": 0, "explanation": "$C_4$ উদ্ভিদে $CO_2$ গ্রহীতা হলো PEP এবং হ্যাচ ও স্ল্যাক চক্রে প্রথম স্থায়ী যৌগ হলো ৪-কার্বনবিশিষ্ট অক্সালোঅ্যাসিটিক এসিড (OAA)।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q087", "test_id": 1, "question_num": 87, "subject": "Biology", "paper": "Botany", "chapter": "উদ্ভিদ শারীরতত্ত্ব", "question_bn": "১ অণু গ্লুকোজের সম্পূর্ণ সবাত শ্বসনে মোট কত অণু ATP তৈরি হয়?", "options": ["৩০ বা ৩২ অণু (আধুনিক হিসাব: ৩০ / পুরাতন: ৩৮)", "৩৮ অণু", "৩৬ অণু", "২৪ অণু"], "correct_option": "ক", "correct_index": 0, "explanation": "আধুনিক পিটার মিশেল কেমিওসমোটিক তত্ত্বানুসারে ১ মোল গ্লুকোজ জারণে ৩০টি ATP (এবং ক্লাসিক্যাল হিসাবানুসারে ৩৮টি ATP) তৈরি হয়।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q088", "test_id": 1, "question_num": 88, "subject": "Biology", "paper": "Botany", "chapter": "জীবপ্রযুক্তি", "question_bn": "রিকম্বিনেন্ট DNA প্রযুক্তিতে ডিএনএ অণুকে কাটার জন্য কোন এনজাইম ব্যবহৃত হয়?", "options": ["রেস্ট্রিকশন এন্ডোনিউক্লিয়েজ (আণবিক কাঁচি)", "DNA লাইগেজ", "DNA পলিমারেজ", "হেলিকেজ"], "correct_option": "ক", "correct_index": 0, "explanation": "নির্দিষ্ট প্যালিনড্রোমিক সিকোয়েন্সে DNA কর্তনের জন্য রেস্ট্রিকশন এনজাইম ব্যবহৃত হয়, একে 'আণবিক কাঁচি' (Molecular Scissors) বলে।", "book_reference": "ড. মোহাম্মদ আবুল হাসান, উদ্ভিদবিজ্ঞান"}, {"id": "VAR-001-Q089", "test_id": 1, "question_num": 89, "subject": "Biology", "paper": "Zoology", "chapter": "প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", "question_bn": "অপ্রকৃত সিলমযুক্ত (Pseudocoelomate) পর্বের প্রাণী কোনটি?", "options": ["Nematoda (নেমাটোডা)", "Platyhelminthes", "Annelida", "Arthropoda"], "correct_option": "ক", "correct_index": 0, "explanation": "নেমাটোডা বা গোলকৃমি পর্বের প্রাণীদের দেহগহ্বর মেসোডার্মাল পেরিটোনিয়াম পর্দা দ্বারা বেষ্টিত থাকে না, তাই এরা অপ্রকৃত সিলমযুক্ত।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q090", "test_id": 1, "question_num": 90, "subject": "Biology", "paper": "Zoology", "chapter": "পর্বসমূহের বৈশিষ্ট্য", "question_bn": "হাইড্রার আত্মরক্ষা ও শিকার অবশ করতে কোন ধরনের নেমাটোসিস্ট হিপনোটক্সিন বিষ ক্ষরণ করে?", "options": ["স্টিনোটিল বা পেনিট্র্যান্ট", "ভলভেন্ট", "স্ট্রেপ্টোলিন গ্লুটিন্যান্ট", "স্টেরিওলিন গ্লুটিন্যান্ট"], "correct_option": "ক", "correct_index": 0, "explanation": "স্টিনোটিল হলো বৃহত্তম নেমাটোসিস্ট যাতে ফাঁপা সূত্রক থাকে এবং এটি হিপনোটক্সিন (প্রোটিন ও ফেনলের মিশ্রণ) ক্ষরণ করে শিকারকে অবশ করে।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q091", "test_id": 1, "question_num": 91, "subject": "Biology", "paper": "Zoology", "chapter": "পরিচিত প্রাণী: হাইড্রা", "question_bn": "হাইড্রার পুনরুৎপত্তি (Regeneration) ক্ষমতার জন্য কোন কোষ দায়ী?", "options": ["ইন্টারস্টিশিয়াল কোষ", "নিডোসাইট", "গ্রন্থিকোষ", "সংবেদী কোষ"], "correct_option": "ক", "correct_index": 0, "explanation": "ইন্টারস্টিশিয়াল কোষ টটিপোটেন্ট প্রকৃতির হওয়ায় এরা যেকোনো কোষে রূপান্তরিত হতে পারে এবং হাইড্রার হারানো অংশ পুনর্গঠন করে।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q092", "test_id": 1, "question_num": 92, "subject": "Biology", "paper": "Zoology", "chapter": "পরিচিত প্রাণী: ঘাসফড়িং", "question_bn": "ঘাসফড়িং-এর প্রধান রেচন অঙ্গ কোনটি?", "options": ["ম্যালপিজিয়ান নালিকা", "নেফ্রিডিয়া", "শিখা কোষ", "অ্যান্টেনাল গ্রন্থি"], "correct_option": "ক", "correct_index": 0, "explanation": "ঘাসফড়িং ও সন্ধিপদী পতঙ্গদের প্রধান রেচন অঙ্গ হলো মধ্যান্ত্র ও পশ্চাৎঅন্ত্রের সংযোগস্থলে অবস্থিত ম্যালপিজিয়ান নালিকা।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q093", "test_id": 1, "question_num": 93, "subject": "Biology", "paper": "Zoology", "chapter": "পরিচিত প্রাণী: রুই মাছ", "question_bn": "রুই মাছের হৃদপিণ্ডকে 'ভেনাস হার্ট' (Venus Heart) বলা হয় কারণ—", "options": ["এর ভেতর দিয়ে শুধুমাত্র কার্বন ডাই-অক্সাইডযুক্ত রক্ত প্রবাহিত হয়", "এতে চারটি প্রকোষ্ঠ থাকে", "এটি ফুসফুসে রক্ত পাঠায়", "এতে কপাটিকা নেই"], "correct_option": "ক", "correct_index": 0, "explanation": "রুই মাছের দুই প্রকোষ্ঠবিশিষ্ট হৃদপিণ্ডে সর্বদা $CO_2$-সমৃদ্ধ রক্ত প্রবেশ ও নির্গত হয়, তাই একে শিরা হৃদপিণ্ড বা ভেনাস হার্ট বলে।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q094", "test_id": 1, "question_num": 94, "subject": "Biology", "paper": "Zoology", "chapter": "পরিপাক ও শোষণ", "question_bn": "মানবদেহের রাসায়নিক গবেষণাগার (Organic Laboratory) বলা হয় কোন অঙ্গকে?", "options": ["যকৃত (Liver)", "অগ্ন্যাশয়", "বৃক্ক", "পাকস্থলী"], "correct_option": "ক", "correct_index": 0, "explanation": "যকৃতে সঞ্চয়ী ও বিপাকীয় ৫০০-রও বেশি গুরুত্বপূর্ণ রাসায়নিক কার্যক্রম সম্পন্ন হওয়ায় একে মানবদেহের জৈব রসায়নাগার বলা হয়।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q095", "test_id": 1, "question_num": 95, "subject": "Biology", "paper": "Zoology", "chapter": "রক্ত ও সংবহন", "question_bn": "হৃদপিণ্ডের প্রাকৃতিক পেসমেকার (Natural Pacemaker) কোনটি?", "options": ["সাইনোট্রিয়াল নোড (SAN)", "অ্যাট্রিওভেন্ট্রিকুলার নোড (AVN)", "বান্ডল অব হিজ", "পারকিঞ্জে তন্তু"], "correct_option": "ক", "correct_index": 0, "explanation": "ডান অলিন্দের প্রাচীরে অবস্থিত সাইনোট্রিয়াল নোড (SAN) স্বতঃস্ফূর্তভাবে অ্যাকশন পটেনশিয়াল তৈরি করে স্পন্দন শুরু করে, তাই একে প্রাকৃতিক পেসমেকার বলে।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q096", "test_id": 1, "question_num": 96, "subject": "Biology", "paper": "Zoology", "chapter": "শ্বসন ও শ্বাসক্রিয়া", "question_bn": "রক্তে কার্বন ডাই-অক্সাইড ($CO_2$) সর্বাধিক পরিমাণে কোন রূপে পরিবাহিত হয়?", "options": ["বাইকার্বনেট আয়ন রূপে ($65\\%$)", "কার্বামিনো যৌগ রূপে", "ভৌত দ্রবণ রূপে", "কার্বনিক এসিড রূপে"], "correct_option": "ক", "correct_index": 0, "explanation": "$CO_2$ রক্তরসে সোডিয়াম বাইকার্বনেট ও লোহিত কণিকায় পটাশিয়াম বাইকার্বনেট হিসেবে প্রায় ৬৫% পরিবাহিত হয়।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q097", "test_id": 1, "question_num": 97, "subject": "Biology", "paper": "Zoology", "chapter": "রেচন ও বর্জ্য নিষ্কাশন", "question_bn": "বৃক্কের গঠন ও কাজের একক কোনটি?", "options": ["নেফ্রন (Nephron)", "নিউরণ", "অ্যালভিওলাস", "হেপাটোসাইট"], "correct_option": "ক", "correct_index": 0, "explanation": "প্রতিটি মানব বৃক্কে ১০-১২ লক্ষ নেফ্রন থাকে যা রক্তের রেচন বর্জ্য ছেঁকে মূত্র উৎপাদন করে।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q098", "test_id": 1, "question_num": 98, "subject": "Biology", "paper": "Zoology", "chapter": "চলন ও অঙ্গচালনা", "question_bn": "মানবদেহের সবচেয়ে দীর্ঘ ও শক্তিশালী অস্থির নাম কী?", "options": ["ফিমার (Femur)", "টিবিয়া", "হিউমেরাস", "স্টার্নাম"], "correct_option": "ক", "correct_index": 0, "explanation": "উরু বা জঙ্ঘায় অবস্থিত ফিমার হলো মানবদেহের দীর্ঘতম, বৃহত্তম ও সবচেয়ে শক্তিশালী অস্থি।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q099", "test_id": 1, "question_num": 99, "subject": "Biology", "paper": "Zoology", "chapter": "সমন্বয় ও নিঃসরণ", "question_bn": "রক্তে গ্লুকোজের মাত্রা নিয়ন্ত্রণকারী হরমোন ইনসুলিন অগ্ন্যাশয়ের কোন কোষ থেকে নিঃসৃত হয়?", "options": ["বিটা ($\beta$) কোষ", "আলফা ($\u0007lpha$) কোষ", "ডেল্টা কোষ", "পিপি কোষ"], "correct_option": "ক", "correct_index": 0, "explanation": "আইলেটস অব ল্যাঙ্গারহ্যান্সের বিটা কোষ থেকে ইনসুলিন এবং আলফা কোষ থেকে গ্লুকাগন নিঃসৃত হয়।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}, {"id": "VAR-001-Q100", "test_id": 1, "question_num": 100, "subject": "Biology", "paper": "Zoology", "chapter": "জিনতত্ত্ব ও বিবর্তন", "question_bn": "অসম্পূর্ণ প্রকটতার (Incomplete Dominance) ক্ষেত্রে $F_2$ জনুর ফিনোটাইপিক অনুপাত কোনটি?", "options": ["১ : ২ : ১", "৩ : ১", "৯ : ৩ : ৩ : ১", "২ : ১"], "correct_option": "ক", "correct_index": 0, "explanation": "সন্ধ্যামালতী (Mirabilis jalapa) উদ্ভিদে অসম্পূর্ণ প্রকটতার কারণে লাল, গোলাপী ও সাদা ফুলের অনুপাত ১ : ২ : ১ হয়।", "book_reference": "গাজী আজমল ও গাজী আসমত, প্রাণিবিজ্ঞান"}], "duration_minutes": 60, "total_questions": 100, "stream": "versity"};
+
+    const appState = {
+      currentStream: 'medical',       // 'medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering'
+      currentTestId: 1,              // 1 to 100
+      selectedSession: localStorage.getItem('admission_selected_session') || '2025-26',
+      unlockedMed: parseInt(localStorage.getItem('admission_unlocked_med') || '1'),
+      unlockedVar: parseInt(localStorage.getItem('admission_unlocked_var') || '1'),
+      studentId: localStorage.getItem('admission_student_id') || ('stu_' + Math.random().toString(36).substring(2, 10)),
+      
+      // Loaded data stores
+      medicalTests: [DEFAULT_MED_TEST_1],
+      versityTests: [DEFAULT_VAR_TEST_1],
+      past15YearsData: { medical: [], versity: [] },
+      pastSubStream: 'medical', // 'medical' or 'versity'
+      textbookKb: [],
+      nocalcTricks: [],
+
+      // Active test runtime
+      currentTestObj: DEFAULT_MED_TEST_1,
+      examStatus: 'ready',            // 'ready', 'running', 'submitted'
+      userAnswers: {},               // { qIndex: optIndex }
+      timerSecondsRemaining: 3600,
+      timerInterval: null,
+      examStartTime: null,
+
+      // Past 15 years state
+      activePastYear: '2024-2025',
+      pastShowAnswers: false,
+
+      // Textbook KB pagination
+      kbSearchQuery: '',
+      kbSelectedSubject: 'All',
+      kbCurrentPage: 1,
+      kbPageSize: 24,
+
+      chartInstance: null,
+
+      // Payment & Enrollment State (Personal bKash Automation)
+      isMedicalPaid: localStorage.getItem('admission_paid_med') === 'true',
+      isVersityPaid: localStorage.getItem('admission_paid_var') === 'true',
+      pendingUnlockTestId: null
+    };
+
+    localStorage.setItem('admission_student_id', appState.studentId);
+
+    // ============================================
+    // INITIALIZATION & DATA FETCHING
+    // ============================================
+    function initApp() {
+      // Guard: Cap free progression to Test 5 if student has not enrolled/paid
+      if (!appState.isMedicalPaid && appState.unlockedMed > 5) {
+        appState.unlockedMed = 5;
+        localStorage.setItem('admission_unlocked_med', '5');
+      }
+      if (!appState.isVersityPaid && appState.unlockedVar > 5) {
+        appState.unlockedVar = 5;
+        localStorage.setItem('admission_unlocked_var', '5');
+      }
+      if (appState.currentTestId > 5 && !isStreamPaid(appState.currentStream)) {
+        appState.currentTestId = 1;
+      }
+
+      const seasonSel = document.getElementById('season-selector');
+      if (seasonSel) seasonSel.value = appState.selectedSession;
+
+      updateUnlockedBadges();
+      populateTestDropdown();
+      loadCurrentSelectedTest();
+      loadAllPlatformData();
+      syncPaymentStatus();
+    }
+
+    async function syncPaymentStatus() {
+      try {
+        const res = await fetch(`/api/payment/status?student_id=${appState.studentId}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.medical_enrolled) {
+            appState.isMedicalPaid = true;
+            localStorage.setItem('admission_paid_med', 'true');
+          }
+          if (data.versity_enrolled) {
+            appState.isVersityPaid = true;
+            localStorage.setItem('admission_paid_var', 'true');
+          }
+          updateUnlockedBadges();
+          populateTestDropdown();
+          if (typeof renderTestGridModal === 'function') {
+            const gridModal = document.getElementById('grid-modal');
+            if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
+          }
+        }
+      } catch (e) {
+        console.warn('Payment status sync offline, using local cache.');
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    async function loadAllPlatformData() {
+      // 1. Fetch Medical tests first for immediate UI readiness
+      try {
+        const medRes = await fetch('/data/medical_100_tests.json');
+        appState.medicalTests = await medRes.json();
+        populateTestDropdown();
+        loadCurrentSelectedTest();
+      } catch (err) {
+        console.warn("Medical tests load error:", err);
+      }
+
+      // 2. Fetch remaining data progressively in background without blocking
+      fetch('/data/versity_100_tests.json')
+        .then(r => r.json())
+        .then(data => {
+          appState.versityTests = data;
+          if (appState.currentStream === 'versity') {
+            populateTestDropdown();
+            loadCurrentSelectedTest();
+          }
+        })
+        .catch(e => console.warn("Varsity data error:", e));
+
+      fetch('/data/past_15years_tests.json')
+        .then(r => r.json())
+        .then(data => {
+          if (data && (data.medical || data.versity)) {
+            appState.past15YearsData = data;
+          } else if (Array.isArray(data)) {
+            appState.past15YearsData = { medical: data, versity: [] };
+          }
+          populatePastYearSelect();
+          if (appState.currentStream === 'past_15years') renderPastYearView();
+        })
+        .catch(e => console.warn("Past 15 years error:", e));
+
+      fetch('/data/nocalc_tricks_kb.json')
+        .then(r => r.json())
+        .then(data => {
+          appState.nocalcTricks = data;
+          renderNocalcTricks();
+        })
+        .catch(e => console.warn("Tricks error:", e));
+
+      fetch('/data/medical_textbooks_kb.json')
+        .then(r => r.json())
+        .then(data => {
+          appState.textbookKb = data;
+          if (appState.currentStream === 'textbooks') renderKbFacts();
+        })
+        .catch(e => console.warn("Textbooks error:", e));
+    }
+
+    // ============================================
+    // ADMISSION SESSION MANAGEMENT
+    // ============================================
+    function changeAdmissionSession(newSession) {
+      appState.selectedSession = newSession;
+      localStorage.setItem('admission_selected_session', newSession);
+      
+      const badge = document.getElementById('start-badge-session');
+      if (badge) badge.innerText = `সেশন: ${newSession}`;
+
+      showToast(`ভর্তি সেশন '${newSession}' নির্বাচিত হয়েছে। মেধা তালিকা এতে রেকর্ড হবে।`, "success");
+    }
+
+    function updateUnlockedBadges() {
+      const medBadge = document.getElementById('med-unlocked-badge');
+      if (medBadge) {
+        if (appState.isMedicalPaid) {
+          medBadge.innerHTML = `🩺 মেডিকেল: 👑 প্রিমিয়াম (টেস্ট ০${appState.unlockedMed})`;
+          medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm";
+        } else {
+          medBadge.innerHTML = `🩺 মেডিকেল: ফ্রি ট্রায়াল (০${Math.min(5, appState.unlockedMed)}/৫)`;
+          medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-brand-950/80 text-brand-300 border border-brand-800 shadow-sm";
+        }
+      }
+
+      const varBadge = document.getElementById('var-unlocked-badge');
+      if (varBadge) {
+        if (appState.isVersityPaid) {
+          varBadge.innerHTML = `🏛️ ভার্সিটি: 👑 প্রিমিয়াম (টেস্ট ০${appState.unlockedVar})`;
+          varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-teal-950/80 text-teal-300 border border-teal-800 shadow-sm";
+        } else {
+          varBadge.innerHTML = `🏛️ ভার্সিটি: ফ্রি ট্রায়াল (০${Math.min(5, appState.unlockedVar)}/৫)`;
+          varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-950/80 text-blue-300 border border-blue-800 shadow-sm";
+        }
+      }
+
+      const paywallBtn = document.getElementById('btn-open-paywall');
+      if (paywallBtn) {
+        const stream = appState.currentStream;
+        const isPaid = (stream === 'medical') ? appState.isMedicalPaid : ((stream === 'versity') ? appState.isVersityPaid : true);
+        if (isPaid && (stream === 'medical' || stream === 'versity')) {
+          paywallBtn.className = "px-3.5 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 font-bold text-xs flex items-center gap-1.5 transition";
+          paywallBtn.innerHTML = `<span>👑 প্রিমিয়াম অ্যাক্টিভ</span><span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-200">✓</span>`;
+        } else {
+          paywallBtn.className = "px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-bold text-xs shadow-lg shadow-pink-500/25 flex items-center gap-1.5 transition animate-pulse";
+          paywallBtn.innerHTML = `<span>👑 প্রিমিয়াম আনলক</span><span class="bg-black/30 px-1.5 py-0.5 rounded text-[10px]">৳৪৯৯</span>`;
+        }
+      }
+    }
+
+    // ============================================
+    // STREAM SWITCHER (Medical -> Varsity -> Past 15 -> Textbooks -> Tricks -> Engineering)
+    // ============================================
+    function switchStream(stream) {
+      appState.currentStream = stream;
+
+      // Update Nav Button Styles
+      const navButtons = [
+        { id: 'nav-btn-medical', stream: 'medical' },
+        { id: 'nav-btn-versity', stream: 'versity' },
+        { id: 'nav-btn-past', stream: 'past_15years' },
+        { id: 'nav-btn-kb', stream: 'textbooks' },
+        { id: 'nav-btn-nocalc', stream: 'nocalc' },
+        { id: 'nav-btn-engineering', stream: 'engineering' }
+      ];
+
+      navButtons.forEach(btn => {
+        const el = document.getElementById(btn.id);
+        if (!el) return;
+        if (btn.stream === stream) {
+          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap bg-brand-600 text-white shadow-md font-bold";
+        } else {
+          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80";
+        }
+      });
+
+      // Hide all views
+      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      // Show selected view
+      if (stream === 'medical' || stream === 'versity') {
+        document.getElementById('view-model-tests').classList.remove('hidden');
+        updateStreamHeadings();
+        populateTestDropdown();
+        loadCurrentSelectedTest();
+      } else if (stream === 'past_15years') {
+        document.getElementById('view-past-15years').classList.remove('hidden');
+        renderPastYearView();
+      } else if (stream === 'textbooks') {
+        document.getElementById('view-textbooks-kb').classList.remove('hidden');
+        renderKbFacts();
+      } else if (stream === 'nocalc') {
+        document.getElementById('view-nocalc').classList.remove('hidden');
+      } else if (stream === 'engineering') {
+        document.getElementById('view-engineering').classList.remove('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStreamHeadings() {
+      const heading = document.getElementById('current-stream-heading');
+      const heroTitle = document.getElementById('hero-title');
+      const startBadge = document.getElementById('start-badge-stream');
+      const f4 = document.getElementById('q-filter-subj4');
+
+      if (appState.currentStream === 'medical') {
+        heading.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট নির্বাচন";
+        heroTitle.innerHTML = 'মেডিকেল <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ</span>';
+        if (startBadge) startBadge.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট";
+        if (f4) {
+          f4.innerText = "ইংরেজি ও জিকে";
+          f4.onclick = function() { filterQuestionsBySubject('English_GK', this); };
+        }
+      } else {
+        heading.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান ১০০ মডেল টেস্ট নির্বাচন";
+        heroTitle.innerHTML = 'ভার্সিটি ও সমন্বিত গুচ্ছ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-200">১০০ মডেল টেস্ট সিরিজ (DU • GST • Agri)</span>';
+        if (startBadge) startBadge.innerText = "ভার্সিটি ও গুচ্ছ বিজ্ঞান মডেল টেস্ট";
+        if (f4) {
+          f4.innerText = "উচ্চতর গণিত";
+          f4.onclick = function() { filterQuestionsBySubject('HigherMath', this); };
+        }
+      }
+    }
+
+    // ============================================
+    // STREAM PAYMENT & SEQUENTIAL LOCK VERIFICATION
+    // (Tests 1-5 are 100% Free; Tests 6-100 require 499 BDT)
+    // ============================================
+    function isStreamPaid(stream) {
+      if (stream === 'medical') return appState.isMedicalPaid;
+      if (stream === 'versity') return appState.isVersityPaid;
+      return true;
+    }
+
+    function isTestUnlocked(stream, testId) {
+      if (stream === 'past_15years') return true; // Past 15 years never locked
+      
+      // Tests 1 to 5 are 100% Free
+      if (testId <= 5) {
+        if (stream === 'medical') return testId <= appState.unlockedMed;
+        if (stream === 'versity') return testId <= appState.unlockedVar;
+      }
+
+      // Tests 6 to 100 require 499 BDT Enrollment
+      const paid = isStreamPaid(stream);
+      if (!paid) return false;
+
+      if (stream === 'medical') return testId <= appState.unlockedMed;
+      if (stream === 'versity') return testId <= appState.unlockedVar;
+      return false;
+    }
+
+    function populateTestDropdown() {
+      const dropdown = document.getElementById('model-test-dropdown');
+      if (!dropdown) return;
+      dropdown.innerHTML = '';
+
+      const maxTest = 100;
+      const stream = appState.currentStream;
+      const paid = isStreamPaid(stream);
+
+      for (let i = 1; i <= maxTest; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        const unlocked = isTestUnlocked(stream, i);
+        const isFree = i <= 5;
+
+        let label = `টেস্ট ${i < 10 ? '০' + i : i} `;
+        if (unlocked) {
+          label += isFree ? '✓ [ফ্রি]' : '✓ [প্রিমিয়াম]';
+        } else {
+          if (!isFree && !paid) {
+            label += '🔒 [প্রিমিয়াম - ৳৪৯৯]';
+          } else {
+            label += '🔒 [লক করা]';
+          }
+        }
+
+        opt.text = label;
+        dropdown.appendChild(opt);
+      }
+      dropdown.value = appState.currentTestId;
+    }
+
+    function onTestDropdownChange(testId) {
+      const unlocked = isTestUnlocked(appState.currentStream, testId);
+      if (!unlocked) {
+        if (testId > 5 && !isStreamPaid(appState.currentStream)) {
+          openBkashPaywallModal(appState.currentStream, testId);
+        } else {
+          showLockedModal(testId);
+        }
+        // Reset dropdown back to current test
+        document.getElementById('model-test-dropdown').value = appState.currentTestId;
+        return;
+      }
+      appState.currentTestId = testId;
+      loadCurrentSelectedTest();
+    }
+
+    // ============================================
+    // CUSTOM ACTION / CONFIRMATION MODAL SYSTEM
+    // (Replaces native browser alert/confirm popups)
+    // ============================================
+    let customModalCallback = null;
+
+    function openCustomModal({ title, subtitle, icon, iconTheme = 'emerald', detailsHtml, confirmText = 'নিশ্চিত করুন', cancelText = 'বাতিল', showCancel = true, onConfirm = null }) {
+      customModalCallback = onConfirm;
+
+      const modal = document.getElementById('app-action-modal');
+      const card = document.getElementById('app-action-modal-card');
+      const iconEl = document.getElementById('app-action-modal-icon');
+      const iconContainer = document.getElementById('app-action-modal-icon-container');
+      const glowEl = document.getElementById('app-action-modal-glow');
+      const titleEl = document.getElementById('app-action-modal-title');
+      const subtitleEl = document.getElementById('app-action-modal-subtitle');
+      const detailsEl = document.getElementById('app-action-modal-details');
+      const btnCancel = document.getElementById('app-action-modal-btn-cancel');
+      const btnConfirm = document.getElementById('app-action-modal-btn-confirm');
+
+      if (!modal) return;
+
+      iconEl.innerText = icon || '📝';
+      titleEl.innerText = title || '';
+      subtitleEl.innerText = subtitle || '';
+      
+      if (detailsHtml) {
+        detailsEl.innerHTML = detailsHtml;
+        detailsEl.classList.remove('hidden');
+      } else {
+        detailsEl.classList.add('hidden');
+      }
+
+      // Configure Theme Colors
+      iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-inner ';
+      glowEl.className = 'absolute -top-16 -left-16 w-36 h-36 rounded-full blur-3xl pointer-events-none ';
+      btnConfirm.className = 'px-6 py-2.5 rounded-xl text-white font-extrabold shadow-lg transition text-xs sm:text-sm flex items-center gap-2 ';
+
+      if (iconTheme === 'emerald') {
+        iconContainer.classList.add('bg-emerald-500/20', 'border', 'border-emerald-500/40', 'text-emerald-300');
+        glowEl.classList.add('bg-emerald-500/20');
+        btnConfirm.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'hover:from-emerald-400', 'hover:to-teal-500', 'shadow-emerald-500/25');
+      } else if (iconTheme === 'amber') {
+        iconContainer.classList.add('bg-amber-500/20', 'border', 'border-amber-500/40', 'text-amber-300');
+        glowEl.classList.add('bg-amber-500/20');
+        btnConfirm.classList.add('bg-gradient-to-r', 'from-amber-500', 'to-orange-600', 'hover:from-amber-400', 'hover:to-orange-500', 'shadow-amber-500/25');
+      } else if (iconTheme === 'rose') {
+        iconContainer.classList.add('bg-rose-500/20', 'border', 'border-rose-500/40', 'text-rose-300');
+        glowEl.classList.add('bg-rose-500/20');
+        btnConfirm.classList.add('bg-gradient-to-r', 'from-rose-500', 'to-red-600', 'hover:from-rose-400', 'hover:to-red-500', 'shadow-rose-500/25');
+      } else {
+        iconContainer.classList.add('bg-blue-500/20', 'border', 'border-blue-500/40', 'text-blue-300');
+        glowEl.classList.add('bg-blue-500/20');
+        btnConfirm.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-indigo-600', 'hover:from-blue-400', 'hover:to-indigo-500', 'shadow-blue-500/25');
+      }
+
+      btnConfirm.innerHTML = `<span>${confirmText}</span>`;
+      if (showCancel) {
+        btnCancel.innerText = cancelText;
+        btnCancel.classList.remove('hidden');
+      } else {
+        btnCancel.classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      });
+    }
+
+    function closeCustomModal(confirmed) {
+      const modal = document.getElementById('app-action-modal');
+      const card = document.getElementById('app-action-modal-card');
+      if (!modal || modal.classList.contains('hidden')) return;
+
+      if (card) {
+        card.classList.remove('scale-100', 'opacity-100');
+        card.classList.add('scale-95', 'opacity-0');
+      }
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (confirmed && typeof customModalCallback === 'function') {
+          const cb = customModalCallback;
+          customModalCallback = null;
+          cb();
+        } else {
+          customModalCallback = null;
+        }
+      }, 150);
+    }
+
+    // Keyboard accessibility: ESC key closes modal
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCustomModal(false);
+      }
+    });
+
+    function showLockedModal(testId) {
+      const prevTest = testId - 1;
+      openCustomModal({
+        title: `টেস্ট #${testId} লক করা আছে`,
+        subtitle: "ধারাবাহিক পরীক্ষা আনলক নীতি (Sequential Progression)",
+        icon: "🔒",
+        iconTheme: "amber",
+        detailsHtml: `
+          <div class="space-y-3 text-xs leading-relaxed text-slate-300">
+            <div class="p-3 bg-amber-950/50 border border-amber-800/60 rounded-2xl text-amber-200">
+              সিস্টেম নিয়মানুযায়ী, টেস্ট #${testId} আনলক করতে অনুগ্রহ করে পূর্ববর্তী <strong class="text-white underline underline-offset-2">টেস্ট #${prevTest}</strong> সম্পন্ন ও সাবমিট করুন।
+            </div>
+            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-slate-400 text-[11px] flex items-start gap-2">
+              <span class="text-amber-400 text-sm">💡</span>
+              <span>পূর্ববর্তী টেস্টে অংশ নিয়ে ফলাফল সাবমিট করা মাত্রই স্বয়ংক্রিয়ভাবে পরবর্তী সকল টেস্ট ধারাবাহিকভাবে আনলক হয়ে যাবে।</span>
+            </div>
+          </div>
+        `,
+        confirmText: "বুঝেছি (Understood)",
+        showCancel: false
+      });
+    }
+
+    // ============================================
+    // PERSONAL BKASH PAYWALL & ENROLLMENT CONTROLLER
+    // ============================================
+    let selectedBkashPackage = 'medical';
+
+    function openBkashPaywallModal(stream = 'medical', targetTestId = null) {
+      if (targetTestId) {
+        appState.pendingUnlockTestId = targetTestId;
+      }
+      if (stream === 'combo') {
+        selectBkashPackage('combo');
+      } else if (stream === 'versity') {
+        selectBkashPackage('versity');
+      } else {
+        selectBkashPackage('medical');
+      }
+
+      const modal = document.getElementById('bkash-paywall-modal');
+      const card = document.getElementById('bkash-paywall-card');
+      const feedback = document.getElementById('paywall-feedback-msg');
+      if (feedback) feedback.classList.add('hidden');
+
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        if (card) {
+          card.classList.remove('scale-95', 'opacity-0');
+          card.classList.add('scale-100', 'opacity-100');
+        }
+      });
+    }
+
+    function closeBkashPaywallModal() {
+      const modal = document.getElementById('bkash-paywall-modal');
+      const card = document.getElementById('bkash-paywall-card');
+      if (!modal || modal.classList.contains('hidden')) return;
+
+      if (card) {
+        card.classList.remove('scale-100', 'opacity-100');
+        card.classList.add('scale-95', 'opacity-0');
+      }
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150);
+    }
+
+    function selectBkashPackage(pkg) {
+      selectedBkashPackage = pkg;
+      const optMed = document.getElementById('pkg-opt-medical');
+      const optVar = document.getElementById('pkg-opt-versity');
+      const optCombo = document.getElementById('pkg-opt-combo');
+      const feeText = document.getElementById('instruction-fee-text');
+
+      [optMed, optVar, optCombo].forEach(el => {
+        if (el) {
+          el.className = "cursor-pointer p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80";
+        }
+      });
+
+      if (pkg === 'medical') {
+        if (optMed) optMed.className = "cursor-pointer p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition ring-1 ring-pink-500";
+        if (feeText) feeText.innerText = "৳৪৯৯";
+      } else if (pkg === 'versity') {
+        if (optVar) optVar.className = "cursor-pointer p-3 rounded-xl border border-teal-500 bg-teal-950/40 text-center transition ring-1 ring-teal-500";
+        if (feeText) feeText.innerText = "৳৪৯৯";
+      } else if (pkg === 'combo') {
+        if (optCombo) optCombo.className = "cursor-pointer p-3 rounded-xl border border-purple-500 bg-purple-950/50 text-center transition ring-1 ring-purple-500 relative overflow-hidden";
+        if (feeText) feeText.innerText = "৳৭৯৯";
+      }
+    }
+
+    function copyBkashNumber() {
+      const num = "01644265766";
+      navigator.clipboard.writeText(num).then(() => {
+        const textEl = document.getElementById('btn-copy-bkash-text');
+        if (textEl) {
+          textEl.innerText = "✓ কপি হয়েছে!";
+          setTimeout(() => { textEl.innerText = "কপি করুন"; }, 2500);
+        }
+        showToast("বিকাশ নাম্বার '01644265766' ক্লিপবোর্ডে কপি করা হয়েছে।", "success");
+      }).catch(() => {
+        showToast("বিকাশ নাম্বার: 01644265766", "info");
+      });
+    }
+
+    async function submitBkashPayment() {
+      const senderNumber = document.getElementById('pay-sender-number').value.trim();
+      const trxId = document.getElementById('pay-trx-id').value.trim().toUpperCase();
+      const feedback = document.getElementById('paywall-feedback-msg');
+      const btn = document.getElementById('btn-submit-payment');
+
+      if (!trxId || trxId.length < 6) {
+        if (feedback) {
+          feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "⚠️ অনুগ্রহ করে SMS-এ প্রাপ্ত সঠিক ও পূর্ণাঙ্গ TrxID লিখুন (কমপক্ষে ৬-১২ ডিজিট/অক্ষর)।";
+        }
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> ভেরিফিকেশন চলছে...`;
+
+      try {
+        const res = await fetch('/api/payment/verify-trx', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: appState.studentId,
+            student_name: 'পরীক্ষার্থী',
+            package: selectedBkashPackage,
+            sender_number: senderNumber || '01644265766',
+            trx_id: trxId
+          })
+        });
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          if (selectedBkashPackage === 'combo') {
+            appState.isMedicalPaid = true;
+            appState.isVersityPaid = true;
+            localStorage.setItem('admission_paid_med', 'true');
+            localStorage.setItem('admission_paid_var', 'true');
+          } else if (selectedBkashPackage === 'medical') {
+            appState.isMedicalPaid = true;
+            localStorage.setItem('admission_paid_med', 'true');
+          } else if (selectedBkashPackage === 'versity') {
+            appState.isVersityPaid = true;
+            localStorage.setItem('admission_paid_var', 'true');
+          }
+
+          if (feedback) {
+            feedback.className = "text-xs p-3 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-200 block";
+            feedback.innerText = result.message || "অভিনন্দন! আপনার পেমেন্ট সফলভাবে ভেরিফাই হয়েছে।";
+          }
+
+          showToast("🎉 অভিনন্দন! ৯৫টি প্রিমিয়াম মডেল টেস্ট আনলক হয়েছে।", "success");
+          updateUnlockedBadges();
+          populateTestDropdown();
+          if (typeof renderTestGridModal === 'function') {
+            const gridModal = document.getElementById('grid-modal');
+            if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
+          }
+
+          setTimeout(() => {
+            closeBkashPaywallModal();
+            if (appState.pendingUnlockTestId) {
+              const target = appState.pendingUnlockTestId;
+              appState.pendingUnlockTestId = null;
+              appState.currentTestId = target;
+              document.getElementById('model-test-dropdown').value = target;
+              loadCurrentSelectedTest();
+            }
+          }, 1500);
+
+        } else {
+          if (feedback) {
+            feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+            feedback.innerText = result.message || "পেমেন্ট ভেরিফিকেশন ব্যর্থ হয়েছে। TrxID সঠিক আছে কিনা যাচাই করুন।";
+          }
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "সার্ভার সংযোগে সমস্যা। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।";
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>🚀 ভেরিফাই ও আনলক করো</span>`;
+      }
+    }
+
+    // ============================================
+    // LOAD SELECTED TEST DETAILS (Shows Start Card)
+    // ============================================
+    function loadCurrentSelectedTest() {
+      // Stop any existing timer
+      if (appState.timerInterval) clearInterval(appState.timerInterval);
+
+      const stream = appState.currentStream;
+      const testId = appState.currentTestId;
+      const tests = (stream === 'medical') ? appState.medicalTests : appState.versityTests;
+      let current = null;
+      if (tests && tests.length > 0) {
+        current = tests.find(t => t.test_id === testId) || tests[0];
+      }
+      if (!current) {
+        current = (stream === 'medical') ? DEFAULT_MED_TEST_1 : DEFAULT_VAR_TEST_1;
+      }
+      appState.currentTestObj = current;
+      appState.examStatus = 'ready';
+      appState.userAnswers = {};
+
+      // Check if current test is unlocked
+      const unlocked = isTestUnlocked(stream, testId);
+      const isPaid = isStreamPaid(stream);
+      const startBtn = document.getElementById('btn-start-exam');
+
+      if (startBtn) {
+        if (!unlocked && testId > 5 && !isPaid) {
+          startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-black text-base sm:text-lg shadow-xl shadow-pink-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 mx-auto animate-pulse";
+          startBtn.innerHTML = `<span>👑 বিকাশ দিয়ে টেস্ট ${testId < 10 ? '০' + testId : testId} আনলক করুন (৳৪৯৯)</span>`;
+          startBtn.onclick = () => openBkashPaywallModal(stream, testId);
+        } else if (!unlocked) {
+          startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-slate-800 text-slate-400 font-black text-base sm:text-lg border border-slate-700 transition cursor-not-allowed mx-auto flex items-center justify-center gap-2";
+          startBtn.innerHTML = `<span>🔒 টেস্ট ${testId < 10 ? '০' + testId : testId} লকড (পূর্ববর্তী টেস্ট সম্পন্ন করুন)</span>`;
+          startBtn.onclick = () => showLockedModal(testId);
+        } else {
+          startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-lg shadow-xl glow-brand transition transform hover:-translate-y-0.5 active:translate-y-0 mx-auto";
+          startBtn.innerHTML = `🚀 পরীক্ষা শুরু করো (Start Exam)`;
+          startBtn.onclick = () => startActiveExam();
+        }
+      }
+
+      // Update Start Screen Elements
+      document.getElementById('start-exam-title').innerText = current.test_name_bn || `মডেল টেস্ট ${testId}`;
+      document.getElementById('start-stat-questions').innerText = `${current.total_questions || current.questions.length}টি`;
+      document.getElementById('start-stat-marks').innerText = `${current.total_questions || current.questions.length}`;
+      document.getElementById('start-stat-duration').innerText = `${current.duration_minutes || 60} মিনিট`;
+
+      // Show Start Card, Hide Active Exam & Results
+      document.getElementById('exam-start-card').classList.remove('hidden');
+      document.getElementById('exam-active-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.add('hidden');
+
+      // Auto-trigger paywall modal if user selects unpaid test > 5
+      if (!unlocked && testId > 5 && !isPaid) {
+        openBkashPaywallModal(stream, testId);
+      }
+    }
+
+    // ============================================
+    // START EXAM FLOW & COUNTDOWN TIMER
+    // ============================================
+    function startActiveExam() {
+      const stream = appState.currentStream;
+      const testId = appState.currentTestId;
+
+      // Strict lock and paywall validation
+      if (!isTestUnlocked(stream, testId)) {
+        if (testId > 5 && !isStreamPaid(stream)) {
+          openBkashPaywallModal(stream, testId);
+        } else {
+          showLockedModal(testId);
+        }
+        return;
+      }
+      const current = appState.currentTestObj;
+      if (!current || !current.questions) {
+        showToast("প্রশ্ন লোড করতে পারছে না।", "error");
+        return;
+      }
+
+      appState.examStatus = 'running';
+      appState.userAnswers = {};
+      appState.examStartTime = new Date();
+      appState.timerSecondsRemaining = (current.duration_minutes || 60) * 60;
+
+      // Switch containers
+      document.getElementById('exam-start-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.add('hidden');
+      document.getElementById('exam-active-card').classList.remove('hidden');
+
+      // Update counters
+      document.getElementById('answered-count-pill').innerText = '০';
+      document.getElementById('unanswered-count-pill').innerText = current.questions.length;
+      document.getElementById('total-questions-pill').innerText = current.questions.length;
+      const progBar = document.getElementById('exam-progress-bar');
+      if (progBar) progBar.style.width = '0%';
+
+      // Render all questions
+      renderQuestionsFeed(current.questions);
+
+      // Start backward countdown timer
+      startCountdownTimer();
+
+      window.scrollTo({ top: 180, behavior: 'smooth' });
+      showToast("পরীক্ষা শুরু হয়েছে! শুভকামনা।", "success");
+    }
+
+    function startCountdownTimer() {
+      if (appState.timerInterval) clearInterval(appState.timerInterval);
+
+      updateTimerDisplay();
+
+      appState.timerInterval = setInterval(() => {
+        appState.timerSecondsRemaining--;
+        updateTimerDisplay();
+
+        if (appState.timerSecondsRemaining <= 0) {
+          clearInterval(appState.timerInterval);
+          openCustomModal({
+            title: "⏱️ পরীক্ষার নির্ধারিত সময় সমাপ্ত!",
+            subtitle: "আপনার উত্তরপত্র স্বয়ংক্রিয়ভাবে সাবমিট করা হচ্ছে...",
+            icon: "⏱️",
+            iconTheme: "rose",
+            detailsHtml: `
+              <div class="text-center text-xs text-rose-200 space-y-1.5 p-3.5 bg-rose-950/50 border border-rose-800/60 rounded-2xl shadow-inner">
+                <p class="font-bold text-sm">পরীক্ষার নির্ধারিত ৬০ মিনিট সময় পূর্ণ হয়েছে।</p>
+                <p class="text-slate-400 text-[11px] leading-relaxed">আপনার প্রদত্ত সকল উত্তর ইতিমধ্যে গৃহীত হয়েছে। স্বয়ংক্রিয়ভাবে ফলাফল বোর্ড প্রস্তুত করা হচ্ছে।</p>
+              </div>
+            `,
+            confirmText: "ফলাফল দেখুন",
+            showCancel: false,
+            onConfirm: () => {
+              submitActiveExam(true);
+            }
+          });
+          setTimeout(() => {
+            closeCustomModal(true);
+            if (appState.examStatus !== 'submitted') {
+              submitActiveExam(true);
+            }
+          }, 2200);
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const display = document.getElementById('countdown-timer-display');
+      if (!display) return;
+
+      const totalSec = Math.max(0, appState.timerSecondsRemaining);
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+
+      const formatted = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+      display.innerText = formatted;
+
+      if (totalSec <= 300) { // Last 5 mins
+        display.classList.add('text-rose-400', 'animate-pulse');
+        display.classList.remove('text-amber-300');
+      } else {
+        display.classList.remove('text-rose-400', 'animate-pulse');
+        display.classList.add('text-amber-300');
+      }
+    }
+
+    // ============================================
+    // RENDER QUESTIONS FEED
+    // ============================================
+    function renderQuestionsFeed(questions) {
+      const container = document.getElementById('questions-feed-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      questions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.id = `q-card-${idx}`;
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-md space-y-3 transition";
+        card.dataset.subject = q.subject || 'General';
+
+        // Options array normalizer
+        const opts = q.options ? q.options : [q.option_a, q.option_b, q.option_c, q.option_d];
+
+        const optionLetters = ['ক', 'খ', 'গ', 'ঘ'];
+
+        let optionsHtml = '';
+        opts.forEach((optText, optIdx) => {
+          optionsHtml += `
+            <button type="button" onclick="selectQuestionOption(${idx}, ${optIdx})" id="opt-btn-${idx}-${optIdx}" class="opt-btn w-full text-left p-3.5 rounded-xl border border-slate-700/80 bg-slate-950/70 hover:bg-slate-800/80 transition flex items-center gap-3 group">
+              <span class="w-7 h-7 rounded-lg bg-slate-800 group-hover:bg-brand-600/30 text-slate-300 group-hover:text-brand-300 border border-slate-700 font-bold text-xs flex items-center justify-center shrink-0">
+                ${optionLetters[optIdx]}
+              </span>
+              <span class="text-xs sm:text-sm text-slate-200 font-medium group-hover:text-white flex-1">${optText || ''}</span>
+            </button>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800/80 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-brand-400 text-sm">প্রশ্ন ${idx + 1}</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">${q.subject || ''}</span>
+              ${q.chapter ? `<span class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800/60 text-slate-400 font-medium">${q.chapter}</span>` : ''}
+            </div>
+            <span id="q-status-badge-${idx}" class="text-[11px] font-bold text-slate-500">অনুত্তরিত</span>
+          </div>
+
+          <div class="text-sm sm:text-base font-semibold text-white leading-relaxed pt-1">
+            ${q.question_bn || ''}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            ${optionsHtml}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      // Render KaTeX math if present
+      if (window.renderMathInElement) {
+        window.renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // ============================================
+    // SELECT OPTION HANDLER
+    // ============================================
+    function selectQuestionOption(qIndex, optIndex) {
+      if (appState.examStatus !== 'running') return;
+
+      appState.userAnswers[qIndex] = optIndex;
+
+      // Update button visual styles
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`opt-btn-${qIndex}-${i}`);
+        if (!btn) continue;
+        if (i === optIndex) {
+          btn.className = "opt-btn w-full text-left p-3.5 rounded-xl border border-brand-500 bg-brand-950/80 text-white transition flex items-center gap-3 shadow-md glow-brand";
+        } else {
+          btn.className = "opt-btn w-full text-left p-3.5 rounded-xl border border-slate-700/80 bg-slate-950/70 hover:bg-slate-800/80 transition flex items-center gap-3 group";
+        }
+      }
+
+      // Update status badge
+      const badge = document.getElementById(`q-status-badge-${qIndex}`);
+      if (badge) {
+        badge.innerText = "✓ উত্তর দেওয়া হয়েছে";
+        badge.className = "text-[11px] font-bold text-emerald-400";
+      }
+
+      // Update counters & progress
+      const totalQ = appState.currentTestObj.questions.length;
+      const ansCount = Object.keys(appState.userAnswers).length;
+      document.getElementById('answered-count-pill').innerText = ansCount;
+      document.getElementById('unanswered-count-pill').innerText = totalQ - ansCount;
+
+      const progBar = document.getElementById('exam-progress-bar');
+      if (progBar && totalQ > 0) {
+        const pct = Math.round((ansCount / totalQ) * 100);
+        progBar.style.width = `${pct}%`;
+      }
+    }
+
+    // ============================================
+    // QUESTION FILTERING
+    // ============================================
+    function filterQuestionsBySubject(subject, btnEl) {
+      const cards = document.querySelectorAll('#questions-feed-container > div');
+      cards.forEach(c => {
+        const cSubj = (c.dataset.subject || '').toLowerCase();
+        let match = false;
+        if (subject === 'All') {
+          match = true;
+        } else if (subject === 'English_GK') {
+          match = cSubj.includes('english') || cSubj.includes('gk') || cSubj.includes('general');
+        } else if (subject === 'HigherMath') {
+          match = cSubj.includes('math') || cSubj.includes('গণিত');
+        } else {
+          match = cSubj.includes(subject.toLowerCase());
+        }
+        if (match) c.classList.remove('hidden');
+        else c.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.q-filter-btn').forEach(btn => {
+        btn.classList.remove('active-filter', 'bg-slate-800', 'text-white');
+        btn.classList.add('bg-slate-900', 'text-slate-400');
+      });
+      if (btnEl) {
+        btnEl.classList.add('active-filter', 'bg-slate-800', 'text-white');
+        btnEl.classList.remove('bg-slate-900', 'text-slate-400');
+      } else if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add('active-filter', 'bg-slate-800', 'text-white');
+        event.target.classList.remove('bg-slate-900', 'text-slate-400');
+      }
+    }
+
+    // ============================================
+    // SUBMISSION, GRADING & DUAL RANKING
+    // ============================================
+    function confirmSubmitExam() {
+      const totalQ = (appState.currentTestObj && appState.currentTestObj.questions) ? appState.currentTestObj.questions.length : 100;
+      const ansCount = Object.keys(appState.userAnswers).length;
+      const unansCount = Math.max(0, totalQ - ansCount);
+      const testName = (appState.currentTestObj && appState.currentTestObj.test_name_bn) ? appState.currentTestObj.test_name_bn : `মডেল টেস্ট ${appState.currentTestId}`;
+
+      openCustomModal({
+        title: "উত্তরপত্র সাবমিট নিশ্চিতকরণ",
+        subtitle: `${testName} — আপনি কি নিশ্চিত যে পরীক্ষা জমা দিতে চান?`,
+        icon: "📝",
+        iconTheme: "emerald",
+        detailsHtml: `
+          <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="bg-emerald-950/60 border border-emerald-700/60 rounded-2xl p-3 shadow-inner">
+              <div class="text-[11px] text-emerald-300 font-bold uppercase tracking-wider">উত্তর দেওয়া হয়েছে</div>
+              <div class="text-2xl font-black text-emerald-400 font-mono mt-1">${ansCount}টি</div>
+            </div>
+            <div class="bg-amber-950/50 border border-amber-700/60 rounded-2xl p-3 shadow-inner">
+              <div class="text-[11px] text-amber-300 font-bold uppercase tracking-wider">উত্তর বাকি আছে</div>
+              <div class="text-2xl font-black text-amber-400 font-mono mt-1">${unansCount}টি</div>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1">
+            <div class="font-bold text-emerald-400 flex items-center gap-1">
+              <span>⚡</span> লাইভ সাবমিশন প্রক্রিয়া:
+            </div>
+            <p class="leading-relaxed text-slate-400">
+              সাবমিট করার সাথে সাথেই ফলাফল ও জাতীয় মেধা স্থান (Session Rank & All-Time Rank) সরাসরি <strong>Neon PostgreSQL</strong> ডেটাবেজে সংরক্ষিত হবে।
+            </p>
+          </div>
+        `,
+        confirmText: "✓ হ্যাঁ, ফলাফল জমা দাও",
+        cancelText: "না, আরও সময় নেব",
+        showCancel: true,
+        onConfirm: () => {
+          submitActiveExam(false);
+        }
+      });
+    }
+
+    async function submitActiveExam(isAutoTimeout = false) {
+      if (appState.timerInterval) clearInterval(appState.timerInterval);
+      appState.examStatus = 'submitted';
+
+      const current = appState.currentTestObj;
+      const questions = current.questions;
+      const totalQuestions = questions.length;
+
+      let correctCount = 0;
+      let wrongCount = 0;
+      let unansweredCount = 0;
+
+      questions.forEach((q, idx) => {
+        const studentAns = appState.userAnswers[idx];
+        const correctIndex = (q.correct_index !== undefined) ? q.correct_index : 0;
+
+        if (studentAns === undefined || studentAns === null) {
+          unansweredCount++;
+        } else if (studentAns === correctIndex) {
+          correctCount++;
+        } else {
+          wrongCount++;
+        }
+      });
+
+      // Score formula: correct - (wrong * 0.25)
+      const rawScore = correctCount - (wrongCount * 0.25);
+      const score = Math.max(0, parseFloat(rawScore.toFixed(2)));
+      const percentage = parseFloat(((score / totalQuestions) * 100).toFixed(2));
+
+      // Robust timeTaken calculation guaranteed never to be NaN
+      const durationMins = (current && current.duration_minutes && !isNaN(current.duration_minutes)) ? Number(current.duration_minutes) : 60;
+      const totalDurationSecs = durationMins * 60;
+      const remSecs = (typeof appState.timerSecondsRemaining === 'number' && !isNaN(appState.timerSecondsRemaining)) ? appState.timerSecondsRemaining : totalDurationSecs;
+      const timeTaken = Math.max(1, Math.min(totalDurationSecs, totalDurationSecs - Math.max(0, remSecs)));
+
+      // Sequential Exam Unlocking Logic - Runs instantly on submit!
+      let nextUnlocked = false;
+      if (appState.currentStream === 'medical' && appState.currentTestId === appState.unlockedMed) {
+        appState.unlockedMed = Math.min(100, appState.unlockedMed + 1);
+        localStorage.setItem('admission_unlocked_med', appState.unlockedMed);
+        nextUnlocked = true;
+      } else if (appState.currentStream === 'versity' && appState.currentTestId === appState.unlockedVar) {
+        appState.unlockedVar = Math.min(100, appState.unlockedVar + 1);
+        localStorage.setItem('admission_unlocked_var', appState.unlockedVar);
+        nextUnlocked = true;
+      }
+
+      updateUnlockedBadges();
+      populateTestDropdown();
+
+      // Render Scoreboard & Review Feed immediately
+      renderExamScoreboard({
+        score,
+        percentage,
+        correctCount,
+        wrongCount,
+        unansweredCount,
+        timeTaken,
+        totalQuestions,
+        rankingResult: null,
+        nextUnlocked
+      });
+
+      // Switch to Results view
+      document.getElementById('exam-active-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.remove('hidden');
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+
+      // Trigger Confetti Celebration on good score / unlock
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      }
+
+      // Live ranking sync with Neon PostgreSQL database
+      const mode = (appState.currentStream === 'medical') ? 'FullExam' : ((appState.currentStream === 'versity') ? 'GSTExam' : 'Past15Years');
+      try {
+        const response = await fetch('/api/submit-exam', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: appState.studentId,
+            student_name: 'পরীক্ষার্থী ' + appState.studentId.substring(4, 8).toUpperCase(),
+            session: appState.selectedSession,
+            test_id: appState.currentTestId,
+            test_code: current.test_code || ('MT-' + String(appState.currentTestId).padStart(3, '0')),
+            subject_mode: mode,
+            total_questions: totalQuestions,
+            correct_count: correctCount,
+            wrong_count: wrongCount,
+            unanswered_count: unansweredCount,
+            score: score,
+            time_taken_seconds: timeTaken
+          })
+        });
+        const data = await response.json();
+        if (data && data.rankings) {
+          const r = data.rankings;
+          document.getElementById('results-session-rank').innerHTML = `#${r.session_rank} <span class="text-xs text-slate-400 font-normal">/ মোট ${r.session_total} জন</span>`;
+          document.getElementById('results-alltime-rank').innerHTML = `#${r.all_time_rank} <span class="text-xs text-slate-400 font-normal">/ মোট ${r.all_time_total} জন</span>`;
+        }
+      } catch (e) {
+        console.warn("Background ranking API sync error:", e);
+        // Clean fallback showing actual single submission if offline
+        document.getElementById('results-session-rank').innerHTML = `#১ <span class="text-xs text-slate-400 font-normal">/ মোট ১ জন</span>`;
+        document.getElementById('results-alltime-rank').innerHTML = `#১ <span class="text-xs text-slate-400 font-normal">/ মোট ১ জন</span>`;
+      }
+    }
+
+    // ============================================
+    // RENDER SCOREBOARD & QUESTION REVIEW
+    // ============================================
+    function renderExamScoreboard(data) {
+      const current = appState.currentTestObj;
+      document.getElementById('results-test-name').innerText = current.test_name_bn || `মডেল টেস্ট ${appState.currentTestId}`;
+      document.getElementById('results-total-score').innerText = data.score.toFixed(2);
+      document.getElementById('results-full-marks').innerText = data.totalQuestions;
+
+      document.getElementById('results-correct-count').innerText = data.correctCount;
+      document.getElementById('results-wrong-count').innerText = data.wrongCount;
+      document.getElementById('results-unanswered-count').innerText = data.unansweredCount;
+
+      const safeSec = (!isNaN(data.timeTaken) && data.timeTaken > 0) ? Math.floor(data.timeTaken) : 1;
+      const mins = Math.floor(safeSec / 60);
+      const secs = safeSec % 60;
+      document.getElementById('results-time-taken').innerText = `${mins} মিনিট ${secs} সেকেন্ড`;
+
+      // Session Name & Rankings
+      document.getElementById('results-session-name').innerText = appState.selectedSession;
+
+      if (data.rankingResult && data.rankingResult.rankings) {
+        const r = data.rankingResult.rankings;
+        document.getElementById('results-session-rank').innerHTML = `#${r.session_rank} <span class="text-xs text-slate-400 font-normal">/ মোট ${r.session_total} জন</span>`;
+        document.getElementById('results-alltime-rank').innerHTML = `#${r.all_time_rank} <span class="text-xs text-slate-400 font-normal">/ মোট ${r.all_time_total} জন</span>`;
+      } else {
+        // Real-time syncing state: NO hardcoded fake numbers!
+        document.getElementById('results-session-rank').innerHTML = `<span class="text-sm font-normal text-amber-400 animate-pulse">হিসাব করা হচ্ছে...</span>`;
+        document.getElementById('results-alltime-rank').innerHTML = `<span class="text-sm font-normal text-amber-400 animate-pulse">হিসাব করা হচ্ছে...</span>`;
+      }
+
+      // Unlock Notice & Button
+      const notice = document.getElementById('results-unlock-notice');
+      const nextBtn = document.getElementById('btn-goto-next-test');
+      const paywallTeaser = document.getElementById('results-paywall-teaser');
+
+      if (appState.currentTestId === 5 && !isStreamPaid(appState.currentStream)) {
+        if (paywallTeaser) paywallTeaser.classList.remove('hidden');
+        if (notice) {
+          notice.innerHTML = `<span>🎁</span> আপনি সফলভাবে ফ্রি ৫টি মডেল টেস্ট সম্পন্ন করেছেন!`;
+          notice.className = "text-xs sm:text-sm text-pink-300 font-bold flex items-center justify-center md:justify-start gap-1.5";
+        }
+        if (nextBtn) {
+          nextBtn.classList.remove('hidden');
+          nextBtn.innerHTML = `<span>📱 বাকি ৯৫টি টেস্ট আনলক (৳৪৯৯)</span> <span>→</span>`;
+          nextBtn.onclick = () => openBkashPaywallModal(appState.currentStream, 6);
+        }
+      } else {
+        if (paywallTeaser) paywallTeaser.classList.add('hidden');
+        if (nextBtn) {
+          nextBtn.innerHTML = `<span>পরবর্তী টেস্টে যান (Next Test)</span> <span>→</span>`;
+          nextBtn.onclick = () => loadNextUnlockedExam();
+        }
+        if (data.nextUnlocked) {
+          notice.innerHTML = `<span>🎉</span> অভিনন্দন! টেস্ট ০${appState.currentTestId + 1} সফলভাবে আনলক হয়েছে!`;
+          notice.className = "text-xs sm:text-sm text-emerald-400 font-bold flex items-center justify-center md:justify-start gap-1.5";
+          if (nextBtn) nextBtn.classList.remove('hidden');
+        } else {
+          notice.innerHTML = `<span>✓</span> টেস্ট সম্পন্ন হয়েছে।`;
+          notice.className = "text-xs sm:text-sm text-slate-400 font-bold flex items-center justify-center md:justify-start gap-1.5";
+        }
+      }
+
+      // Render Review Cards
+      renderReviewCards(current.questions);
+
+      // Render Subject Chart
+      renderSubjectAutopsyChart(current.questions);
+    }
+
+    function renderReviewCards(questions) {
+      const container = document.getElementById('results-review-feed');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const optionLetters = ['ক', 'খ', 'গ', 'ঘ'];
+
+      questions.forEach((q, idx) => {
+        const studentAns = appState.userAnswers[idx];
+        const correctIndex = (q.correct_index !== undefined) ? q.correct_index : 0;
+        const opts = q.options ? q.options : [q.option_a, q.option_b, q.option_c, q.option_d];
+
+        let statusBadge = '';
+        let cardBorder = 'border-slate-800';
+
+        if (studentAns === undefined || studentAns === null) {
+          statusBadge = '<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold text-xs">উত্তর করা হয়নি (০.০০)</span>';
+        } else if (studentAns === correctIndex) {
+          statusBadge = '<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-xs">✓ সঠিক উত্তর (+১.০০)</span>';
+          cardBorder = 'border-emerald-900/60 bg-emerald-950/10';
+        } else {
+          statusBadge = '<span class="px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-bold text-xs">✗ ভুল উত্তর (-০.২৫)</span>';
+          cardBorder = 'border-rose-900/60 bg-rose-950/10';
+        }
+
+        let optionsHtml = '';
+        opts.forEach((optText, optIdx) => {
+          let optClass = "p-3 rounded-xl border border-slate-800 bg-slate-950/70 text-slate-300 text-xs sm:text-sm flex items-center gap-2.5";
+          let marker = '';
+
+          if (optIdx === correctIndex) {
+            optClass = "p-3 rounded-xl border border-emerald-500 bg-emerald-950/80 text-emerald-200 font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-sm";
+            marker = '<span class="ml-auto text-emerald-400 font-bold text-xs">✓ সঠিক</span>';
+          } else if (optIdx === studentAns && studentAns !== correctIndex) {
+            optClass = "p-3 rounded-xl border border-rose-500 bg-rose-950/80 text-rose-200 font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-sm";
+            marker = '<span class="ml-auto text-rose-400 font-bold text-xs">✗ আপনার উত্তর</span>';
+          }
+
+          optionsHtml += `
+            <div class="${optClass}">
+              <span class="w-6 h-6 rounded bg-slate-800 font-bold text-xs flex items-center justify-center shrink-0">
+                ${optionLetters[optIdx]}
+              </span>
+              <span>${optText || ''}</span>
+              ${marker}
+            </div>
+          `;
+        });
+
+        const card = document.createElement('div');
+        card.className = `bg-slate-900 border ${cardBorder} rounded-2xl p-5 shadow space-y-3`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-sm">প্রশ্ন ${idx + 1}</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">${q.subject || ''}</span>
+              ${q.chapter ? `<span class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800/60 text-slate-400">${q.chapter}</span>` : ''}
+            </div>
+            ${statusBadge}
+          </div>
+
+          <div class="text-sm sm:text-base font-semibold text-white leading-relaxed pt-1">
+            ${q.question_bn || ''}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            ${optionsHtml}
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 bg-slate-950/50 rounded-xl p-3 space-y-1">
+            <div class="font-bold text-brand-400 flex items-center gap-1.5">
+              <span>📚 পাঠ্যবই নির্ভুল ব্যাখ্যা:</span>
+            </div>
+            <p class="leading-relaxed text-slate-300 font-medium">${q.explanation || 'এনসিটিবি পাঠ্যবই অনুসারে সঠিক উত্তর ব্যাখ্যা প্রদান করা হলো।'}</p>
+            ${q.book_reference ? `<div class="text-[11px] text-slate-400 font-semibold pt-1">রেফারেন্স: ${q.book_reference}</div>` : ''}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      if (window.renderMathInElement) {
+        window.renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function renderSubjectAutopsyChart(questions) {
+      const subjectStats = {};
+      questions.forEach((q, idx) => {
+        const s = q.subject || 'অন্যান্য';
+        if (!subjectStats[s]) subjectStats[s] = { total: 0, correct: 0, wrong: 0 };
+        subjectStats[s].total++;
+
+        const studentAns = appState.userAnswers[idx];
+        const correctIndex = (q.correct_index !== undefined) ? q.correct_index : 0;
+        if (studentAns === correctIndex) subjectStats[s].correct++;
+        else if (studentAns !== undefined && studentAns !== null) subjectStats[s].wrong++;
+      });
+
+      const labels = Object.keys(subjectStats);
+      const accuracies = labels.map(l => {
+        const item = subjectStats[l];
+        return Math.round((item.correct / item.total) * 100);
+      });
+
+      // Render Chart.js
+      const canvas = document.getElementById('exam-subject-chart');
+      if (!canvas) return;
+
+      if (appState.chartInstance) appState.chartInstance.destroy();
+
+      appState.chartInstance = new Chart(canvas, {
+        type: 'radar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'নির্ভুলতার হার (%)',
+            data: accuracies,
+            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+            borderColor: '#10b981',
+            pointBackgroundColor: '#10b981',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 100,
+              ticks: { color: '#94a3b8', backdropColor: 'transparent', stepSize: 20 },
+              grid: { color: '#334155' },
+              angleLines: { color: '#334155' },
+              pointLabels: { color: '#f8fafc', font: { size: 11, weight: 'bold' } }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Render textual subject summary
+      const listEl = document.getElementById('subject-performance-list');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      labels.forEach(subj => {
+        const st = subjectStats[subj];
+        const pct = Math.round((st.correct / st.total) * 100);
+        const item = document.createElement('div');
+        item.className = "bg-slate-950/70 rounded-xl p-3 border border-slate-800 flex items-center justify-between text-xs";
+        item.innerHTML = `
+          <div>
+            <div class="font-bold text-white text-sm">${subj}</div>
+            <div class="text-slate-400 text-[11px]">মোট: ${st.total} | সঠিক: ${st.correct} | ভুল: ${st.wrong}</div>
+          </div>
+          <div class="text-right">
+            <span class="font-mono font-black text-sm ${pct >= 75 ? 'text-emerald-400' : (pct >= 50 ? 'text-amber-400' : 'text-rose-400')}">${pct}%</span>
+            <div class="text-[10px] text-slate-500 font-semibold">নির্ভুলতা</div>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function retakeCurrentExam() {
+      openCustomModal({
+        title: "পরীক্ষা পুনরায় শুরু করবেন?",
+        subtitle: "বর্তমান চিহ্নিত উত্তরপত্র রিসেট হবে",
+        icon: "🔄",
+        iconTheme: "blue",
+        detailsHtml: `
+          <div class="text-xs text-slate-300 leading-relaxed text-center p-3.5 bg-blue-950/40 border border-blue-800/50 rounded-2xl">
+            আপনি কি বর্তমান পরীক্ষাটি আবার নতুন করে শুরু করতে চান? আপনার পূর্ববর্তী চিহ্নিত উত্তরপত্র এবং টাইমার পুনরায় সম্পূর্ণ সময় থেকে শুরু হবে।
+          </div>
+        `,
+        confirmText: "হ্যাঁ, পুনরায় শুরু করো",
+        cancelText: "বাতিল",
+        showCancel: true,
+        onConfirm: () => {
+          loadCurrentSelectedTest();
+        }
+      });
+    }
+
+    function loadNextUnlockedExam() {
+      const nextId = appState.currentTestId + 1;
+      if (nextId <= 100) {
+        if (isTestUnlocked(appState.currentStream, nextId)) {
+          appState.currentTestId = nextId;
+          document.getElementById('model-test-dropdown').value = nextId;
+          loadCurrentSelectedTest();
+        } else if (nextId > 5 && !isStreamPaid(appState.currentStream)) {
+          openBkashPaywallModal(appState.currentStream, nextId);
+        } else {
+          showLockedModal(nextId);
+        }
+      } else {
+        openCustomModal({
+          title: "সর্বশেষ টেস্ট সম্পন্ন",
+          subtitle: "১০০ মডেল টেস্ট সফল সমাপ্তি",
+          icon: "🎓",
+          iconTheme: "emerald",
+          detailsHtml: `
+            <div class="text-xs text-slate-300 leading-relaxed text-center p-3.5 bg-emerald-950/40 border border-emerald-800/50 rounded-2xl">
+              অভিনন্দন! আপনি সফলভাবে এই সিরিজের সকল ১০০টি মডেল টেস্ট সম্পন্ন করেছেন।
+            </div>
+          `,
+          confirmText: "ধন্যবাদ",
+          showCancel: false
+        });
+      }
+    }
+
+    // ============================================
+    // 100 TESTS GRID MODAL
+    // ============================================
+    function toggleTestGridModal() {
+      const modal = document.getElementById('grid-modal');
+      if (!modal) return;
+
+      if (modal.classList.contains('hidden')) {
+        renderTestGridCards();
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderTestGridCards() {
+      const container = document.getElementById('test-grid-cards');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const modalTitle = document.getElementById('grid-modal-title');
+      modalTitle.innerText = (appState.currentStream === 'medical') 
+        ? "📋 মেডিকেল ১০০ মডেল টেস্টের অগ্রগতি (১–৫ ফ্রি • ৬–১০০ প্রিমিয়াম)" 
+        : "📋 ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্টের অগ্রগতি (১–৫ ফ্রি • ৬–১০০ প্রিমিয়াম)";
+
+      const paid = isStreamPaid(appState.currentStream);
+
+      for (let i = 1; i <= 100; i++) {
+        const unlocked = isTestUnlocked(appState.currentStream, i);
+        const card = document.createElement('div');
+        const isFree = i <= 5;
+
+        if (unlocked) {
+          card.className = "cursor-pointer p-3 rounded-xl border border-emerald-500/60 bg-emerald-950/40 hover:bg-emerald-900/60 transition text-center shadow group";
+          card.onclick = () => {
+            appState.currentTestId = i;
+            document.getElementById('model-test-dropdown').value = i;
+            toggleTestGridModal();
+            loadCurrentSelectedTest();
+          };
+          card.innerHTML = `
+            <div class="flex items-center justify-between text-[10px] font-bold">
+              <span class="text-emerald-300">টেস্ট #${i}</span>
+              <span class="${isFree ? 'text-teal-300' : 'text-amber-300'}">${isFree ? '🎁 ফ্রি' : '👑 প্রিমিয়াম'}</span>
+            </div>
+            <div class="text-xs font-black text-white mt-1 group-hover:text-emerald-300">উন্মুক্ত ✓</div>
+          `;
+        } else {
+          if (!isFree && !paid) {
+            // Unpurchased Premium Test Card
+            card.className = "cursor-pointer p-3 rounded-xl border border-pink-500/50 bg-pink-950/20 hover:border-pink-500 hover:bg-pink-950/40 transition text-center shadow group";
+            card.onclick = () => {
+              toggleTestGridModal();
+              openBkashPaywallModal(appState.currentStream, i);
+            };
+            card.innerHTML = `
+              <div class="flex items-center justify-between text-[10px] font-bold">
+                <span class="text-pink-300">টেস্ট #${i}</span>
+                <span class="text-pink-400 font-extrabold">👑 ৳৪৯৯</span>
+              </div>
+              <div class="text-xs font-bold text-pink-200 mt-1 flex items-center justify-center gap-1 group-hover:scale-105 transition">🔒 আনলক করুন</div>
+            `;
+          } else {
+            // Sequentially Locked Test Card
+            card.className = "cursor-pointer p-3 rounded-xl border border-slate-800 bg-slate-950/60 text-center opacity-60 hover:opacity-100 transition";
+            card.onclick = () => showLockedModal(i);
+            card.innerHTML = `
+              <div class="flex items-center justify-between text-[10px] font-semibold text-slate-400">
+                <span>টেস্ট #${i}</span>
+                <span>${isFree ? 'ফ্রি' : 'প্রিমিয়াম'}</span>
+              </div>
+              <div class="text-xs font-bold text-slate-500 mt-1 flex items-center justify-center gap-1">🔒 লকড</div>
+            `;
+          }
+        }
+        container.appendChild(card);
+      }
+    }
+
+    // ============================================
+    // PAST 15 YEARS TESTS FLOW (NO SEQUENTIAL LOCK RULE)
+    // ============================================
+    function getActivePastYearList() {
+      const substream = appState.pastSubStream || 'medical';
+      if (appState.past15YearsData && Array.isArray(appState.past15YearsData[substream])) {
+        return appState.past15YearsData[substream];
+      }
+      if (Array.isArray(appState.past15YearsData)) {
+        return appState.past15YearsData;
+      }
+      return [];
+    }
+
+    function switchPastSubStream(substream) {
+      appState.pastSubStream = substream;
+      const btnMed = document.getElementById('past-btn-medical');
+      const btnVar = document.getElementById('past-btn-versity');
+      const titleEl = document.getElementById('past-year-stream-title');
+
+      if (substream === 'medical') {
+        if (btnMed) {
+          btnMed.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition bg-purple-600 text-white shadow";
+        }
+        if (btnVar) {
+          btnVar.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+        }
+        if (titleEl) titleEl.innerText = "মেডিকেল বিগত ১৫ বছরের প্রশ্নব্যাংক (২০১০ - ২০২৫)";
+      } else {
+        if (btnMed) {
+          btnMed.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+        }
+        if (btnVar) {
+          btnVar.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition bg-blue-600 text-white shadow";
+        }
+        if (titleEl) titleEl.innerText = "ভার্সিটি ও গুচ্ছ বিগত ১৫ বছরের প্রশ্নব্যাংক (২০১০ - ২০২৫)";
+      }
+      populatePastYearSelect();
+      renderPastYearView();
+    }
+
+    function populatePastYearSelect() {
+      const select = document.getElementById('past-year-select');
+      const list = getActivePastYearList();
+      if (!select || !list) return;
+      select.innerHTML = '';
+
+      list.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.session;
+        const totalQ = (item.questions && item.questions.length) ? item.questions.length : (item.total_questions || 100);
+        opt.text = `সেশন: ${item.session} (${totalQ}টি প্রশ্ন)`;
+        select.appendChild(opt);
+      });
+
+      if (list.length > 0) {
+        const exists = list.some(p => p.session === appState.activePastYear);
+        if (!exists) {
+          appState.activePastYear = list[0].session;
+        }
+        select.value = appState.activePastYear;
+      }
+    }
+
+    function loadPastYearTest(session) {
+      appState.activePastYear = session;
+      renderPastYearView();
+    }
+
+    function renderPastYearView() {
+      const list = getActivePastYearList();
+      const pastObj = list.find(p => p.session === appState.activePastYear) || list[0];
+      if (!pastObj) return;
+
+      appState.activePastYear = pastObj.session;
+      const select = document.getElementById('past-year-select');
+      if (select) select.value = pastObj.session;
+
+      document.getElementById('past-year-active-badge').innerText = `সেশন: ${pastObj.session}`;
+      const qCount = pastObj.questions ? pastObj.questions.length : (pastObj.total_questions || 100);
+      document.getElementById('past-year-question-count-badge').innerText = `${qCount}টি আসল প্রশ্ন`;
+
+      const container = document.getElementById('past-year-questions-container');
+      container.innerHTML = '';
+
+      const optionLetters = ['ক', 'খ', 'গ', 'ঘ'];
+
+      (pastObj.questions || []).forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow space-y-3";
+
+        const correctIndex = (q.correct_index !== undefined) ? q.correct_index : 0;
+        const opts = q.options ? q.options : [q.option_a, q.option_b, q.option_c, q.option_d];
+
+        let optionsHtml = '';
+        opts.forEach((optText, optIdx) => {
+          let optStyle = "p-3 rounded-xl border border-slate-800 bg-slate-950/70 text-slate-300 text-xs sm:text-sm flex items-center gap-2.5";
+          let badge = '';
+
+          // If show answers mode is on
+          if (appState.pastShowAnswers && optIdx === correctIndex) {
+            optStyle = "p-3 rounded-xl border border-purple-500 bg-purple-950/80 text-purple-200 font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow";
+            badge = '<span class="ml-auto text-purple-400 font-bold text-xs">✓ সঠিক উত্তর</span>';
+          }
+
+          optionsHtml += `
+            <div class="${optStyle}">
+              <span class="w-6 h-6 rounded bg-slate-800 text-slate-300 font-bold text-xs flex items-center justify-center shrink-0">
+                ${optionLetters[optIdx]}
+              </span>
+              <span>${optText || ''}</span>
+              ${badge}
+            </div>
+          `;
+        });
+
+        const examTypeBn = (pastObj.stream === 'versity' || appState.pastSubStream === 'versity') ? 'ভার্সিটি ও গুচ্ছ ভর্তি পরীক্ষা' : 'মেডিকেল ভর্তি পরীক্ষা';
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-purple-400 text-sm">প্রশ্ন ${idx + 1}</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">${q.subject || ''}</span>
+              ${q.chapter ? `<span class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800/60 text-slate-400 font-medium">${q.chapter}</span>` : ''}
+            </div>
+            <span class="text-[11px] font-semibold text-slate-500">${examTypeBn} ${pastObj.session}</span>
+          </div>
+
+          <div class="text-sm sm:text-base font-semibold text-white leading-relaxed pt-1">
+            ${q.question_bn || ''}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            ${optionsHtml}
+          </div>
+
+          ${appState.pastShowAnswers ? `
+            <div class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 bg-slate-950/60 rounded-xl p-3 space-y-1">
+              <div class="font-bold text-purple-400">💡 সমাধান ও নির্ভুল ব্যাখ্যা:</div>
+              <p class="leading-relaxed font-medium">${q.explanation || 'এনসিটিবি পাঠ্যবই ও বিগত বছরের প্রশ্নব্যাংকের ভিত্তিতে সঠিক উত্তর।'}</p>
+              ${q.book_reference ? `<div class="text-[11px] text-slate-400 pt-1">রেফারেন্স: ${q.book_reference}</div>` : ''}
+            </div>
+          ` : ''}
+        `;
+
+        container.appendChild(card);
+      });
+
+      if (window.renderMathInElement) {
+        window.renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function togglePastYearAnswerSheet() {
+      appState.pastShowAnswers = !appState.pastShowAnswers;
+      const btnText = document.getElementById('past-show-answer-text');
+      if (btnText) {
+        btnText.innerText = appState.pastShowAnswers ? "উত্তরপত্র লুকান (Hide Answers)" : "উত্তরপত্র দেখুন (Show Answers)";
+      }
+      renderPastYearView();
+    }
+
+    function startPastYearExam() {
+      const list = getActivePastYearList();
+      const pastObj = list.find(p => p.session === appState.activePastYear) || list[0];
+      if (!pastObj) return;
+
+      // Switch to model test view with pastObj as active
+      appState.currentTestObj = pastObj;
+      appState.currentStream = 'past_15years';
+      appState.examStatus = 'running';
+      appState.userAnswers = {};
+      appState.examStartTime = new Date();
+      appState.timerSecondsRemaining = (pastObj.duration_minutes || 60) * 60;
+
+      // Switch to model test view tab
+      document.getElementById('view-past-15years').classList.add('hidden');
+      document.getElementById('view-model-tests').classList.remove('hidden');
+
+      document.getElementById('exam-start-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.add('hidden');
+      document.getElementById('exam-active-card').classList.remove('hidden');
+
+      document.getElementById('answered-count-pill').innerText = '০';
+      document.getElementById('unanswered-count-pill').innerText = pastObj.questions.length;
+      document.getElementById('total-questions-pill').innerText = pastObj.questions.length;
+      const progBar = document.getElementById('exam-progress-bar');
+      if (progBar) progBar.style.width = '0%';
+
+      renderQuestionsFeed(pastObj.questions);
+      startCountdownTimer();
+
+      window.scrollTo({ top: 180, behavior: 'smooth' });
+    }
+
+    // ============================================
+    // TEXTBOOK KNOWLEDGE BASE (2,000 FACTS)
+    // ============================================
+    function onKbSearch(query) {
+      appState.kbSearchQuery = query.trim().toLowerCase();
+      appState.kbCurrentPage = 1;
+      renderKbFacts();
+    }
+
+    function filterKbBySubject(subj, btnEl) {
+      appState.kbSelectedSubject = subj;
+      appState.kbCurrentPage = 1;
+
+      document.querySelectorAll('.kb-chip').forEach(c => {
+        c.classList.remove('bg-amber-500', 'text-slate-950', 'active-kb-chip');
+        c.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      if (btnEl) {
+        btnEl.classList.add('bg-amber-500', 'text-slate-950', 'active-kb-chip');
+        btnEl.classList.remove('bg-slate-800', 'text-slate-300');
+      } else if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add('bg-amber-500', 'text-slate-950', 'active-kb-chip');
+        event.target.classList.remove('bg-slate-800', 'text-slate-300');
+      }
+
+      renderKbFacts();
+    }
+
+    function renderKbFacts() {
+      const container = document.getElementById('kb-facts-container');
+      if (!container || !appState.textbookKb) return;
+      container.innerHTML = '';
+
+      let filtered = appState.textbookKb;
+
+      // Filter by subject
+      if (appState.kbSelectedSubject !== 'All') {
+        const s = appState.kbSelectedSubject.toLowerCase();
+        filtered = filtered.filter(item => {
+          const subDisc = (item.sub_discipline || '').toLowerCase();
+          const subj = (item.subject || '').toLowerCase();
+          if (s === 'botany') return subDisc.includes('botany');
+          if (s === 'zoology') return subDisc.includes('zoology');
+          if (s === 'chem1') return subj.includes('chem') && subDisc.includes('1');
+          if (s === 'chem2') return subj.includes('chem') && subDisc.includes('2');
+          if (s === 'phys1') return subj.includes('phys') && subDisc.includes('1');
+          if (s === 'phys2') return subj.includes('phys') && subDisc.includes('2');
+          if (s === 'math') return subj.includes('math');
+          return true;
+        });
+      }
+
+      // Filter by search query
+      if (appState.kbSearchQuery) {
+        const q = appState.kbSearchQuery;
+        filtered = filtered.filter(item => {
+          return (item.topic && item.topic.toLowerCase().includes(q)) ||
+                 (item.chapter && item.chapter.toLowerCase().includes(q)) ||
+                 (item.author && item.author.toLowerCase().includes(q)) ||
+                 (item.exact_text_bn && item.exact_text_bn.toLowerCase().includes(q)) ||
+                 (item.keywords && item.keywords.toLowerCase().includes(q));
+        });
+      }
+
+      // Pagination
+      const totalFiltered = filtered.length;
+      const pageSize = appState.kbPageSize;
+      const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));
+      const page = Math.min(appState.kbCurrentPage, totalPages);
+      appState.kbCurrentPage = page;
+
+      const startIndex = (page - 1) * pageSize;
+      const pageItems = filtered.slice(startIndex, startIndex + pageSize);
+
+      // Update counters
+      document.getElementById('kb-showing-count').innerText = `${totalFiltered > 0 ? startIndex + 1 : 0} - ${Math.min(startIndex + pageSize, totalFiltered)}`;
+      document.getElementById('kb-total-count').innerText = totalFiltered;
+      document.getElementById('kb-page-indicator').innerText = `${page} / ${totalPages}`;
+
+      document.getElementById('btn-kb-prev').disabled = (page <= 1);
+      document.getElementById('btn-kb-next').disabled = (page >= totalPages);
+
+      // Render cards
+      pageItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow space-y-3 hover:border-slate-700 transition";
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 font-bold border border-amber-800">${item.subject}</span>
+              <span class="font-bold text-white text-xs">${item.chapter}</span>
+            </div>
+            <span class="text-amber-400 font-bold text-[11px]">⭐⭐⭐⭐⭐ প্রায়োরিটি</span>
+          </div>
+
+          <div class="text-sm font-bold text-amber-300">
+            ${item.topic}
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            ${item.exact_text_bn}
+          </p>
+
+          ${item.common_mcq_trap ? `
+            <div class="text-[11px] text-rose-300 font-semibold bg-rose-950/40 p-2.5 rounded-lg border border-rose-900/60">
+              ⚠️ ভর্তি পরীক্ষার ট্র্যাপ: ${item.common_mcq_trap}
+            </div>
+          ` : ''}
+
+          <div class="text-[11px] text-slate-400 pt-1 flex items-center justify-between">
+            <span class="font-semibold">লেখক: ${item.author}</span>
+            <span class="text-slate-500">${item.book_name}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      if (window.renderMathInElement) {
+        window.renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function prevKbPage() {
+      if (appState.kbCurrentPage > 1) {
+        appState.kbCurrentPage--;
+        renderKbFacts();
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+      }
+    }
+
+    function nextKbPage() {
+      appState.kbCurrentPage++;
+      renderKbFacts();
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
+
+    // ============================================
+    // NO-CALCULATOR SPEED MATH TRICKS
+    // ============================================
+    function renderNocalcTricks() {
+      const container = document.getElementById('nocalc-tricks-grid');
+      if (!container || !appState.nocalcTricks) return;
+      container.innerHTML = '';
+
+      appState.nocalcTricks.forEach((trick, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow space-y-3";
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 font-bold">
+              ট্রিক #${idx + 1}
+            </span>
+            <span class="text-slate-400 font-semibold">${trick.category || 'ঢাবি ক ইউনিট'}</span>
+          </div>
+
+          <h3 class="text-sm sm:text-base font-bold text-white">${trick.title_bn || ''}</h3>
+
+          <div class="text-xs sm:text-sm text-slate-300 bg-slate-950 p-3.5 rounded-xl border border-slate-800 font-mono leading-relaxed">
+            ${trick.technique || trick.description || ''}
+          </div>
+
+          ${trick.example ? `
+            <div class="text-xs text-emerald-300 font-medium bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
+              <strong class="text-white">উদাহরণ:</strong> ${trick.example}
+            </div>
+          ` : ''}
+        `;
+        container.appendChild(card);
+      });
+
+      if (window.renderMathInElement) {
+        window.renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // ============================================
+    // TOAST NOTIFICATIONS
+    // ============================================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      let borderCol = 'border-slate-700 bg-slate-900 text-white';
+      if (type === 'success') borderCol = 'border-emerald-500 bg-emerald-950 text-emerald-200';
+      if (type === 'error') borderCol = 'border-rose-500 bg-rose-950 text-rose-200';
+
+      toast.className = `px-4 py-3 rounded-2xl border shadow-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transform transition duration-300 translate-x-12 opacity-0 pointer-events-auto ${borderCol}`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : (type === 'error' ? '⚠️' : 'ℹ️')}</span> <span>${message}</span>`;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-x-12', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('translate-x-12', 'opacity-0');
+        setTimeout(() => {
+          if (toast && toast.remove) toast.remove();
+          else if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+      }, 4000);
+    }
+  
+print('=== 1. VERIFY INITAPP CAPPING UNPAID USER ===');
+print('Medical Paid: ' + appState.isMedicalPaid);
+print('Capped UnlockedMed: ' + appState.unlockedMed);
+print('localStorage unlockedMed: ' + localStorage.getItem('admission_unlocked_med'));
+
+print('
+=== 2. ATTEMPT TO LOAD TEST 6 ===');
+appState.currentTestId = 6;
+let paywallCalled = false;
+openBkashPaywallModal = function(stream, id) {
+    paywallCalled = true;
+    print('[PAYWALL POPUP ACTIVATED] Stream: ' + stream + ', TestId: ' + id + ', bKash: 01644265766');
+};
+loadCurrentSelectedTest();
+print('Test 6 isTestUnlocked: ' + isTestUnlocked('medical', 6));
+print('Start Exam Button Text: ' + capturedHtml['btn-start-exam']);
+
+print('
+=== 3. ATTEMPT TO START EXAM 6 (UNPAID) ===');
+startActiveExam();
+print('Exam status: ' + appState.examStatus);
+print('Paywall modal opened successfully: ' + paywallCalled);

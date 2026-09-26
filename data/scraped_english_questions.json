@@ -1,0 +1,5645 @@
+[
+  {
+    "question_bn": "The word \"electorate\" means–",
+    "options": [
+      "A piece of land",
+      "A body of voters",
+      "A law",
+      "Actually/ Infact"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We saw him at newmarket when he was supposed... At office",
+    "options": [
+      "To be",
+      "Being",
+      "Go",
+      "Attend"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is ____honours graduate",
+    "options": [
+      "a",
+      "an",
+      "the",
+      "No article"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The lights have been blown ---- by the strong wind.BCS:26",
+    "options": [
+      "away",
+      "off",
+      "out",
+      "up"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "This is the book I lost. Here\" I lost\" is --BCS:38th",
+    "options": [
+      "a noun phrase",
+      "an adjective clause",
+      "an adverbial clause",
+      "none of the three"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I have great respect _____ him.",
+    "options": [
+      "for",
+      "Of",
+      "to",
+      "in"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I seldom go to cinema here seldom is",
+    "options": [
+      "Noun",
+      "Verb",
+      "Adverb",
+      "Adjective"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What kind of noun is \"Class\"?",
+    "options": [
+      "Proper",
+      "Common",
+      "Collective",
+      "Material"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spellingMAT:20-21",
+    "options": [
+      "Soverenity",
+      "Sovereignty",
+      "Sovreinty",
+      "Sovreignty"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He insisted ___ seeing her.",
+    "options": [
+      "for",
+      "to",
+      "in",
+      "on"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We look forward ___a response from you.",
+    "options": [
+      "for receiving",
+      "to receive",
+      "to receiving",
+      "in receiving"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The lights have been blown ____ by the strong wind.",
+    "options": [
+      "Away",
+      "Out",
+      "Up",
+      "Off"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He had-------of fever",
+    "options": [
+      "Strong attack",
+      "Severe attack",
+      "Serious attack",
+      "bad attack"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Parcel' means -",
+    "options": [
+      "quarrel",
+      "Piece of land",
+      "Postage",
+      "Unobstructed view"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find the correct-",
+    "options": [
+      "This is a very unique case",
+      "This is a unique case",
+      "This is an unique case",
+      "This is the most unique case i ever seen!"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What kind of noun is 'cattle'?",
+    "options": [
+      "Proper",
+      "Common",
+      "Collective",
+      "Material"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A speech full of too many words is",
+    "options": [
+      "A verbose speech",
+      "Maiden speech",
+      "An unimportant speech",
+      "A big speech"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The discovery of penicillium was a _____event.",
+    "options": [
+      "Sensible",
+      "Sensational",
+      "Senile",
+      "Sensitive"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Panic seized me. (Passive)",
+    "options": [
+      "I was seized with panic",
+      "I was being seized by panic",
+      "I was seized by panic",
+      "I was seized from panic"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the adjective of\" marriage \"",
+    "options": [
+      "Marring",
+      "Emery",
+      "Marry",
+      "Nuptial"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The children were entrusted-------the care of their uncle.",
+    "options": [
+      "with",
+      "for",
+      "to",
+      "at"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A specialist in eye diseases is called _____",
+    "options": [
+      "A cardiologist",
+      "An Optician",
+      "A neurologist",
+      "An Ophthalmologist"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'এ বেঞ্চে কোনো জায়গা নেই'- এর সঠিক অনুবাদ কী?",
+    "options": [
+      "There is no bench in the room",
+      "There is no room in the bench",
+      "There is no space in the bench",
+      "There is no place in the bench"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Cut and dry\" means",
+    "options": [
+      "Humorous",
+      "Fixed",
+      "Secret",
+      "Brief"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I prefer swimming to ...............",
+    "options": [
+      "walk",
+      "walking",
+      "walked",
+      "walks"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the antonym of Fervor?",
+    "options": [
+      "Ardor",
+      "Apathy",
+      "Zeal",
+      "Charm"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "You should abstain ___ smoking",
+    "options": [
+      "by",
+      "of",
+      "from",
+      "within"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "This will put a slur ___ his name.",
+    "options": [
+      "in",
+      "of",
+      "on",
+      "into"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is quite ----- in dealing with people. BCS:31st",
+    "options": [
+      "unsubtle",
+      "imprudent",
+      "diplomatic",
+      "impolite"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is good ----- fishing .",
+    "options": [
+      "in",
+      "about",
+      "at",
+      "On"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym for Oblige-",
+    "options": [
+      "Bind",
+      "Require",
+      "Bother",
+      "Censure"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym of \"Anarchy \" is -",
+    "options": [
+      "Courtesy",
+      "Senior",
+      "Gullible",
+      "Order"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which word is similar to 'appal'?",
+    "options": [
+      "Deceive",
+      "Confuse",
+      "Dismay",
+      "Solicit"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "which of the following words in singular form?",
+    "options": [
+      "formulae",
+      "agenda",
+      "Oases",
+      "radius"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I Don't Mind(To Take) Sn Apple.",
+    "options": [
+      "Taking",
+      "Will Take",
+      "Would Take",
+      "Would Snatch"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The old man was tired of walking. Here 'walking' is a/an:",
+    "options": [
+      "Present participle",
+      "Adjective",
+      "Common noun",
+      "Gerund"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Hardly any of it _ written in blank verse.",
+    "options": [
+      "were",
+      "was",
+      "are",
+      "have been"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct one-BCS -12th",
+    "options": [
+      "Mispel",
+      "Misspel",
+      "Misspell",
+      "Misspal"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The teacher made the children ___ the book",
+    "options": [
+      "Reading",
+      "Read",
+      "To read",
+      "Reads"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct part of speech.Qs) He is a boy. Here \" a\" is .....",
+    "options": [
+      "Article",
+      "Noun",
+      "Adjective",
+      "None"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Go and catch the falling star. Here the \"falling\" is",
+    "options": [
+      "An adverb",
+      "A preposition",
+      "An adjective",
+      "A verb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I saw --- one-eyed man when I was walking on the road",
+    "options": [
+      "an",
+      "a",
+      "the",
+      "X"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Foot loose and fancy free' means -",
+    "options": [
+      "Imaginative",
+      "Unemployed",
+      "Whose foot is lost",
+      "Free to enjoy oneself"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which word is closest in meaning to Franchise?",
+    "options": [
+      "Utility",
+      "Frankness",
+      "Privilege",
+      "Superficial"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I will----MBBS admission test this year",
+    "options": [
+      "give",
+      "go for",
+      "appear at",
+      "continue"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of 'competent'?",
+    "options": [
+      "circumspect",
+      "discrete",
+      "capable",
+      "Prudent"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for \" panacea \" is --",
+    "options": [
+      "Inactivity",
+      "Cure all",
+      "Pandk",
+      "Prevail"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Parcel",
+    "options": [
+      "quarrel",
+      "piece of land",
+      "postage",
+      "unobstructed"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The rich should not look down---the poor",
+    "options": [
+      "at",
+      "for",
+      "towards",
+      "upon"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"pooh-pooh\" means-DU:18-19",
+    "options": [
+      "To accept",
+      "To reject",
+      "To respect",
+      "To take for granted"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the antonym for the word 'deformation'-",
+    "options": [
+      "Distortion",
+      "Contortion",
+      "Wholeness",
+      "Disfigurement"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym of \"crux\" is -",
+    "options": [
+      "Courtesy",
+      "Held",
+      "Trivial point",
+      "Spark"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct one",
+    "options": [
+      "Villain",
+      "Vilain",
+      "Villein",
+      "Vilein"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Our students ______ language and literature in their 4-year course.",
+    "options": [
+      "study just so",
+      "learn both of",
+      "study both",
+      "studies both"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I had two bananas for breakfast but _______ of those was fresh.",
+    "options": [
+      "both",
+      "either",
+      "neither",
+      "all"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There is ---- on the roads today.DU:01-02",
+    "options": [
+      "too many traffic",
+      "very much traffic",
+      "few traffic",
+      "too much traffic"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find out the correct sentence.",
+    "options": [
+      "There is no place in the bench",
+      "There is no seat in the bench",
+      "There is no space in the bench",
+      "There is no room in the bench"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She's become much more sure__herself since she got a job",
+    "options": [
+      "of",
+      "to",
+      "with",
+      "for"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am in class twelve. Here \"am\" is -(Ru-15-16)",
+    "options": [
+      "Cognate verb",
+      "Principle verb",
+      "Auxiliary verb",
+      "Factitive verb"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the meaning of 'soft soap'-",
+    "options": [
+      "Flatter for self motives",
+      "to speak ill of others",
+      "To speak high of others",
+      "to recognize others good deeds"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The team is ----- eleven players. BCS:24th",
+    "options": [
+      "made of",
+      "made up of",
+      "made up",
+      "made"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Ali would rather .......(sleep) than worked last night.",
+    "options": [
+      "Slept",
+      "Have slept",
+      "Have been slept",
+      "Will sleep"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is correct?",
+    "options": [
+      "The chair is made from wood",
+      "The chair is made by wood",
+      "The chair is made to wood",
+      "The chair is made of wood"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which word is closed meaning to 'Franchise'-",
+    "options": [
+      "Utility",
+      "Frankness",
+      "Privilege",
+      "Superficial"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The correct synonym of \"Mediocre\"",
+    "options": [
+      "Average",
+      "Industrious",
+      "Ordinary",
+      "Better"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Many prefer donating money ____ distributing clothes. [28th BCS]",
+    "options": [
+      "than",
+      "but",
+      "to",
+      "without"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "If I knew her name,I (to be) tell you.",
+    "options": [
+      "Will tell",
+      "Would tell",
+      "Tells",
+      "Told"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Walking is called the best exercise. Here Exercise is an/a -",
+    "options": [
+      "Participle",
+      "Gerund",
+      "Adjective",
+      "Noun"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is a plural number?",
+    "options": [
+      "Louse",
+      "Phenomena",
+      "Erratum",
+      "Mouse"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Prices for bicycles can run -------- TK. 200000",
+    "options": [
+      "As high as",
+      "So high as",
+      "As high to",
+      "As high for"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He longed ____ fame.",
+    "options": [
+      "after",
+      "ti",
+      "over",
+      "for"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The tree has been blown ____ by the storm.",
+    "options": [
+      "away",
+      "off",
+      "out",
+      "by"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We had ----- good breakfast yesterday.",
+    "options": [
+      "An",
+      "A",
+      "The",
+      "No article"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The meaning of the 'Obese' [27th BCS]",
+    "options": [
+      "Ugly",
+      "Tardy",
+      "Very fat",
+      "Obnoxious"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The Correct synonym of the word 'bounty' -",
+    "options": [
+      "Generosity",
+      "Familiar",
+      "Dividing line",
+      "Sympathy"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "কাঁচায় না নোয়ালে বাঁশ, পাকলে করে ঠাস ঠাস",
+    "options": [
+      "Take the bamboo down otherwise it sound much",
+      "Strike the iron while it is hot",
+      "Old bamboo always make sound",
+      "No pains no gain"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Select the correct spelling",
+    "options": [
+      "Expadient",
+      "Expedeint",
+      "Expediant",
+      "Expedient"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Hard & fast\" means-",
+    "options": [
+      "Difficult matter",
+      "Fixed",
+      "Easy matter",
+      "Loose"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for \"Abortive\" is–",
+    "options": [
+      "Successful",
+      "Delight",
+      "Unsuccessful",
+      "None of the above"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I'm sure I _____ Ramisa at Our house last night",
+    "options": [
+      "had seen",
+      "were seen",
+      "seen",
+      "saw"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The government gave ___ the demands of the people.",
+    "options": [
+      "in",
+      "in to",
+      "to",
+      "over"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of abolish",
+    "options": [
+      "Perform",
+      "Cancel",
+      "Creat",
+      "Generate"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of 'Delude'-",
+    "options": [
+      "Demand",
+      "Permit",
+      "Aggravate",
+      "Deceive"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Time after twilight & before night-----BCS:30th",
+    "options": [
+      "Evening",
+      "Dawn",
+      "Dusk",
+      "Eclipse"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the past form \" blow \"",
+    "options": [
+      "Blew",
+      "Belw",
+      "Blown",
+      "None"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I can play ----- flute",
+    "options": [
+      "The",
+      "A",
+      "An",
+      "X"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for \" delinquent'is -MAT:15-16",
+    "options": [
+      "bold",
+      "profuse",
+      "mild",
+      "offending"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Who hatched the plan ? Here \"hatched\" means( তৈরি করা)",
+    "options": [
+      "cut into",
+      "originated",
+      "dismantled",
+      "reported"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "At least one of the students ----full marks every time.",
+    "options": [
+      "Are getting",
+      "Get",
+      "Gets",
+      "Have got"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "সে আমার আপন ভাই।",
+    "options": [
+      "He is my brother",
+      "He is my step brother",
+      "He is my elder brother",
+      "He is my own brother"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which of the following sentence is correct?",
+    "options": [
+      "He is best today than before",
+      "He is comparatively better today",
+      "He is good today",
+      "He is better today"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Singular form of \"Data \"",
+    "options": [
+      "Data",
+      "Datas",
+      "Datum",
+      "Datam"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the noun of \" Do\"-?",
+    "options": [
+      "did",
+      "deed",
+      "does",
+      "done"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The correct adjective form of 'adjective' is---",
+    "options": [
+      "adjective",
+      "adjectival",
+      "adjectiving",
+      "adject"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The ring is made ______ gold",
+    "options": [
+      "Of",
+      "From",
+      "With",
+      "By"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the adjective form of \"Heart\"?BCS -12th",
+    "options": [
+      "Heart",
+      "Hearten",
+      "Heartening",
+      "Heartful"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct sentence.",
+    "options": [
+      "All of it depend on you",
+      "All of it are depending on you",
+      "All of it depends on you",
+      "All of it is depends on you"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "' Acid Test '",
+    "options": [
+      "First Test",
+      "Lost Test",
+      "Final Test",
+      "Happy life"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of 'rare'?",
+    "options": [
+      "Available",
+      "Unavailable",
+      "Scarce",
+      "Difficult"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A person who rules without consulting others-",
+    "options": [
+      "A democrat",
+      "Bureaucrat",
+      "Autocrat",
+      "Fanatic"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He comes ..... a respectable family",
+    "options": [
+      "Of",
+      "From",
+      "On",
+      "In"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The thief ____ the house last night.",
+    "options": [
+      "broken out",
+      "broken dawn",
+      "break in",
+      "broke into"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The Antonym of \"Adversity\" is---",
+    "options": [
+      "Misfortune",
+      "Antipathy",
+      "Difficulty",
+      "Privilege"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the meaning of the word \"euphemism\" -",
+    "options": [
+      "Vague idea",
+      "In offensive expression",
+      "Verbal play",
+      "Wise saying"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the plural number of Ovum???",
+    "options": [
+      "Ovumes",
+      "Ovums",
+      "Ova",
+      "Ovams"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of-' exhausted '",
+    "options": [
+      "plenty",
+      "stored",
+      "animated",
+      "drained"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He said that he was very pleased --------- my work.",
+    "options": [
+      "for",
+      "with",
+      "about",
+      "at"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am accustomed ___ such a life.",
+    "options": [
+      "of",
+      "with",
+      "to",
+      "from"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He went ___ college",
+    "options": [
+      "at",
+      "in",
+      "to",
+      "none"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is the correct sentence?",
+    "options": [
+      "I shall look upon the matter",
+      "I shall look into the matter",
+      "I shal look after the matter",
+      "I shall look for the matter"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The translation of 'আমরা না হেসে পারলাম না'-",
+    "options": [
+      "We did nothing but laugh",
+      "We laughed and did nothing else",
+      "We could not but laugh",
+      "We did laugh but could not do anything"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is the correct antonym of\"frugal\"?",
+    "options": [
+      "Extraordinary",
+      "Spendthrift",
+      "Economical",
+      "Authentic"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correctly spelled word-",
+    "options": [
+      "Tuberculosis",
+      "Tuberculisis",
+      "Tubarculosis",
+      "Tubarculisis"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Concern\" er correct synonym konta?",
+    "options": [
+      "Worry",
+      "negligence",
+      "apathy",
+      "indifference"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "আমি আম পছন্দ করি",
+    "options": [
+      "I like mango",
+      "I would like a mango",
+      "I like the mango",
+      "I like mangoes"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'স্পষ্ট কথা বলো'-এর সঠিক ইংরেজি অনুবাদ",
+    "options": [
+      "speak gently",
+      "Leave your words clearly",
+      "Tell a clear word",
+      "Call a spade a spade"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "IMPEDIMENT synonym",
+    "options": [
+      "Indication",
+      "Taste",
+      "Colour",
+      "Smell"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Suddenly he brust _____ tears",
+    "options": [
+      "out",
+      "of",
+      "into",
+      "on"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for 'Ascent ' is-- MAT:08-09,05-06",
+    "options": [
+      "regress",
+      "further",
+      "low down",
+      "jump"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The minister was accused ___corruption.(MAT :92-93)",
+    "options": [
+      "for",
+      "by",
+      "of",
+      "in"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of \"Exhausted \"? MAT:18-19",
+    "options": [
+      "Plenty",
+      "Stored",
+      "Animated",
+      "Drained"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The doctor took the round in the hospitals. Here round is a/an-DAT:17-18",
+    "options": [
+      "Adjective",
+      "Adverb",
+      "Noun",
+      "Verb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The phrase \"Achilles heel\" means-BCS:38th",
+    "options": [
+      "A strong point",
+      "A weak point",
+      "A permanent solution",
+      "A serious idea"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She died ____ COVID-19",
+    "options": [
+      "from",
+      "by",
+      "in",
+      "of"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I ......... the 9th letter of English alphabet.",
+    "options": [
+      "is",
+      "am",
+      "are",
+      "none"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The teacher became very angry___ me.",
+    "options": [
+      "at",
+      "about",
+      "of",
+      "with"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of 'commotion '?",
+    "options": [
+      "Emotion",
+      "Turmoil",
+      "Abnormal",
+      "None of the above"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Trees have _____ their leaves.",
+    "options": [
+      "cast away",
+      "cast dawn",
+      "cast",
+      "cast off"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am not bad----tennis",
+    "options": [
+      "in",
+      "at",
+      "about",
+      "with"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "With open arms",
+    "options": [
+      "Warmly",
+      "Resemble",
+      "Cold blooded",
+      "Coldly"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which is a common noun?",
+    "options": [
+      "Spouse",
+      "Son",
+      "Sir",
+      "Father"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The captain Joy &---- had a score of 30.DU:06-07",
+    "options": [
+      "I",
+      "me",
+      "us",
+      "myself"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Cricket enjoys a huge ____ in Bangladesh.",
+    "options": [
+      "Follow on",
+      "Fall out",
+      "Follows",
+      "Following"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which of the following is a complex sentence?",
+    "options": [
+      "Tell me the truth",
+      "I am sure of his success",
+      "Many foods are poisonous to us",
+      "This letter proves that he is honest"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym for Hibernation-",
+    "options": [
+      "Dormancy",
+      "Sluggishness",
+      "Democracy",
+      "Liviness"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which is the longest river -------- Europe?",
+    "options": [
+      "in",
+      "of",
+      "within",
+      "by"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Read the above sentence.\" Here Above is-",
+    "options": [
+      "Noun",
+      "Adjective",
+      "Adverb",
+      "Pronoun"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "My flight departs.......5 p.m.",
+    "options": [
+      "about",
+      "from",
+      "on",
+      "in"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A man is known ___ the company he keeps.",
+    "options": [
+      "at",
+      "to",
+      "by",
+      "With"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym of “delinquent” is-",
+    "options": [
+      "thrifty",
+      "harmony",
+      "offending",
+      "scantly"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He longed ----- fame .",
+    "options": [
+      "will",
+      "over",
+      "to",
+      "for"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Hard & fast 'means--",
+    "options": [
+      "Quick",
+      "Fixed",
+      "Rapid",
+      "Difficult"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word \"sibling\" means ---",
+    "options": [
+      "A brother",
+      "A sister",
+      "A brother or sister",
+      "An infant"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Credit Tk. 5000 ------- my account.",
+    "options": [
+      "In",
+      "With",
+      "Against",
+      "To"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Professor Razzak was scholar _______repute.",
+    "options": [
+      "of",
+      "in",
+      "after",
+      "by"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym of \"concord\" is -",
+    "options": [
+      "Harmony",
+      "Conflict",
+      "Thrifty",
+      "Scantly"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Red letter day\"means",
+    "options": [
+      "Bright day",
+      "Memorable day",
+      "Miserable day",
+      "Burning day"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The number of people ----negligible .",
+    "options": [
+      "was",
+      "is",
+      "are",
+      "has"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Panegyric means-",
+    "options": [
+      "Criticism",
+      "Curse",
+      "Elaborate praise",
+      "High Sound"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym of pardon",
+    "options": [
+      "mercy",
+      "Punishment",
+      "Clemncy",
+      "None"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I wait for a while, Here while is",
+    "options": [
+      "Noun",
+      "Pronoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the meaning of Sanction?",
+    "options": [
+      "Verify",
+      "Play",
+      "Prohibit",
+      "Authorization"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "May I know who I am talking_____?",
+    "options": [
+      "with",
+      "to",
+      "on",
+      "by"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The correct spelling is.",
+    "options": [
+      "Burocrat",
+      "Bureaucrat",
+      "Beaurocrat",
+      "Buroucrat"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The mother sat vigilantly beside the sick baby. Here\" vigilantly \"is ---BCS:37th",
+    "options": [
+      "a noun",
+      "an adjective",
+      "an adverb",
+      "none of three"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which book do you want? Here 'which' is a/an.....",
+    "options": [
+      "Noun",
+      "Adjective",
+      "Interrogative pronoun",
+      "None"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Where there is a will, there is a way. Here will is an/a-",
+    "options": [
+      "Adjective",
+      "Pronoun",
+      "Adverb",
+      "Noun"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "As the sun____, I decided to go out",
+    "options": [
+      "has shone",
+      "Shine",
+      "Shines",
+      "was shining"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "আমার একটি কম্পিউটার আছে।",
+    "options": [
+      "I have a computer",
+      "I had a computer",
+      "I has a computer",
+      "I am a computer"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She has _ her hair a beautiful shade of brown.",
+    "options": [
+      "coloured",
+      "given",
+      "dried",
+      "dyed"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The Antonym of \" Affluent\" is---",
+    "options": [
+      "Poor",
+      "Native",
+      "Disagreement",
+      "Retain"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is superior ___ me.",
+    "options": [
+      "a) than",
+      "b) that",
+      "c) from",
+      "d) to"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Pancea' means-",
+    "options": [
+      "Pancreatic",
+      "Widespread disease",
+      "Gland",
+      "Cure-all"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"To lose heart\" means -",
+    "options": [
+      "To lose courage",
+      "To have a heart attack",
+      "To fall in love",
+      "To be without passion"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Swimming is a good exercise . Here\" swimming \"is _",
+    "options": [
+      "Participle",
+      "Nominal",
+      "Gerund",
+      "Infinitive"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The art exhibition will be _ next week in Bangladesh Television.",
+    "options": [
+      "telecast",
+      "published",
+      "telecasted",
+      "broadcasted"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The prices of rice are _",
+    "options": [
+      "raising",
+      "risen",
+      "raised",
+      "rising"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I wanted the poster to _ .",
+    "options": [
+      "be hang",
+      "be hanged",
+      "be hung",
+      "hung"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "People 'lauded' Mandela's humanity, kindness and dignity. In this sentence, the present form of bold-faced word is _",
+    "options": [
+      "laude",
+      "led",
+      "lead",
+      "laud"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the past participle form of 'Split'?",
+    "options": [
+      "spoilt",
+      "spoiled",
+      "split",
+      "splitted"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The past participle form of the verb 'flow' is ____",
+    "options": [
+      "fled",
+      "flew",
+      "flowed",
+      "flown"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Hard and fast \" means",
+    "options": [
+      "Deep",
+      "Obvious",
+      "Honest",
+      "Spirited"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Silver-lining’ means-",
+    "options": [
+      "To observe",
+      "To remain neutral",
+      "Last work",
+      "Hope"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Razzmatazz means-",
+    "options": [
+      "A musical instrument",
+      "A well planned programme",
+      "A noisy activity",
+      "A musical activity"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Opposite to Deleterious-",
+    "options": [
+      "Toxic",
+      "Spurious",
+      "Harmless",
+      "Lethal"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The tree has been blown _ by a strong wind.",
+    "options": [
+      "up",
+      "out",
+      "away",
+      "by"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He works hard. Here hard is an/a-",
+    "options": [
+      "Noun",
+      "Verb",
+      "Adverb",
+      "Adjective"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'To smell a rat'",
+    "options": [
+      "to smell a bad smell",
+      "to misunderstand",
+      "to suspect a trick or deceit",
+      "to fall sick"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He was dedicated ------ his job.",
+    "options": [
+      "at",
+      "for",
+      "to",
+      "on"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "venerate means",
+    "options": [
+      "defame",
+      "Abuse",
+      "Respect",
+      "accuse"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the masculine gender of \"Mare\"?BCS :38th",
+    "options": [
+      "Stallion",
+      "Witch",
+      "Mermaid",
+      "Bear"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We are going to have our car fix before we go to dhaka",
+    "options": [
+      "Fixed",
+      "Fixing",
+      "No change",
+      "To have fix"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I finally killed the fly ___a rolled up newspaper. [BCS 25th]",
+    "options": [
+      "by",
+      "with",
+      "through",
+      "from"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Call to mind means -BCS:33rd",
+    "options": [
+      "fantasize",
+      "attend",
+      "remember",
+      "request"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Meteorology is related to–",
+    "options": [
+      "concrete slabs",
+      "motor vehicles",
+      "weather forecasting",
+      "motor neurone disease"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Panacea means-",
+    "options": [
+      "Pancreatic",
+      "gland",
+      "Cure-all",
+      "Widespread disease"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I finally killed the fly ---- a rolled up newspaper. BCS:25th",
+    "options": [
+      "by",
+      "with",
+      "through",
+      "from"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of \"incredible\"?",
+    "options": [
+      "Unbelievable",
+      "Unthinkable",
+      "Unlikely",
+      "Unthinking"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The headmaster __to speak to you..",
+    "options": [
+      "wants",
+      "was wanting",
+      "is wanting",
+      "has wanted"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The timely rain _ good crops____.",
+    "options": [
+      "brings in",
+      "brings about",
+      "brings up",
+      "brings forth"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The last word of the proverb, 'Handsome is that handsome --",
+    "options": [
+      "Works",
+      "Thinks",
+      "Says",
+      "Does"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Medium এর plural form",
+    "options": [
+      "Media",
+      "Medias",
+      "Medies",
+      "Mediums"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "My brother tried to resuscitate her, but doctors told us she died ___ the spot\".",
+    "options": [
+      "to",
+      "at",
+      "on",
+      "for"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He parted -----his friends in tears",
+    "options": [
+      "with",
+      "from",
+      "against",
+      "beside"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "It is time for _ his bad habits.",
+    "options": [
+      "Changes",
+      "Changed",
+      "Changing",
+      "Change"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Mother made the child ____.",
+    "options": [
+      "eating",
+      "eaten",
+      "eat",
+      "ate"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "How many times have you ____ your house broken into.",
+    "options": [
+      "been",
+      "had",
+      "be",
+      "have"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Did you really say that? You _ out of your mind!",
+    "options": [
+      "were to have been",
+      "have had to be",
+      "must have been",
+      "should have been"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The family doesn't feel ____ going outing this season.",
+    "options": [
+      "in",
+      "on",
+      "like",
+      "of"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "You should not run ____ fame.",
+    "options": [
+      "at",
+      "after",
+      "into",
+      "beside"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The present verb form of the word 'sworn' is ____",
+    "options": [
+      "swore",
+      "swor",
+      "swered",
+      "swear"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He was born in 1980. What kind of verb is it?",
+    "options": [
+      "transitive",
+      "intransitive",
+      "linking",
+      "non-finite"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Take one to task \" means ___",
+    "options": [
+      "Imidate",
+      "Rebuke",
+      "Resume",
+      "Restrain"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Ramisa burst ___ laughing",
+    "options": [
+      "into",
+      "out",
+      "in",
+      "to"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There is _ milk in the bottle",
+    "options": [
+      "very few",
+      "any",
+      "many",
+      "very little"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What kind of noun is the word \" cattle \"-?BCS:10th",
+    "options": [
+      "Proper",
+      "Common",
+      "Collective",
+      "Abstract"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She has no zest --------- music.",
+    "options": [
+      "To",
+      "in",
+      "For",
+      "At"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Nasreen, an interior decorator, designs____",
+    "options": [
+      "Furniture",
+      "The furniture",
+      "Furnitures",
+      "Some furniture"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She was sliding ___depression.",
+    "options": [
+      "into",
+      "of",
+      "on",
+      "at"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Give me ___ milk",
+    "options": [
+      "little",
+      "a few",
+      "a little",
+      "the little"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She had faith --- and hopes --- the future.",
+    "options": [
+      "to,for",
+      "in,in",
+      "for,in",
+      "in,for"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Everybody....... to school.",
+    "options": [
+      "go",
+      "goes",
+      "going",
+      "None of the above"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word panegyric means",
+    "options": [
+      "criticism",
+      "elaborate praise",
+      "curse",
+      "high sound"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "It is high time we (start) for home",
+    "options": [
+      "Start",
+      "Started",
+      "Starts",
+      "Will start"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I still have ______money.",
+    "options": [
+      "a few",
+      "quite a few",
+      "many",
+      "a little"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym: 'Well mannered'",
+    "options": [
+      "Decorous",
+      "Courteous",
+      "Chivalrous",
+      "Sassy"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He was addicted _____ smoking.",
+    "options": [
+      "for",
+      "in",
+      "to",
+      "with"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The heavens are above. Here above is -",
+    "options": [
+      "Noun",
+      "Preposition",
+      "Adverb",
+      "Verb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Adjective form of \"cow\"",
+    "options": [
+      "Bovine",
+      "Equine",
+      "Oxen",
+      "Vixen"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the plural form of the word ' louse'? BCS:38th",
+    "options": [
+      "Louses",
+      "Lice",
+      "Lices",
+      "Licess"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The paper is made ___ bamboo",
+    "options": [
+      "by",
+      "of",
+      "out",
+      "from"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the antonym of 'Honorary'?",
+    "options": [
+      "official",
+      "Honorable",
+      "salaried",
+      "Literary"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "the phrase \"sine die\" means",
+    "options": [
+      "Half heartedly",
+      "uncertain",
+      "fixed",
+      "doubtfully"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Translation of \" দোকানটি উঠে গিয়েছে \"",
+    "options": [
+      "The shop has gone up",
+      "The shop cannot be found",
+      "The shop has been closed down",
+      "The shop has moved"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She burst ___ tears at the sight of her son's misery.",
+    "options": [
+      "into",
+      "out",
+      "in",
+      "to"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "what is the masculine gender of \"Mare\"?",
+    "options": [
+      "Stag",
+      "Witch",
+      "Stallion",
+      "Vixen"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "It is I who ___ to blame.",
+    "options": [
+      "were",
+      "was",
+      "are",
+      "am"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I decided to go--------my friend as I needed some exercise.",
+    "options": [
+      "to a walk",
+      "for a walk",
+      "for a walking",
+      "walk"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He was all alone when I saw him. Here \"all\" is a/an.....",
+    "options": [
+      "Noun",
+      "Adverb",
+      "Adjective",
+      "Preposition"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find the correctly spelt word-",
+    "options": [
+      "Parallelled",
+      "Parralleled",
+      "Paralleled",
+      "Paraleled"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He took shelter under a tree.Here the verb \"took\" is",
+    "options": [
+      "transative",
+      "intransative",
+      "both a&b",
+      "neither a&b"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "33. 'Panacea' means",
+    "options": [
+      "cure all",
+      "Pancreatic",
+      "widespread disease",
+      "gland"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Bag and baggage",
+    "options": [
+      "All the clothing",
+      "Without any belonging",
+      "Leave",
+      "With all one's belongings"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is quite____in dealing with people.[31 BCS]",
+    "options": [
+      "Unsubtle",
+      "imprudent",
+      "diplomatic",
+      "impolite"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The Arabian Nights ---- still a great favourite. BCS:26th",
+    "options": [
+      "has",
+      "are",
+      "is",
+      "were"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Neither of the applicants..... Suitable for the post.",
+    "options": [
+      "is",
+      "are",
+      "have",
+      "had"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The synonym of 'Hospitality \" is-",
+    "options": [
+      "Hostility",
+      "Hospital",
+      "Welcome",
+      "Enmity"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "JIT was formed to investigate the crime. The JIT here is ______noun",
+    "options": [
+      "Abstract",
+      "Collective",
+      "Virtual",
+      "Concrete"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He has gone ____ the novel",
+    "options": [
+      "away",
+      "down",
+      "beyond",
+      "through"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Please, come again. Here please is a/an-",
+    "options": [
+      "Adverb",
+      "Pronoun",
+      "Noun",
+      "Verb"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The noun of 'bore' is",
+    "options": [
+      "boring",
+      "bores",
+      "bored",
+      "boredom"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A person who writes about his own life is called an",
+    "options": [
+      "Biography",
+      "Autobiography",
+      "Play",
+      "Drama"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "find the incorrectly spelled word",
+    "options": [
+      "psychology",
+      "seperate",
+      "receive",
+      "committee"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "My nephew __ chicken pox this weekend",
+    "options": [
+      "Came round with",
+      "Came along with",
+      "Came down with",
+      "Came over with"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Tasnova has been ill------three months.",
+    "options": [
+      "since",
+      "about",
+      "in",
+      "for"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He has run ___ debt after the inflation",
+    "options": [
+      "for",
+      "at",
+      "after",
+      "into"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Cul - de- sac means ---",
+    "options": [
+      "Selection",
+      "Dead end",
+      "Error",
+      "Bubble"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the meaning of 'white elephant'?",
+    "options": [
+      "An elephamt of white colour",
+      "a black marketer",
+      "a hoarder",
+      "A very costly or troublesome possession"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the plural form of the word 'fish'?",
+    "options": [
+      "Fishes",
+      "Fish",
+      "Fisheries",
+      "Many fish"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I have no taste __ music.",
+    "options": [
+      "for",
+      "at",
+      "to",
+      "in"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one of the following is correct?",
+    "options": [
+      "Excesive",
+      "Execessive",
+      "Excesive",
+      "Excessive"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym of \"exhausted\"",
+    "options": [
+      "plenty",
+      "stored",
+      "animated",
+      "drained"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one of the following is not a noun?",
+    "options": [
+      "Loneliness",
+      "Childhood",
+      "Purity",
+      "Fairly"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "My house is --- comfortable than my father's.",
+    "options": [
+      "very",
+      "to",
+      "much more",
+      "বহত জিয়াদা"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is not a adjective?",
+    "options": [
+      "Good",
+      "Well",
+      "Bad",
+      "Wrong"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling --",
+    "options": [
+      "Assasination",
+      "Assassination",
+      "Assassinasion",
+      "Asassination"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "correct sentence ?",
+    "options": [
+      "He found the books at sixes and sevens.",
+      "He found the books in sixes and sevens.",
+      "He found the books at sixes and seven",
+      "He found the books to six and sevens."
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Hate ( antonym)",
+    "options": [
+      "Admire",
+      "Abhor",
+      "Concern",
+      "Loathe"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is wise enough to accept the others. Here \"enough\" is ----",
+    "options": [
+      "Verb",
+      "Adverb",
+      "Adjective",
+      "Conjunction"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the misspelled",
+    "options": [
+      "Expedient",
+      "Exhilaration",
+      "Headach",
+      "Indispensable"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Fight shy of \" means ---",
+    "options": [
+      "Very shy",
+      "Avoid",
+      "Fight untidely",
+      "Fight constantly"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of panacia?",
+    "options": [
+      "Active",
+      "Inactive",
+      "Cure all",
+      "Curing"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A person who writes about his own life, writes-",
+    "options": [
+      "a biography",
+      "A diary",
+      "an autobiography",
+      "a chronicle"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct sentence:-",
+    "options": [
+      "1) I want you.",
+      "2)I am wanting you.",
+      "3)Both",
+      "None of the above"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Correct one___",
+    "options": [
+      "discipline",
+      "disipline",
+      "dissipline",
+      "descipline"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He insisted ___ seeing her",
+    "options": [
+      "in",
+      "to",
+      "for",
+      "on"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym of \" Urbane \"is-------",
+    "options": [
+      "Conflict",
+      "Regress",
+      "Rural",
+      "Uncouth"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Parts of speech... Speech-",
+    "options": [
+      "Noun",
+      "Adjective",
+      "Verb",
+      "Adverb"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Aware\" means___",
+    "options": [
+      "negotiate",
+      "ignorant",
+      "mindful",
+      "agreeable"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym for ‘Tractable’ is-",
+    "options": [
+      "Amenable",
+      "Refractory",
+      "Compliant",
+      "Docile"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The boy from the village said,\" I---starve than beg",
+    "options": [
+      "Better",
+      "rather",
+      "Would rather",
+      "Would better"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Do not cry ------- spilt milk",
+    "options": [
+      "Over",
+      "For",
+      "At",
+      "On"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Blockhead \" Correct antonym __",
+    "options": [
+      "absurd",
+      "unwise",
+      "bird brain",
+      "intellectual"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Ramisa is well now. Here well is an/a-",
+    "options": [
+      "Adjective",
+      "Adverb",
+      "Noun",
+      "Verb"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Gold & Silver _____ precious metals",
+    "options": [
+      "is",
+      "are",
+      "were",
+      "X"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Yesterday I _____ an old friend.",
+    "options": [
+      "came out",
+      "came on",
+      "came across",
+      "came from"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Words inscribed on tomb is an- [43rd BCS]",
+    "options": [
+      "Epitome",
+      "Epithet",
+      "Episode",
+      "Epitaph"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Feminine Gender of \" Buck \"",
+    "options": [
+      "Bee",
+      "Cow",
+      "Doe",
+      "Bitch"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He advised me ....... the doctor",
+    "options": [
+      "saw",
+      "to see",
+      "Seeing",
+      "see"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word 'bounty' is closest in meaning to",
+    "options": [
+      "a)generosity",
+      "b)familiar",
+      "c)dividing line",
+      "d)sympathy"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Rainfall শব্দটি",
+    "options": [
+      "Noun",
+      "Verb",
+      "Adverb",
+      "None of these"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The cricket match was telecast live. Here \"live \" is---",
+    "options": [
+      "Adjective",
+      "Verb",
+      "Adverb",
+      "Noun"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Times are hard & we have to husband our resources . Here \" Husband \" is a/an-",
+    "options": [
+      "Adjective",
+      "Noun",
+      "Verb",
+      "Adverb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I agree ___ this proposal",
+    "options": [
+      "with",
+      "on",
+      "to",
+      "by"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Once in a blue moon' means ---",
+    "options": [
+      "always",
+      "Very rarely",
+      "Nearly",
+      "Hourly"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Please leave your key------- the reception",
+    "options": [
+      "In",
+      "On",
+      "At",
+      "With"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word 'dilly-dally'means--",
+    "options": [
+      "to dilute",
+      "to start",
+      "to get rid of",
+      "waste time"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What kind of noun is 'infantry''?",
+    "options": [
+      "Abstract",
+      "Common",
+      "Collective",
+      "Material"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "____ types of investments go up or down in value at the same time.",
+    "options": [
+      "Not",
+      "Not all",
+      "Not at all",
+      "Not only"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Each of the sons followed ______ father's trade",
+    "options": [
+      "their",
+      "her",
+      "whose",
+      "his"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Love for the whole world is called-",
+    "options": [
+      "Misogyny",
+      "Benevolence",
+      "Misanthropy",
+      "Philanthropy"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "N.B stands for----",
+    "options": [
+      "Note boldly",
+      "No bar",
+      "Note before",
+      "Nota bene"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Bengalis are (innate) poets-",
+    "options": [
+      "Excellent",
+      "Inborn",
+      "Dull",
+      "Born"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find correct spelling -",
+    "options": [
+      "conttroversy",
+      "controversy",
+      "controvarsy",
+      "controvirsy"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A roilling stone gathers no moss. Here rolling is an/a-",
+    "options": [
+      "Adjective",
+      "Verb",
+      "Gerund",
+      "Present Participle"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We have enough food. Here \"enough\" is ---",
+    "options": [
+      "Verb",
+      "Adverb",
+      "Noun",
+      "Adjective"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word 'culinary ' related to-",
+    "options": [
+      "Dress",
+      "Cooking",
+      "Musical instruments",
+      "Printing"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the antonym of \"Grievance\"",
+    "options": [
+      "peace",
+      "Happiness",
+      "distress",
+      "discomfort"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I'm sure I _____ him at the party last night",
+    "options": [
+      "had seen",
+      "seen",
+      "saw",
+      "were seen"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word ' permissive' implies",
+    "options": [
+      "humble",
+      "law-abiding",
+      "liberal",
+      "submissive"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The ball is moving _____ the box.",
+    "options": [
+      "far from",
+      "away from",
+      "near from",
+      "No preposition"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Gloomy (antonym)",
+    "options": [
+      "Dark",
+      "Grey",
+      "Bright",
+      "Plane"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym: Friendship",
+    "options": [
+      "Bitterness",
+      "Dislike",
+      "Loggerheads",
+      "Enmity"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "One those who are not serious to their success work by ____ and starts.",
+    "options": [
+      "fits",
+      "against time",
+      "Long odds",
+      "every inch"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "This is ________ unique case",
+    "options": [
+      "an",
+      "a",
+      "a very",
+      "the most"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of paradox?",
+    "options": [
+      "Exaggeration",
+      "Hyperbole",
+      "Contradiction",
+      "Invective"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The team is -----eleven players.",
+    "options": [
+      "Made of",
+      "Made up",
+      "Made up of",
+      "Made"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He insisted ____ seeing her",
+    "options": [
+      "on",
+      "in",
+      "for",
+      "to"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling------",
+    "options": [
+      "Assesment",
+      "Assessment",
+      "Asessment",
+      "Ascessment"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I have...... interest in the matter?",
+    "options": [
+      "Not",
+      "Any",
+      "None",
+      "No"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There is no alternative---training",
+    "options": [
+      "to",
+      "for",
+      "than",
+      "of"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He died ___ his wounds.",
+    "options": [
+      "of",
+      "for",
+      "to",
+      "from"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am ____ car",
+    "options": [
+      "on",
+      "at",
+      "to",
+      "in"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Hard & fast\" means -",
+    "options": [
+      "Difficult matter",
+      "Fixed",
+      "Loose",
+      "Easy matter"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is the only child . Here Child is a/an-",
+    "options": [
+      "Adverb",
+      "Adjective",
+      "Noun",
+      "Pronoun"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Do you have some Money ____ your pocket.",
+    "options": [
+      "of",
+      "on",
+      "With",
+      "in"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Right Spelling",
+    "options": [
+      "parlament",
+      "parleament",
+      "perliamant",
+      "parliament"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "শাস্তি দেওয়া-",
+    "options": [
+      "Bring on book",
+      "Bring to light",
+      "Bring in light",
+      "Bring to book"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Teacher said,'The earth ----round the sun'",
+    "options": [
+      "moved",
+      "moves",
+      "has moved",
+      "will be moving"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Bottom line' means-",
+    "options": [
+      "The final step",
+      "The end of the road",
+      "The last line of a book",
+      "The essential point"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I got my car ____",
+    "options": [
+      "repairing",
+      "repaired",
+      "have repaired",
+      "to be repaired"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the antonym of 'queer'?",
+    "options": [
+      "Integrated",
+      "Orderly",
+      "abnormal",
+      "Odd"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" All at once \" means",
+    "options": [
+      "Slowly",
+      "Quickly",
+      "Gradually",
+      "Suddenly"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Boot leg \" means ------",
+    "options": [
+      "Distribute",
+      "Export",
+      "Import",
+      "Smuggle"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He joined --- army",
+    "options": [
+      "No article",
+      "to the",
+      "the",
+      "an"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She takes ____ her mother.",
+    "options": [
+      "over",
+      "down",
+      "by",
+      "after"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "42nd BCSWhat is the meaning of musk?",
+    "options": [
+      "a form of drama",
+      "a face cover",
+      "a substance used in making perfume",
+      "a disguise"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Take one to task \" means -----",
+    "options": [
+      "To question",
+      "To praise",
+      "To flatter",
+      "To rebuke"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct",
+    "options": [
+      "A.Entreprenor",
+      "B.Entrepreneur",
+      "C Entreprenror",
+      "D.Enterprener"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "আমার মাথা ঘুরছে",
+    "options": [
+      "I feel nausea",
+      "I feel flatulent",
+      "I feel smacking",
+      "I feel giddy"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "When water _____it turns into ice.",
+    "options": [
+      "Will freeze",
+      "Freezes",
+      "Would freeze",
+      "Freoze"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The police is looking__the case",
+    "options": [
+      "by",
+      "for",
+      "into",
+      "in"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He came ____ a good family",
+    "options": [
+      "by",
+      "from",
+      "to",
+      "of"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The class was held ‘online’ Here ‘online’ is-",
+    "options": [
+      "an adverb",
+      "a verb",
+      "An adjective",
+      "a noun"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym of \" Foreign \"",
+    "options": [
+      "Home",
+      "Native",
+      "Emigrant",
+      "Immigrant"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Out and out' means-",
+    "options": [
+      "not at all",
+      "Thoroughly",
+      "to be last",
+      "man of outside"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Measles had broken ____ in the village.",
+    "options": [
+      "into",
+      "through",
+      "out",
+      "in"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of \"Courteous\"",
+    "options": [
+      "Omnipotent",
+      "Gracious",
+      "Denounce",
+      "Priority"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Many a ____ had tried but a few ___ succeeded.",
+    "options": [
+      "men, men",
+      "girl, girl",
+      "man, men",
+      "boys,boy"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is the correct antonym of 'frugal'?",
+    "options": [
+      "Extraordinary",
+      "Spendthrift",
+      "Economical",
+      "Authentic"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Correct",
+    "options": [
+      "Supercede",
+      "Supersed",
+      "Suparced",
+      "Supersede"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Slow and steady ____ the race.",
+    "options": [
+      "win",
+      "won",
+      "wins",
+      "had won"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I was used to____ up early.",
+    "options": [
+      "get",
+      "gets",
+      "getting",
+      "got"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A Synonym for 'Appropriate ' is",
+    "options": [
+      "Aapproximate",
+      "exact",
+      "suitable",
+      "common"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The phrase\" Achilles heel\" means??",
+    "options": [
+      "A strong point",
+      "A serious idea",
+      "A permanent solution",
+      "A weak point"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Correct spelling:",
+    "options": [
+      "Miscellaneous",
+      "Missceleneous",
+      "Misseleneous",
+      "Miscelaneous"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Ramisa is afraid _____ the dog",
+    "options": [
+      "by",
+      "for",
+      "to",
+      "of"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He said that he_______the previous day.",
+    "options": [
+      "has come",
+      "had come",
+      "came",
+      "arrived"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "We should have no sympathy ____ war criminals of 1971.",
+    "options": [
+      "at",
+      "for",
+      "to",
+      "with"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the plural form of the word ‘deer’?",
+    "options": [
+      "deers",
+      "Deer",
+      "Dear",
+      "Many deer"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which of the following words can be used as a verb?",
+    "options": [
+      "mister",
+      "Master",
+      "Mistress",
+      "Mastery"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Misanthropist means--",
+    "options": [
+      "A hater of mankind",
+      "A hater of evoloution",
+      "A hater of soil",
+      "A hater of love"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is ____ home now",
+    "options": [
+      "in",
+      "on",
+      "None",
+      "at"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "All vegetables ___good for you.",
+    "options": [
+      "is",
+      "are",
+      "were",
+      "None"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct one.",
+    "options": [
+      "superceed",
+      "supercede",
+      "supersede",
+      "superseed"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Fill in the blanks with correct option-___ is considered a serious crime.",
+    "options": [
+      "Shoplifter",
+      "Shoplift",
+      "To shoplifting",
+      "Shoplifting"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "It's time you------your mistakes.",
+    "options": [
+      "realize",
+      "realized",
+      "would realize",
+      "have realized"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the right form of verb: I have the (little) money",
+    "options": [
+      "a.slightest",
+      "b.little",
+      "c.least",
+      "d.less"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The Padma abounds _____ Hilsha fish",
+    "options": [
+      "in",
+      "to",
+      "by",
+      "with"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Opposite gender of 'doctor' -",
+    "options": [
+      "Lady doctor",
+      "Doctress",
+      "Nurse",
+      "Doctorex"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym of \"advancing\"___",
+    "options": [
+      "forwarding",
+      "retreating",
+      "running",
+      "progressing"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "_____ the bread dough for 30 minutes in a hot oven",
+    "options": [
+      "Steam",
+      "Fry",
+      "Bake",
+      "Grill"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He ____ fire accident",
+    "options": [
+      "died from",
+      "died in",
+      "died away",
+      "died by"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "which is incorrect spelling",
+    "options": [
+      "Fluctuation",
+      "Remission",
+      "Occassion",
+      "decision"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"A lion may be helped even by a little mouse\" make it active.",
+    "options": [
+      "A little mouse may even help a lion",
+      "Even a little mouse may help a lion",
+      "A little mouse can even help a lion",
+      "Even a little mouse ought to help a lion"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is Feminine Gender?",
+    "options": [
+      "Sun",
+      "Winter",
+      "Moon",
+      "Sky"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The idiom 'Put up with ' means",
+    "options": [
+      "Protect",
+      "Keep trust",
+      "Stay together",
+      "Tolerate"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I have been living Dhaka ____2000",
+    "options": [
+      "Since",
+      "From",
+      "After",
+      "Till"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym of indigenous",
+    "options": [
+      "Alien",
+      "Remote",
+      "Domestic",
+      "International"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "পাপ বাপকেও ছাড়ে না",
+    "options": [
+      "ক) Look after you leap.",
+      "খ) To hide in a superficial way.",
+      "গ) Better an empty house than an ill tenant .",
+      "ঘ)Every sin carries its own punishment."
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Blue blood' means-",
+    "options": [
+      "aristocratic birth",
+      "scoundrel",
+      "sound health",
+      "blood of king"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Love for the whole world is called--",
+    "options": [
+      "Misogyny",
+      "Philanthropy",
+      "Misanthropy",
+      "Benevolence"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is addicted....... gambling",
+    "options": [
+      "With",
+      "For",
+      "To",
+      "In"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The doctor took the round in the hospital. Here around is a/an",
+    "options": [
+      "Noun",
+      "Adjective",
+      "Verb",
+      "Adverb"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Pediatric \" relates to the treatment of ------",
+    "options": [
+      "Adults",
+      "Children",
+      "Old people",
+      "Women"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "' Hardly ' means",
+    "options": [
+      "Always",
+      "Almost not",
+      "Seriously",
+      "Regularly"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Gala Day \"",
+    "options": [
+      "A bad day",
+      "A day of sorrow",
+      "A day of festivity",
+      "A day of full rain"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Three-fourths of the assignment-----",
+    "options": [
+      "is finish",
+      "have been finished",
+      "have finished",
+      "has been finished"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A speech full of too many words is:",
+    "options": [
+      "A big speech",
+      "Maiden speech",
+      "an unimportant speech",
+      "A verbose speech"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "This line is adapted _____ the poem 'Patriotism'.",
+    "options": [
+      "of",
+      "by",
+      "to",
+      "from"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The building – left unoccupied since 1950.",
+    "options": [
+      "Would be",
+      "Will be",
+      "Would being",
+      "has been"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the proper antonym for \"waver\"?",
+    "options": [
+      "Determine",
+      "Sway",
+      "Very",
+      "Develop"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'To meet trouble half-way'-means-",
+    "options": [
+      "to get nervous",
+      "to be disappointed",
+      "to bear up",
+      "to be puzzled"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "This is the go of the world. Here go is an/a-",
+    "options": [
+      "Adjective",
+      "Verb",
+      "Noun",
+      "Adverb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "antonym of \" facilitate\" is-",
+    "options": [
+      "hide",
+      "hallow",
+      "hamper",
+      "hold"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Correct spelling",
+    "options": [
+      "Supercede",
+      "Supersed",
+      "Suparsede",
+      "Supersede"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for\" sanction \" is",
+    "options": [
+      "verify",
+      "Play",
+      "Docile",
+      "Authorization"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of Genesis",
+    "options": [
+      "introduction",
+      "Preface",
+      "beginning",
+      "foreword"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym for ‘Urbane’ is -",
+    "options": [
+      "Rural",
+      "Regress",
+      "Conflict",
+      "Uncouth"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym: 'Native'",
+    "options": [
+      "Real",
+      "Alien",
+      "Congenital",
+      "Inborn"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Hardly ---- entered the office when he realized that he had forgotten his wallet.",
+    "options": [
+      "arrival",
+      "he had",
+      "had he",
+      "was he"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Nowadays many villages are lit----electricity",
+    "options": [
+      "With",
+      "By",
+      "From",
+      "On"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am looking forward ........ you",
+    "options": [
+      "seeing",
+      "to seeing",
+      "to see",
+      "to have seen"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "36th BCSProfessor Razzak was a scholar ___refute.",
+    "options": [
+      "in",
+      "of",
+      "after",
+      "by"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The girl ____ tears",
+    "options": [
+      "burst onto",
+      "burst out",
+      "burst into",
+      "burst in"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The meeting has come to a close. Here close is",
+    "options": [
+      "Noun",
+      "Adverb",
+      "Adjective",
+      "Preposition"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct one:",
+    "options": [
+      "mispel",
+      "Misspel",
+      "misspell",
+      "mispell"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct sentence -",
+    "options": [
+      "Why you have done this?",
+      "Why have you done this?",
+      "Why you has done this?",
+      "Why has you done this?"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Alluring means-",
+    "options": [
+      "Unexpected",
+      "Tempting",
+      "Disappointing",
+      "Ordinary"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find the correct spell word-",
+    "options": [
+      "Satellit",
+      "Satelite",
+      "Setellite",
+      "Satellite"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" আমি মেডিকেল কলেজে ভর্তি হতে চাই\" বাক্যটির সঠিক ইংরেজি কি হবে?",
+    "options": [
+      "I want to admitted a medical college",
+      "I get myself admitted into a medical College",
+      "I want to get admitted a medical College",
+      "I want to get meself admitted into a medical College."
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Change the voice. 'Nobody trusts a traitor. ' [43rd BCS]",
+    "options": [
+      "A traitor is trusted",
+      "A traitor should not be trusted",
+      "Everybody hates a traitor",
+      "A traitor is not trusted by anybody"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym of \"forward \" is-",
+    "options": [
+      "Mature",
+      "Advanced",
+      "Backward",
+      "Clear"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I have told you twice.Here 'twice' is-",
+    "options": [
+      "Adverb",
+      "Noun",
+      "Adjective",
+      "Preposition b"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"আমার মাথা ঘুরছে\"___",
+    "options": [
+      "I feel round on my head",
+      "I feel nausea",
+      "My head feels round",
+      "I feel giddy"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "As you sow, ____________ .",
+    "options": [
+      "so shall you reap",
+      "so shall one reaps",
+      "so shall he reaps",
+      "so shall she reaps"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct sentence:",
+    "options": [
+      "He died of poison",
+      "He died by over eating",
+      "He died from cholera",
+      "He died for his country"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "‘He lives----- honest means’. (M.A.T. 18-19, 11-12)",
+    "options": [
+      "on",
+      "for",
+      "within",
+      "by"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I shall avail myself ____ the morning bus",
+    "options": [
+      "for",
+      "on",
+      "to",
+      "of"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Identify the word which is spelt incorrectly. [43rd BCS]",
+    "options": [
+      "Fluctuation",
+      "Remission",
+      "Ocassion",
+      "Decision"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An ordinance is-",
+    "options": [
+      "A state",
+      "A story",
+      "A law",
+      "A function"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Ramisa believes _____ ghost 👻",
+    "options": [
+      "of",
+      "at",
+      "on",
+      "in"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "In view ------ what you say, I pardon you this time",
+    "options": [
+      "In",
+      "For",
+      "Up",
+      "Of"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What are you so angry.........?(BCS qs)",
+    "options": [
+      "at",
+      "for",
+      "about",
+      "with"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I applied ___ him for the post.",
+    "options": [
+      "to",
+      "of",
+      "on",
+      "with"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The synonym of \"Efface\"",
+    "options": [
+      "Improve",
+      "Rub out",
+      "Exhaust",
+      "Cut out"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Sheep শব্দটি____",
+    "options": [
+      "singular",
+      "Plural",
+      "Singular & plural",
+      "None of these"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He will set __ a shop __ the end",
+    "options": [
+      "up, at",
+      "for, in",
+      "of, by",
+      "up, to"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The cricket match was telecast live.Here \"live \" is---",
+    "options": [
+      "Adjective",
+      "Noun",
+      "Adverb",
+      "Verb"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The plural for of \"Sheep\" is-",
+    "options": [
+      "sheeps",
+      "ships",
+      "sheepes",
+      "sheep"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "You are --- Nazrul, I see.",
+    "options": [
+      "a",
+      "the",
+      "an",
+      "none"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which of the following compound sentence content an illative conjunction?",
+    "options": [
+      "Sheraj as well as Anwar was present",
+      "I was annoyed ,still I kept quiet",
+      "Neither a borrower , nor a lender be",
+      "He was sincere , and so he joined prominence."
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'Razzmatazz' means--(BCS:24)",
+    "options": [
+      "a) A musical instrument",
+      "b) A well-planned programme",
+      "c) A noisy activity",
+      "d) A musical activity"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "One of the major.........load shedding.",
+    "options": [
+      "problem is",
+      "problems are",
+      "problem are",
+      "problems is"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Many a man __ succumbed to such temptation.",
+    "options": [
+      "A. Get",
+      "B. Are",
+      "C. Have",
+      "D. Has"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Verb form of 'popular'---",
+    "options": [
+      "Popularity",
+      "Population",
+      "Popularise",
+      "People"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Everyone is ambitious____getting power",
+    "options": [
+      "of",
+      "for",
+      "about",
+      "towards"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling?",
+    "options": [
+      "A.entreprenor",
+      "B.entrepreneor",
+      "C.entrepreneur",
+      "D.enterpreneur"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "an extra message added at the end of a letter after it is signed is called_____",
+    "options": [
+      "Corrigendum",
+      "Postscript",
+      "NB",
+      "RSVP"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A herculean task is one which is ---",
+    "options": [
+      "easily accomplished",
+      "quickly Done",
+      "accomplished with great difficulty",
+      "never finished"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "what is the meaning of the phrase 'Hold water'?",
+    "options": [
+      "Keep water",
+      "Drinking water",
+      "Bear examination",
+      "Store"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Find out the correct spelling",
+    "options": [
+      "Jewelery",
+      "Jewellry",
+      "Jwellry",
+      "Jewellery"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The correct spelling is-",
+    "options": [
+      "Dilema",
+      "Dilemma",
+      "Dillema",
+      "Delema"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "No order__yet been passed",
+    "options": [
+      "Had",
+      "Have",
+      "Has",
+      "Are"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am not good ___ preposition.",
+    "options": [
+      "in",
+      "to",
+      "at",
+      "about"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "She got her servent help her in the work",
+    "options": [
+      "Help",
+      "To help",
+      "Helped",
+      "Helping"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He_____ arrested if he had tried to leave the country.",
+    "options": [
+      "would have",
+      "would",
+      "must be",
+      "would have been"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Plebiscite is a term related to-",
+    "options": [
+      "Medicine",
+      "Politics",
+      "Law",
+      "Technology"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym for 'Queer' is-",
+    "options": [
+      "Integrated",
+      "Crafty",
+      "Orderly",
+      "Stupid"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He (work) in the post office for twenty years",
+    "options": [
+      "Have been working",
+      "Has been working",
+      "Working",
+      "Worked"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Lexicographer is related to-",
+    "options": [
+      "Geography",
+      "Psychology",
+      "Biology",
+      "Dictionary"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There were _____ guests than I expected.",
+    "options": [
+      "Few",
+      "Less",
+      "Fewer",
+      "Lesser"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym of \"bargain\" is",
+    "options": [
+      "talking",
+      "ally",
+      "malicious",
+      "negotiate"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He parted ---- his friends in tears.",
+    "options": [
+      "with",
+      "from",
+      "against",
+      "beside"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The tall gentleman _ by the door is the bank manager.",
+    "options": [
+      "who standing",
+      "is standing",
+      "stands",
+      "standing"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling -",
+    "options": [
+      "Mathemetics",
+      "Mathamatics",
+      "Mathematics",
+      "Mathametics"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A synonym for ' synergy' is-",
+    "options": [
+      "Conflict",
+      "Autonomy",
+      "Antagonism",
+      "Alliance"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is not a singular noun?",
+    "options": [
+      "Sheep",
+      "Wages",
+      "Measles",
+      "News"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Bibliography means -",
+    "options": [
+      "Worshipper of books",
+      "Collection of books",
+      "History of books",
+      "Books on Biology"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He entered ____ an agreement",
+    "options": [
+      "in",
+      "into",
+      "to",
+      "None"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He advised me _____ smoking.",
+    "options": [
+      "giving up",
+      "to give up",
+      "in giving up",
+      "from giving up"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The dog ran _ the road.",
+    "options": [
+      "along",
+      "in",
+      "to",
+      "of"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word \"Infancy\" is",
+    "options": [
+      "Verb",
+      "Noun",
+      "Adjective",
+      "Adverb"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Stay where you are until help.........",
+    "options": [
+      "arrive",
+      "arrives",
+      "go",
+      "goes"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The boy ran fast so that he (stand) first in the competition",
+    "options": [
+      "Stood",
+      "Could stand",
+      "Stand",
+      "Standing"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I went to the library with a view to (read) there",
+    "options": [
+      "Read",
+      "Reading",
+      "Have read",
+      "Reads"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The idiom \"Put up with\" means ---",
+    "options": [
+      "Stay together",
+      "Tolerate",
+      "Keep trust",
+      "Protect"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Omnipotent ------",
+    "options": [
+      "Feeble",
+      "Supreme",
+      "Important",
+      "Vulnerable"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Two times six ---- twelve.",
+    "options": [
+      "are",
+      "is",
+      "were",
+      "None"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Rima talks as if she (to be) a leader",
+    "options": [
+      "Is",
+      "Was",
+      "Were",
+      "Had been"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The idiom 'A stitch in time saves nine'-refers to the importance of-",
+    "options": [
+      "Saving lives",
+      "Saving time",
+      "Timely action",
+      "Time tailoring"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "An antonym for \" Queer\" is --",
+    "options": [
+      "Integrated",
+      "Chaffey",
+      "Orderly",
+      "Stupid"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the plural form of \"deer\"?",
+    "options": [
+      "Deers",
+      "Deerese",
+      "Deeres",
+      "Deer"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He worked (with all sincerity). Here the underline phrase is-",
+    "options": [
+      "A noun phrase",
+      "An adjective phrase",
+      "An infinitive phrase",
+      "An adverbial phrase"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "True happiness consists ___ contentment.",
+    "options": [
+      "on",
+      "in",
+      "of",
+      "with"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He was not conversant ..... the plan",
+    "options": [
+      "Of",
+      "To",
+      "With",
+      "In"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is devoid---commonsense",
+    "options": [
+      "of",
+      "from",
+      "introduction",
+      "at"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The teacher told ---- to leave. DU:09-10",
+    "options": [
+      "he & me",
+      "him & I",
+      "him & me",
+      "he & I"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "My dog is smarter than----.",
+    "options": [
+      "their",
+      "theirs",
+      "your",
+      "you"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He went to -------- hospital because he had --------- heart attack. Use article in the gap.",
+    "options": [
+      "× , an",
+      "× , a",
+      "a , an",
+      "the , ×"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling.",
+    "options": [
+      "Acomodation",
+      "Accomodation",
+      "Accommodation",
+      "Accomoodation"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Some writers sink ----- oblivion in course of time",
+    "options": [
+      "On",
+      "From",
+      "Under",
+      "Into"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The man died ----- overeating. BCS:27th",
+    "options": [
+      "for",
+      "by",
+      "of",
+      "from"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "what is the time --- your watch?BCS-12th",
+    "options": [
+      "in",
+      "at",
+      "with",
+      "by"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The speaker failed to make the audience ---- to him patiently. BCS -15th",
+    "options": [
+      "to listen",
+      "listening",
+      "listened",
+      "listen"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "He is angry ___his behaviour",
+    "options": [
+      "with",
+      "at",
+      "for",
+      "by"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The government gave ----- the demands of the people. BCS:24th",
+    "options": [
+      "in to",
+      "in",
+      "on",
+      "to"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I can not ---- what you say.",
+    "options": [
+      "make over",
+      "make out",
+      "take over",
+      "take out"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I am used to ----- coffee in the morning now.",
+    "options": [
+      "drink",
+      "drank",
+      "drinking",
+      "drunk"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There is no difference between you & ----DU:10-11",
+    "options": [
+      "yours",
+      "me",
+      "I",
+      "we"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Dog Days\" means-",
+    "options": [
+      "a period of being carefree",
+      "a period of having youthful flings",
+      "a period of misfortune",
+      "hot weather"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Heart শব্দটির Adjective কী?",
+    "options": [
+      "Heartful",
+      "Hearten",
+      "Heartening",
+      "Heart"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "04. Choose the correct preposition. 26th BCS; The police is looking— the case.",
+    "options": [
+      "after",
+      "on",
+      "up",
+      "into"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "13. \"Look out\" means—",
+    "options": [
+      "carry on",
+      "be careful",
+      "give up",
+      "get on"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The sun went down.Here down is a/an:BCS:38th",
+    "options": [
+      "Preposition",
+      "Adjective",
+      "Adverb",
+      "Noun"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Which one is a noun?",
+    "options": [
+      "Flute",
+      "Cute",
+      "Acute",
+      "Mute"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "There is ---- milk in the bottle. DU:12-13",
+    "options": [
+      "very few",
+      "few",
+      "very little",
+      "many"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "I cannot ---- to pay such high prices.BCS:28th",
+    "options": [
+      "able",
+      "but",
+      "try",
+      "afford"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The synonym for ' Authoritarian ' is-BCS:33rd",
+    "options": [
+      "autocratic",
+      "senior",
+      "elderly",
+      "potential"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Trees have cast ----- their leaves",
+    "options": [
+      "Over",
+      "away",
+      "Off",
+      "On"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Antonym of \"Dearth\" -",
+    "options": [
+      "Life",
+      "Terror",
+      "Abundance",
+      "Brightness"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "One who draws maps is a-",
+    "options": [
+      "Painter",
+      "Sculptor",
+      "Geologist",
+      "Cartographer"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "If only I ____ rich.",
+    "options": [
+      "will be",
+      "were",
+      "am",
+      "would be"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'I can not but go'-বাক্যটির সঠিক বাংলা অনুবাদ হচ্ছে -MAT:16-17",
+    "options": [
+      "আমি যেতে পারি",
+      "আমি না যেয়ে পারিনা",
+      "আমাকে যেতে হবে",
+      "আমি যাবোই"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct spelling :BCS:26th",
+    "options": [
+      "Assartain",
+      "Ascertain",
+      "Asertain",
+      "Asartain"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Stockings are ---- socks",
+    "options": [
+      "Long",
+      "Small",
+      "Big",
+      "Short"
+    ],
+    "probable_ans_idx": 0,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Apartheid refers to:",
+    "options": [
+      "Distance",
+      "Apart",
+      "Discrimination",
+      "Indifference"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Synonym for \"Extempore \" --",
+    "options": [
+      "Planned",
+      "Improvise",
+      "Impromptu",
+      "Immediate"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\" Prior to \" means ______",
+    "options": [
+      "After",
+      "Before",
+      "Immediately",
+      "During the period of"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "A soporific speech is likely to----BCS:39(special)",
+    "options": [
+      "Appear primary to emotions",
+      "Put one to sleep",
+      "Stimulate actions",
+      "Be incomprehensible"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "The word \"sibling\" means ---BCS-40",
+    "options": [
+      "a brother",
+      "a sister",
+      "a brother or sister",
+      "an infant"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What is the synonym for \"Obdurate \"?",
+    "options": [
+      "Deceitful",
+      "Stubborn",
+      "Sly",
+      "Swindler"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "টাকায় টাকা আনে। প্রবাদটির ইংরেজি অনুবাদ ---",
+    "options": [
+      "Money brings money",
+      "Money beings money",
+      "Money begets money",
+      "Money makes money"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "what is the meaning of the word 'belated'? BCS:13th",
+    "options": [
+      "Complaining",
+      "Off hand",
+      "Weak",
+      "Tardy"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Tell me ----- that?",
+    "options": [
+      "whom told you",
+      "that told you",
+      "who told you",
+      "told you"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Identify the correct sentence? BCS:36th",
+    "options": [
+      "Yesterday, he has gone home",
+      "Yesterday, he had gone home",
+      "Yesterday, he did gone home",
+      "Yesterday, he went home"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "What would be the right synonym for initiative?BCS:35th",
+    "options": [
+      "apathy",
+      "indolence",
+      "enterprise",
+      "activity"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "------- amazing song haunted me for a long time.BCS:35th",
+    "options": [
+      "These",
+      "Those",
+      "Thus",
+      "That"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"Maiden speech \"means -BCS:34th",
+    "options": [
+      "Final speech",
+      "Middle speech",
+      "First speech",
+      "Maid servant's speech"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "'To raise ones brows' indicates--BCS:32nd",
+    "options": [
+      "annoyance",
+      "approval",
+      "indifference",
+      "surprise"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "Choose the correct synonym \"Menacing \"",
+    "options": [
+      "Encouraging",
+      "Alarming",
+      "Promising",
+      "Auspicious"
+    ],
+    "probable_ans_idx": 1,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "One looking only to the bright side of things -",
+    "options": [
+      "Pessimist",
+      "Altruist",
+      "Alimony",
+      "Optimist"
+    ],
+    "probable_ans_idx": 3,
+    "type": "poll_quiz"
+  },
+  {
+    "question_bn": "\"আমাকে এখন যেতে হবে। \"বাক্যটির সঠিক ইংরেজি অনুবাদ কোনটি? DAT:17-18",
+    "options": [
+      "I will go now",
+      "I am going now",
+      "I have to go now",
+      "I must go now"
+    ],
+    "probable_ans_idx": 2,
+    "type": "poll_quiz"
+  }
+]

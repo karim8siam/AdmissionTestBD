@@ -1,0 +1,257 @@
+[
+  {
+    "id": "DU-KA-23-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2023-24",
+    "subject": "HigherMath",
+    "question_bn": "$\\int_0^1 \\frac{x}{1+x^4} dx$-এর মান কত?",
+    "options": [
+      "$\\frac{\\pi}{8}$",
+      "$\\frac{\\pi}{4}$",
+      "$\\frac{\\pi}{2}$",
+      "$1$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$z = x^2$ ধরলে $dz = 2x dx$। সীমা পরিবর্তন: $x=0 \\to z=0, x=1 \\to z=1$। অতএব $\\frac{1}{2}\\int_0^1 \\frac{dz}{1+z^2} = \\frac{1}{2}[\\tan^{-1}z]_0^1 = \\frac{\\pi}{8}$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২৩-২৪ (প্রশ্ন সমাধান)"
+  },
+  {
+    "id": "DU-KA-23-P01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2023-24",
+    "subject": "Physics",
+    "question_bn": "একটি কণা $r$ ব্যাসার্ধের বৃত্তাকার পথে সমদ্রুতিতে ঘুরছে। কণাটির পর্যায়কাল $T$ হলে এর কেন্দ্রমুখী ত্বরণ কত?",
+    "options": [
+      "$\\frac{4\\pi^2 r}{T^2}$",
+      "$\\frac{2\\pi r}{T}$",
+      "$\\frac{4\\pi r^2}{T^2}$",
+      "$\\frac{2\\pi^2 r}{T}$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "রৈখিক বেগ $v = \\frac{2\\pi r}{T}$। কেন্দ্রমুখী ত্বরণ $a_c = \\frac{v^2}{r} = \\frac{4\\pi^2 r^2 / T^2}{r} = \\frac{4\\pi^2 r}{T^2}$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২৩-২৪ (পদার্থবিজ্ঞান)"
+  },
+  {
+    "id": "DU-KA-23-C01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2023-24",
+    "subject": "Chemistry",
+    "question_bn": "$0.005$ M $H_2SO_4$ দ্রবণের pH কত?",
+    "options": [
+      "$2.0$",
+      "$2.3$",
+      "$1.7$",
+      "$3.0$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$H_2SO_4$ দ্বি-ক্ষারকীয় তীব্র এসিড হওয়ায় $[H^+] = 2 \\times 0.005 = 0.01 = 10^{-2}$ M। অতএব $\\text{pH} = -\\log(10^{-2}) = 2.0$। ক্যালকুলেটর ছাড়াই সরাসরি নির্ণয় সম্ভব।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২৩-২৪ (রসায়ন)"
+  },
+  {
+    "id": "DU-KA-22-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2022-23",
+    "subject": "HigherMath",
+    "question_bn": "$\\lim_{x \\to 0} \\frac{1 - \\cos 4x}{x^2}$-এর মান কত?",
+    "options": [
+      "$8$",
+      "$4$",
+      "$16$",
+      "$2$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "শর্টকাট সূত্র: $\\lim_{x \\to 0} \\frac{1 - \\cos kx}{x^2} = \\frac{k^2}{2}$। এখানে $k=4$, সুতরাং মান $= \\frac{4^2}{2} = \\frac{16}{2} = 8$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২২-২৩ (গণিত)"
+  },
+  {
+    "id": "DU-KA-22-P01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2022-23",
+    "subject": "Physics",
+    "question_bn": "একটি প্রাসের সর্বোচ্চ অনুভূমিক পাল্লা $R_{\\max} = 400$ m হলে, ঐ নিক্ষিপ্ত কোণে বস্তুটির সর্বোচ্চ উচ্চতা $H$ কত?",
+    "options": [
+      "$100$ m",
+      "$200$ m",
+      "$400$ m",
+      "$50$ m"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "সর্বাধিক পাল্লার জন্য নিক্ষেপ কোণ $\\alpha = 45^\\circ$। সম্পর্ক: $R_{\\max} = 4H \\Rightarrow H = \\frac{R_{\\max}}{4} = \\frac{400}{4} = 100$ m।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২২-২৩ (পদার্থবিজ্ঞান)"
+  },
+  {
+    "id": "DU-KA-22-C01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2022-23",
+    "subject": "Chemistry",
+    "question_bn": "নিচের কোন যৌগটি টলেন বিকারকের (Tollens' Reagent) সাথে রূপালী দর্পণ তৈরি করে?",
+    "options": [
+      "$CH_3CHO$",
+      "$CH_3COCH_3$",
+      "$CH_3COOH$",
+      "$CH_3CH_2OH$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "অ্যালডিহাইড ($CH_3CHO$ - ইথান্যাল) বিজারক হওয়ায় অ্যামোনিয়াযুক্ত সিলভার নাইট্রেট দ্রবণকে বিজারিত করে সিলভারের রূপালী দর্পণ ($Ag$) অদক্ষিপ্ত করে। কিটোন এই বিক্রিয়া দেয় না।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২২-২৩ (রসায়ন)"
+  },
+  {
+    "id": "GST-23-M01",
+    "exam": "GST Science Cluster",
+    "session": "2023-24",
+    "subject": "HigherMath",
+    "question_bn": "$\\vec{A} = 2\\hat{i} - \\hat{j} + 2\\hat{k}$ এবং $\\vec{B} = \\hat{i} + 2\\hat{j} - 2\\hat{k}$ ভেক্টরদ্বয়ের মধ্যবর্তী কোণ কত?",
+    "options": [
+      "$\\cos^{-1}(-4/9)$",
+      "$\\cos^{-1}(4/9)$",
+      "$\\pi/2$",
+      "$0$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$\\vec{A}\\cdot\\vec{B} = 2(1) - 1(2) + 2(-2) = 2 - 2 - 4 = -4$। $|\\vec{A}| = \\sqrt{4+1+4}=3$, $|\\vec{B}| = 3$। $\\cos\\theta = \\frac{-4}{9}$।",
+    "reference": "গুচ্ছ বিজ্ঞান ভর্তি পরীক্ষা ২০২৩-২৪"
+  },
+  {
+    "id": "GST-23-P01",
+    "exam": "GST Science Cluster",
+    "session": "2023-24",
+    "subject": "Physics",
+    "question_bn": "কার্নো ইঞ্জিনের উৎসের তাপমাত্রা $400$ K এবং গ্রাহকের তাপমাত্রা $300$ K হলে এর কর্মদক্ষতা ($\\eta$) কত?",
+    "options": [
+      "$25\\%$",
+      "$33.3\\%$",
+      "$75\\%$",
+      "$20\\%$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$\\eta = \\left(1 - \\frac{T_2}{T_1}\\right) \\times 100\\% = \\left(1 - \\frac{300}{400}\\right) \\times 100\\% = \\frac{100}{400} \\times 100\\% = 25\\%$।",
+    "reference": "গুচ্ছ বিজ্ঞান ভর্তি পরীক্ষা ২০২৩-২৪"
+  },
+  {
+    "id": "GST-23-C01",
+    "exam": "GST Science Cluster",
+    "session": "2023-24",
+    "subject": "Chemistry",
+    "question_bn": "$PCl_5$ অণুতে ফসফরাস ($P$) পরমাণুর সংকরায়ন (Hybridization) কোনটি?",
+    "options": [
+      "$sp^3d$",
+      "$sp^3$",
+      "$sp^2$",
+      "$dsp^2$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "সংকরায়ন সংখ্যা $H = \\frac{1}{2}(V + M - C + A) = \\frac{1}{2}(5 + 5 - 0 + 0) = 5$। সংকরায়ন $sp^3d$ এবং জ্যামিতিক গঠন ত্রিকোণীয় দ্বিপিরামিডীয়।",
+    "reference": "হাজারী ও নাগ, গুণগত রসায়ন"
+  },
+  {
+    "id": "DU-KA-21-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2021-22",
+    "subject": "HigherMath",
+    "question_bn": "$y^2 = 8x$ পরাবৃত্তের দিকাক্ষের (Directrix) সমীকরণ কোনটি?",
+    "options": [
+      "$x + 2 = 0$",
+      "$x - 2 = 0$",
+      "$y + 2 = 0$",
+      "$y - 2 = 0$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$y^2 = 4ax \\Rightarrow 4a = 8 \\Rightarrow a = 2$। দিকাক্ষের সমীকরণ $x = -a \\Rightarrow x = -2 \\Rightarrow x + 2 = 0$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২১-২২ (গণিত)"
+  },
+  {
+    "id": "DU-KA-21-P01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2021-22",
+    "subject": "Physics",
+    "question_bn": "একটি সরল ছন্দিত স্পন্দনে স্পন্দিত কণার সাম্যাবস্থা থেকে কত দূরত্বে গতিশক্তি ও স্থিতিশক্তি সমান হবে?",
+    "options": [
+      "$x = \\frac{A}{\\sqrt{2}}$",
+      "$x = \\frac{A}{2}$",
+      "$x = \\frac{\\sqrt{3}A}{2}$",
+      "$x = A$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$E_k = E_p \\Rightarrow \\frac{1}{2}k(A^2 - x^2) = \\frac{1}{2}kx^2 \\Rightarrow A^2 - x^2 = x^2 \\Rightarrow 2x^2 = A^2 \\Rightarrow x = \\frac{A}{\\sqrt{2}}$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২১-২২ (পদার্থবিজ্ঞান)"
+  },
+  {
+    "id": "DU-KA-20-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2020-21",
+    "subject": "HigherMath",
+    "question_bn": "$(-1 - i)$ জটিল সংখ্যাটির আর্গুমেন্ট কত?",
+    "options": [
+      "$-\\frac{3\\pi}{4}$",
+      "$\\frac{5\\pi}{4}$",
+      "$-\\frac{\\pi}{4}$",
+      "ক ও খ উভয়ই"
+    ],
+    "correct_option": "ঘ",
+    "correct_index": 3,
+    "explanation": "তৃতীয় চতুর্ভাগে থাকায় মুখ্য আর্গুমেন্ট $-\\pi + \\tan^{-1}(|-1/-1|) = -\\pi + \\pi/4 = -3\\pi/4$ (বা সাধারণ আর্গুমেন্ট $\\pi + \\pi/4 = 5\\pi/4$)। উভয়টিই সমতুল্য।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০২০-২১ (গণিত)"
+  },
+  {
+    "id": "DU-KA-19-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2019-20",
+    "subject": "HigherMath",
+    "question_bn": "$\\tan^{-1}\\frac{1}{2} + \\tan^{-1}\\frac{1}{3}$-এর মান কত?",
+    "options": [
+      "$\\frac{\\pi}{4}$",
+      "$\\frac{\\pi}{2}$",
+      "$\\pi$",
+      "$\\frac{\\pi}{3}$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$\\tan^{-1}\\left(\\frac{1/2+1/3}{1 - 1/6}\\right) = \\tan^{-1}(1) = \\frac{\\pi}{4}$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০১৯-২০ (গণিত)"
+  },
+  {
+    "id": "DU-KA-18-M01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2018-19",
+    "subject": "HigherMath",
+    "question_bn": "$(1, 2)$ কেন্দ্র এবং $5$ ব্যাসার্ধবিশিষ্ট বৃত্তের সমীকরণ কোনটি?",
+    "options": [
+      "$x^2 + y^2 - 2x - 4y - 20 = 0$",
+      "$x^2 + y^2 + 2x + 4y - 20 = 0$",
+      "$x^2 + y^2 - 2x - 4y + 20 = 0$",
+      "$x^2 + y^2 - 4x - 2y - 20 = 0$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "$(x-1)^2 + (y-2)^2 = 5^2 \\Rightarrow x^2 - 2x + 1 + y^2 - 4y + 4 = 25 \\Rightarrow x^2 + y^2 - 2x - 4y - 20 = 0$।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০১৮-১৯ (গণিত)"
+  },
+  {
+    "id": "DU-KA-17-P01",
+    "exam": "Dhaka University 'Ka' Unit",
+    "session": "2017-18",
+    "subject": "Physics",
+    "question_bn": "ভূপৃষ্ঠে কোনো বস্তুর মুক্তিবেগ $11.2\\text{ km/s}$ হলে, যে গ্রহের ভর ও ব্যাসার্ধ উভয়ই পৃথিবীর দ্বিগুণ, সেখানে মুক্তিবেগ কত?",
+    "options": [
+      "$11.2\\text{ km/s}$",
+      "$22.4\\text{ km/s}$",
+      "$5.6\\text{ km/s}$",
+      "$15.8\\text{ km/s}$"
+    ],
+    "correct_option": "ক",
+    "correct_index": 0,
+    "explanation": "মুক্তিবেগ $v_e = \\sqrt{\\frac{2GM}{R}}$। গ্রহের ক্ষেত্রে ভর $2M$ ও ব্যাসার্ধ $2R$, অতএব $v_e' = \\sqrt{\\frac{2G(2M)}{2R}} = \\sqrt{\\frac{2GM}{R}} = 11.2\\text{ km/s}$ (অপরিবর্তিত থাকবে)।",
+    "reference": "ঢাবি 'ক' ইউনিট ২০১৭-১৮ (পদার্থবিজ্ঞান)"
+  }
+]
