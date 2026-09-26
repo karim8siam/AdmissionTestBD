@@ -789,16 +789,38 @@ class handler(http.server.BaseHTTPRequestHandler):
             })
             return
 
+        where_clauses = []
+        params = []
+        if student_id:
+            where_clauses.append("student_id = %s")
+            params.append(student_id)
+        if email:
+            where_clauses.append("(student_email IS NOT NULL AND student_email != '' AND student_email = %s)")
+            params.append(email)
+
+        if not where_clauses:
+            self.send_json_response({
+                "student_id": "",
+                "medical_enrolled": False,
+                "versity_enrolled": False,
+                "combo_enrolled": False,
+                "has_pending": False,
+                "pending_packages": [],
+                "enrollments": []
+            })
+            return
+
         import psycopg2.extras
         conn = get_db_connection()
         try:
             ensure_database_schema(conn)
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-            c.execute("""
+            sql = f"""
                 SELECT package_type, amount, sender_number, trx_id, status, enrolled_at
                 FROM student_enrollments
-                WHERE (student_id = %s OR (student_email IS NOT NULL AND student_email = %s));
-            """, (student_id, email))
+                WHERE ({' OR '.join(where_clauses)});
+            """
+            c.execute(sql, tuple(params))
             rows = [dict(r) for r in c.fetchall()]
         except Exception as e:
             self.send_json_response({"status": "error", "message": str(e)}, status=500)
