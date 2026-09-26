@@ -1507,8 +1507,15 @@
 
       syncPaymentStatus();
 
-      // Listeners for seamless session saving
-      window.addEventListener('beforeunload', saveSessionState);
+      // Listeners for seamless session saving & exam exit protection
+      window.addEventListener('beforeunload', (e) => {
+        saveSessionState();
+        if (appState && appState.examStatus === 'running' && !allowUserExit) {
+          e.preventDefault();
+          e.returnValue = 'আপনার পরীক্ষা বর্তমানে চলমান রয়েছে! এখন বের হলে উত্তরপত্র বাতিল হতে পারে।';
+          return e.returnValue;
+        }
+      });
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') saveSessionState();
       });
@@ -1520,6 +1527,9 @@
       if (window.location.hash === '#admin') {
         openAdminModal();
       }
+
+      // Initialize Mobile Back Exit Protection & Modal Trap
+      setupMobileExitGuard();
     }
 
     let paymentPollInterval = null;
@@ -1928,9 +1938,26 @@
     // (Replaces native browser alert/confirm popups)
     // ============================================
     let customModalCallback = null;
+    let customModalCancelCallback = null;
+    let isExitConfirmationActive = false;
+    let allowUserExit = false;
 
-    function openCustomModal({ title, subtitle, icon, iconTheme = 'emerald', detailsHtml, confirmText = 'নিশ্চিত করুন', cancelText = 'বাতিল', showCancel = true, onConfirm = null }) {
+    function openCustomModal({ 
+      title, 
+      subtitle, 
+      icon, 
+      iconTheme = 'emerald', 
+      detailsHtml, 
+      confirmText = 'নিশ্চিত করুন', 
+      cancelText = 'বাতিল', 
+      showCancel = true, 
+      confirmClass = null,
+      cancelClass = null,
+      onConfirm = null,
+      onCancel = null 
+    }) {
       customModalCallback = onConfirm;
+      customModalCancelCallback = onCancel;
 
       const modal = document.getElementById('app-action-modal');
       const card = document.getElementById('app-action-modal-card');
@@ -1959,29 +1986,44 @@
       // Configure Theme Colors
       iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-inner ';
       glowEl.className = 'absolute -top-16 -left-16 w-36 h-36 rounded-full blur-3xl pointer-events-none ';
-      btnConfirm.className = 'px-6 py-2.5 rounded-xl text-white font-extrabold shadow-lg transition text-xs sm:text-sm flex items-center gap-2 ';
+      
+      if (confirmClass) {
+        btnConfirm.className = confirmClass;
+      } else {
+        btnConfirm.className = 'w-full sm:w-auto px-6 py-2.5 rounded-xl text-white font-extrabold shadow-lg transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[44px] ';
+        if (iconTheme === 'emerald') {
+          btnConfirm.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'hover:from-emerald-400', 'hover:to-teal-500', 'shadow-emerald-500/25');
+        } else if (iconTheme === 'amber') {
+          btnConfirm.classList.add('bg-gradient-to-r', 'from-amber-500', 'to-orange-600', 'hover:from-amber-400', 'hover:to-orange-500', 'shadow-amber-500/25');
+        } else if (iconTheme === 'rose') {
+          btnConfirm.classList.add('bg-gradient-to-r', 'from-rose-500', 'to-red-600', 'hover:from-rose-400', 'hover:to-red-500', 'shadow-rose-500/25');
+        } else {
+          btnConfirm.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-indigo-600', 'hover:from-blue-400', 'hover:to-indigo-500', 'shadow-blue-500/25');
+        }
+      }
 
       if (iconTheme === 'emerald') {
         iconContainer.classList.add('bg-emerald-500/20', 'border', 'border-emerald-500/40', 'text-emerald-300');
         glowEl.classList.add('bg-emerald-500/20');
-        btnConfirm.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'hover:from-emerald-400', 'hover:to-teal-500', 'shadow-emerald-500/25');
       } else if (iconTheme === 'amber') {
         iconContainer.classList.add('bg-amber-500/20', 'border', 'border-amber-500/40', 'text-amber-300');
         glowEl.classList.add('bg-amber-500/20');
-        btnConfirm.classList.add('bg-gradient-to-r', 'from-amber-500', 'to-orange-600', 'hover:from-amber-400', 'hover:to-orange-500', 'shadow-amber-500/25');
       } else if (iconTheme === 'rose') {
         iconContainer.classList.add('bg-rose-500/20', 'border', 'border-rose-500/40', 'text-rose-300');
         glowEl.classList.add('bg-rose-500/20');
-        btnConfirm.classList.add('bg-gradient-to-r', 'from-rose-500', 'to-red-600', 'hover:from-rose-400', 'hover:to-red-500', 'shadow-rose-500/25');
       } else {
         iconContainer.classList.add('bg-blue-500/20', 'border', 'border-blue-500/40', 'text-blue-300');
         glowEl.classList.add('bg-blue-500/20');
-        btnConfirm.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-indigo-600', 'hover:from-blue-400', 'hover:to-indigo-500', 'shadow-blue-500/25');
       }
 
       btnConfirm.innerHTML = `<span>${confirmText}</span>`;
       if (showCancel) {
         btnCancel.innerText = cancelText;
+        if (cancelClass) {
+          btnCancel.className = cancelClass;
+        } else {
+          btnCancel.className = 'w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center';
+        }
         btnCancel.classList.remove('hidden');
       } else {
         btnCancel.classList.add('hidden');
@@ -1995,6 +2037,7 @@
     }
 
     function closeCustomModal(confirmed) {
+      isExitConfirmationActive = false;
       const modal = document.getElementById('app-action-modal');
       const card = document.getElementById('app-action-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
@@ -2009,9 +2052,16 @@
         if (confirmed && typeof customModalCallback === 'function') {
           const cb = customModalCallback;
           customModalCallback = null;
+          customModalCancelCallback = null;
           cb();
+        } else if (!confirmed && typeof customModalCancelCallback === 'function') {
+          const cancelCb = customModalCancelCallback;
+          customModalCallback = null;
+          customModalCancelCallback = null;
+          cancelCb();
         } else {
           customModalCallback = null;
+          customModalCancelCallback = null;
         }
       }, 150);
     }
@@ -2044,6 +2094,174 @@
         confirmText: "বুঝেছি (Understood)",
         showCancel: false
       });
+    }
+
+    // ============================================
+    // MOBILE BACK BUTTON & EXIT CONFIRMATION CONTROLLER
+    // ============================================
+    function setupMobileExitGuard() {
+      try {
+        if (!history.state || history.state.guard !== 'admission_test_bd') {
+          history.pushState({ guard: 'admission_test_bd' }, document.title, window.location.href);
+        }
+      } catch (e) {}
+
+      window.addEventListener('popstate', function (event) {
+        if (allowUserExit) {
+          return;
+        }
+
+        // Maintain the barrier so subsequent back presses are safely intercepted
+        try {
+          history.pushState({ guard: 'admission_test_bd' }, document.title, window.location.href);
+        } catch (e) {}
+
+        // 1. If Exit Modal itself is already open, pressing back again simply dismisses it (stays on page)
+        if (isExitConfirmationActive) {
+          closeCustomModal(false);
+          isExitConfirmationActive = false;
+          return;
+        }
+
+        // 2. If any other modal is open (Paywall, 100 Tests Grid, Auth, Admin, Lock notice), close it!
+        if (closeAnyOpenModal()) {
+          return;
+        }
+
+        // 3. No modal open -> Show Exit Confirmation Dialog
+        promptExitConfirmation();
+      });
+    }
+
+    function closeAnyOpenModal() {
+      let closed = false;
+
+      // Paywall Modal
+      const paywall = document.getElementById('bkash-paywall-modal');
+      if (paywall && !paywall.classList.contains('hidden')) {
+        closeBkashPaywallModal();
+        closed = true;
+      }
+
+      // 100 Tests Grid Modal
+      const grid = document.getElementById('grid-modal');
+      if (grid && !grid.classList.contains('hidden')) {
+        grid.classList.add('hidden');
+        closed = true;
+      }
+
+      // Auth Modal
+      const auth = document.getElementById('auth-modal');
+      if (auth && !auth.classList.contains('hidden')) {
+        closeAuthModal();
+        closed = true;
+      }
+
+      // Admin Modal
+      const admin = document.getElementById('admin-panel-modal');
+      if (admin && !admin.classList.contains('hidden')) {
+        closeAdminModal();
+        closed = true;
+      }
+
+      // Custom Alert / Locked Modal (if not exit dialog)
+      const custom = document.getElementById('app-action-modal');
+      if (custom && !custom.classList.contains('hidden') && !isExitConfirmationActive) {
+        closeCustomModal(false);
+        closed = true;
+      }
+
+      return closed;
+    }
+
+    function promptExitConfirmation() {
+      isExitConfirmationActive = true;
+      const isExamRunning = (appState && appState.examStatus === 'running');
+
+      if (isExamRunning) {
+        openCustomModal({
+          title: "⚠️ পরীক্ষা কি অসমাপ্ত রেখে বের হবেন?",
+          subtitle: "আপনার পরীক্ষা বর্তমানে চলমান রয়েছে! এখন বের হলে আপনার দেওয়া উত্তরসমূহ জমা নাও হতে পারে।",
+          icon: "⚠️",
+          iconTheme: "rose",
+          detailsHtml: `
+            <div class="space-y-3 text-xs leading-relaxed text-slate-300">
+              <div class="p-3 bg-rose-950/70 border border-rose-800/80 rounded-2xl text-rose-200">
+                ⚠️ আপনি বর্তমানে <strong class="text-white">টেস্ট #${appState.currentTestId}</strong>-এর পরীক্ষা দিচ্ছেন। এখন বের হয়ে গেলে আপনার উত্তরপত্রটি অসম্পূর্ণ থাকবে।
+              </div>
+              <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-slate-300 text-[11px] flex items-center gap-2">
+                <span class="text-emerald-400 font-bold text-sm">💡</span>
+                <span><strong>"না, পরীক্ষা চালিয়ে যান"</strong> চাপলে পরীক্ষা যেখানে ছিল ঠিক সেখানেই অব্যাহত থাকবে।</span>
+              </div>
+            </div>
+          `,
+          confirmText: "হ্যাঁ, বের হতে চাই",
+          cancelText: "না, পরীক্ষা চালিয়ে যান",
+          confirmClass: "w-full sm:w-auto px-5 py-2.5 rounded-xl border border-rose-800/80 bg-rose-950/50 text-rose-300 hover:bg-rose-900/60 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center order-2 sm:order-1",
+          cancelClass: "w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold shadow-lg shadow-emerald-500/25 transition text-xs sm:text-sm flex items-center justify-center min-h-[44px] order-1 sm:order-2",
+          showCancel: true,
+          onConfirm: () => {
+            isExitConfirmationActive = false;
+            confirmExitWebsite();
+          },
+          onCancel: () => {
+            isExitConfirmationActive = false;
+          }
+        });
+      } else {
+        openCustomModal({
+          title: "ওয়েবসাইট থেকে প্রস্থান (Exit)?",
+          subtitle: "আপনি কি নিশ্চিত AdmissionTestBD প্ল্যাটফর্ম থেকে বের হতে চান?",
+          icon: "🚪",
+          iconTheme: "amber",
+          detailsHtml: `
+            <div class="space-y-3 text-xs leading-relaxed text-slate-300">
+              <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl text-slate-300 leading-relaxed">
+                ভুলবশত মোবাইলের ব্যাক বাটন চেপে থাকলে নিচের <strong class="text-emerald-300">"না, এখানেই থাকুন"</strong> বাটনটিতে চাপুন। আপনি পেজের ঠিক একই জায়গায় থাকবেন।
+              </div>
+            </div>
+          `,
+          confirmText: "হ্যাঁ, বের হতে চাই",
+          cancelText: "না, এখানেই থাকুন",
+          confirmClass: "w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800/70 text-slate-400 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center order-2 sm:order-1",
+          cancelClass: "w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold shadow-lg shadow-emerald-500/25 transition text-xs sm:text-sm flex items-center justify-center min-h-[44px] order-1 sm:order-2",
+          showCancel: true,
+          onConfirm: () => {
+            isExitConfirmationActive = false;
+            confirmExitWebsite();
+          },
+          onCancel: () => {
+            isExitConfirmationActive = false;
+          }
+        });
+      }
+    }
+
+    function confirmExitWebsite() {
+      allowUserExit = true;
+      saveSessionState();
+
+      try {
+        window.history.go(-2);
+      } catch (e) {}
+
+      setTimeout(() => {
+        try {
+          window.close();
+        } catch (e) {}
+        if (!document.hidden) {
+          document.body.innerHTML = `
+            <div style="min-height:100vh;background:#020617;color:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-family:system-ui,-apple-system,sans-serif;">
+              <div style="font-size:48px;margin-bottom:16px;">👋</div>
+              <h2 style="font-size:22px;font-weight:800;margin-bottom:8px;color:#38bdf8;">ধন্যবাদ! আপনি সফলভাবে প্রস্থান করেছেন</h2>
+              <p style="font-size:14px;color:#94a3b8;max-width:340px;line-height:1.6;margin-bottom:24px;">AdmissionTestBD প্ল্যাটফর্ম থেকে আপনি প্রস্থান করেছেন। আপনি চাইলে এই ব্রাউজার ট্যাবটি বন্ধ করতে পারেন।</p>
+              <button onclick="window.location.reload()" style="background:linear-gradient(to right, #10b981, #0d9488);color:white;font-weight:700;padding:12px 24px;border-radius:12px;border:none;cursor:pointer;font-size:14px;box-shadow:0 10px 15px -3px rgba(16,185,129,0.3);">
+                🔄 পুনরায় প্রবেশ করুন
+              </button>
+            </div>
+          `;
+        }
+      }, 350);
     }
 
     // ============================================
