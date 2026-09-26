@@ -134,7 +134,7 @@ class handler(http.server.BaseHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
         super().end_headers()
 
@@ -142,13 +142,23 @@ class handler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
+    def do_HEAD(self):
+        self.do_GET()
+
     def get_route_path(self):
-        """Extracts the actual route path from incoming request URL."""
-        # Use self.path directly as standard BaseHTTPRequestHandler.
-        raw_path = self.path or '/'
-        parsed = urllib.parse.urlparse(raw_path)
-        path = parsed.path.rstrip('/')
-        return path, urllib.parse.parse_qs(parsed.query)
+        """Extracts the actual route path from incoming request URL, supporting Vercel __route rewrite parameter."""
+        parsed = urllib.parse.urlparse(self.path or '/')
+        query = urllib.parse.parse_qs(parsed.query)
+
+        if '__route' in query:
+            route = query['__route'][0]
+            clean_route = urllib.parse.urlparse(route).path.rstrip('/') or '/'
+            clean_query = {k: v for k, v in query.items() if k != '__route'}
+            return clean_route, clean_query
+
+        raw_path = self.headers.get('x-forwarded-uri') or parsed.path or '/'
+        path = urllib.parse.urlparse(raw_path).path.rstrip('/') or '/'
+        return path, query
 
     def serve_static_file(self, file_path, content_type):
         """Streams a static file (HTML, JSON, Images) with correct caching and headers."""
