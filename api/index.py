@@ -1030,16 +1030,26 @@ class handler(http.server.BaseHTTPRequestHandler):
             ensure_database_schema(conn)
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-            # 1. Check if student already enrolled
-            c.execute("""
-                SELECT package_type, status FROM student_enrollments
-                WHERE (student_id = %s OR (student_email IS NOT NULL AND student_email = %s))
-                  AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
-            """, (student_id, student_email, package))
+            # 1. Check if student already enrolled (only match valid non-empty email)
+            valid_email = student_email if (student_email and '@' in student_email and '.' in student_email) else None
+            if valid_email:
+                c.execute("""
+                    SELECT package_type, status FROM student_enrollments
+                    WHERE (student_id = %s OR student_email = %s)
+                      AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
+                """, (student_id, valid_email, package))
+            else:
+                c.execute("""
+                    SELECT package_type, status FROM student_enrollments
+                    WHERE student_id = %s
+                      AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
+                """, (student_id, package))
             already = c.fetchone()
             if already:
                 self.send_json_response({
                     "success": True,
+                    "verified": True,
+                    "status": "verified",
                     "already_enrolled": True,
                     "package": already['package_type'],
                     "message": "আপনি ইতিমধ্যে এই প্যাকেজে সফলভাবে এনরোল্ড আছেন!"
@@ -1049,14 +1059,26 @@ class handler(http.server.BaseHTTPRequestHandler):
             # 2. Check if TrxID was claimed by another student
             c.execute("SELECT student_id, student_email, status FROM student_enrollments WHERE trx_id = %s;", (trx_id,))
             claimed_other = c.fetchone()
-            if claimed_other and claimed_other['student_id'] != student_id and claimed_other.get('student_email') != student_email:
-                self.send_json_response({
-                    "success": False,
-                    "message": "এই TrxID ইতিপূর্বে অন্য একজন শিক্ষার্থীর একাউন্টে সাবমিট করা হয়েছে।"
-                }, status=400)
-                return
+            if claimed_other:
+                is_same_student = (claimed_other['student_id'] == student_id) or (valid_email and claimed_other.get('student_email') == valid_email)
+                if not is_same_student:
+                    self.send_json_response({
+                        "success": False,
+                        "verified": False,
+                        "message": "এই TrxID ইতিপূর্বে অন্য একজন শিক্ষার্থীর একাউন্টে সাবমিট করা হয়েছে।"
+                    }, status=400)
+                    return
+                elif claimed_other['status'] == 'verified':
+                    self.send_json_response({
+                        "success": True,
+                        "verified": True,
+                        "status": "verified",
+                        "package": package,
+                        "message": "এই TrxID-এর পেমেন্ট ইতিমধ্যে সফলভাবে অনুমোদিত হয়েছে।"
+                    })
+                    return
 
-            # 3. Check received SMS logs
+            # 3. Check received SMS logs for matching bKash SMS
             c.execute("SELECT * FROM received_sms_logs WHERE UPPER(parsed_trx_id) = %s;", (trx_id,))
             sms_log = c.fetchone()
 
@@ -1065,12 +1087,14 @@ class handler(http.server.BaseHTTPRequestHandler):
                 if sms_log['is_claimed'] and sms_log['claimed_by_student_id'] and sms_log['claimed_by_student_id'] != student_id:
                     self.send_json_response({
                         "success": False,
+                        "verified": False,
                         "message": "এই TrxID-এর পেমেন্ট ইতিপূর্বে অন্য একাউন্টে ক্লেইম করা হয়েছে।"
                     }, status=400)
                     return
                 if sms_log['parsed_amount'] is not None and float(sms_log['parsed_amount']) > 0 and float(sms_log['parsed_amount']) < required_price:
                     self.send_json_response({
                         "success": False,
+                        "verified": False,
                         "message": f"পেমেন্ট ফি অপর্যাপ্ত! এই প্যাকেজের জন্য ৳{int(required_price)} প্রয়োজন, কিন্তু TrxID-তে পাওয়া গেছে ৳{float(sms_log['parsed_amount'])}।"
                     }, status=400)
                     return
@@ -1083,18 +1107,17 @@ class handler(http.server.BaseHTTPRequestHandler):
                 """, (student_id, trx_id))
                 is_auto_verified = True
 
-
-            # 4. Insert or update student enrollment
+            # 4. Insert or update student enrollment as verified (if SMS matched) or pending (if awaiting admin)
             status_val = 'verified' if is_auto_verified else 'pending'
             c.execute("""
                 INSERT INTO student_enrollments (student_id, student_name, student_email, package_type, amount, sender_number, trx_id, status)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (trx_id) DO UPDATE SET
                     status = EXCLUDED.status,
-                    student_email = EXCLUDED.student_email,
+                    student_email = COALESCE(EXCLUDED.student_email, student_enrollments.student_email),
                     package_type = EXCLUDED.package_type,
                     amount = EXCLUDED.amount;
-            """, (student_id, student_name, student_email, package, required_price, sender_number, trx_id, status_val))
+            """, (student_id, student_name, valid_email, package, required_price, sender_number, trx_id, status_val))
             conn.commit()
 
         except Exception as e:
@@ -1108,17 +1131,21 @@ class handler(http.server.BaseHTTPRequestHandler):
         if is_auto_verified:
             self.send_json_response({
                 "success": True,
+                "verified": True,
                 "status": "verified",
+                "pending": False,
                 "package": package,
-                "message": f"🎉 অভিনন্দন! আপনার bKash পেমেন্ট সফলভাবে ভেরিফাই হয়েছে। '{pkg_title}'-এর ৯৫টি প্রিমিয়াম টেস্ট সফলভাবে আনলক করা হয়েছে।"
+                "message": f"🎉 অভিনন্দন! আপনার bKash পেমেন্ট সফলভাবে স্বয়ংক্রিয়ভাবে ভেরিফাই হয়েছে। '{pkg_title}'-এর ৯৫টি প্রিমিয়াম টেস্ট সফলভাবে আনলক করা হয়েছে।"
             })
         else:
+            # STRICTLY NOT VERIFIED! PENDING ADMIN MANUAL APPROVAL OR SMS FORWARDER ARRIVAL
             self.send_json_response({
-                "success": True,
+                "success": False,
+                "verified": False,
                 "status": "pending",
                 "pending": True,
                 "package": package,
-                "message": f"✅ আপনার পেমেন্ট তথ্য গৃহীত হয়েছে! এসএমএস যাচাই বা এডমিন কর্তৃক দ্রুত অনুমোদনের সাথে সাথে '{pkg_title}' আনলক হয়ে যাবে।"
+                "message": f"✅ আপনার বিকাশ পেমেন্ট অনুরোধ (TrxID: {trx_id}) অ্যাডমিন প্যানেলে জমা নেওয়া হয়েছে। এসএমএস স্বয়ংক্রিয়ভাবে পৌঁছালে বা অ্যাডমিন কর্তৃক অনুমোদন হওয়ামাত্রই টেস্ট আনলক হয়ে যাবে।"
             })
 
     def handle_submit_exam(self, data):
