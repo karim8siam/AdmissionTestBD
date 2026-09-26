@@ -835,31 +835,32 @@
   <!-- ============================================== -->
   <!-- 100 TESTS GRID MODAL (All 100 Tests Status) -->
   <!-- ============================================== -->
-  <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+  <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
       
-      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+      <div class="p-3.5 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2">
         <div>
-          <h3 id="grid-modal-title" class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+          <h3 id="grid-modal-title" class="text-sm sm:text-lg font-bold text-white flex items-center gap-2">
             <span>📋</span> ১০০ মডেল টেস্টের অগ্রগতি ও আনলক স্থিতি
           </h3>
-          <p class="text-xs text-slate-400">পূর্ববর্তী টেস্ট সম্পন্ন হলে ক্রমান্বয়ে পরবর্তী টেস্ট আনলক হবে।</p>
+          <p class="text-[11px] sm:text-xs text-slate-400">পূর্ববর্তী টেস্ট সম্পন্ন হলে ক্রমান্বয়ে পরবর্তী টেস্ট আনলক হবে।</p>
         </div>
-        <button onclick="toggleTestGridModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
+        <button onclick="toggleTestGridModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold shrink-0">✕</button>
       </div>
 
-      <div class="p-5 overflow-y-auto custom-scrollbar flex-1">
-        <div id="test-grid-cards" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+      <div class="p-3 sm:p-5 overflow-y-auto custom-scrollbar flex-1">
+        <div id="test-grid-cards" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3">
           <!-- Dynamically populated 1 to 100 cards -->
         </div>
       </div>
 
-      <div class="p-4 border-t border-slate-800 bg-slate-950/50 flex items-center justify-between text-xs text-slate-400">
-        <div class="flex items-center gap-3">
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> আনলকড / প্রস্তুত</span>
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span> 🔒 লক করা</span>
+      <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950/50 flex flex-wrap items-center justify-between gap-2 text-[11px] sm:text-xs text-slate-400">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> আনলকড</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span> 🔒 লকড</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> 👑 প্রিমিয়াম</span>
         </div>
-        <button onclick="toggleTestGridModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 text-white font-semibold">বন্ধ করুন</button>
+        <button onclick="toggleTestGridModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 text-white font-semibold min-h-[36px]">বন্ধ করুন</button>
       </div>
 
     </div>
