@@ -346,6 +346,13 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.handle_admin_reject_payment(data)
             return
 
+        if path == '/api/admin/manual-enroll':
+            if not self.check_admin_auth(query) and data.get('admin_token') not in (ADMIN_TOKEN, ADMIN_MASTER_PASSWORD_1):
+                self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
+                return
+            self.handle_admin_manual_enroll(data)
+            return
+
         # Payment & Exam Routes
         if path == '/api/payment/sms-webhook':
             self.handle_sms_webhook(data)
@@ -576,7 +583,8 @@ class handler(http.server.BaseHTTPRequestHandler):
 
     def handle_admin_approve_payment(self, data):
         trx_id = (data.get('trx_id') or '').strip().upper()
-        enrollment_id = data.get('enrollment_id')
+        enrollment_id = data.get('enrollment_id') or data.get('claim_id')
+        package_override = (data.get('package') or data.get('package_type') or '').strip().lower()
 
         if not trx_id and not enrollment_id:
             self.send_json_response({"success": False, "message": "TrxID বা ID প্রয়োজন।"}, status=400)
@@ -589,19 +597,35 @@ class handler(http.server.BaseHTTPRequestHandler):
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
             if enrollment_id:
-                c.execute("""
-                    UPDATE student_enrollments 
-                    SET status = 'verified' 
-                    WHERE id = %s 
-                    RETURNING trx_id, student_id, package_type;
-                """, (enrollment_id,))
+                if package_override in ('medical', 'versity', 'combo'):
+                    c.execute("""
+                        UPDATE student_enrollments 
+                        SET status = 'verified', package_type = %s 
+                        WHERE id = %s 
+                        RETURNING trx_id, student_id, package_type;
+                    """, (package_override, enrollment_id))
+                else:
+                    c.execute("""
+                        UPDATE student_enrollments 
+                        SET status = 'verified' 
+                        WHERE id = %s 
+                        RETURNING trx_id, student_id, package_type;
+                    """, (enrollment_id,))
             else:
-                c.execute("""
-                    UPDATE student_enrollments 
-                    SET status = 'verified' 
-                    WHERE trx_id = %s 
-                    RETURNING trx_id, student_id, package_type;
-                """, (trx_id,))
+                if package_override in ('medical', 'versity', 'combo'):
+                    c.execute("""
+                        UPDATE student_enrollments 
+                        SET status = 'verified', package_type = %s 
+                        WHERE trx_id = %s 
+                        RETURNING trx_id, student_id, package_type;
+                    """, (package_override, trx_id))
+                else:
+                    c.execute("""
+                        UPDATE student_enrollments 
+                        SET status = 'verified' 
+                        WHERE trx_id = %s 
+                        RETURNING trx_id, student_id, package_type;
+                    """, (trx_id,))
             row = c.fetchone()
             if not row:
                 self.send_json_response({"success": False, "message": "পেমেন্ট রেকর্ড পাওয়া যায়নি।"}, status=404)
@@ -622,9 +646,54 @@ class handler(http.server.BaseHTTPRequestHandler):
         finally:
             conn.close()
 
+        pkg_label = "উভয় / কম্বো (সব টেস্ট)" if row['package_type'] == 'combo' else ("মেডিকেল (৯৫ টেস্ট)" if row['package_type'] == 'medical' else "ভার্সিটি (৯৫ টেস্ট)")
         self.send_json_response({
             "success": True,
-            "message": f"🎉 TrxID: {actual_trx} সফলভাবে অনুমোদন করা হয়েছে! শিক্ষার্থীর {row['package_type'].upper()} প্যাকেজ সক্রিয়।"
+            "package": row['package_type'],
+            "message": f"🎉 TrxID: {actual_trx} সফলভাবে অনুমোদন করা হয়েছে! শিক্ষার্থীর '{pkg_label}' সাবস্ক্রিপশন আনলক করা হয়েছে।"
+        })
+
+    def handle_admin_manual_enroll(self, data):
+        identifier = (data.get('identifier') or data.get('student_id') or data.get('email') or '').strip()
+        package = (data.get('package') or data.get('package_type') or 'combo').strip().lower()
+        if package not in ('medical', 'versity', 'combo'):
+            package = 'combo'
+        trx_id = (data.get('trx_id') or f"MANUAL-{uuid.uuid4().hex[:8].upper()}").strip().upper()
+        sender_number = (data.get('sender_number') or '01644265766').strip()
+        student_name = (data.get('student_name') or 'অনুমোদিত শিক্ষার্থী').strip()
+
+        if not identifier:
+            self.send_json_response({"success": False, "message": "শিক্ষার্থীর ইমেইল, আইডি বা বিকাশ নাম্বার দিন।"}, status=400)
+            return
+
+        is_email = '@' in identifier
+        student_id = identifier if not is_email else f"stu_{uuid.uuid4().hex[:8]}"
+        student_email = identifier if is_email else None
+        amount = 799.0 if package == 'combo' else 499.0
+
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            c = conn.cursor()
+            c.execute("""
+                INSERT INTO student_enrollments (student_id, student_name, student_email, package_type, amount, sender_number, trx_id, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, 'verified')
+                ON CONFLICT (trx_id) DO UPDATE SET
+                    status = 'verified',
+                    package_type = EXCLUDED.package_type,
+                    student_email = COALESCE(EXCLUDED.student_email, student_enrollments.student_email);
+            """, (student_id, student_name, student_email, package, amount, sender_number, trx_id))
+            conn.commit()
+        except Exception as e:
+            self.send_json_response({"success": False, "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        pkg_label = "উভয় / কম্বো (সব টেস্ট)" if package == 'combo' else ("মেডিকেল (৯৫ টেস্ট)" if package == 'medical' else "ভার্সিটি (৯৫ টেস্ট)")
+        self.send_json_response({
+            "success": True,
+            "message": f"🎉 শিক্ষার্থী '{identifier}'-কে সরাসরি '{pkg_label}' সাবস্ক্রিপশন সফলভাবে প্রদান করা হয়েছে!"
         })
 
     def handle_admin_reject_payment(self, data):

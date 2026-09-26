@@ -919,10 +919,10 @@
         <div class="font-bold text-slate-200 flex items-center gap-1.5 text-[11px]">
           <span>💡</span> <span>ফি পরিশোধের নিয়মাবলি:</span>
         </div>
-        <ol class="list-decimal list-inside space-y-1 text-slate-400 pl-1 text-[11px]">
+        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 pl-1 text-[11px]">
           <li>আপনার bKash অ্যাপ ওপেন করে <strong class="text-pink-300">Send Money</strong> সিলেক্ট করুন।</li>
           <li>প্রাপক নাম্বারে <strong class="text-white font-mono">01644265766</strong> দিন এবং নির্বাচিত ফি (<span id="instruction-fee-text" class="text-white font-bold">৳৪৯৯</span>) পাঠান।</li>
-          <li>টাকা পাঠানোর পর SMS-এ প্রাপ্ত <strong class="text-amber-300 font-mono">TrxID</strong> এবং আপনার বিকাশ নাম্বার নিচে দিয়ে ভেরিফাই করুন।</li>
+          <li>টাকা পাঠানোর পর SMS বা বিকাশ অ্যাপে প্রাপ্ত <strong class="text-amber-300 font-mono">TrxID</strong> এবং আপনার প্রেরক বিকাশ নাম্বার নিচে দিন। অ্যাডমিন মেসেজ/অ্যাপ দেখে যাচাই করলেই সাথে সাথে ৯৫টি টেস্ট আনলক হয়ে যাবে।</li>
         </ol>
       </div>
 
@@ -1156,6 +1156,45 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-5">
           <!-- Claims Table -->
           <div id="adm-claims-container" class="space-y-3">
+            <!-- Search Bar & Direct Unlock Button -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+              <div class="relative flex-1">
+                <input id="adm-claims-search" oninput="filterAdminClaims(this.value)" type="text" placeholder="🔍 TrxID, বিকাশ মোবাইল নাম্বার বা ইমেইল দিয়ে ফিল্টার করুন..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+              </div>
+              <button onclick="toggleManualEnrollForm()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold text-xs border border-brand-500/40 flex items-center justify-center gap-1.5 transition shrink-0">
+                <span>➕</span> <span>সরাসরি শিক্ষার্থী আনলক (Manual Unlock)</span>
+              </button>
+            </div>
+
+            <!-- Manual Direct Enroll Card (Collapsible) -->
+            <div id="adm-manual-enroll-card" class="hidden p-4 bg-slate-950 border border-brand-500/40 rounded-2xl space-y-3 shadow-xl">
+              <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <span class="text-brand-400">⚡</span> <span>সরাসরি শিক্ষার্থীকে সাবস্ক্রিপশন প্রদান (ফেসবুক বা সরাসরি যোগাযোগকারী শিক্ষার্থীদের জন্য)</span>
+                </h4>
+                <button onclick="toggleManualEnrollForm()" class="text-slate-400 hover:text-white text-xs">✕</button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+                <div class="sm:col-span-2">
+                  <label class="block text-[10px] text-slate-400 mb-1">শিক্ষার্থীর ইমেইল / বিকাশ নাম্বার / আইডি:</label>
+                  <input id="manual-student-identifier" type="text" placeholder="যেমন: student@gmail.com বা 017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-1">প্যাকেজ নির্বাচন করুন:</label>
+                  <select id="manual-student-package" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-brand-500">
+                    <option value="combo" selected>🌟 উভয় / কম্বো (সব টেস্ট)</option>
+                    <option value="medical">🩺 মেডিকেল (৯৫ টেস্ট)</option>
+                    <option value="versity">🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
+                  </select>
+                </div>
+                <div class="flex items-end">
+                  <button onclick="submitManualEnrollment()" class="w-full py-2 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-500 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg transition">
+                    ✓ সরাসরি আনলক করুন
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div class="overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead>
@@ -1382,9 +1421,74 @@
       }
     }
 
+    let paymentPollInterval = null;
+
+    function startPaymentStatusPolling() {
+      if (paymentPollInterval) clearInterval(paymentPollInterval);
+      paymentPollInterval = setInterval(async () => {
+        try {
+          const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
+          const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
+          if (res.ok) {
+            const data = await res.json();
+            let newlyUnlocked = false;
+
+            if (data.medical_enrolled && !appState.isMedicalPaid) {
+              appState.isMedicalPaid = true;
+              localStorage.setItem('admission_paid_med', 'true');
+              newlyUnlocked = true;
+            }
+            if (data.versity_enrolled && !appState.isVersityPaid) {
+              appState.isVersityPaid = true;
+              localStorage.setItem('admission_paid_var', 'true');
+              newlyUnlocked = true;
+            }
+
+            if (newlyUnlocked) {
+              clearInterval(paymentPollInterval);
+              paymentPollInterval = null;
+              localStorage.removeItem('admission_has_pending');
+              updateUnlockedBadges();
+              populateTestDropdown();
+              if (typeof renderTestGridModal === 'function') {
+                const gridModal = document.getElementById('grid-modal');
+                if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
+              }
+              if (typeof confetti === 'function') {
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+              }
+              showToast("🎉 অভিনন্দন! আপনার পেমেন্ট অনুমোদিত হয়েছে এবং টেস্ট ৬-১০০ আনলক করা হয়েছে!", "success");
+              openCustomModal({
+                title: "🎉 প্রিমিয়াম সাবস্ক্রিপশন আনলকড!",
+                subtitle: "অ্যাডমিন আপনার পেমেন্ট যাচাই করে সফলভাবে অনুমোদন করেছেন।",
+                icon: "👑",
+                iconTheme: "emerald",
+                detailsHtml: `
+                  <div class="p-4 bg-emerald-950/60 border border-emerald-800 rounded-2xl text-center space-y-2">
+                    <p class="text-sm font-bold text-emerald-300">সকল ৯৫টি প্রিমিয়াম মডেল টেস্ট আনলক সম্পন্ন হয়েছে!</p>
+                    <p class="text-xs text-slate-300 leading-relaxed">এখন থেকে আপনি টেস্ট ০৬ থেকে ১০০ পর্যন্ত সকল পরীক্ষা দেওয়ার পূর্ণ এক্সেস পেয়েছেন। শুভকামনা!</p>
+                  </div>
+                `,
+                confirmText: "পরীক্ষায় ফিরে যান",
+                showCancel: false,
+                onConfirm: () => {
+                  if (appState.currentTestId > 5) {
+                    loadCurrentSelectedTest();
+                  }
+                }
+              });
+            }
+          }
+        } catch (e) {
+          // quiet polling
+        }
+      }, 6000);
+    }
+
     async function syncPaymentStatus() {
       try {
-        const res = await fetch(`/api/payment/status?student_id=${appState.studentId}`);
+        const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
+        const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
         if (res.ok) {
           const data = await res.json();
           if (data.medical_enrolled) {
@@ -1400,6 +1504,11 @@
           if (typeof renderTestGridModal === 'function') {
             const gridModal = document.getElementById('grid-modal');
             if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
+          }
+
+          // If student has pending claims or unpaid tests, keep polling in background
+          if (data.has_pending || localStorage.getItem('admission_has_pending') === 'true' || !appState.isMedicalPaid || !appState.isVersityPaid) {
+            startPaymentStatusPolling();
           }
         }
       } catch (e) {
@@ -1950,14 +2059,16 @@
               }
             }, 1500);
           } else if (result.pending) {
+            localStorage.setItem('admission_has_pending', 'true');
             if (feedback) {
-              feedback.className = "text-xs p-3 rounded-xl bg-amber-950/80 border border-amber-800 text-amber-200 block";
-              feedback.innerHTML = `⏳ <strong>পেমেন্ট রিকোয়েস্ট গৃহীত হয়েছে!</strong><br><span class="text-[11px]">${result.message || 'অ্যাডমিন অনুমোদন করলেই টেস্ট স্বয়ংক্রিয়ভাবে আনলক হয়ে যাবে।'}</span>`;
+              feedback.className = "text-xs p-3.5 rounded-xl bg-amber-950/80 border border-amber-800 text-amber-200 block space-y-1";
+              feedback.innerHTML = `⏳ <strong>পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে!</strong><br><span class="text-[11px] leading-relaxed">অ্যাডমিন মেসেজ/অ্যাপ দেখে ম্যানুয়ালি যাচাই করলেই সাথে সাথে আপনার টেস্টগুলো এই পেজেই স্বয়ংক্রিয়ভাবে আনলক হয়ে যাবে (রিফ্রেশ করার প্রয়োজন নেই)।</span>`;
             }
-            showToast("পেমেন্ট রিকোয়েস্ট সংরক্ষিত হয়েছে। অ্যাডমিন অনুমোদন করলে আনলক হবে।", "info");
+            showToast("পেমেন্ট রিকোয়েস্ট অ্যাডমিন প্যানেলে পাঠানো হয়েছে। অনুমোদন সাপেক্ষে আনলক হবে।", "info");
+            startPaymentStatusPolling();
             setTimeout(() => {
               closeBkashPaywallModal();
-            }, 2500);
+            }, 3500);
           }
         } else {
           if (feedback) {
@@ -3653,23 +3764,54 @@
         }
 
         let actionButtons = '';
+        let packageCol = '';
+
         if (c.status === 'pending') {
+          packageCol = `
+            <div class="space-y-1">
+              <select id="claim-pkg-${c.id}" class="bg-slate-950 border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 font-bold focus:ring-1 focus:ring-emerald-500">
+                <option value="medical" ${c.package === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট)</option>
+                <option value="versity" ${c.package === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
+                <option value="combo" ${c.package === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট)</option>
+              </select>
+              <div class="text-[10px] text-slate-400">অনুরোধ: <span class="font-bold text-slate-300 uppercase">${c.package}</span> (৳${c.amount || (c.package === 'combo' ? 799 : 499)})</div>
+            </div>
+          `;
           actionButtons = `
             <div class="flex items-center justify-end gap-1.5">
-              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow transition">
-                ✓ অনুমোদন
+              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 transition flex items-center gap-1.5">
+                <span>✓</span> <span>অনুমোদন ও আনলক</span>
               </button>
-              <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-[11px] border border-slate-700 transition">
+              <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 transition">
                 ✕ বাতিল
               </button>
             </div>
           `;
         } else if (c.status === 'verified') {
-          actionButtons = `<span class="text-[11px] text-emerald-400 font-semibold flex items-center justify-end gap-1"><span>🔓</span> টেস্ট আনলকড</span>`;
+          packageCol = `
+            <div>
+              <span class="font-bold ${c.package === 'combo' ? 'text-purple-300' : (c.package === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${c.package === 'combo' ? 'উভয় / কম্বো' : (c.package === 'medical' ? 'মেডিকেল' : 'ভার্সিটি')}</span>
+              <span class="text-[11px] text-slate-400 ml-1">৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
+            </div>
+          `;
+          actionButtons = `
+            <div class="space-y-0.5 text-right">
+              <span class="text-xs text-emerald-400 font-bold flex items-center justify-end gap-1">
+                <span>🔓</span> <span>${c.package === 'combo' ? 'উভয় টেস্ট আনলকড' : (c.package === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
+              </span>
+              <span class="text-[10px] text-slate-500">অনুমোদিত</span>
+            </div>
+          `;
         } else {
+          packageCol = `
+            <div>
+              <span class="font-bold text-slate-400 uppercase">${c.package}</span>
+              <span class="text-[11px] text-slate-500 ml-1">৳${c.amount}</span>
+            </div>
+          `;
           actionButtons = `
             <div class="flex items-center justify-end gap-1">
-              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
+              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
                 পুনরায় অনুমোদন
               </button>
             </div>
@@ -3684,12 +3826,9 @@
             <div class="font-bold text-white text-xs">${c.student_name || 'পরীক্ষার্থী'}</div>
             <div class="text-[10px] text-slate-400 truncate max-w-[140px]">${c.student_email || c.student_id || '-'}</div>
           </td>
-          <td class="py-2.5 px-2 font-mono text-slate-300">${c.sender_number || '-'}</td>
-          <td class="py-2.5 px-2">
-            <span class="font-bold ${c.package === 'combo' ? 'text-purple-300' : (c.package === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${c.package}</span>
-            <span class="text-[11px] text-slate-400 ml-1">৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
-          </td>
-          <td class="py-2.5 px-2 font-mono font-bold text-amber-300 text-xs">${c.trx_id || '-'}</td>
+          <td class="py-2.5 px-2 font-mono text-slate-300 font-bold">${c.sender_number || '-'}</td>
+          <td class="py-2.5 px-2">${packageCol}</td>
+          <td class="py-2.5 px-2 font-mono font-black text-amber-300 text-xs tracking-wider">${c.trx_id || '-'}</td>
           <td class="py-2.5 px-2">${statusBadge}</td>
           <td class="py-2.5 pl-2 text-right">${actionButtons}</td>
         `;
@@ -3752,6 +3891,9 @@
       const token = sessionStorage.getItem('admission_admin_token');
       if (!token) return;
 
+      const pkgSelect = document.getElementById(`claim-pkg-${claimId}`);
+      const selectedPackage = pkgSelect ? pkgSelect.value : undefined;
+
       try {
         const res = await fetch('/api/admin/approve-payment', {
           method: 'POST',
@@ -3759,11 +3901,15 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ trx_id: trxId, claim_id: claimId })
+          body: JSON.stringify({
+            trx_id: trxId,
+            claim_id: claimId,
+            package: selectedPackage
+          })
         });
         const data = await res.json();
         if (res.ok && data.success) {
-          showToast(data.message || "পেমেন্ট সফলভাবে অনুমোদিত হয়েছে!", "success");
+          showToast(data.message || "পেমেন্ট সফলভাবে অনুমোদিত হয়েছে এবং টেস্ট আনলক হয়েছে!", "success");
           loadAdminData();
           syncPaymentStatus();
         } else {
@@ -3772,6 +3918,65 @@
       } catch (e) {
         showToast("সার্ভার সংযোগে সমস্যা।", "error");
       }
+    }
+
+    function toggleManualEnrollForm() {
+      const card = document.getElementById('adm-manual-enroll-card');
+      if (card) card.classList.toggle('hidden');
+    }
+
+    async function submitManualEnrollment() {
+      const token = sessionStorage.getItem('admission_admin_token');
+      if (!token) return;
+
+      const idInput = document.getElementById('manual-student-identifier');
+      const pkgSelect = document.getElementById('manual-student-package');
+      const identifier = idInput ? idInput.value.trim() : '';
+      const package = pkgSelect ? pkgSelect.value : 'combo';
+
+      if (!identifier) {
+        showToast("শিক্ষার্থীর ইমেইল, বিকাশ নাম্বার বা আইডি লিখুন।", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/manual-enroll', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ identifier, package })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(data.message || "সাবস্ক্রিপশন সফলভাবে প্রদান করা হয়েছে!", "success");
+          if (idInput) idInput.value = '';
+          toggleManualEnrollForm();
+          loadAdminData();
+          syncPaymentStatus();
+        } else {
+          showToast(data.message || "ত্রুটি ঘটেছে।", "error");
+        }
+      } catch (e) {
+        showToast("সার্ভার সংযোগে সমস্যা।", "error");
+      }
+    }
+
+    function filterAdminClaims(query) {
+      const q = (query || '').toLowerCase().trim();
+      if (!q) {
+        renderAdminClaimsTable(adminClaimsCache);
+        return;
+      }
+      const filtered = adminClaimsCache.filter(c => {
+        return (c.trx_id && c.trx_id.toLowerCase().includes(q)) ||
+               (c.sender_number && c.sender_number.includes(q)) ||
+               (c.student_email && c.student_email.toLowerCase().includes(q)) ||
+               (c.student_name && c.student_name.toLowerCase().includes(q)) ||
+               (c.student_id && c.student_id.toLowerCase().includes(q));
+      });
+      renderAdminClaimsTable(filtered);
     }
 
     async function rejectClaim(trxId, claimId) {
