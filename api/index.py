@@ -6,6 +6,8 @@ import re
 import uuid
 import decimal
 import urllib.parse
+import hashlib
+import hmac
 from datetime import datetime, date
 
 # Neon PostgreSQL connection URL
@@ -13,6 +15,9 @@ NEON_URL = os.environ.get(
     "DATABASE_URL",
     "postgresql://neondb_owner:npg_YIR9cGa5MqOP@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
 )
+
+# Admin Panel Password
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin1234")
 
 # Root directory of the repository
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +31,13 @@ def get_db_connection():
     conn = psycopg2.connect(NEON_URL, connect_timeout=10)
     return conn
 
+def hash_password(password: str) -> str:
+    salt = "admission_test_bd_secure_salt_2026"
+    return hashlib.sha256((password + salt).encode('utf-8')).hexdigest()
+
+def verify_password(password: str, stored_hash: str) -> bool:
+    return hmac.compare_digest(hash_password(password), stored_hash)
+
 def ensure_database_schema(conn):
     """Ensures that all needed tables and indexes exist on the database."""
     global _SCHEMA_ENSURED
@@ -34,6 +46,14 @@ def ensure_database_schema(conn):
     try:
         c = conn.cursor()
         c.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                student_id VARCHAR(64) UNIQUE NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password_hash VARCHAR(255) NOT NULL,
+                name VARCHAR(255),
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            );
             CREATE TABLE IF NOT EXISTS students (
                 student_id VARCHAR(64) PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
@@ -78,6 +98,7 @@ def ensure_database_schema(conn):
                 id SERIAL PRIMARY KEY,
                 student_id VARCHAR(64) NOT NULL,
                 student_name VARCHAR(255),
+                student_email VARCHAR(255),
                 package_type VARCHAR(32) NOT NULL,
                 amount NUMERIC(10, 2) NOT NULL,
                 sender_number VARCHAR(32) NOT NULL,
@@ -159,6 +180,17 @@ class handler(http.server.BaseHTTPRequestHandler):
         raw_path = self.headers.get('x-forwarded-uri') or parsed.path or '/'
         path = urllib.parse.urlparse(raw_path).path.rstrip('/') or '/'
         return path, query
+
+    def check_admin_auth(self, query):
+        """Validates admin token/password from Authorization header or query parameter."""
+        auth_header = self.headers.get('Authorization', '')
+        if auth_header.startswith('Bearer '):
+            token = auth_header.split('Bearer ', 1)[1].strip()
+            if token == ADMIN_PASSWORD:
+                return True
+        if query.get('admin_token', [''])[0] == ADMIN_PASSWORD:
+            return True
+        return False
 
     def serve_static_file(self, file_path, content_type):
         """Streams a static file (HTML, JSON, Images) with correct caching and headers."""
@@ -245,6 +277,14 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.handle_get_stats()
             return
 
+        # Admin: Get All Payments & Logs
+        if path == '/api/admin/payments':
+            if not self.check_admin_auth(query):
+                self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
+                return
+            self.handle_admin_get_payments()
+            return
+
         # Fallback for unknown web routes to index.html (SPA routing)
         if not path.startswith('/api/'):
             html_path = os.path.join(BASE_DIR, 'index.html')
@@ -255,7 +295,7 @@ class handler(http.server.BaseHTTPRequestHandler):
         self.send_json_response({"status": "error", "message": f"Endpoint not found: {path}"}, status=404)
 
     def do_POST(self):
-        path, _ = self.get_route_path()
+        path, query = self.get_route_path()
 
         content_length = int(self.headers.get('Content-Length', 0))
         post_body = self.rfile.read(content_length).decode('utf-8') if content_length > 0 else ""
@@ -270,6 +310,35 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.send_json_response({"status": "error", "message": f"Invalid request body: {str(e)}"}, status=400)
             return
 
+        # Auth Routes
+        if path == '/api/auth/signup':
+            self.handle_auth_signup(data)
+            return
+
+        if path == '/api/auth/login':
+            self.handle_auth_login(data)
+            return
+
+        # Admin Routes
+        if path == '/api/admin/login':
+            self.handle_admin_login(data)
+            return
+
+        if path == '/api/admin/approve-payment':
+            if not self.check_admin_auth(query) and data.get('admin_token') != ADMIN_PASSWORD:
+                self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
+                return
+            self.handle_admin_approve_payment(data)
+            return
+
+        if path == '/api/admin/reject-payment':
+            if not self.check_admin_auth(query) and data.get('admin_token') != ADMIN_PASSWORD:
+                self.send_json_response({"status": "error", "message": "Unauthorized admin access"}, status=401)
+                return
+            self.handle_admin_reject_payment(data)
+            return
+
+        # Payment & Exam Routes
         if path == '/api/payment/sms-webhook':
             self.handle_sms_webhook(data)
             return
@@ -300,14 +369,266 @@ class handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(response_bytes)
 
+    # ================= AUTH HANDLERS =================
+    def handle_auth_signup(self, data):
+        email = (data.get('email') or '').strip().lower()
+        password = (data.get('password') or '').strip()
+        name = (data.get('name') or 'শিক্ষার্থী').strip() or 'শিক্ষার্থী'
+
+        if not email or '@' not in email or '.' not in email:
+            self.send_json_response({"success": False, "message": "অনুগ্রহ করে সঠিক ইমেইল এড্রেস প্রদান করুন।"}, status=400)
+            return
+        if len(password) < 4:
+            self.send_json_response({"success": False, "message": "পাসওয়ার্ড ন্যূনতম ৪ অক্ষরের হতে হবে।"}, status=400)
+            return
+
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            import psycopg2.extras
+            c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+            # Check existing email
+            c.execute("SELECT id FROM users WHERE email = %s;", (email,))
+            if c.fetchone():
+                self.send_json_response({"success": False, "message": "এই ইমেইলে ইতিমধ্যে একটি একাউন্ট রয়েছে। দয়া করে লগইন করুন।"}, status=400)
+                return
+
+            student_id = f"STU-{uuid.uuid4().hex[:8].upper()}"
+            pass_hash = hash_password(password)
+
+            c.execute("""
+                INSERT INTO users (student_id, email, password_hash, name)
+                VALUES (%s, %s, %s, %s);
+            """, (student_id, email, pass_hash, name))
+
+            c.execute("""
+                INSERT INTO students (student_id, name, target_college, session)
+                VALUES (%s, %s, 'জাতীয় মেধা তালিকা', '2025-26')
+                ON CONFLICT (student_id) DO NOTHING;
+            """, (student_id, name))
+
+            conn.commit()
+        except Exception as e:
+            self.send_json_response({"success": False, "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        self.send_json_response({
+            "success": True,
+            "student_id": student_id,
+            "email": email,
+            "name": name,
+            "medical_enrolled": False,
+            "versity_enrolled": False,
+            "combo_enrolled": False,
+            "enrollments": [],
+            "message": "🎉 একাউন্ট সফলভাবে তৈরি হয়েছে!"
+        })
+
+    def handle_auth_login(self, data):
+        email = (data.get('email') or '').strip().lower()
+        password = (data.get('password') or '').strip()
+
+        if not email or not password:
+            self.send_json_response({"success": False, "message": "ইমেইল ও পাসওয়ার্ড উভয়ই প্রদান করুন।"}, status=400)
+            return
+
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            import psycopg2.extras
+            c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+            c.execute("SELECT student_id, email, password_hash, name FROM users WHERE email = %s;", (email,))
+            user = c.fetchone()
+            if not user or not verify_password(password, user['password_hash']):
+                self.send_json_response({"success": False, "message": "ভুল ইমেইল অথবা পাসওয়ার্ড! আবার চেষ্টা করুন।"}, status=401)
+                return
+
+            # Fetch student's verified enrollments
+            c.execute("""
+                SELECT package_type, amount, sender_number, trx_id, status, enrolled_at
+                FROM student_enrollments
+                WHERE (student_id = %s OR student_email = %s) AND status = 'verified';
+            """, (user['student_id'], email))
+            rows = [dict(r) for r in c.fetchall()]
+
+            packages = [r['package_type'].lower() for r in rows]
+            combo = 'combo' in packages
+            med = combo or ('medical' in packages)
+            var = combo or ('versity' in packages)
+
+        except Exception as e:
+            self.send_json_response({"success": False, "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        self.send_json_response({
+            "success": True,
+            "student_id": user['student_id'],
+            "email": user['email'],
+            "name": user['name'] or 'শিক্ষার্থী',
+            "medical_enrolled": med,
+            "versity_enrolled": var,
+            "combo_enrolled": combo,
+            "enrollments": rows,
+            "message": "সফলভাবে লগইন হয়েছে! আপনার প্রোফাইল ও সাবস্ক্রিপশন সিঙ্ক করা হয়েছে।"
+        })
+
+    # ================= ADMIN HANDLERS =================
+    def handle_admin_login(self, data):
+        entered_pass = (data.get('password') or '').strip()
+        if entered_pass == ADMIN_PASSWORD:
+            self.send_json_response({
+                "success": True,
+                "token": ADMIN_PASSWORD,
+                "message": "এডমিন লগইন সফল হয়েছে।"
+            })
+        else:
+            self.send_json_response({"success": False, "message": "ভুল এডমিন পাসওয়ার্ড!"}, status=401)
+
+    def handle_admin_get_payments(self):
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            import psycopg2.extras
+            c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+            # 1. Enrollments list
+            c.execute("""
+                SELECT id, student_id, student_name, student_email, package_type, amount, sender_number, trx_id, status, enrolled_at
+                FROM student_enrollments
+                ORDER BY enrolled_at DESC
+                LIMIT 100;
+            """)
+            enrollments = [dict(r) for r in c.fetchall()]
+
+            # 2. Raw SMS logs
+            c.execute("""
+                SELECT id, sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id, is_claimed, claimed_by_student_id, received_at
+                FROM received_sms_logs
+                ORDER BY received_at DESC
+                LIMIT 100;
+            """)
+            sms_logs = [dict(r) for r in c.fetchall()]
+
+            # 3. Metrics
+            c.execute("SELECT COALESCE(SUM(amount), 0) FROM student_enrollments WHERE status = 'verified';")
+            total_rev = c.fetchone()['coalesce']
+            c.execute("SELECT COUNT(*) FROM student_enrollments WHERE status = 'verified';")
+            verified_cnt = c.fetchone()['count']
+            c.execute("SELECT COUNT(*) FROM student_enrollments WHERE status = 'pending';")
+            pending_cnt = c.fetchone()['count']
+            c.execute("SELECT COUNT(*) FROM exam_submissions;")
+            total_exams = c.fetchone()['count']
+
+        except Exception as e:
+            self.send_json_response({"status": "error", "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        self.send_json_response({
+            "success": True,
+            "metrics": {
+                "total_revenue": float(total_rev),
+                "verified_students": verified_cnt,
+                "pending_claims": pending_cnt,
+                "total_exams": total_exams
+            },
+            "enrollments": enrollments,
+            "sms_logs": sms_logs
+        })
+
+    def handle_admin_approve_payment(self, data):
+        trx_id = (data.get('trx_id') or '').strip().upper()
+        enrollment_id = data.get('enrollment_id')
+
+        if not trx_id and not enrollment_id:
+            self.send_json_response({"success": False, "message": "TrxID বা ID প্রয়োজন।"}, status=400)
+            return
+
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            import psycopg2.extras
+            c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+            if enrollment_id:
+                c.execute("""
+                    UPDATE student_enrollments 
+                    SET status = 'verified' 
+                    WHERE id = %s 
+                    RETURNING trx_id, student_id, package_type;
+                """, (enrollment_id,))
+            else:
+                c.execute("""
+                    UPDATE student_enrollments 
+                    SET status = 'verified' 
+                    WHERE trx_id = %s 
+                    RETURNING trx_id, student_id, package_type;
+                """, (trx_id,))
+            row = c.fetchone()
+            if not row:
+                self.send_json_response({"success": False, "message": "পেমেন্ট রেকর্ড পাওয়া যায়নি।"}, status=404)
+                return
+
+            # Mark matching SMS as claimed
+            actual_trx = row['trx_id']
+            c.execute("""
+                UPDATE received_sms_logs
+                SET is_claimed = TRUE, claimed_by_student_id = %s
+                WHERE parsed_trx_id = %s;
+            """, (row['student_id'], actual_trx))
+
+            conn.commit()
+        except Exception as e:
+            self.send_json_response({"success": False, "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        self.send_json_response({
+            "success": True,
+            "message": f"🎉 TrxID: {actual_trx} সফলভাবে অনুমোদন করা হয়েছে! শিক্ষার্থীর {row['package_type'].upper()} প্যাকেজ সক্রিয়।"
+        })
+
+    def handle_admin_reject_payment(self, data):
+        trx_id = (data.get('trx_id') or '').strip().upper()
+        enrollment_id = data.get('enrollment_id')
+
+        conn = get_db_connection()
+        try:
+            ensure_database_schema(conn)
+            c = conn.cursor()
+            if enrollment_id:
+                c.execute("UPDATE student_enrollments SET status = 'rejected' WHERE id = %s;", (enrollment_id,))
+            else:
+                c.execute("UPDATE student_enrollments SET status = 'rejected' WHERE trx_id = %s;", (trx_id,))
+            conn.commit()
+        except Exception as e:
+            self.send_json_response({"success": False, "message": str(e)}, status=500)
+            return
+        finally:
+            conn.close()
+
+        self.send_json_response({"success": True, "message": "পেমেন্ট বাতিল (Rejected) করা হয়েছে।"})
+
+    # ================= PAYMENT & EXAM HANDLERS =================
     def handle_payment_status(self, query):
         student_id = query.get('student_id', [''])[0].strip()
-        if not student_id:
+        email = query.get('email', [''])[0].strip().lower()
+
+        if not student_id and not email:
             self.send_json_response({
                 "student_id": "",
                 "medical_enrolled": False,
                 "versity_enrolled": False,
                 "combo_enrolled": False,
+                "has_pending": False,
                 "enrollments": []
             })
             return
@@ -320,8 +641,8 @@ class handler(http.server.BaseHTTPRequestHandler):
             c.execute("""
                 SELECT package_type, amount, sender_number, trx_id, status, enrolled_at
                 FROM student_enrollments
-                WHERE student_id = %s AND status = 'verified';
-            """, (student_id,))
+                WHERE (student_id = %s OR (student_email IS NOT NULL AND student_email = %s));
+            """, (student_id, email))
             rows = [dict(r) for r in c.fetchall()]
         except Exception as e:
             self.send_json_response({"status": "error", "message": str(e)}, status=500)
@@ -329,7 +650,10 @@ class handler(http.server.BaseHTTPRequestHandler):
         finally:
             conn.close()
 
-        packages = [r['package_type'].lower() for r in rows]
+        verified_rows = [r for r in rows if r['status'] == 'verified']
+        pending_rows = [r for r in rows if r['status'] == 'pending']
+
+        packages = [r['package_type'].lower() for r in verified_rows]
         combo = 'combo' in packages
         med = combo or ('medical' in packages)
         var = combo or ('versity' in packages)
@@ -339,6 +663,8 @@ class handler(http.server.BaseHTTPRequestHandler):
             "medical_enrolled": med,
             "versity_enrolled": var,
             "combo_enrolled": combo,
+            "has_pending": len(pending_rows) > 0,
+            "pending_packages": [r['package_type'] for r in pending_rows],
             "enrollments": rows
         })
 
@@ -370,8 +696,15 @@ class handler(http.server.BaseHTTPRequestHandler):
                         parsed_amount = EXCLUDED.parsed_amount,
                         parsed_sender = EXCLUDED.parsed_sender;
                 """, (sender, raw_message, parsed['amount'], parsed['sender'], parsed['trx_id']))
+
+                # Also automatically verify any pending enrollment matching this TrxID
+                c.execute("""
+                    UPDATE student_enrollments
+                    SET status = 'verified'
+                    WHERE trx_id = %s AND status = 'pending';
+                """, (parsed['trx_id'],))
+
             else:
-                # Log incoming test message so we can verify phone connectivity
                 c.execute("""
                     INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
                     VALUES (%s, %s, NULL, NULL, NULL);
@@ -399,6 +732,7 @@ class handler(http.server.BaseHTTPRequestHandler):
     def handle_verify_trx(self, data):
         student_id = data.get('student_id', '').strip()
         student_name = data.get('student_name', 'শিক্ষার্থী').strip() or 'শিক্ষার্থী'
+        student_email = (data.get('email') or data.get('student_email') or '').strip().lower()
         package = (data.get('package') or data.get('package_type') or 'medical').strip().lower()
         sender_number = data.get('sender_number', '').strip()
         trx_id = data.get('trx_id', '').strip().upper()
@@ -441,10 +775,12 @@ class handler(http.server.BaseHTTPRequestHandler):
             ensure_database_schema(conn)
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
+            # 1. Check if student already enrolled
             c.execute("""
-                SELECT package_type FROM student_enrollments
-                WHERE student_id = %s AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
-            """, (student_id, package))
+                SELECT package_type, status FROM student_enrollments
+                WHERE (student_id = %s OR (student_email IS NOT NULL AND student_email = %s))
+                  AND (package_type = %s OR package_type = 'combo') AND status = 'verified';
+            """, (student_id, student_email, package))
             already = c.fetchone()
             if already:
                 self.send_json_response({
@@ -455,17 +791,21 @@ class handler(http.server.BaseHTTPRequestHandler):
                 })
                 return
 
-            c.execute("SELECT student_id FROM student_enrollments WHERE trx_id = %s AND status = 'verified';", (trx_id,))
+            # 2. Check if TrxID was claimed by another student
+            c.execute("SELECT student_id, student_email, status FROM student_enrollments WHERE trx_id = %s;", (trx_id,))
             claimed_other = c.fetchone()
-            if claimed_other and claimed_other['student_id'] != student_id:
+            if claimed_other and claimed_other['student_id'] != student_id and claimed_other.get('student_email') != student_email:
                 self.send_json_response({
                     "success": False,
-                    "message": "এই TrxID ইতিপূর্বে অন্য একজন শিক্ষার্থীর একাউন্টে ব্যবহার করা হয়েছে।"
+                    "message": "এই TrxID ইতিপূর্বে অন্য একজন শিক্ষার্থীর একাউন্টে সাবমিট করা হয়েছে।"
                 }, status=400)
                 return
 
+            # 3. Check received SMS logs
             c.execute("SELECT * FROM received_sms_logs WHERE parsed_trx_id = %s;", (trx_id,))
             sms_log = c.fetchone()
+
+            is_auto_verified = False
             if sms_log:
                 if sms_log['is_claimed'] and sms_log['claimed_by_student_id'] and sms_log['claimed_by_student_id'] != student_id:
                     self.send_json_response({
@@ -480,20 +820,25 @@ class handler(http.server.BaseHTTPRequestHandler):
                     }, status=400)
                     return
 
+                # Mark claimed in SMS logs
                 c.execute("""
                     UPDATE received_sms_logs
                     SET is_claimed = TRUE, claimed_by_student_id = %s
                     WHERE parsed_trx_id = %s;
                 """, (student_id, trx_id))
+                is_auto_verified = True
 
+            # 4. Insert or update student enrollment
+            status_val = 'verified' if is_auto_verified else 'pending'
             c.execute("""
-                INSERT INTO student_enrollments (student_id, student_name, package_type, amount, sender_number, trx_id, status)
-                VALUES (%s, %s, %s, %s, %s, %s, 'verified')
+                INSERT INTO student_enrollments (student_id, student_name, student_email, package_type, amount, sender_number, trx_id, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (trx_id) DO UPDATE SET
-                    status = 'verified',
+                    status = EXCLUDED.status,
+                    student_email = EXCLUDED.student_email,
                     package_type = EXCLUDED.package_type,
                     amount = EXCLUDED.amount;
-            """, (student_id, student_name, package, required_price, sender_number, trx_id))
+            """, (student_id, student_name, student_email, package, required_price, sender_number, trx_id, status_val))
             conn.commit()
 
         except Exception as e:
@@ -503,11 +848,22 @@ class handler(http.server.BaseHTTPRequestHandler):
             conn.close()
 
         pkg_title = "মেডিকেল ১০০ মডেল টেস্ট" if package == 'medical' else ("ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্ট" if package == 'versity' else "মেডিকেল + ভার্সিটি মেগা কম্বো প্যাক")
-        self.send_json_response({
-            "success": True,
-            "package": package,
-            "message": f"🎉 অভিনন্দন! আপনার bKash পেমেন্ট সফলভাবে ভেরিফাই হয়েছে। '{pkg_title}'-এর ৯৫টি প্রিমিয়াম টেস্ট সফলভাবে আনলক করা হয়েছে।"
-        })
+        
+        if is_auto_verified:
+            self.send_json_response({
+                "success": True,
+                "status": "verified",
+                "package": package,
+                "message": f"🎉 অভিনন্দন! আপনার bKash পেমেন্ট সফলভাবে ভেরিফাই হয়েছে। '{pkg_title}'-এর ৯৫টি প্রিমিয়াম টেস্ট সফলভাবে আনলক করা হয়েছে।"
+            })
+        else:
+            self.send_json_response({
+                "success": True,
+                "status": "pending",
+                "pending": True,
+                "package": package,
+                "message": f"✅ আপনার পেমেন্ট তথ্য গৃহীত হয়েছে! এসএমএস যাচাই বা এডমিন কর্তৃক দ্রুত অনুমোদনের সাথে সাথে '{pkg_title}' আনলক হয়ে যাবে।"
+            })
 
     def handle_submit_exam(self, data):
         student_name = data.get('student_name', 'পরীক্ষার্থী').strip() or 'পরীক্ষার্থী'

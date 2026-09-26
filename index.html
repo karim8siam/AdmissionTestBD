@@ -156,6 +156,9 @@
               🏛️ ভার্সিটি ও গুচ্ছ: টেস্ট ০১ আনলকড
             </span>
           </div>
+
+          <!-- User Auth Widget (Sign In / Sign Up & Profile) -->
+          <div id="user-auth-widget"></div>
         </div>
 
       </div>
@@ -243,8 +246,8 @@
         </div>
 
         <div class="w-full md:w-auto shrink-0 flex items-center justify-center gap-3">
-          <img src="/web/assets/student_studying_ai.jpg" onerror="this.onerror=null; this.src='/assets/student_studying_ai.jpg';" alt="Student Studying" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl hidden sm:block">
-          <img src="/web/assets/student_ai_analysis.jpg" onerror="this.onerror=null; this.src='/assets/student_ai_analysis.jpg';" alt="AI Analysis" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl">
+          <img src="/web/assets/student_studying_ai.jpg" alt="Student Studying" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl hidden sm:block">
+          <img src="/web/assets/student_ai_analysis.jpg" alt="AI Analysis" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl">
         </div>
       </div>
     </section>
@@ -773,6 +776,43 @@
   </main>
 
   <!-- ============================================== -->
+  <!-- FOOTER -->
+  <!-- ============================================== -->
+  <footer class="bg-slate-950 border-t border-slate-900 mt-auto py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-400 border border-brand-500/40 flex items-center justify-center font-black text-sm">
+          A
+        </div>
+        <div>
+          <p class="text-sm font-bold text-white">Admission Test BD &copy; 2025-2026</p>
+          <p class="text-xs text-slate-400">বাংলাদেশ জাতীয় মেডিকেল ও ভার্সিটি মেধা যাচাই প্ল্যাটফর্ম</p>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300">
+        <a href="mailto:shahriyarkarimsiam@gmail.com" class="flex items-center gap-1.5 hover:text-brand-400 transition bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+          <span>📧</span>
+          <span>shahriyarkarimsiam@gmail.com</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61594973542595" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-blue-400 transition bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+          <span>🌐</span>
+          <span>Facebook Page</span>
+        </a>
+      </div>
+
+      <!-- Discrete Admin Entry -->
+      <div>
+        <button onclick="openAdminModal()" class="text-[11px] text-slate-400 hover:text-brand-400 transition flex items-center gap-1 bg-slate-900/60 hover:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-800">
+          <span>🔐</span>
+          <span>অ্যাডমিন প্যানেল</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
   <!-- 100 TESTS GRID MODAL (All 100 Tests Status) -->
   <!-- ============================================== -->
   <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -913,6 +953,209 @@
   </div>
 
   <!-- ============================================== -->
+  <!-- USER AUTH MODAL (LOGIN / SIGN UP) -->
+  <!-- ============================================== -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-200">
+    <div class="fixed inset-0" onclick="closeAuthModal()"></div>
+    <div id="auth-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl shadow-black/90 relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200 space-y-4">
+      
+      <!-- Top glow -->
+      <div class="absolute -top-16 -right-16 w-36 h-36 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header -->
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-300 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+            👤
+          </div>
+          <div>
+            <h3 id="auth-modal-title" class="text-lg sm:text-xl font-black text-white">শিক্ষার্থী একাউন্ট</h3>
+            <p class="text-xs text-slate-400">ভিন্ন ডিভাইসে আপনার প্রিমিয়াম সাবস্ক্রিপশন সিঙ্ক করুন</p>
+          </div>
+        </div>
+        <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition">✕</button>
+      </div>
+
+      <!-- Auth Tab Toggle (Login / Signup) -->
+      <div class="flex items-center bg-slate-950 p-1 rounded-2xl border border-slate-800 text-xs font-bold">
+        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition">
+          লগইন (Sign In)
+        </button>
+        <button id="auth-tab-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition">
+          নতুন একাউন্ট (Sign Up)
+        </button>
+      </div>
+
+      <!-- Form Inputs -->
+      <form id="auth-form" onsubmit="event.preventDefault(); handleAuthSubmit();" class="space-y-3 pt-1">
+        <div id="auth-name-container" class="hidden">
+          <label class="block text-[11px] font-bold text-slate-300 mb-1">আপনার নাম (ঐচ্ছিক):</label>
+          <input id="auth-input-name" type="text" placeholder="যেমন: আবরার সাকিব" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-300 mb-1">ইমেইল এড্রেস:</label>
+          <input id="auth-input-email" type="email" required placeholder="name@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-300 mb-1">পাসওয়ার্ড:</label>
+          <input id="auth-input-password" type="password" required minlength="6" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+        </div>
+
+        <div id="auth-feedback-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
+
+        <div class="pt-2">
+          <button id="btn-auth-submit" type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black shadow-lg glow-brand transition text-xs sm:text-sm flex items-center justify-center gap-2">
+            <span>লগইন করুন</span>
+          </button>
+        </div>
+      </form>
+
+      <p class="text-[11px] text-center text-slate-500">
+        ডিভাইস পরিবর্তন না করলে বারবার লগইন করার প্রয়োজন নেই, ডেটা স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে।
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- ADMIN PANEL & PAYMENT APPROVAL MODAL -->
+  <!-- ============================================== -->
+  <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 transition-all duration-200">
+    <div class="fixed inset-0" onclick="closeAdminModal()"></div>
+    <div id="admin-modal-card" class="bg-slate-900 border border-slate-800 rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
+      
+      <!-- Admin Login State (Password Gate) -->
+      <div id="admin-login-view" class="p-8 max-w-md mx-auto w-full my-auto space-y-5 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-3xl mx-auto shadow-inner">
+          🔐
+        </div>
+        <div>
+          <h3 class="text-xl font-black text-white">অ্যাডমিন কন্ট্রোল প্যানেল</h3>
+          <p class="text-xs text-slate-400 mt-1">পেমেন্ট রিকোয়েস্ট যাচাই ও অনুমোদনের জন্য পাসওয়ার্ড দিন</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); handleAdminLoginSubmit();" class="space-y-3">
+          <input id="admin-input-password" type="password" placeholder="অ্যাডমিন পাসওয়ার্ড লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 text-center font-mono">
+          <div id="admin-login-feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
+          <button id="btn-admin-login-submit" type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg transition">
+            লগইন করুন
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard State -->
+      <div id="admin-dashboard-view" class="hidden flex flex-col flex-1 overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-3 bg-slate-950/60">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-xl shrink-0">
+              📊
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base sm:text-lg font-black text-white">অ্যাডমিন ড্যাশবোর্ড</h3>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold">লাইভ কন্ট্রোল</span>
+              </div>
+              <p class="text-xs text-slate-400">পেমেন্ট রিকোয়েস্ট ও বিকাশ SMS ম্যানেজমেন্ট</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="refreshAdminData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition">
+              <span>↻</span> <span class="hidden sm:inline">রিফ্রেশ</span>
+            </button>
+            <button onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-800 text-rose-300 text-xs font-bold transition">
+              লগআউট
+            </button>
+            <button onclick="closeAdminModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold ml-1">✕</button>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 sm:p-5 bg-slate-950/30 border-b border-slate-800">
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
+            <p class="text-[11px] text-slate-400 font-semibold">মোট সংগৃহীত ফি</p>
+            <p id="adm-metric-revenue" class="text-lg sm:text-2xl font-black text-emerald-400 font-mono mt-0.5">৳০</p>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
+            <p class="text-[11px] text-slate-400 font-semibold">অনুমোদিত শিক্ষার্থী</p>
+            <p id="adm-metric-verified" class="text-lg sm:text-2xl font-black text-white font-mono mt-0.5">০ জন</p>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
+            <p class="text-[11px] text-amber-400 font-semibold">পেন্ডিং রিকোয়েস্ট</p>
+            <p id="adm-metric-pending" class="text-lg sm:text-2xl font-black text-amber-400 font-mono mt-0.5">০ টি</p>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
+            <p class="text-[11px] text-slate-400 font-semibold">মোট সাবমিট পরীক্ষা</p>
+            <p id="adm-metric-exams" class="text-lg sm:text-2xl font-black text-teal-400 font-mono mt-0.5">০ টি</p>
+          </div>
+        </div>
+
+        <!-- Sub Tabs (Claims vs SMS Logs) -->
+        <div class="flex items-center px-4 sm:px-5 pt-3 border-b border-slate-800 gap-2 bg-slate-900/50">
+          <button id="adm-tab-claims" onclick="switchAdminTab('claims')" class="px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+            <span>📋</span> পেমেন্ট রিকোয়েস্ট তালিকা (<span id="adm-claims-count">0</span>)
+          </button>
+          <button id="adm-tab-sms" onclick="switchAdminTab('sms')" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+            <span>📱</span> বিকাশ SMS লগ (<span id="adm-sms-count">0</span>)
+          </button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-5">
+          <!-- Claims Table -->
+          <div id="adm-claims-container" class="space-y-3">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
+                    <th class="pb-3 pr-2">তারিখ ও সময়</th>
+                    <th class="pb-3 px-2">শিক্ষার্থী / ইমেইল</th>
+                    <th class="pb-3 px-2">বিকাশ নাম্বার</th>
+                    <th class="pb-3 px-2">প্যাকেজ ও ফি</th>
+                    <th class="pb-3 px-2">TrxID</th>
+                    <th class="pb-3 px-2">স্ট্যাটাস</th>
+                    <th class="pb-3 pl-2 text-right">পদক্ষেপ (Action)</th>
+                  </tr>
+                </thead>
+                <tbody id="adm-claims-tbody" class="divide-y divide-slate-800/60 font-medium">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+            <div id="adm-claims-empty" class="hidden text-center py-10 text-slate-500 text-xs">
+              কোনো পেমেন্ট রিকোয়েস্ট পাওয়া যায়নি।
+            </div>
+          </div>
+
+          <!-- SMS Logs Table -->
+          <div id="adm-sms-container" class="hidden space-y-3">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
+                    <th class="pb-3 pr-2">সময়</th>
+                    <th class="pb-3 px-2">প্রেরক নাম্বার</th>
+                    <th class="pb-3 px-2">পরিমাণ</th>
+                    <th class="pb-3 px-2">TrxID</th>
+                    <th class="pb-3 px-2">ম্যাচিং স্ট্যাটাস</th>
+                    <th class="pb-3 pl-2">মূল SMS বার্তা</th>
+                  </tr>
+                </thead>
+                <tbody id="adm-sms-tbody" class="divide-y divide-slate-800/60 font-mono text-[11px]">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
   <!-- PREMIUM CUSTOM ACTION & CONFIRMATION MODAL -->
   <!-- (Replaces all browser native alert/confirm popups) -->
   <!-- ============================================== -->
@@ -1019,7 +1262,12 @@
       // Payment & Enrollment State (Personal bKash Automation)
       isMedicalPaid: localStorage.getItem('admission_paid_med') === 'true',
       isVersityPaid: localStorage.getItem('admission_paid_var') === 'true',
-      pendingUnlockTestId: null
+      pendingUnlockTestId: null,
+
+      // User Authentication State
+      userToken: localStorage.getItem('admission_user_token') || null,
+      userEmail: localStorage.getItem('admission_user_email') || null,
+      userName: localStorage.getItem('admission_user_name') || null
     };
 
     localStorage.setItem('admission_student_id', appState.studentId);
@@ -1041,14 +1289,46 @@
         appState.currentTestId = 1;
       }
 
+      updateAuthUI();
+
+      // Session state restoration (device resilience)
+      const sessionRestored = restoreSessionState();
+
       const seasonSel = document.getElementById('season-selector');
       if (seasonSel) seasonSel.value = appState.selectedSession;
 
       updateUnlockedBadges();
       populateTestDropdown();
-      loadCurrentSelectedTest();
-      loadAllPlatformData();
+
+      if (!sessionRestored || !sessionRestored.shouldResume) {
+        if (appState.currentStream === 'medical' || appState.currentStream === 'versity') {
+          loadCurrentSelectedTest();
+        } else {
+          switchStream(appState.currentStream);
+        }
+      }
+
+      loadAllPlatformData().then(() => {
+        if (sessionRestored && sessionRestored.shouldResume) {
+          resumeActiveExam();
+        }
+      });
+
       syncPaymentStatus();
+
+      // Listeners for seamless session saving
+      window.addEventListener('beforeunload', saveSessionState);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') saveSessionState();
+      });
+
+      // Admin hash listener
+      window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#admin') openAdminModal();
+      });
+      if (window.location.hash === '#admin') {
+        openAdminModal();
+      }
     }
 
     async function syncPaymentStatus() {
@@ -1236,6 +1516,7 @@
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      saveSessionState();
     }
 
     function updateStreamHeadings() {
@@ -1570,7 +1851,8 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             student_id: appState.studentId,
-            student_name: 'পরীক্ষার্থী',
+            student_name: appState.userName || 'পরীক্ষার্থী',
+            student_email: appState.userEmail || '',
             package: selectedBkashPackage,
             sender_number: senderNumber || '01644265766',
             trx_id: trxId
@@ -1578,44 +1860,54 @@
         });
         const result = await res.json();
 
-        if (res.ok && result.success) {
-          if (selectedBkashPackage === 'combo') {
-            appState.isMedicalPaid = true;
-            appState.isVersityPaid = true;
-            localStorage.setItem('admission_paid_med', 'true');
-            localStorage.setItem('admission_paid_var', 'true');
-          } else if (selectedBkashPackage === 'medical') {
-            appState.isMedicalPaid = true;
-            localStorage.setItem('admission_paid_med', 'true');
-          } else if (selectedBkashPackage === 'versity') {
-            appState.isVersityPaid = true;
-            localStorage.setItem('admission_paid_var', 'true');
-          }
-
-          if (feedback) {
-            feedback.className = "text-xs p-3 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-200 block";
-            feedback.innerText = result.message || "অভিনন্দন! আপনার পেমেন্ট সফলভাবে ভেরিফাই হয়েছে।";
-          }
-
-          showToast("🎉 অভিনন্দন! ৯৫টি প্রিমিয়াম মডেল টেস্ট আনলক হয়েছে।", "success");
-          updateUnlockedBadges();
-          populateTestDropdown();
-          if (typeof renderTestGridModal === 'function') {
-            const gridModal = document.getElementById('grid-modal');
-            if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
-          }
-
-          setTimeout(() => {
-            closeBkashPaywallModal();
-            if (appState.pendingUnlockTestId) {
-              const target = appState.pendingUnlockTestId;
-              appState.pendingUnlockTestId = null;
-              appState.currentTestId = target;
-              document.getElementById('model-test-dropdown').value = target;
-              loadCurrentSelectedTest();
+        if (res.ok && (result.success || result.pending)) {
+          if (result.success) {
+            if (selectedBkashPackage === 'combo') {
+              appState.isMedicalPaid = true;
+              appState.isVersityPaid = true;
+              localStorage.setItem('admission_paid_med', 'true');
+              localStorage.setItem('admission_paid_var', 'true');
+            } else if (selectedBkashPackage === 'medical') {
+              appState.isMedicalPaid = true;
+              localStorage.setItem('admission_paid_med', 'true');
+            } else if (selectedBkashPackage === 'versity') {
+              appState.isVersityPaid = true;
+              localStorage.setItem('admission_paid_var', 'true');
             }
-          }, 1500);
 
+            if (feedback) {
+              feedback.className = "text-xs p-3 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-200 block";
+              feedback.innerText = result.message || "অভিনন্দন! আপনার পেমেন্ট সফলভাবে ভেরিফাই হয়েছে।";
+            }
+
+            showToast("🎉 অভিনন্দন! ৯৫টি প্রিমিয়াম মডেল টেস্ট আনলক হয়েছে।", "success");
+            updateUnlockedBadges();
+            populateTestDropdown();
+            if (typeof renderTestGridModal === 'function') {
+              const gridModal = document.getElementById('grid-modal');
+              if (gridModal && !gridModal.classList.contains('hidden')) renderTestGridModal();
+            }
+
+            setTimeout(() => {
+              closeBkashPaywallModal();
+              if (appState.pendingUnlockTestId) {
+                const target = appState.pendingUnlockTestId;
+                appState.pendingUnlockTestId = null;
+                appState.currentTestId = target;
+                document.getElementById('model-test-dropdown').value = target;
+                loadCurrentSelectedTest();
+              }
+            }, 1500);
+          } else if (result.pending) {
+            if (feedback) {
+              feedback.className = "text-xs p-3 rounded-xl bg-amber-950/80 border border-amber-800 text-amber-200 block";
+              feedback.innerHTML = `⏳ <strong>পেমেন্ট রিকোয়েস্ট গৃহীত হয়েছে!</strong><br><span class="text-[11px]">${result.message || 'অ্যাডমিন অনুমোদন করলেই টেস্ট স্বয়ংক্রিয়ভাবে আনলক হয়ে যাবে।'}</span>`;
+            }
+            showToast("পেমেন্ট রিকোয়েস্ট সংরক্ষিত হয়েছে। অ্যাডমিন অনুমোদন করলে আনলক হবে।", "info");
+            setTimeout(() => {
+              closeBkashPaywallModal();
+            }, 2500);
+          }
         } else {
           if (feedback) {
             feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
@@ -1901,6 +2193,7 @@
         const pct = Math.round((ansCount / totalQ) * 100);
         progBar.style.width = `${pct}%`;
       }
+      saveSessionState();
     }
 
     // ============================================
@@ -1983,6 +2276,7 @@
     async function submitActiveExam(isAutoTimeout = false) {
       if (appState.timerInterval) clearInterval(appState.timerInterval);
       appState.examStatus = 'submitted';
+      saveSessionState();
 
       const current = appState.currentTestObj;
       const questions = current.questions;
@@ -2844,6 +3138,594 @@
           ],
           throwOnError: false
         });
+      }
+    }
+
+    // ============================================
+    // SESSION STATE PERSISTENCE (DEVICE RESILIENCE)
+    // ============================================
+    function saveSessionState() {
+      try {
+        const sessionData = {
+          currentStream: appState.currentStream,
+          currentTestId: appState.currentTestId,
+          examStatus: appState.examStatus,
+          userAnswers: appState.userAnswers,
+          timerSecondsRemaining: appState.timerSecondsRemaining,
+          savedAt: Date.now()
+        };
+        localStorage.setItem('admission_active_session', JSON.stringify(sessionData));
+      } catch (e) {
+        console.warn('Failed to save session state', e);
+      }
+    }
+
+    function restoreSessionState() {
+      try {
+        const raw = localStorage.getItem('admission_active_session');
+        if (!raw) return false;
+        const session = JSON.parse(raw);
+        if (!session) return false;
+
+        if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering'].includes(session.currentStream)) {
+          appState.currentStream = session.currentStream;
+        }
+        if (session.currentTestId && session.currentTestId >= 1 && session.currentTestId <= 100) {
+          appState.currentTestId = session.currentTestId;
+        }
+
+        if (session.examStatus === 'running' && session.savedAt && typeof session.timerSecondsRemaining === 'number') {
+          const elapsedSecs = Math.floor((Date.now() - session.savedAt) / 1000);
+          const remaining = session.timerSecondsRemaining - elapsedSecs;
+          if (remaining > 15) {
+            appState.userAnswers = session.userAnswers || {};
+            appState.timerSecondsRemaining = remaining;
+            return { shouldResume: true };
+          }
+        }
+        return false;
+      } catch (e) {
+        console.warn('Failed to restore session state', e);
+        return false;
+      }
+    }
+
+    function resumeActiveExam() {
+      const current = appState.currentTestObj;
+      if (!current || !current.questions) return;
+
+      appState.examStatus = 'running';
+
+      document.getElementById('exam-start-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.add('hidden');
+      document.getElementById('exam-active-card').classList.remove('hidden');
+
+      renderQuestionsFeed(current.questions);
+
+      const totalQ = current.questions.length;
+      const answeredKeys = Object.keys(appState.userAnswers);
+      answeredKeys.forEach(qIdx => {
+        const optIdx = appState.userAnswers[qIdx];
+        for (let i = 0; i < 4; i++) {
+          const btn = document.getElementById(`opt-btn-${qIdx}-${i}`);
+          if (btn) {
+            if (i === optIdx) {
+              btn.className = "opt-btn w-full text-left p-3.5 rounded-xl border border-brand-500 bg-brand-950/80 text-white transition flex items-center gap-3 shadow-md glow-brand";
+            } else {
+              btn.className = "opt-btn w-full text-left p-3.5 rounded-xl border border-slate-700/80 bg-slate-950/70 hover:bg-slate-800/80 transition flex items-center gap-3 group";
+            }
+          }
+        }
+        const badge = document.getElementById(`q-status-badge-${qIdx}`);
+        if (badge) {
+          badge.innerText = "✓ উত্তর দেওয়া হয়েছে";
+          badge.className = "text-[11px] font-bold text-emerald-400";
+        }
+      });
+
+      document.getElementById('answered-count-pill').innerText = answeredKeys.length;
+      document.getElementById('unanswered-count-pill').innerText = Math.max(0, totalQ - answeredKeys.length);
+      document.getElementById('total-questions-pill').innerText = totalQ;
+      const progBar = document.getElementById('exam-progress-bar');
+      if (progBar && totalQ > 0) {
+        progBar.style.width = `${Math.round((answeredKeys.length / totalQ) * 100)}%`;
+      }
+
+      startCountdownTimer();
+      showToast("পূর্বে রেখে যাওয়া পরীক্ষা থেকে পুনরায় শুরু করা হয়েছে!", "info");
+    }
+
+    // ============================================
+    // USER AUTHENTICATION & MULTI-DEVICE SYNC
+    // ============================================
+    let currentAuthMode = 'login';
+
+    function openAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      const card = document.getElementById('auth-modal-card');
+      if (!modal || !card) return;
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      });
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      const card = document.getElementById('auth-modal-card');
+      if (!modal || modal.classList.contains('hidden')) return;
+      if (card) {
+        card.classList.remove('scale-100', 'opacity-100');
+        card.classList.add('scale-95', 'opacity-0');
+      }
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150);
+    }
+
+    function switchAuthTab(mode) {
+      currentAuthMode = mode;
+      const loginTab = document.getElementById('auth-tab-login');
+      const signupTab = document.getElementById('auth-tab-signup');
+      const nameContainer = document.getElementById('auth-name-container');
+      const submitBtn = document.getElementById('btn-auth-submit');
+      const feedback = document.getElementById('auth-feedback-msg');
+      if (feedback) feedback.classList.add('hidden');
+
+      if (mode === 'signup') {
+        loginTab.className = "flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition";
+        signupTab.className = "flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition";
+        nameContainer.classList.remove('hidden');
+        submitBtn.innerHTML = `<span>নতুন একাউন্ট তৈরি করুন</span>`;
+      } else {
+        loginTab.className = "flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition";
+        signupTab.className = "flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition";
+        nameContainer.classList.add('hidden');
+        submitBtn.innerHTML = `<span>লগইন করুন</span>`;
+      }
+    }
+
+    async function handleAuthSubmit() {
+      const emailInput = document.getElementById('auth-input-email');
+      const passInput = document.getElementById('auth-input-password');
+      const nameInput = document.getElementById('auth-input-name');
+      const feedback = document.getElementById('auth-feedback-msg');
+      const btn = document.getElementById('btn-auth-submit');
+
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passInput ? passInput.value.trim() : '';
+      const name = nameInput ? nameInput.value.trim() : '';
+
+      if (!email || !password) {
+        if (feedback) {
+          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "ইমেইল এবং পাসওয়ার্ড আবশ্যক।";
+        }
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> অনুগ্রহ করে অপেক্ষা করুন...`;
+
+      const endpoint = currentAuthMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+      const payload = {
+        email,
+        password,
+        name: name || undefined,
+        student_id: appState.studentId
+      };
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          localStorage.setItem('admission_user_token', data.token);
+          localStorage.setItem('admission_user_email', data.email);
+          if (data.name) localStorage.setItem('admission_user_name', data.name);
+          if (data.student_id) {
+            localStorage.setItem('admission_student_id', data.student_id);
+            appState.studentId = data.student_id;
+          }
+          appState.userToken = data.token;
+          appState.userEmail = data.email;
+          appState.userName = data.name || data.email;
+
+          if (data.medical_enrolled) {
+            appState.isMedicalPaid = true;
+            localStorage.setItem('admission_paid_med', 'true');
+          }
+          if (data.versity_enrolled) {
+            appState.isVersityPaid = true;
+            localStorage.setItem('admission_paid_var', 'true');
+          }
+
+          updateUnlockedBadges();
+          populateTestDropdown();
+          updateAuthUI();
+          closeAuthModal();
+
+          showToast(`স্বাগতম ${data.name || data.email}! আপনার একাউন্ট সক্রিয় হয়েছে।`, "success");
+        } else {
+          if (feedback) {
+            feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+            feedback.innerText = data.error || "প্রক্রিয়াটি সম্পন্ন করা যায়নি।";
+          }
+        }
+      } catch (e) {
+        if (feedback) {
+          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "সার্ভার সংযোগে সমস্যা হয়েছে।";
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>${currentAuthMode === 'signup' ? 'নতুন একাউন্ট তৈরি করুন' : 'লগইন করুন'}</span>`;
+      }
+    }
+
+    function handleUserLogout() {
+      localStorage.removeItem('admission_user_token');
+      localStorage.removeItem('admission_user_email');
+      localStorage.removeItem('admission_user_name');
+      appState.userToken = null;
+      appState.userEmail = null;
+      appState.userName = null;
+      updateAuthUI();
+      showToast("সফলভাবে লগআউট করা হয়েছে।", "info");
+    }
+
+    function updateAuthUI() {
+      const container = document.getElementById('user-auth-widget');
+      if (!container) return;
+
+      if (appState.userEmail) {
+        const isCombo = appState.isMedicalPaid && appState.isVersityPaid;
+        const isMed = appState.isMedicalPaid;
+        const isVar = appState.isVersityPaid;
+        const badgeText = isCombo ? '★ কম্বো' : (isMed ? '★ মেডিকেল' : (isVar ? '★ ভার্সিটি' : 'ফ্রি মেম্বার'));
+
+        container.innerHTML = `
+          <div class="relative group">
+            <button class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-white font-bold transition">
+              <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40 flex items-center justify-center text-[11px]">👤</span>
+              <span class="max-w-[90px] sm:max-w-[130px] truncate">${appState.userName || appState.userEmail}</span>
+              <span class="text-[10px] text-slate-400">▼</span>
+            </button>
+            <div class="absolute right-0 mt-1 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 hidden group-hover:block z-50 space-y-1">
+              <div class="px-3 py-2 border-b border-slate-800">
+                <p class="text-[10px] text-slate-400">লগইন প্রোফাইল</p>
+                <p class="text-xs font-bold text-white truncate">${appState.userEmail}</p>
+                <p class="text-[10px] text-emerald-400 font-bold mt-1 font-mono">${badgeText}</p>
+              </div>
+              <button onclick="handleUserLogout()" class="w-full text-left px-3 py-2 text-xs text-rose-400 hover:bg-rose-950/40 hover:text-rose-300 rounded-xl transition flex items-center gap-2">
+                <span>🚪</span> লগআউট করুন
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="openAuthModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-600/90 to-teal-600/90 hover:from-brand-500 hover:to-teal-500 text-white text-xs font-extrabold shadow-sm transition border border-emerald-500/30">
+            <span>👤</span>
+            <span class="hidden sm:inline">লগইন / সাইন-আপ</span>
+            <span class="sm:hidden">লগইন</span>
+          </button>
+        `;
+      }
+    }
+
+    // ============================================
+    // ADMIN PANEL & PAYMENT APPROVAL SYSTEM
+    // ============================================
+    let adminClaimsCache = [];
+    let adminSmsCache = [];
+
+    function openAdminModal() {
+      const modal = document.getElementById('admin-panel-modal');
+      const card = document.getElementById('admin-modal-card');
+      if (!modal || !card) return;
+
+      const adminToken = sessionStorage.getItem('admission_admin_token');
+      if (adminToken) {
+        document.getElementById('admin-login-view').classList.add('hidden');
+        document.getElementById('admin-dashboard-view').classList.remove('hidden');
+        loadAdminData();
+      } else {
+        document.getElementById('admin-login-view').classList.remove('hidden');
+        document.getElementById('admin-dashboard-view').classList.add('hidden');
+        const pwdInput = document.getElementById('admin-input-password');
+        if (pwdInput) { pwdInput.value = ''; }
+      }
+
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      });
+    }
+
+    function closeAdminModal() {
+      const modal = document.getElementById('admin-panel-modal');
+      const card = document.getElementById('admin-modal-card');
+      if (!modal || modal.classList.contains('hidden')) return;
+
+      if (card) {
+        card.classList.remove('scale-100', 'opacity-100');
+        card.classList.add('scale-95', 'opacity-0');
+      }
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (window.location.hash === '#admin') {
+          history.replaceState(null, null, ' ');
+        }
+      }, 150);
+    }
+
+    async function handleAdminLoginSubmit() {
+      const pwdInput = document.getElementById('admin-input-password');
+      const feedback = document.getElementById('admin-login-feedback');
+      const btn = document.getElementById('btn-admin-login-submit');
+      const password = pwdInput ? pwdInput.value.trim() : '';
+
+      if (!password) {
+        if (feedback) {
+          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "পাসওয়ার্ড প্রবেশ করান।";
+        }
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "যাচাই করা হচ্ছে...";
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          sessionStorage.setItem('admission_admin_token', data.token);
+          if (feedback) feedback.classList.add('hidden');
+          document.getElementById('admin-login-view').classList.add('hidden');
+          document.getElementById('admin-dashboard-view').classList.remove('hidden');
+          loadAdminData();
+        } else {
+          if (feedback) {
+            feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+            feedback.innerText = data.error || "ভুল পাসওয়ার্ড! পুনরায় চেষ্টা করুন।";
+          }
+        }
+      } catch (e) {
+        if (feedback) {
+          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
+          feedback.innerText = "সার্ভার সংযোগে ত্রুটি।";
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "লগইন করুন";
+      }
+    }
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem('admission_admin_token');
+      document.getElementById('admin-dashboard-view').classList.add('hidden');
+      document.getElementById('admin-login-view').classList.remove('hidden');
+      showToast("অ্যাডমিন প্যানেল থেকে লগআউট করা হয়েছে।", "info");
+    }
+
+    async function loadAdminData() {
+      const token = sessionStorage.getItem('admission_admin_token');
+      if (!token) return;
+
+      try {
+        const res = await fetch('/api/admin/payments', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.status === 401) {
+          sessionStorage.removeItem('admission_admin_token');
+          document.getElementById('admin-dashboard-view').classList.add('hidden');
+          document.getElementById('admin-login-view').classList.remove('hidden');
+          return;
+        }
+        const data = await res.json();
+        if (!data.success) return;
+
+        const m = data.metrics || {};
+        document.getElementById('adm-metric-revenue').innerText = `৳${(m.total_revenue || 0).toLocaleString()}`;
+        document.getElementById('adm-metric-verified').innerText = `${m.verified_students || 0} জন`;
+        document.getElementById('adm-metric-pending').innerText = `${m.pending_claims || 0} টি`;
+        document.getElementById('adm-metric-exams').innerText = `${m.total_exams || 0} টি`;
+
+        adminClaimsCache = data.claims || [];
+        adminSmsCache = data.sms_logs || [];
+
+        document.getElementById('adm-claims-count').innerText = adminClaimsCache.length;
+        document.getElementById('adm-sms-count').innerText = adminSmsCache.length;
+
+        renderAdminClaimsTable(adminClaimsCache);
+        renderAdminSmsTable(adminSmsCache);
+      } catch (e) {
+        console.error("Admin data load error:", e);
+        showToast("অ্যাডমিন ডেটা লোড করতে সমস্যা হয়েছে।", "error");
+      }
+    }
+
+    function renderAdminClaimsTable(claims) {
+      const tbody = document.getElementById('adm-claims-tbody');
+      const empty = document.getElementById('adm-claims-empty');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (!claims || claims.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+      if (empty) empty.classList.add('hidden');
+
+      claims.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+        
+        let statusBadge = '';
+        if (c.status === 'verified') {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">✓ অনুমোদিত</span>';
+        } else if (c.status === 'rejected') {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 text-[10px] font-bold">✕ বাতিল</span>';
+        } else {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold animate-pulse">⏳ অপেক্ষমান</span>';
+        }
+
+        let actionButtons = '';
+        if (c.status === 'pending') {
+          actionButtons = `
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow transition">
+                ✓ অনুমোদন
+              </button>
+              <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-[11px] border border-slate-700 transition">
+                ✕ বাতিল
+              </button>
+            </div>
+          `;
+        } else if (c.status === 'verified') {
+          actionButtons = `<span class="text-[11px] text-emerald-400 font-semibold flex items-center justify-end gap-1"><span>🔓</span> টেস্ট আনলকড</span>`;
+        } else {
+          actionButtons = `
+            <div class="flex items-center justify-end gap-1">
+              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
+                পুনরায় অনুমোদন
+              </button>
+            </div>
+          `;
+        }
+
+        const dateStr = c.created_at ? new Date(c.created_at).toLocaleString('bn-BD', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+
+        tr.innerHTML = `
+          <td class="py-2.5 pr-2 text-slate-400 text-[11px] whitespace-nowrap">${dateStr}</td>
+          <td class="py-2.5 px-2">
+            <div class="font-bold text-white text-xs">${c.student_name || 'পরীক্ষার্থী'}</div>
+            <div class="text-[10px] text-slate-400 truncate max-w-[140px]">${c.student_email || c.student_id || '-'}</div>
+          </td>
+          <td class="py-2.5 px-2 font-mono text-slate-300">${c.sender_number || '-'}</td>
+          <td class="py-2.5 px-2">
+            <span class="font-bold ${c.package === 'combo' ? 'text-purple-300' : (c.package === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${c.package}</span>
+            <span class="text-[11px] text-slate-400 ml-1">৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
+          </td>
+          <td class="py-2.5 px-2 font-mono font-bold text-amber-300 text-xs">${c.trx_id || '-'}</td>
+          <td class="py-2.5 px-2">${statusBadge}</td>
+          <td class="py-2.5 pl-2 text-right">${actionButtons}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAdminSmsTable(smsLogs) {
+      const tbody = document.getElementById('adm-sms-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (!smsLogs || smsLogs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 font-sans text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</td></tr>`;
+        return;
+      }
+
+      smsLogs.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+        const dateStr = s.received_at ? new Date(s.received_at).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-';
+
+        tr.innerHTML = `
+          <td class="py-2 pr-2 text-slate-400 whitespace-nowrap">${dateStr}</td>
+          <td class="py-2 px-2 text-slate-300">${s.sender || '-'}</td>
+          <td class="py-2 px-2 font-bold text-emerald-400">৳${s.amount || '০'}</td>
+          <td class="py-2 px-2 text-amber-300 font-bold">${s.trx_id || '-'}</td>
+          <td class="py-2 px-2">${s.matched_claim_id ? `<span class="text-emerald-400">✓ ক্লেইম #${s.matched_claim_id}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</td>
+          <td class="py-2 pl-2 text-slate-400 truncate max-w-xs" title="${s.raw_sms || ''}">${s.raw_sms || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function switchAdminTab(tab) {
+      const claimsTab = document.getElementById('adm-tab-claims');
+      const smsTab = document.getElementById('adm-tab-sms');
+      const claimsContainer = document.getElementById('adm-claims-container');
+      const smsContainer = document.getElementById('adm-sms-container');
+
+      if (tab === 'claims') {
+        claimsTab.className = "px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5";
+        smsTab.className = "px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5";
+        claimsContainer.classList.remove('hidden');
+        smsContainer.classList.add('hidden');
+      } else {
+        smsTab.className = "px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5";
+        claimsTab.className = "px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5";
+        smsContainer.classList.remove('hidden');
+        claimsContainer.classList.add('hidden');
+      }
+    }
+
+    function refreshAdminData() {
+      loadAdminData();
+      showToast("অ্যাডমিন ডেটা রিফ্রেশ করা হয়েছে।", "info");
+    }
+
+    async function approveClaim(trxId, claimId) {
+      const token = sessionStorage.getItem('admission_admin_token');
+      if (!token) return;
+
+      try {
+        const res = await fetch('/api/admin/approve-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ trx_id: trxId, claim_id: claimId })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(data.message || "পেমেন্ট সফলভাবে অনুমোদিত হয়েছে!", "success");
+          loadAdminData();
+          syncPaymentStatus();
+        } else {
+          showToast(data.error || "অনুমোদন ব্যর্থ হয়েছে।", "error");
+        }
+      } catch (e) {
+        showToast("সার্ভার সংযোগে সমস্যা।", "error");
+      }
+    }
+
+    async function rejectClaim(trxId, claimId) {
+      const token = sessionStorage.getItem('admission_admin_token');
+      if (!token) return;
+
+      try {
+        const res = await fetch('/api/admin/reject-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ trx_id: trxId, claim_id: claimId })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast("পেমেন্ট রিকোয়েস্ট বাতিল করা হয়েছে।", "info");
+          loadAdminData();
+        } else {
+          showToast(data.error || "বাতিল করতে সমস্যা হয়েছে।", "error");
+        }
+      } catch (e) {
+        showToast("সার্ভার সংযোগে সমস্যা।", "error");
       }
     }
 
