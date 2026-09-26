@@ -1542,11 +1542,19 @@
             if (isMed && !appState.isMedicalPaid) {
               appState.isMedicalPaid = true;
               localStorage.setItem('admission_paid_med', 'true');
+              if (appState.unlockedMed === 5) {
+                appState.unlockedMed = 6;
+                localStorage.setItem('admission_unlocked_med', '6');
+              }
               newlyUnlocked = true;
             }
             if (isVar && !appState.isVersityPaid) {
               appState.isVersityPaid = true;
               localStorage.setItem('admission_paid_var', 'true');
+              if (appState.unlockedVar === 5) {
+                appState.unlockedVar = 6;
+                localStorage.setItem('admission_unlocked_var', '6');
+              }
               newlyUnlocked = true;
             }
 
@@ -1596,11 +1604,19 @@
 
           if (isMed) {
             localStorage.setItem('admission_paid_med', 'true');
+            if (appState.unlockedMed === 5) {
+              appState.unlockedMed = 6;
+              localStorage.setItem('admission_unlocked_med', '6');
+            }
           } else {
             localStorage.removeItem('admission_paid_med');
           }
           if (isVar) {
             localStorage.setItem('admission_paid_var', 'true');
+            if (appState.unlockedVar === 5) {
+              appState.unlockedVar = 6;
+              localStorage.setItem('admission_unlocked_var', '6');
+            }
           } else {
             localStorage.removeItem('admission_paid_var');
           }
@@ -1834,18 +1850,16 @@
     function isTestUnlocked(stream, testId) {
       if (stream === 'past_15years' || stream === 'textbooks' || stream === 'nocalc') return true;
       
-      // 1. If student paid for this stream, all 100 tests are 100% UNLOCKED!
-      if (isStreamPaid(stream)) {
-        return true;
+      const isPaid = isStreamPaid(stream);
+      const maxUnlocked = (stream === 'medical') ? appState.unlockedMed : appState.unlockedVar;
+
+      // 1. Tests 6 to 100 strictly require payment for this stream
+      if (testId > 5 && !isPaid) {
+        return false;
       }
 
-      // 2. If not paid, only free tests (Tests 1 to 5) are accessible
-      if (testId <= 5) {
-        return true;
-      }
-
-      // 3. Tests 6 to 100 are strictly locked for unpaid streams
-      return false;
+      // 2. Sequential Progression Rule: Each test is locked until the previous test is given & submitted
+      return Number(testId) <= Number(maxUnlocked);
     }
 
     function populateTestDropdown() {
@@ -1866,8 +1880,10 @@
         let label = `টেস্ট ${i < 10 ? '০' + i : i} `;
         if (unlocked) {
           label += isFree ? '✓ [ফ্রি]' : '✓ [উন্মুক্ত]';
-        } else {
+        } else if (i > 5 && !paid) {
           label += '🔒 [প্রিমিয়াম - ৳৪৯৯]';
+        } else {
+          label += '🔒 [ধারাবাহিক লকড]';
         }
 
         opt.text = label;
@@ -2216,12 +2232,18 @@
       if (appState.currentStream !== targetStream && (selectedBkashPackage === 'medical' || selectedBkashPackage === 'versity')) {
         switchStream(targetStream);
       }
-      if (appState.pendingUnlockTestId) {
-        appState.currentTestId = appState.pendingUnlockTestId;
-        appState.pendingUnlockTestId = null;
-        const dropdown = document.getElementById('model-test-dropdown');
-        if (dropdown) dropdown.value = appState.currentTestId;
+      const stream = appState.currentStream;
+      const maxUnlocked = (stream === 'medical') ? appState.unlockedMed : appState.unlockedVar;
+      
+      let testToStart = maxUnlocked;
+      if (appState.pendingUnlockTestId && isTestUnlocked(stream, appState.pendingUnlockTestId)) {
+        testToStart = appState.pendingUnlockTestId;
       }
+      appState.pendingUnlockTestId = null;
+      appState.currentTestId = testToStart;
+      const dropdown = document.getElementById('model-test-dropdown');
+      if (dropdown) dropdown.value = appState.currentTestId;
+
       loadCurrentSelectedTest();
       startActiveExam();
     }
@@ -2287,12 +2309,16 @@
               appState.isVersityPaid = true;
               localStorage.setItem('admission_paid_med', 'true');
               localStorage.setItem('admission_paid_var', 'true');
+              if (appState.unlockedMed === 5) { appState.unlockedMed = 6; localStorage.setItem('admission_unlocked_med', '6'); }
+              if (appState.unlockedVar === 5) { appState.unlockedVar = 6; localStorage.setItem('admission_unlocked_var', '6'); }
             } else if (selectedBkashPackage === 'medical') {
               appState.isMedicalPaid = true;
               localStorage.setItem('admission_paid_med', 'true');
+              if (appState.unlockedMed === 5) { appState.unlockedMed = 6; localStorage.setItem('admission_unlocked_med', '6'); }
             } else if (selectedBkashPackage === 'versity') {
               appState.isVersityPaid = true;
               localStorage.setItem('admission_paid_var', 'true');
+              if (appState.unlockedVar === 5) { appState.unlockedVar = 6; localStorage.setItem('admission_unlocked_var', '6'); }
             }
 
             updateUnlockedBadges();
@@ -2734,14 +2760,21 @@
 
       // Sequential Exam Unlocking Logic - Runs instantly on submit!
       let nextUnlocked = false;
+      const isPaid = isStreamPaid(appState.currentStream);
+      const maxAllowed = isPaid ? 100 : 5;
+
       if (appState.currentStream === 'medical' && appState.currentTestId === appState.unlockedMed) {
-        appState.unlockedMed = Math.min(100, appState.unlockedMed + 1);
-        localStorage.setItem('admission_unlocked_med', appState.unlockedMed);
-        nextUnlocked = true;
+        if (appState.unlockedMed < maxAllowed) {
+          appState.unlockedMed = Math.min(maxAllowed, appState.unlockedMed + 1);
+          localStorage.setItem('admission_unlocked_med', appState.unlockedMed);
+          nextUnlocked = true;
+        }
       } else if (appState.currentStream === 'versity' && appState.currentTestId === appState.unlockedVar) {
-        appState.unlockedVar = Math.min(100, appState.unlockedVar + 1);
-        localStorage.setItem('admission_unlocked_var', appState.unlockedVar);
-        nextUnlocked = true;
+        if (appState.unlockedVar < maxAllowed) {
+          appState.unlockedVar = Math.min(maxAllowed, appState.unlockedVar + 1);
+          localStorage.setItem('admission_unlocked_var', appState.unlockedVar);
+          nextUnlocked = true;
+        }
       }
 
       updateUnlockedBadges();
