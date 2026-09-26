@@ -353,26 +353,29 @@ class handler(http.server.BaseHTTPRequestHandler):
             data.get('sms') or ''
         )
 
+        if not raw_message and isinstance(data, str):
+            raw_message = data
+
         parsed = parse_bkash_sms(raw_message)
-        if not parsed:
-            self.send_json_response({
-                "status": "ignored",
-                "message": "No valid bKash TrxID found in the SMS message.",
-                "raw": raw_message
-            }, status=200)
-            return
 
         conn = get_db_connection()
         try:
             ensure_database_schema(conn)
             c = conn.cursor()
-            c.execute("""
-                INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
-                VALUES (%s, %s, %s, %s, %s)
-                ON CONFLICT (parsed_trx_id) DO UPDATE SET
-                    parsed_amount = EXCLUDED.parsed_amount,
-                    parsed_sender = EXCLUDED.parsed_sender;
-            """, (sender, raw_message, parsed['amount'], parsed['sender'], parsed['trx_id']))
+            if parsed:
+                c.execute("""
+                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON CONFLICT (parsed_trx_id) DO UPDATE SET
+                        parsed_amount = EXCLUDED.parsed_amount,
+                        parsed_sender = EXCLUDED.parsed_sender;
+                """, (sender, raw_message, parsed['amount'], parsed['sender'], parsed['trx_id']))
+            else:
+                # Log incoming test message so we can verify phone connectivity
+                c.execute("""
+                    INSERT INTO received_sms_logs (sender, raw_message, parsed_amount, parsed_sender, parsed_trx_id)
+                    VALUES (%s, %s, NULL, NULL, NULL);
+                """, (sender, raw_message or json.dumps(data)))
             conn.commit()
         except Exception as e:
             self.send_json_response({"status": "error", "message": str(e)}, status=500)
@@ -380,11 +383,18 @@ class handler(http.server.BaseHTTPRequestHandler):
         finally:
             conn.close()
 
-        self.send_json_response({
-            "status": "success",
-            "message": "bKash SMS successfully recorded and logged.",
-            "parsed": parsed
-        })
+        if parsed:
+            self.send_json_response({
+                "status": "success",
+                "message": "bKash SMS successfully recorded and logged.",
+                "parsed": parsed
+            })
+        else:
+            self.send_json_response({
+                "status": "received",
+                "message": "Test SMS received and logged successfully (no real bKash TrxID).",
+                "raw": raw_message or data
+            })
 
     def handle_verify_trx(self, data):
         student_id = data.get('student_id', '').strip()
