@@ -16,7 +16,7 @@ portal_code = """<!DOCTYPE html>
 <html lang="bn" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>Admission Test BD | AI-Powered Exam Preparation & National Merit Ranking</title>
   <meta name="description" content="বাংলাদেশ শীর্ষস্থানীয় এডমিশন টেস্ট পোর্টাল: মেডিকেল ও ভার্সিটি ১০০ মডেল টেস্ট, বিগত ১৫ বছরের প্রশ্ন, ২০০০ পাঠ্যবই তথ্য এবং রিয়েল-টাইম জাতীয় ও সেশন মেধা তালিকা।">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -88,8 +88,27 @@ portal_code = """<!DOCTYPE html>
   </script>
 
   <style>
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
     body {
       font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+    }
+    /* iOS Safari Auto-Zoom Fix: prevents iOS from auto-zooming inputs on mobile */
+    @media screen and (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+    .touch-scroll {
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    button, a {
+      -webkit-tap-highlight-color: transparent;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -123,46 +142,46 @@ portal_code = """<!DOCTYPE html>
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white overflow-x-hidden">
 
   <!-- ============================================== -->
   <!-- TOP NAVIGATION BAR -->
   <!-- ============================================== -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-14 sm:h-16 gap-2">
         
         <!-- Logo & Branding -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="switchStream('medical')">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-lg glow-brand shrink-0">
+        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onclick="switchStream('medical')">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-base sm:text-xl shadow-lg glow-brand shrink-0">
             A
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span class="font-black text-lg sm:text-xl tracking-tight text-white">ADMISSION TEST <span class="text-brand-400">BD</span></span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-ai-900/80 text-ai-300 border border-ai-700 font-bold hidden sm:inline-block">AI 2.0</span>
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="font-black text-base sm:text-xl tracking-tight text-white">ADMISSION<span class="text-brand-400">BD</span></span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-ai-900/80 text-ai-300 border border-ai-700 font-bold hidden md:inline-block">AI 2.0</span>
             </div>
-            <p class="text-[11px] text-slate-400 hidden sm:block">বাংলাদেশ অ্যাডমিশন মডেল টেস্ট ও জাতীয় মেধা র‍্যাংকিং</p>
+            <p class="text-[11px] text-slate-400 hidden lg:block">বাংলাদেশ অ্যাডমিশন মডেল টেস্ট ও জাতীয় মেধা র‍্যাংকিং</p>
           </div>
         </div>
 
-        <!-- Admission Season Selector (Strictly Season Only - No Name / University) -->
-        <div class="flex items-center gap-3">
-          <div class="flex items-center gap-2 bg-slate-800/90 px-3 py-1.5 rounded-xl border border-slate-700/80 shadow-inner">
-            <span class="text-xs text-brand-400 font-bold flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
-              <span class="hidden md:inline">ভর্তি সেশন:</span>
+        <!-- Admission Season Selector & Auth (Mobile Friendly) -->
+        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <div class="flex items-center gap-1 sm:gap-2 bg-slate-800/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700/80 shadow-inner">
+            <span class="text-xs text-brand-400 font-bold flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping shrink-0"></span>
+              <span class="hidden md:inline">সেশন:</span>
             </span>
-            <select id="season-selector" onchange="changeAdmissionSession(this.value)" class="bg-slate-900 border border-slate-700 text-xs sm:text-sm font-extrabold text-white rounded-lg px-2.5 py-1 focus:ring-2 focus:ring-brand-500 focus:outline-none cursor-pointer">
-              <option value="2025-26" selected>২০২৫-২৬ সেশন (চলতি ব্যাচ)</option>
-              <option value="2026-27">২০২৬-২৭ সেশন (পরবর্তী সেশন)</option>
-              <option value="2024-25">২০২৪-২৫ সেশন (বিগত সেশন)</option>
-              <option value="2027-28">২০২৭-২৮ সেশন (অগ্রিম ব্যাচ)</option>
+            <select id="season-selector" onchange="changeAdmissionSession(this.value)" class="bg-slate-900 border border-slate-700 text-xs sm:text-sm font-extrabold text-white rounded-lg px-1.5 sm:px-2.5 py-1 focus:ring-1 focus:ring-brand-500 focus:outline-none cursor-pointer">
+              <option value="2025-26" selected>২০২৫-২৬</option>
+              <option value="2026-27">২০২৬-২৭</option>
+              <option value="2024-25">২০২৪-২৫</option>
+              <option value="2027-28">২০২৭-২৮</option>
             </select>
           </div>
 
           <!-- Quick Progress Indicator -->
-          <div class="hidden lg:flex items-center gap-2 text-xs">
+          <div class="hidden xl:flex items-center gap-2 text-xs">
             <span id="med-unlocked-badge" class="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-800 font-semibold flex items-center gap-1">
               🩺 মেডিকেল: টেস্ট ০১ আনলকড
             </span>
@@ -172,13 +191,13 @@ portal_code = """<!DOCTYPE html>
           </div>
 
           <!-- User Auth Widget (Sign In / Sign Up & Profile) -->
-          <div id="user-auth-widget"></div>
+          <div id="user-auth-widget" class="shrink-0"></div>
         </div>
 
       </div>
 
       <!-- Main Navigation Tabs: Stream Order Medical -> Varsity -> Engineering (Last) -> 15 Years -> Textbooks -> Tricks -->
-      <nav class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto py-2 custom-scrollbar border-t border-slate-800/60 text-xs sm:text-sm font-semibold">
+      <nav class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto py-2 custom-scrollbar touch-scroll border-t border-slate-800/60 text-xs sm:text-sm font-semibold flex-nowrap -mx-3 px-3 sm:mx-0 sm:px-0">
         <button id="nav-btn-medical" onclick="switchStream('medical')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap bg-brand-600 text-white shadow-md font-bold">
           <span>🩺</span>
           <span>মেডিকেল ১০০ মডেল টেস্ট</span>
@@ -227,28 +246,28 @@ portal_code = """<!DOCTYPE html>
   <!-- ============================================== -->
   <!-- MAIN CONTENT CONTAINER -->
   <!-- ============================================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6 overflow-x-hidden">
 
     <!-- HERO / BANNER WITH AI VIBE & ILLUSTRATIONS -->
-    <section id="hero-banner" class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl">
-      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="max-w-2xl space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/80 text-brand-300 border border-brand-800 text-xs font-bold">
+    <section id="hero-banner" class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 p-4 sm:p-8 shadow-2xl">
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+        <div class="max-w-2xl space-y-2.5 sm:space-y-3">
+          <div class="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-brand-950/80 text-brand-300 border border-brand-800 text-[11px] sm:text-xs font-bold">
             <span class="w-2 h-2 rounded-full bg-brand-400"></span>
             পরবর্তী পরীক্ষা দিতে পূর্ববর্তী পরীক্ষা সম্পন্ন বাধ্যতামূলক
           </div>
-          <h1 id="hero-title" class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          <h1 id="hero-title" class="text-xl sm:text-4xl font-black text-white tracking-tight leading-snug">
             মেডিকেল ও ভার্সিটি <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ</span>
           </h1>
-          <p id="hero-subtitle" class="text-sm sm:text-base text-slate-300 font-medium">
+          <p id="hero-subtitle" class="text-xs sm:text-base text-slate-300 font-medium leading-relaxed">
             পরপর সিকোয়েন্সিয়াল টেস্ট আনলক সিস্টেম। প্রতিটি টেস্টে রয়েছে ৬০ মিনিটের রিয়েল-টাইম কাউন্টডাউন টাইমার, সেশন মেধা ও সর্বকালের অল-বাংলাদেশ লাইভ র‍্যাংকিং।
           </p>
-          <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300 pt-2">
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-semibold text-slate-300 pt-1">
             <div class="flex items-center gap-1.5">
               <span class="text-brand-400">✓</span> ১০,০০০+ এনসিটিবি প্রশ্নব্যাংক
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="text-brand-400">✓</span> নেগেটিভ মার্কিং (-০.২৫)
+              <span class="text-brand-400">✓</span> নেগেティブ মার্কিং (-০.২৫)
             </div>
             <div class="flex items-center gap-1.5">
               <span class="text-brand-400">✓</span> অটোমেটিক সাবমিট ব্যবস্থা
@@ -260,8 +279,8 @@ portal_code = """<!DOCTYPE html>
         </div>
 
         <div class="w-full md:w-auto shrink-0 flex items-center justify-center gap-3">
-          <img src="/web/assets/student_studying_ai.jpg" alt="Student Studying" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl hidden sm:block">
-          <img src="/web/assets/student_ai_analysis.jpg" alt="AI Analysis" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl">
+          <img src="/web/assets/student_studying_ai.jpg" alt="Student Studying" class="w-24 h-24 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl hidden sm:block">
+          <img src="/web/assets/student_ai_analysis.jpg" alt="AI Analysis" class="w-24 h-24 sm:w-36 sm:h-36 rounded-2xl object-cover border border-slate-700 shadow-xl">
         </div>
       </div>
     </section>
@@ -269,10 +288,10 @@ portal_code = """<!DOCTYPE html>
     <!-- ============================================== -->
     <!-- VIEW 1: MODEL TEST SIMULATOR (Medical & Varsity) -->
     <!-- ============================================== -->
-    <div id="view-model-tests" class="space-y-6">
+    <div id="view-model-tests" class="space-y-4 sm:space-y-6">
 
       <!-- Test Navigation / Selection Bar -->
-      <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div class="bg-slate-900/90 rounded-2xl p-3.5 sm:p-5 border border-slate-800 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
         
         <!-- Left: Test Selector & Lock Summary -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
@@ -378,35 +397,36 @@ portal_code = """<!DOCTYPE html>
       <!-- ============================================== -->
       <div id="exam-active-card" class="hidden space-y-6">
 
-        <!-- Sticky Countdown Timer & Control Header -->
-        <div class="sticky top-28 z-40 bg-slate-900/95 backdrop-blur-md rounded-2xl p-4 border border-slate-700/80 shadow-2xl flex flex-col gap-3">
-          <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-black text-lg animate-pulse shrink-0">
+        <!-- Sticky Countdown Timer & Control Header (Mobile Slim) -->
+        <div class="sticky top-[98px] sm:top-20 z-40 bg-slate-900/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-4 border border-slate-700/80 shadow-2xl flex flex-col gap-2 sm:gap-3">
+          <div class="flex items-center justify-between gap-2 sm:gap-4">
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-black text-sm sm:text-lg animate-pulse shrink-0">
                 ⏳
               </div>
               <div>
-                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">অবশিষ্ট সময় (Time Remaining)</div>
-                <div id="countdown-timer-display" class="text-2xl sm:text-3xl font-black text-amber-300 font-mono tracking-wider">
+                <div class="text-[9px] sm:text-[11px] uppercase tracking-wider text-slate-400 font-bold">অবশিষ্ট সময়</div>
+                <div id="countdown-timer-display" class="text-xl sm:text-3xl font-black text-amber-300 font-mono tracking-wider">
                   ৬০:০০
                 </div>
               </div>
             </div>
 
             <!-- Answer Counter Pills -->
-            <div class="flex items-center gap-2 text-xs font-bold">
-              <span class="px-3 py-1.5 rounded-xl bg-emerald-950/80 text-emerald-300 border border-emerald-800">
-                উত্তর: <span id="answered-count-pill" class="text-white text-sm font-black">০</span>/<span id="total-questions-pill">১০০</span>
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs font-bold">
+              <span class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-950/80 text-emerald-300 border border-emerald-800 text-[11px] sm:text-xs">
+                উত্তর: <span id="answered-count-pill" class="text-white text-xs sm:text-sm font-black">০</span>/<span id="total-questions-pill">১০০</span>
               </span>
-              <span class="hidden sm:inline-block px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 border border-slate-700">
+              <span class="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 border border-slate-700">
                 বাকি: <span id="unanswered-count-pill" class="text-white text-sm font-black">১০০</span>
               </span>
             </div>
 
             <!-- Submit Button -->
-            <button id="btn-submit-active-exam" onclick="confirmSubmitExam()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-950 transition flex items-center gap-1.5 border border-emerald-500/40 cursor-pointer">
+            <button id="btn-submit-active-exam" onclick="confirmSubmitExam()" class="px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-950 transition flex items-center justify-center gap-1.5 border border-emerald-500/40 cursor-pointer shrink-0 min-h-[40px]">
               <span>📥</span>
-              <span>সাবমিট করো</span>
+              <span class="hidden sm:inline">সাবমিট করো</span>
+              <span class="sm:hidden">সাবমিট</span>
             </button>
           </div>
 
@@ -417,7 +437,7 @@ portal_code = """<!DOCTYPE html>
         </div>
 
         <!-- Question Filter Tabs -->
-        <div class="flex items-center gap-2 overflow-x-auto py-1 custom-scrollbar text-xs font-semibold">
+        <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 custom-scrollbar touch-scroll text-xs font-semibold flex-nowrap -mx-3 px-3 sm:mx-0 sm:px-0">
           <button onclick="filterQuestionsBySubject('All', this)" class="q-filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-white border border-slate-700 active-filter">সব বিষয় (১০০)</button>
           <button id="q-filter-subj1" onclick="filterQuestionsBySubject('Biology', this)" class="q-filter-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800">জীববিজ্ঞান</button>
           <button id="q-filter-subj2" onclick="filterQuestionsBySubject('Chemistry', this)" class="q-filter-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800">রসায়ন</button>
@@ -536,12 +556,12 @@ portal_code = """<!DOCTYPE html>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-800/80 flex-wrap">
-            <button onclick="retakeCurrentExam()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center gap-1.5">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 mt-6 pt-4 border-t border-slate-800/80">
+            <button onclick="retakeCurrentExam()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
               <span>🔄</span> আবার পরীক্ষা দিন
             </button>
 
-            <button id="btn-goto-next-test" onclick="loadNextUnlockedExam()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center gap-1.5">
+            <button id="btn-goto-next-test" onclick="loadNextUnlockedExam()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center justify-center gap-1.5 min-h-[44px]">
               <span>পরবর্তী টেস্টে যান (Next Test)</span>
               <span>→</span>
             </button>
@@ -793,7 +813,7 @@ portal_code = """<!DOCTYPE html>
   <!-- FOOTER -->
   <!-- ============================================== -->
   <footer class="bg-slate-950 border-t border-slate-900 mt-auto py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-400 border border-brand-500/40 flex items-center justify-center font-black text-sm">
           A
@@ -805,12 +825,12 @@ portal_code = """<!DOCTYPE html>
       </div>
 
       <!-- Contact Info -->
-      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300">
-        <a href="mailto:shahriyarkarimsiam@gmail.com" class="flex items-center gap-1.5 hover:text-brand-400 transition bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+      <div class="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4 text-xs text-slate-300">
+        <a href="mailto:shahriyarkarimsiam@gmail.com" class="flex items-center gap-1.5 hover:text-brand-400 transition bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
           <span>📧</span>
-          <span>shahriyarkarimsiam@gmail.com</span>
+          <span class="break-all font-mono">shahriyarkarimsiam@gmail.com</span>
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61594973542595" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-blue-400 transition bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+        <a href="https://www.facebook.com/profile.php?id=61594973542595" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-blue-400 transition bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
           <span>🌐</span>
           <span>Facebook Page</span>
         </a>
@@ -818,7 +838,7 @@ portal_code = """<!DOCTYPE html>
 
       <!-- Discrete Admin Entry -->
       <div>
-        <button onclick="openAdminModal()" class="text-[11px] text-slate-400 hover:text-brand-400 transition flex items-center gap-1 bg-slate-900/60 hover:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-800">
+        <button onclick="openAdminModal()" class="text-[11px] text-slate-400 hover:text-brand-400 transition flex items-center gap-1 bg-slate-900/60 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-800 min-h-[36px]">
           <span>🔐</span>
           <span>অ্যাডমিন প্যানেল</span>
         </button>
@@ -860,105 +880,105 @@ portal_code = """<!DOCTYPE html>
   </div>
 
   <!-- ============================================== -->
-  <!-- PREMIUM BKASH PAYWALL & ENROLLMENT MODAL -->
+  <!-- PREMIUM BKASH PAYWALL & ENROLLMENT MODAL (MOBILE OPTIMIZED) -->
   <!-- ============================================== -->
-  <div id="bkash-paywall-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-200">
+  <div id="bkash-paywall-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeBkashPaywallModal()"></div>
-    <div id="bkash-paywall-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-pink-500/40 rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl shadow-pink-950/60 relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200 space-y-4">
+    <div id="bkash-paywall-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-pink-500/40 rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-pink-950/60 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-3 sm:space-y-4">
       
       <!-- Ambient Background Accents -->
       <div class="absolute -top-20 -right-20 w-44 h-44 bg-pink-600/20 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-20 -left-20 w-44 h-44 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Header with bKash Badge -->
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+      <div class="flex items-start justify-between gap-2 sm:gap-3">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-inner">
             📱
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <h3 class="text-lg sm:text-xl font-black text-white">প্রিমিয়াম মডেল টেস্ট আনলক</h3>
-              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-pink-600 text-white shadow-sm">bKash</span>
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <h3 class="text-base sm:text-xl font-black text-white">প্রিমিয়াম মডেল টেস্ট আনলক</h3>
+              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-pink-600 text-white shadow-sm">bKash</span>
             </div>
-            <p class="text-xs text-slate-300 font-medium">প্রথম ৫টি টেস্ট ফ্রি! বাকি ৯৫টি টেস্টের জন্য ফি পরিশোধ করুন</p>
+            <p class="text-[11px] sm:text-xs text-slate-300 font-medium">প্রথম ৫টি টেস্ট ফ্রি! বাকি ৯৫টি টেস্টের জন্য ফি পরিশোধ করুন</p>
           </div>
         </div>
-        <button onclick="closeBkashPaywallModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition">✕</button>
+        <button onclick="closeBkashPaywallModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition shrink-0">✕</button>
       </div>
 
-      <!-- Package Selector -->
+      <!-- Package Selector (3-col mobile friendly) -->
       <div class="space-y-1.5">
-        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">প্যাকেজ নির্বাচন করুন:</div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider">প্যাকেজ নির্বাচন করুন:</div>
+        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
           <!-- Medical Pack -->
-          <div id="pkg-opt-medical" onclick="selectBkashPackage('medical')" class="cursor-pointer p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition">
-            <div class="text-xs font-bold text-pink-300">🩺 মেডিকেল</div>
-            <div class="text-base font-black text-white mt-0.5">৳৪৯৯</div>
-            <div class="text-[10px] text-pink-200">৯৫টি পেইড টেস্ট</div>
+          <div id="pkg-opt-medical" onclick="selectBkashPackage('medical')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition flex flex-col justify-between ring-1 ring-pink-500">
+            <div class="text-[11px] sm:text-xs font-bold text-pink-300">🩺 মেডিকেল</div>
+            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৪৯৯</div>
+            <div class="text-[9px] sm:text-[10px] text-pink-200">৯৫ টেস্ট</div>
           </div>
           <!-- Versity Pack -->
-          <div id="pkg-opt-versity" onclick="selectBkashPackage('versity')" class="cursor-pointer p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80">
-            <div class="text-xs font-bold text-slate-300">🏛️ ভার্সিটি ও গুচ্ছ</div>
-            <div class="text-base font-black text-white mt-0.5">৳৪৯৯</div>
-            <div class="text-[10px] text-slate-400">৯৫টি পেইড টেস্ট</div>
+          <div id="pkg-opt-versity" onclick="selectBkashPackage('versity')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80 flex flex-col justify-between">
+            <div class="text-[11px] sm:text-xs font-bold text-slate-300">🏛️ ভার্সিটি</div>
+            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৪৯৯</div>
+            <div class="text-[9px] sm:text-[10px] text-slate-400">৯৫ টেস্ট</div>
           </div>
           <!-- Combo Pack -->
-          <div id="pkg-opt-combo" onclick="selectBkashPackage('combo')" class="cursor-pointer p-3 rounded-xl border border-purple-500/40 bg-purple-950/30 text-center hover:border-purple-400 transition opacity-80 relative overflow-hidden">
-            <span class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-pink-500 text-slate-950 text-[9px] font-black px-1.5 py-0.2 rounded-bl">মেগা ছাড়</span>
-            <div class="text-xs font-bold text-purple-300">⚡ মেগা কম্বো</div>
-            <div class="text-base font-black text-white mt-0.5">৳৭৯৯</div>
-            <div class="text-[10px] text-purple-200">২০০ টেস্ট (উভয়)</div>
+          <div id="pkg-opt-combo" onclick="selectBkashPackage('combo')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-purple-500/40 bg-purple-950/30 text-center hover:border-purple-400 transition opacity-80 relative overflow-hidden flex flex-col justify-between">
+            <span class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-pink-500 text-slate-950 text-[8px] sm:text-[9px] font-black px-1 sm:px-1.5 py-0.2 rounded-bl">মেগা ছাড়</span>
+            <div class="text-[11px] sm:text-xs font-bold text-purple-300">⚡ কম্বো</div>
+            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৭৯৯</div>
+            <div class="text-[9px] sm:text-[10px] text-purple-200">২০০ টেস্ট</div>
           </div>
         </div>
       </div>
 
       <!-- Personal bKash Account Display & Copy Card -->
-      <div class="p-3.5 rounded-2xl bg-gradient-to-r from-pink-950/60 via-slate-900 to-pink-950/60 border border-pink-500/40 flex items-center justify-between gap-3">
-        <div>
-          <div class="text-[11px] font-semibold text-pink-300 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
-            <span>পার্সোনাল বিকাশ একাউন্ট (Send Money):</span>
+      <div class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-pink-950/60 via-slate-900 to-pink-950/60 border border-pink-500/40 flex items-center justify-between gap-2 sm:gap-3">
+        <div class="min-w-0">
+          <div class="text-[10px] sm:text-[11px] font-semibold text-pink-300 flex items-center gap-1.5 truncate">
+            <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse shrink-0"></span>
+            <span class="truncate">পার্সোনাল বিকাশ (Send Money):</span>
           </div>
-          <div id="bkash-number-text" class="text-xl sm:text-2xl font-black text-white tracking-widest mt-0.5 font-mono">01644265766</div>
+          <div id="bkash-number-text" class="text-xl sm:text-2xl font-black text-white tracking-wider sm:tracking-widest mt-0.5 font-mono select-all">01644265766</div>
         </div>
-        <button id="btn-copy-bkash" onclick="copyBkashNumber()" class="px-3.5 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs shadow-md shadow-pink-600/30 transition flex items-center gap-1.5 shrink-0">
+        <button id="btn-copy-bkash" onclick="copyBkashNumber()" class="px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-pink-600 hover:bg-pink-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-pink-600/30 transition flex items-center gap-1.5 shrink-0 min-h-[44px]">
           <span>📋</span>
-          <span id="btn-copy-bkash-text">কপি করুন</span>
+          <span id="btn-copy-bkash-text">কপি</span>
         </button>
       </div>
 
       <!-- Send Money Instructions -->
-      <div class="p-3 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-1.5 text-xs text-slate-300 leading-relaxed">
+      <div class="p-2.5 sm:p-3 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-1 sm:space-y-1.5 text-xs text-slate-300 leading-relaxed">
         <div class="font-bold text-slate-200 flex items-center gap-1.5 text-[11px]">
           <span>💡</span> <span>ফি পরিশোধের নিয়মাবলি:</span>
         </div>
-        <ol class="list-decimal list-inside space-y-1.5 text-slate-400 pl-1 text-[11px]">
-          <li>আপনার bKash অ্যাপ ওপেন করে <strong class="text-pink-300">Send Money</strong> সিলেক্ট করুন।</li>
-          <li>প্রাপক নাম্বারে <strong class="text-white font-mono">01644265766</strong> দিন এবং নির্বাচিত ফি (<span id="instruction-fee-text" class="text-white font-bold">৳৪৯৯</span>) পাঠান।</li>
-          <li>টাকা পাঠানোর পর SMS বা বিকাশ অ্যাপে প্রাপ্ত <strong class="text-amber-300 font-mono">TrxID</strong> এবং আপনার প্রেরক বিকাশ নাম্বার নিচে দিন। অ্যাডমিন মেসেজ/অ্যাপ দেখে যাচাই করলেই সাথে সাথে ৯৫টি টেস্ট আনলক হয়ে যাবে।</li>
+        <ol class="list-decimal list-inside space-y-1 text-slate-400 pl-1 text-[11px]">
+          <li>আপনার bKash অ্যাপে <strong class="text-pink-300">Send Money</strong> সিলেক্ট করুন।</li>
+          <li>প্রাপক নাম্বারে <strong class="text-white font-mono select-all">01644265766</strong> দিন এবং নির্বাচিত ফি (<span id="instruction-fee-text" class="text-white font-bold">৳৪৯৯</span>) পাঠান।</li>
+          <li>টাকা পাঠানোর পর প্রাপ্ত <strong class="text-amber-300 font-mono">TrxID</strong> এবং আপনার বিকাশ নাম্বার নিচে দিন। অ্যাডমিন যাচাই করলেই টেস্টগুলো আনলক হয়ে যাবে।</li>
         </ol>
       </div>
 
       <!-- Verification Input Form -->
-      <div class="space-y-2.5">
+      <div class="space-y-2 sm:space-y-2.5">
         <div>
           <label class="block text-[11px] font-bold text-slate-300 mb-1">আপনার বিকাশ মোবাইল নাম্বার:</label>
-          <input id="pay-sender-number" type="tel" placeholder="01XXXXXXXXX (যে নাম্বার থেকে পাঠিয়েছেন)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500">
+          <input id="pay-sender-number" type="tel" placeholder="01XXXXXXXXX (যে নাম্বার থেকে পাঠিয়েছেন)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500 min-h-[44px]">
         </div>
         <div>
           <label class="block text-[11px] font-bold text-slate-300 mb-1">bKash Transaction ID (TrxID):</label>
-          <input id="pay-trx-id" type="text" placeholder="যেমন: 9K27XZ89 (৮-১২ অক্ষরের TrxID)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500 uppercase font-mono">
+          <input id="pay-trx-id" type="text" placeholder="যেমন: 9K27XZ89 (TrxID)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500 uppercase font-mono min-h-[44px]">
         </div>
         <div id="paywall-feedback-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center justify-end gap-3 pt-1">
-        <button onclick="closeBkashPaywallModal()" class="px-5 py-2 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 font-bold transition text-xs">
+      <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 pt-1">
+        <button onclick="closeBkashPaywallModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
           পরে করব
         </button>
-        <button id="btn-submit-payment" onclick="submitBkashPayment()" class="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-extrabold shadow-lg shadow-pink-600/30 transition text-xs sm:text-sm flex items-center gap-2">
+        <button id="btn-submit-payment" onclick="submitBkashPayment()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-extrabold shadow-lg shadow-pink-600/30 transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[46px]">
           <span>🚀 ভেরিফাই ও আনলক করো</span>
         </button>
       </div>
@@ -967,11 +987,11 @@ portal_code = """<!DOCTYPE html>
   </div>
 
   <!-- ============================================== -->
-  <!-- USER AUTH MODAL (LOGIN / SIGN UP) -->
+  <!-- USER AUTH MODAL (MOBILE FRIENDLY) -->
   <!-- ============================================== -->
-  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-200">
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeAuthModal()"></div>
-    <div id="auth-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl shadow-black/90 relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200 space-y-4">
+    <div id="auth-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-black/90 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-3 sm:space-y-4">
       
       <!-- Top glow -->
       <div class="absolute -top-16 -right-16 w-36 h-36 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -979,23 +999,23 @@ portal_code = """<!DOCTYPE html>
       <!-- Header -->
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-300 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-300 flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-inner">
             👤
           </div>
           <div>
-            <h3 id="auth-modal-title" class="text-lg sm:text-xl font-black text-white">শিক্ষার্থী একাউন্ট</h3>
+            <h3 id="auth-modal-title" class="text-base sm:text-xl font-black text-white">শিক্ষার্থী একাউন্ট</h3>
             <p class="text-xs text-slate-400">ভিন্ন ডিভাইসে আপনার প্রিমিয়াম সাবস্ক্রিপশন সিঙ্ক করুন</p>
           </div>
         </div>
-        <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition">✕</button>
+        <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition shrink-0">✕</button>
       </div>
 
       <!-- Auth Tab Toggle (Login / Signup) -->
       <div class="flex items-center bg-slate-950 p-1 rounded-2xl border border-slate-800 text-xs font-bold">
-        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition">
+        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white shadow transition min-h-[42px]">
           লগইন (Sign In)
         </button>
-        <button id="auth-tab-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition">
+        <button id="auth-tab-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 rounded-xl text-slate-400 hover:text-white transition min-h-[42px]">
           নতুন একাউন্ট (Sign Up)
         </button>
       </div>
@@ -1004,64 +1024,64 @@ portal_code = """<!DOCTYPE html>
       <form id="auth-form" onsubmit="event.preventDefault(); handleAuthSubmit();" class="space-y-3 pt-1">
         <div id="auth-name-container" class="hidden">
           <label class="block text-[11px] font-bold text-slate-300 mb-1">আপনার নাম (ঐচ্ছিক):</label>
-          <input id="auth-input-name" type="text" placeholder="যেমন: আবরার সাকিব" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          <input id="auth-input-name" type="text" placeholder="যেমন: আবরার সাকিব" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
         </div>
         <div>
           <label class="block text-[11px] font-bold text-slate-300 mb-1">ইমেইল এড্রেস:</label>
-          <input id="auth-input-email" type="email" required placeholder="name@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          <input id="auth-input-email" type="email" required placeholder="name@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
         </div>
         <div>
           <label class="block text-[11px] font-bold text-slate-300 mb-1">পাসওয়ার্ড:</label>
-          <input id="auth-input-password" type="password" required minlength="6" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          <input id="auth-input-password" type="password" required minlength="6" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
         </div>
 
         <div id="auth-feedback-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
 
-        <div class="pt-2">
-          <button id="btn-auth-submit" type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black shadow-lg glow-brand transition text-xs sm:text-sm flex items-center justify-center gap-2">
+        <div class="pt-1">
+          <button id="btn-auth-submit" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black shadow-lg glow-brand transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[46px]">
             <span>লগইন করুন</span>
           </button>
         </div>
       </form>
 
-      <p class="text-[11px] text-center text-slate-500">
-        ডিভাইস পরিবর্তন না করলে বারবার লগইন করার প্রয়োজন নেই, ডেটা স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে।
+      <p class="text-[11px] text-center text-slate-400 leading-relaxed">
+        💡 এক ডিভাইসে একবার সাবস্ক্রিপশন নিলে ডেটা স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে। অন্য ডিভাইসে পড়ার ক্ষেত্রে শুধুমাত্র এই ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করবেন।
       </p>
 
     </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- ADMIN PANEL & PAYMENT APPROVAL MODAL -->
+  <!-- ADMIN PANEL & PAYMENT APPROVAL MODAL (RESPONSIVE) -->
   <!-- ============================================== -->
-  <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 transition-all duration-200">
+  <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-2.5 sm:p-6 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeAdminModal()"></div>
-    <div id="admin-modal-card" class="bg-slate-900 border border-slate-800 rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
+    <div id="admin-modal-card" class="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-5xl w-full max-h-[92dvh] flex flex-col shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
       
       <!-- Admin Login State (4-Step Security Gate) -->
-      <div id="admin-login-view" class="p-6 sm:p-8 max-w-lg mx-auto w-full my-auto space-y-4">
+      <div id="admin-login-view" class="p-4 sm:p-8 max-w-lg mx-auto w-full my-auto space-y-3 sm:space-y-4 overflow-y-auto custom-scrollbar">
         <div class="text-center space-y-1.5">
-          <div class="w-14 h-14 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-3xl mx-auto shadow-inner">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-2xl sm:text-3xl mx-auto shadow-inner">
             🛡️
           </div>
           <div>
-            <h3 class="text-lg sm:text-xl font-black text-white">অ্যাডমিন ৪-ধাপ নিরাপত্তা যাচাই</h3>
+            <h3 class="text-base sm:text-xl font-black text-white">অ্যাডমিন ৪-ধাপ নিরাপত্তা যাচাই</h3>
             <p class="text-xs text-slate-400">অনুমোদিত অ্যাডমিন এক্সেসের জন্য ৪টি সিকিউরিটি লেয়ার পূরণ করুন</p>
           </div>
         </div>
 
-        <!-- 4 Step Mini Cards -->
-        <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold">
-          <div class="p-1.5 rounded-xl bg-slate-950 border border-brand-500/40 text-brand-400">
+        <!-- 4 Step Mini Cards (2x2 on mobile, 4-col on desktop) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[10px] font-bold">
+          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-brand-500/40 text-brand-400">
             <span class="block text-xs">🔑</span>ধাপ ১: Master
           </div>
-          <div class="p-1.5 rounded-xl bg-slate-950 border border-teal-500/40 text-teal-400">
+          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-teal-500/40 text-teal-400">
             <span class="block text-xs">🛡️</span>ধাপ ২: Secondary
           </div>
-          <div class="p-1.5 rounded-xl bg-slate-950 border border-purple-500/40 text-purple-400">
+          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-purple-500/40 text-purple-400">
             <span class="block text-xs">🔢</span>ধাপ ৩: PIN
           </div>
-          <div class="p-1.5 rounded-xl bg-slate-950 border border-amber-500/40 text-amber-400">
+          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-amber-500/40 text-amber-400">
             <span class="block text-xs">🤐</span>ধাপ ৪: Secret
           </div>
         </div>
@@ -1072,7 +1092,7 @@ portal_code = """<!DOCTYPE html>
             <label class="block text-[11px] font-bold text-slate-300 mb-1">
               🔑 ধাপ ১: Master Password 1
             </label>
-            <input id="admin-input-master" type="password" required placeholder="Master Password 1 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+            <input id="admin-input-master" type="password" required placeholder="Master Password 1 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[44px]">
           </div>
 
           <!-- Step 2: Secondary Password 2 -->
@@ -1080,29 +1100,29 @@ portal_code = """<!DOCTYPE html>
             <label class="block text-[11px] font-bold text-slate-300 mb-1">
               🛡️ ধাপ ২: Secondary Password 2
             </label>
-            <input id="admin-input-secondary" type="password" required placeholder="Secondary Password 2 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+            <input id="admin-input-secondary" type="password" required placeholder="Secondary Password 2 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[44px]">
           </div>
 
           <!-- Step 3 & 4 in 2 columns -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             <div>
               <label class="block text-[11px] font-bold text-slate-300 mb-1">
                 🔢 ধাপ ৩: Security PIN
               </label>
-              <input id="admin-input-pin" type="password" inputmode="numeric" required placeholder="Security PIN" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono text-center">
+              <input id="admin-input-pin" type="password" inputmode="numeric" required placeholder="Security PIN" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono text-center min-h-[44px]">
             </div>
 
             <div>
               <label class="block text-[11px] font-bold text-slate-300 mb-1">
                 🤐 ধাপ ৪: Secret Word
               </label>
-              <input id="admin-input-word" type="text" required placeholder="Secret Word" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-center font-mono">
+              <input id="admin-input-word" type="text" required placeholder="Secret Word" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-center font-mono min-h-[44px]">
             </div>
           </div>
 
           <div id="admin-login-feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
 
-          <button id="btn-admin-login-submit" type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand transition flex items-center justify-center gap-2">
+          <button id="btn-admin-login-submit" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand transition flex items-center justify-center gap-2 min-h-[46px]">
             <span>🛡️ ৪-ধাপ নিরাপত্তা যাচাই ও প্রবেশ</span>
           </button>
         </form>
@@ -1112,24 +1132,24 @@ portal_code = """<!DOCTYPE html>
       <div id="admin-dashboard-view" class="hidden flex flex-col flex-1 overflow-hidden">
         
         <!-- Header -->
-        <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-3 bg-slate-950/60">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-xl shrink-0">
+        <div class="p-3 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2 sm:gap-3 bg-slate-950/60">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-lg sm:text-xl shrink-0">
               📊
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-base sm:text-lg font-black text-white">অ্যাডমিন ড্যাশবোর্ড</h3>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold">লাইভ কন্ট্রোল</span>
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <h3 class="text-sm sm:text-lg font-black text-white">অ্যাডমিন ড্যাশবোর্ড</h3>
+                <span class="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold">লাইভ</span>
               </div>
-              <p class="text-xs text-slate-400">পেমেন্ট রিকোয়েস্ট ও বিকাশ SMS ম্যানেজমেন্ট</p>
+              <p class="text-[10px] sm:text-xs text-slate-400">পেমেন্ট রিকোয়েস্ট ও SMS ম্যানেজমেন্ট</p>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <button onclick="refreshAdminData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <button onclick="refreshAdminData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition min-h-[36px]">
               <span>↻</span> <span class="hidden sm:inline">রিফ্রেশ</span>
             </button>
-            <button onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-800 text-rose-300 text-xs font-bold transition">
+            <button onclick="handleAdminLogout()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-800 text-rose-300 text-xs font-bold transition min-h-[36px]">
               লগআউট
             </button>
             <button onclick="closeAdminModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold ml-1">✕</button>
@@ -1137,79 +1157,80 @@ portal_code = """<!DOCTYPE html>
         </div>
 
         <!-- Metrics Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 sm:p-5 bg-slate-950/30 border-b border-slate-800">
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
-            <p class="text-[11px] text-slate-400 font-semibold">মোট সংগৃহীত ফি</p>
-            <p id="adm-metric-revenue" class="text-lg sm:text-2xl font-black text-emerald-400 font-mono mt-0.5">৳০</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 p-3 sm:p-5 bg-slate-950/30 border-b border-slate-800">
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
+            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">মোট সংগৃহীত ফি</p>
+            <p id="adm-metric-revenue" class="text-base sm:text-2xl font-black text-emerald-400 font-mono mt-0.5">৳০</p>
           </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
-            <p class="text-[11px] text-slate-400 font-semibold">অনুমোদিত শিক্ষার্থী</p>
-            <p id="adm-metric-verified" class="text-lg sm:text-2xl font-black text-white font-mono mt-0.5">০ জন</p>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
+            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">অনুমোদিত শিক্ষার্থী</p>
+            <p id="adm-metric-verified" class="text-base sm:text-2xl font-black text-white font-mono mt-0.5">০ জন</p>
           </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
-            <p class="text-[11px] text-amber-400 font-semibold">পেন্ডিং রিকোয়েস্ট</p>
-            <p id="adm-metric-pending" class="text-lg sm:text-2xl font-black text-amber-400 font-mono mt-0.5">০ টি</p>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
+            <p class="text-[10px] sm:text-[11px] text-amber-400 font-semibold">পেন্ডিং রিকোয়েস্ট</p>
+            <p id="adm-metric-pending" class="text-base sm:text-2xl font-black text-amber-400 font-mono mt-0.5">০ টি</p>
           </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-inner">
-            <p class="text-[11px] text-slate-400 font-semibold">মোট সাবমিট পরীক্ষা</p>
-            <p id="adm-metric-exams" class="text-lg sm:text-2xl font-black text-teal-400 font-mono mt-0.5">০ টি</p>
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
+            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">মোট পরীক্ষা সাবমিট</p>
+            <p id="adm-metric-exams" class="text-base sm:text-2xl font-black text-teal-400 font-mono mt-0.5">০ টি</p>
           </div>
         </div>
 
         <!-- Sub Tabs (Claims vs SMS Logs) -->
-        <div class="flex items-center px-4 sm:px-5 pt-3 border-b border-slate-800 gap-2 bg-slate-900/50">
-          <button id="adm-tab-claims" onclick="switchAdminTab('claims')" class="px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-            <span>📋</span> পেমেন্ট রিকোয়েস্ট তালিকা (<span id="adm-claims-count">0</span>)
+        <div class="flex items-center px-3 sm:px-5 pt-2 sm:pt-3 border-b border-slate-800 gap-2 bg-slate-900/50">
+          <button id="adm-tab-claims" onclick="switchAdminTab('claims')" class="px-3 sm:px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+            <span>📋</span> পেমেন্ট রিকোয়েস্ট (<span id="adm-claims-count">0</span>)
           </button>
-          <button id="adm-tab-sms" onclick="switchAdminTab('sms')" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+          <button id="adm-tab-sms" onclick="switchAdminTab('sms')" class="px-3 sm:px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5">
             <span>📱</span> বিকাশ SMS লগ (<span id="adm-sms-count">0</span>)
           </button>
         </div>
 
         <!-- Table Container -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-5">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-3 sm:p-5">
           <!-- Claims Table -->
           <div id="adm-claims-container" class="space-y-3">
             <!-- Search Bar & Direct Unlock Button -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-950/80 p-2.5 sm:p-3 rounded-2xl border border-slate-800">
               <div class="relative flex-1">
-                <input id="adm-claims-search" oninput="filterAdminClaims(this.value)" type="text" placeholder="🔍 TrxID, বিকাশ মোবাইল নাম্বার বা ইমেইল দিয়ে ফিল্টার করুন..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+                <input id="adm-claims-search" oninput="filterAdminClaims(this.value)" type="text" placeholder="🔍 TrxID, বিকাশ নাম্বার বা ইমেইল খুঁজুন..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[40px]">
               </div>
-              <button onclick="toggleManualEnrollForm()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold text-xs border border-brand-500/40 flex items-center justify-center gap-1.5 transition shrink-0">
-                <span>➕</span> <span>সরাসরি শিক্ষার্থী আনলক (Manual Unlock)</span>
+              <button onclick="toggleManualEnrollForm()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold text-xs border border-brand-500/40 flex items-center justify-center gap-1.5 transition shrink-0 min-h-[40px]">
+                <span>➕</span> <span>সরাসরি শিক্ষার্থী আনলক</span>
               </button>
             </div>
 
             <!-- Manual Direct Enroll Card (Collapsible) -->
-            <div id="adm-manual-enroll-card" class="hidden p-4 bg-slate-950 border border-brand-500/40 rounded-2xl space-y-3 shadow-xl">
+            <div id="adm-manual-enroll-card" class="hidden p-3.5 sm:p-4 bg-slate-950 border border-brand-500/40 rounded-2xl space-y-3 shadow-xl">
               <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                 <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
-                  <span class="text-brand-400">⚡</span> <span>সরাসরি শিক্ষার্থীকে সাবস্ক্রিপশন প্রদান (ফেসবুক বা সরাসরি যোগাযোগকারী শিক্ষার্থীদের জন্য)</span>
+                  <span class="text-brand-400">⚡</span> <span>সরাসরি শিক্ষার্থীকে সাবস্ক্রিপশন প্রদান (যোগাযোগকারী শিক্ষার্থীদের জন্য)</span>
                 </h4>
                 <button onclick="toggleManualEnrollForm()" class="text-slate-400 hover:text-white text-xs">✕</button>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
                 <div class="sm:col-span-2">
                   <label class="block text-[10px] text-slate-400 mb-1">শিক্ষার্থীর ইমেইল / বিকাশ নাম্বার / আইডি:</label>
-                  <input id="manual-student-identifier" type="text" placeholder="যেমন: student@gmail.com বা 017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500">
+                  <input id="manual-student-identifier" type="text" placeholder="student@gmail.com বা 017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
                 </div>
                 <div>
                   <label class="block text-[10px] text-slate-400 mb-1">প্যাকেজ নির্বাচন করুন:</label>
-                  <select id="manual-student-package" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-brand-500">
+                  <select id="manual-student-package" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
                     <option value="combo" selected>🌟 উভয় / কম্বো (সব টেস্ট)</option>
                     <option value="medical">🩺 মেডিকেল (৯৫ টেস্ট)</option>
                     <option value="versity">🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
                   </select>
                 </div>
                 <div class="flex items-end">
-                  <button onclick="submitManualEnrollment()" class="w-full py-2 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-500 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg transition">
+                  <button onclick="submitManualEnrollment()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-500 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg transition min-h-[44px] flex items-center justify-center">
                     ✓ সরাসরি আনলক করুন
                   </button>
                 </div>
               </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Desktop Table View -->
+            <div class="hidden sm:block overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead>
                   <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
@@ -1227,6 +1248,12 @@ portal_code = """<!DOCTYPE html>
                 </tbody>
               </table>
             </div>
+
+            <!-- Mobile Touch-Optimized Cards View -->
+            <div id="adm-claims-cards-mobile" class="sm:hidden space-y-3">
+              <!-- Populated dynamically on mobile -->
+            </div>
+
             <div id="adm-claims-empty" class="hidden text-center py-10 text-slate-500 text-xs">
               কোনো পেমেন্ট রিকোয়েস্ট পাওয়া যায়নি।
             </div>
@@ -1234,7 +1261,8 @@ portal_code = """<!DOCTYPE html>
 
           <!-- SMS Logs Table -->
           <div id="adm-sms-container" class="hidden space-y-3">
-            <div class="overflow-x-auto">
+            <!-- Desktop SMS Table View -->
+            <div class="hidden sm:block overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead>
                   <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
@@ -1251,6 +1279,11 @@ portal_code = """<!DOCTYPE html>
                 </tbody>
               </table>
             </div>
+
+            <!-- Mobile SMS Cards View -->
+            <div id="adm-sms-cards-mobile" class="sm:hidden space-y-3">
+              <!-- Populated dynamically on mobile -->
+            </div>
           </div>
         </div>
 
@@ -1261,22 +1294,21 @@ portal_code = """<!DOCTYPE html>
 
   <!-- ============================================== -->
   <!-- PREMIUM CUSTOM ACTION & CONFIRMATION MODAL -->
-  <!-- (Replaces all browser native alert/confirm popups) -->
   <!-- ============================================== -->
-  <div id="app-action-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-200">
+  <div id="app-action-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeCustomModal(false)"></div>
-    <div id="app-action-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl shadow-black/90 relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200 space-y-5">
+    <div id="app-action-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-black/90 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-4">
       
       <!-- Ambient Glow Behind Icon -->
       <div id="app-action-modal-glow" class="absolute -top-16 -left-16 w-36 h-36 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Icon & Header -->
-      <div class="flex items-start gap-4">
-        <div id="app-action-modal-icon-container" class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+      <div class="flex items-start gap-3 sm:gap-4">
+        <div id="app-action-modal-icon-container" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-inner">
           <span id="app-action-modal-icon">📝</span>
         </div>
         <div class="space-y-1">
-          <h3 id="app-action-modal-title" class="text-lg sm:text-xl font-black text-white tracking-tight">
+          <h3 id="app-action-modal-title" class="text-base sm:text-xl font-black text-white tracking-tight">
             উত্তরপত্র সাবমিট নিশ্চিতকরণ
           </h3>
           <p id="app-action-modal-subtitle" class="text-xs sm:text-sm text-slate-400 font-medium leading-relaxed">
@@ -1291,11 +1323,11 @@ portal_code = """<!DOCTYPE html>
       </div>
 
       <!-- Action Buttons -->
-      <div id="app-action-modal-actions" class="flex items-center justify-end gap-3 pt-2">
-        <button id="app-action-modal-btn-cancel" onclick="closeCustomModal(false)" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm">
+      <div id="app-action-modal-actions" class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 pt-2">
+        <button id="app-action-modal-btn-cancel" onclick="closeCustomModal(false)" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
           বাতিল করো
         </button>
-        <button id="app-action-modal-btn-confirm" onclick="closeCustomModal(true)" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold shadow-lg shadow-emerald-500/25 transition text-xs sm:text-sm flex items-center gap-2">
+        <button id="app-action-modal-btn-confirm" onclick="closeCustomModal(true)" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold shadow-lg shadow-emerald-500/25 transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[44px]">
           <span>হ্যাঁ, সাবমিট করো</span>
         </button>
       </div>
@@ -1303,22 +1335,7 @@ portal_code = """<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- FOOTER -->
-  <!-- ============================================== -->
-  <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-12 text-slate-400 text-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-      <div class="flex items-center gap-2.5 justify-center md:justify-start">
-        <div class="w-6 h-6 rounded-lg bg-brand-600 text-slate-950 font-black text-xs flex items-center justify-center">A</div>
-        <span class="font-bold text-white">ADMISSION TEST BD</span>
-        <span>•</span>
-        <span>বাংলাদেশ এডমিশন টেস্ট পোর্টাল ২০২৫-২০২৬</span>
-      </div>
-      <div>
-        প্রস্তুতকৃত: ড. মোহাম্মদ আবুল হাসান, গাজী আজমল, হাজারী ও নাগ, শাহজাহান তপন ও এস ইউ আহাম্মদের পাঠ্যবই নির্দেশিকা অনুসারে।
-      </div>
-    </div>
-  </footer>
+
 
   <!-- ============================================== -->
   <!-- CORE JAVASCRIPT APPLICATION LOGIC -->
@@ -1972,18 +1989,18 @@ portal_code = """<!DOCTYPE html>
 
       [optMed, optVar, optCombo].forEach(el => {
         if (el) {
-          el.className = "cursor-pointer p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80";
+          el.className = "cursor-pointer p-2 sm:p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80 flex flex-col justify-between";
         }
       });
 
       if (pkg === 'medical') {
-        if (optMed) optMed.className = "cursor-pointer p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition ring-1 ring-pink-500";
+        if (optMed) optMed.className = "cursor-pointer p-2 sm:p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition ring-1 ring-pink-500 flex flex-col justify-between";
         if (feeText) feeText.innerText = "৳৪৯৯";
       } else if (pkg === 'versity') {
-        if (optVar) optVar.className = "cursor-pointer p-3 rounded-xl border border-teal-500 bg-teal-950/40 text-center transition ring-1 ring-teal-500";
+        if (optVar) optVar.className = "cursor-pointer p-2 sm:p-3 rounded-xl border border-teal-500 bg-teal-950/40 text-center transition ring-1 ring-teal-500 flex flex-col justify-between";
         if (feeText) feeText.innerText = "৳৪৯৯";
       } else if (pkg === 'combo') {
-        if (optCombo) optCombo.className = "cursor-pointer p-3 rounded-xl border border-purple-500 bg-purple-950/50 text-center transition ring-1 ring-purple-500 relative overflow-hidden";
+        if (optCombo) optCombo.className = "cursor-pointer p-2 sm:p-3 rounded-xl border border-purple-500 bg-purple-950/50 text-center transition ring-1 ring-purple-500 relative overflow-hidden flex flex-col justify-between";
         if (feeText) feeText.innerText = "৳৭৯৯";
       }
     }
@@ -2278,7 +2295,7 @@ portal_code = """<!DOCTYPE html>
       questions.forEach((q, idx) => {
         const card = document.createElement('div');
         card.id = `q-card-${idx}`;
-        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-md space-y-3 transition";
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-md space-y-3 transition";
         card.dataset.subject = q.subject || 'General';
 
         // Options array normalizer
@@ -2680,7 +2697,7 @@ portal_code = """<!DOCTYPE html>
         });
 
         const card = document.createElement('div');
-        card.className = `bg-slate-900 border ${cardBorder} rounded-2xl p-5 shadow space-y-3`;
+        card.className = `bg-slate-900 border ${cardBorder} rounded-2xl p-4 sm:p-5 shadow space-y-3`;
         card.innerHTML = `
           <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
             <div class="flex items-center gap-2">
@@ -3567,9 +3584,9 @@ portal_code = """<!DOCTYPE html>
 
         container.innerHTML = `
           <div class="relative group">
-            <button class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-white font-bold transition">
-              <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40 flex items-center justify-center text-[11px]">👤</span>
-              <span class="max-w-[90px] sm:max-w-[130px] truncate">${appState.userName || appState.userEmail}</span>
+            <button class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-white font-bold transition">
+              <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40 flex items-center justify-center text-[10px] sm:text-[11px] shrink-0">👤</span>
+              <span class="max-w-[70px] sm:max-w-[130px] truncate">${appState.userName || appState.userEmail}</span>
               <span class="text-[10px] text-slate-400">▼</span>
             </button>
             <div class="absolute right-0 mt-1 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 hidden group-hover:block z-50 space-y-1">
@@ -3586,7 +3603,7 @@ portal_code = """<!DOCTYPE html>
         `;
       } else {
         container.innerHTML = `
-          <button onclick="openAuthModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-600/90 to-teal-600/90 hover:from-brand-500 hover:to-teal-500 text-white text-xs font-extrabold shadow-sm transition border border-emerald-500/30">
+          <button onclick="openAuthModal()" class="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-600/90 to-teal-600/90 hover:from-brand-500 hover:to-teal-500 text-white text-xs font-extrabold shadow-sm transition border border-emerald-500/30 shrink-0 min-h-[36px]">
             <span>👤</span>
             <span class="hidden sm:inline">লগইন / সাইন-আপ</span>
             <span class="sm:hidden">লগইন</span>
@@ -3754,9 +3771,10 @@ portal_code = """<!DOCTYPE html>
 
     function renderAdminClaimsTable(claims) {
       const tbody = document.getElementById('adm-claims-tbody');
+      const cardsMobile = document.getElementById('adm-claims-cards-mobile');
       const empty = document.getElementById('adm-claims-empty');
-      if (!tbody) return;
-      tbody.innerHTML = '';
+      if (tbody) tbody.innerHTML = '';
+      if (cardsMobile) cardsMobile.innerHTML = '';
 
       if (!claims || claims.length === 0) {
         if (empty) empty.classList.remove('hidden');
@@ -3765,9 +3783,6 @@ portal_code = """<!DOCTYPE html>
       if (empty) empty.classList.add('hidden');
 
       claims.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-800/40 transition";
-        
         let statusBadge = '';
         if (c.status === 'verified') {
           statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">✓ অনুমোদিত</span>';
@@ -3777,103 +3792,212 @@ portal_code = """<!DOCTYPE html>
           statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold animate-pulse">⏳ অপেক্ষমান</span>';
         }
 
-        let actionButtons = '';
-        let packageCol = '';
-
-        if (c.status === 'pending') {
-          packageCol = `
-            <div class="space-y-1">
-              <select id="claim-pkg-${c.id}" class="bg-slate-950 border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 font-bold focus:ring-1 focus:ring-emerald-500">
-                <option value="medical" ${c.package === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট)</option>
-                <option value="versity" ${c.package === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
-                <option value="combo" ${c.package === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট)</option>
-              </select>
-              <div class="text-[10px] text-slate-400">অনুরোধ: <span class="font-bold text-slate-300 uppercase">${c.package}</span> (৳${c.amount || (c.package === 'combo' ? 799 : 499)})</div>
-            </div>
-          `;
-          actionButtons = `
-            <div class="flex items-center justify-end gap-1.5">
-              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 transition flex items-center gap-1.5">
-                <span>✓</span> <span>অনুমোদন ও আনলক</span>
-              </button>
-              <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 transition">
-                ✕ বাতিল
-              </button>
-            </div>
-          `;
-        } else if (c.status === 'verified') {
-          packageCol = `
-            <div>
-              <span class="font-bold ${c.package === 'combo' ? 'text-purple-300' : (c.package === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${c.package === 'combo' ? 'উভয় / কম্বো' : (c.package === 'medical' ? 'মেডিকেল' : 'ভার্সিটি')}</span>
-              <span class="text-[11px] text-slate-400 ml-1">৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
-            </div>
-          `;
-          actionButtons = `
-            <div class="space-y-0.5 text-right">
-              <span class="text-xs text-emerald-400 font-bold flex items-center justify-end gap-1">
-                <span>🔓</span> <span>${c.package === 'combo' ? 'উভয় টেস্ট আনলকড' : (c.package === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
-              </span>
-              <span class="text-[10px] text-slate-500">অনুমোদিত</span>
-            </div>
-          `;
-        } else {
-          packageCol = `
-            <div>
-              <span class="font-bold text-slate-400 uppercase">${c.package}</span>
-              <span class="text-[11px] text-slate-500 ml-1">৳${c.amount}</span>
-            </div>
-          `;
-          actionButtons = `
-            <div class="flex items-center justify-end gap-1">
-              <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
-                পুনরায় অনুমোদন
-              </button>
-            </div>
-          `;
-        }
-
         const dateStr = c.created_at ? new Date(c.created_at).toLocaleString('bn-BD', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
 
-        tr.innerHTML = `
-          <td class="py-2.5 pr-2 text-slate-400 text-[11px] whitespace-nowrap">${dateStr}</td>
-          <td class="py-2.5 px-2">
-            <div class="font-bold text-white text-xs">${c.student_name || 'পরীক্ষার্থী'}</div>
-            <div class="text-[10px] text-slate-400 truncate max-w-[140px]">${c.student_email || c.student_id || '-'}</div>
-          </td>
-          <td class="py-2.5 px-2 font-mono text-slate-300 font-bold">${c.sender_number || '-'}</td>
-          <td class="py-2.5 px-2">${packageCol}</td>
-          <td class="py-2.5 px-2 font-mono font-black text-amber-300 text-xs tracking-wider">${c.trx_id || '-'}</td>
-          <td class="py-2.5 px-2">${statusBadge}</td>
-          <td class="py-2.5 pl-2 text-right">${actionButtons}</td>
-        `;
-        tbody.appendChild(tr);
+        // 1. Desktop Table Row
+        if (tbody) {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-slate-800/40 transition";
+          let actionButtons = '';
+          let packageCol = '';
+
+          if (c.status === 'pending') {
+            packageCol = `
+              <div class="space-y-1">
+                <select id="claim-pkg-${c.id}" class="bg-slate-950 border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 font-bold focus:ring-1 focus:ring-emerald-500">
+                  <option value="medical" ${c.package === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট)</option>
+                  <option value="versity" ${c.package === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
+                  <option value="combo" ${c.package === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট)</option>
+                </select>
+                <div class="text-[10px] text-slate-400">অনুরোধ: <span class="font-bold text-slate-300 uppercase">${c.package}</span> (৳${c.amount || (c.package === 'combo' ? 799 : 499)})</div>
+              </div>
+            `;
+            actionButtons = `
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 transition flex items-center gap-1.5">
+                  <span>✓</span> <span>অনুমোদন ও আনলক</span>
+                </button>
+                <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 transition">
+                  ✕ বাতিল
+                </button>
+              </div>
+            `;
+          } else if (c.status === 'verified') {
+            packageCol = `
+              <div>
+                <span class="font-bold ${c.package === 'combo' ? 'text-purple-300' : (c.package === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${c.package === 'combo' ? 'উভয় / কম্বো' : (c.package === 'medical' ? 'মেডিকেল' : 'ভার্সিটি')}</span>
+                <span class="text-[11px] text-slate-400 ml-1">৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
+              </div>
+            `;
+            actionButtons = `
+              <div class="space-y-0.5 text-right">
+                <span class="text-xs text-emerald-400 font-bold flex items-center justify-end gap-1">
+                  <span>🔓</span> <span>${c.package === 'combo' ? 'উভয় টেস্ট আনলকড' : (c.package === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
+                </span>
+                <span class="text-[10px] text-slate-500">অনুমোদিত</span>
+              </div>
+            `;
+          } else {
+            packageCol = `
+              <div>
+                <span class="font-bold text-slate-400 uppercase">${c.package}</span>
+                <span class="text-[11px] text-slate-500 ml-1">৳${c.amount}</span>
+              </div>
+            `;
+            actionButtons = `
+              <div class="flex items-center justify-end gap-1">
+                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
+                  পুনরায় অনুমোদন
+                </button>
+              </div>
+            `;
+          }
+
+          tr.innerHTML = `
+            <td class="py-2.5 pr-2 text-slate-400 text-[11px] whitespace-nowrap">${dateStr}</td>
+            <td class="py-2.5 px-2">
+              <div class="font-bold text-white text-xs">${c.student_name || 'পরীক্ষার্থী'}</div>
+              <div class="text-[10px] text-slate-400 truncate max-w-[140px]">${c.student_email || c.student_id || '-'}</div>
+            </td>
+            <td class="py-2.5 px-2 font-mono text-slate-300 font-bold">${c.sender_number || '-'}</td>
+            <td class="py-2.5 px-2">${packageCol}</td>
+            <td class="py-2.5 px-2 font-mono font-black text-amber-300 text-xs tracking-wider">${c.trx_id || '-'}</td>
+            <td class="py-2.5 px-2">${statusBadge}</td>
+            <td class="py-2.5 pl-2 text-right">${actionButtons}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+
+        // 2. Mobile Responsive Card
+        if (cardsMobile) {
+          const card = document.createElement('div');
+          card.className = "bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shadow-md";
+
+          let mobAction = '';
+          if (c.status === 'pending') {
+            mobAction = `
+              <div class="space-y-1.5 pt-1">
+                <label class="block text-[10px] text-slate-400 font-bold">অনুমোদন প্যাকেজ নির্বাচন:</label>
+                <select id="claim-pkg-mob-${c.id}" class="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-xl p-2.5 font-bold focus:ring-1 focus:ring-emerald-500">
+                  <option value="medical" ${c.package === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট - ৳৪৯৯)</option>
+                  <option value="versity" ${c.package === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট - ৳৪৯৯)</option>
+                  <option value="combo" ${c.package === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট - ৳৭৯৯)</option>
+                </select>
+              </div>
+              <div class="grid grid-cols-3 gap-2 pt-1">
+                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="col-span-2 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 flex items-center justify-center gap-1.5 min-h-[44px]">
+                  <span>✓</span> <span>অনুমোদন ও আনলক</span>
+                </button>
+                <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="py-2.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 flex items-center justify-center min-h-[44px]">
+                  ✕ বাতিল
+                </button>
+              </div>
+            `;
+          } else if (c.status === 'verified') {
+            mobAction = `
+              <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-950/30 border border-emerald-900/50 text-xs">
+                <span class="text-emerald-300 font-bold flex items-center gap-1">
+                  <span>🔓</span> <span>${c.package === 'combo' ? 'উভয় টেস্ট আনলকড' : (c.package === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
+                </span>
+                <span class="text-slate-400 text-[10px]">ফি: ৳${c.amount || (c.package === 'combo' ? 799 : 499)}</span>
+              </div>
+            `;
+          } else {
+            mobAction = `
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-xs text-rose-400 font-semibold">আবেদনটি বাতিল</span>
+                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-slate-300 text-xs font-bold border border-slate-700">
+                  পুনরায় অনুমোদন
+                </button>
+              </div>
+            `;
+          }
+
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-2 border-b border-slate-800/80 pb-2">
+              <div>
+                <div class="font-bold text-white text-sm">${c.student_name || 'পরীক্ষার্থী'}</div>
+                <div class="text-[11px] text-slate-400 truncate max-w-[200px]">${c.student_email || c.student_id || '-'}</div>
+                <div class="text-[10px] text-slate-500 mt-0.5">${dateStr}</div>
+              </div>
+              <div>${statusBadge}</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 font-mono">
+              <div>
+                <div class="text-[10px] text-slate-400 font-sans">প্রেরক বিকাশ:</div>
+                <div class="font-bold text-white tracking-wider">${c.sender_number || '-'}</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-slate-400 font-sans">TrxID:</div>
+                <div class="font-black text-amber-300 tracking-wider">${c.trx_id || '-'}</div>
+              </div>
+            </div>
+
+            ${mobAction}
+          `;
+          cardsMobile.appendChild(card);
+        }
       });
     }
 
     function renderAdminSmsTable(smsLogs) {
       const tbody = document.getElementById('adm-sms-tbody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
+      const cardsMobile = document.getElementById('adm-sms-cards-mobile');
+      if (tbody) tbody.innerHTML = '';
+      if (cardsMobile) cardsMobile.innerHTML = '';
 
       if (!smsLogs || smsLogs.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 font-sans text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</td></tr>`;
+        if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 font-sans text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</td></tr>`;
+        if (cardsMobile) cardsMobile.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</div>`;
         return;
       }
 
       smsLogs.forEach(s => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-800/40 transition";
         const dateStr = s.received_at ? new Date(s.received_at).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-';
 
-        tr.innerHTML = `
-          <td class="py-2 pr-2 text-slate-400 whitespace-nowrap">${dateStr}</td>
-          <td class="py-2 px-2 text-slate-300">${s.sender || '-'}</td>
-          <td class="py-2 px-2 font-bold text-emerald-400">৳${s.amount || '০'}</td>
-          <td class="py-2 px-2 text-amber-300 font-bold">${s.trx_id || '-'}</td>
-          <td class="py-2 px-2">${s.matched_claim_id ? `<span class="text-emerald-400">✓ ক্লেইম #${s.matched_claim_id}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</td>
-          <td class="py-2 pl-2 text-slate-400 truncate max-w-xs" title="${s.raw_sms || ''}">${s.raw_sms || '-'}</td>
-        `;
-        tbody.appendChild(tr);
+        if (tbody) {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-slate-800/40 transition";
+          tr.innerHTML = `
+            <td class="py-2 pr-2 text-slate-400 whitespace-nowrap">${dateStr}</td>
+            <td class="py-2 px-2 text-slate-300">${s.sender || '-'}</td>
+            <td class="py-2 px-2 font-bold text-emerald-400">৳${s.amount || '০'}</td>
+            <td class="py-2 px-2 text-amber-300 font-bold">${s.trx_id || '-'}</td>
+            <td class="py-2 px-2">${s.matched_claim_id ? `<span class="text-emerald-400">✓ ক্লেইম #${s.matched_claim_id}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</td>
+            <td class="py-2 pl-2 text-slate-400 truncate max-w-xs" title="${s.raw_sms || ''}">${s.raw_sms || '-'}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+
+        if (cardsMobile) {
+          const card = document.createElement('div');
+          card.className = "bg-slate-950 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs font-mono";
+          card.innerHTML = `
+            <div class="flex items-center justify-between text-[11px] font-sans border-b border-slate-800/80 pb-1.5">
+              <span class="text-slate-400">${dateStr}</span>
+              <span>${s.matched_claim_id ? `<span class="text-emerald-400 font-bold">✓ ক্লেইম #${s.matched_claim_id}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 py-1">
+              <div>
+                <div class="text-[9px] text-slate-400 font-sans">প্রেরক:</div>
+                <div class="text-slate-200 font-bold">${s.sender || '-'}</div>
+              </div>
+              <div>
+                <div class="text-[9px] text-slate-400 font-sans">পরিমাণ:</div>
+                <div class="text-emerald-400 font-black">৳${s.amount || '০'}</div>
+              </div>
+              <div>
+                <div class="text-[9px] text-slate-400 font-sans">TrxID:</div>
+                <div class="text-amber-300 font-bold">${s.trx_id || '-'}</div>
+              </div>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-900/80 text-[10px] text-slate-400 font-sans leading-relaxed break-all">
+              ${s.raw_sms || '-'}
+            </div>
+          `;
+          cardsMobile.appendChild(card);
+        }
       });
     }
 
@@ -3905,7 +4029,7 @@ portal_code = """<!DOCTYPE html>
       const token = sessionStorage.getItem('admission_admin_token');
       if (!token) return;
 
-      const pkgSelect = document.getElementById(`claim-pkg-${claimId}`);
+      const pkgSelect = document.getElementById(`claim-pkg-${claimId}`) || document.getElementById(`claim-pkg-mob-${claimId}`);
       const selectedPackage = pkgSelect ? pkgSelect.value : undefined;
 
       try {
