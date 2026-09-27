@@ -369,6 +369,12 @@
           </ul>
         </div>
 
+        <!-- Retake Notification Banner (Shown when test already completed) -->
+        <div id="start-exam-retake-banner" class="hidden p-3.5 bg-teal-950/70 border border-teal-500/60 rounded-2xl text-xs sm:text-sm text-teal-200 font-semibold text-center flex items-center justify-center gap-2 max-w-2xl mx-auto shadow-lg">
+          <span class="text-base">✓</span>
+          <span>এই মডেল টেস্টটি আপনি ইতিমধ্যে সম্পন্ন করেছেন। নিজের প্রস্তুতি আরও শাণিত করতে যতবার খুশি পুনরায় পরীক্ষা দিতে পারেন।</span>
+        </div>
+
         <!-- Big Start Exam CTA Button -->
         <div class="pt-2">
           <button id="btn-start-exam" onclick="startActiveExam()" class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-lg shadow-xl glow-brand transition transform hover:-translate-y-0.5 active:translate-y-0">
@@ -1419,6 +1425,8 @@
     const appState = {
       currentStream: 'medical',       // 'medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering'
       currentTestId: 1,              // 1 to 100
+      currentMedTestId: Number(localStorage.getItem('admission_current_med_id') || 1),
+      currentVarTestId: Number(localStorage.getItem('admission_current_var_id') || 1),
       selectedSession: localStorage.getItem('admission_selected_session') || '2025-26',
       completedMed: JSON.parse(localStorage.getItem('admission_completed_med') || '[]'),
       completedVar: JSON.parse(localStorage.getItem('admission_completed_var') || '[]'),
@@ -1468,6 +1476,32 @@
 
     localStorage.setItem('admission_student_id', appState.studentId);
 
+    // Bengali numeral formatter for clean and localized counters
+    function toBengaliNum(num) {
+      if (num === null || num === undefined) return '';
+      const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+      return String(num).replace(/[0-9]/g, d => bnDigits[Number(d)]);
+    }
+
+    // Independent stream test selectors
+    function getCurrentStreamTestId(stream = appState.currentStream) {
+      if (stream === 'medical') return appState.currentMedTestId || 1;
+      if (stream === 'versity') return appState.currentVarTestId || 1;
+      return appState.currentTestId || 1;
+    }
+
+    function setCurrentStreamTestId(stream, testId) {
+      const id = Number(testId) || 1;
+      appState.currentTestId = id;
+      if (stream === 'medical') {
+        appState.currentMedTestId = id;
+        localStorage.setItem('admission_current_med_id', id);
+      } else if (stream === 'versity') {
+        appState.currentVarTestId = id;
+        localStorage.setItem('admission_current_var_id', id);
+      }
+    }
+
     // ============================================
     // INITIALIZATION & DATA FETCHING
     // ============================================
@@ -1476,9 +1510,14 @@
       appState.unlockedMed = getMaxUnlocked('medical');
       appState.unlockedVar = getMaxUnlocked('versity');
 
-      if (!isTestUnlocked(appState.currentStream, appState.currentTestId)) {
-        appState.currentTestId = getMaxUnlocked(appState.currentStream);
+      // Ensure each stream's selected test is within valid unlocked bounds
+      if (!isTestUnlocked('medical', appState.currentMedTestId)) {
+        appState.currentMedTestId = getMaxUnlocked('medical');
       }
+      if (!isTestUnlocked('versity', appState.currentVarTestId)) {
+        appState.currentVarTestId = getMaxUnlocked('versity');
+      }
+      appState.currentTestId = getCurrentStreamTestId(appState.currentStream);
 
       updateAuthUI();
 
@@ -1719,22 +1758,28 @@
     function updateUnlockedBadges() {
       const medBadge = document.getElementById('med-unlocked-badge');
       if (medBadge) {
+        const medComp = (appState.completedMed && appState.completedMed.length) || 0;
+        const medMax = appState.isMedicalPaid ? 100 : 5;
+        const medTier = appState.isMedicalPaid ? '👑 প্রিমিয়াম' : 'ফ্রি';
+        const medNextBn = appState.unlockedMed < 10 ? '০' + toBengaliNum(appState.unlockedMed) : toBengaliNum(appState.unlockedMed);
+        medBadge.innerHTML = `🩺 মেডিকেল: ${medTier} (${toBengaliNum(medComp)}/${toBengaliNum(medMax)} সম্পন্ন • টেস্ট ${medNextBn} উন্মুক্ত)`;
         if (appState.isMedicalPaid) {
-          medBadge.innerHTML = `🩺 মেডিকেল: 👑 প্রিমিয়াম (১০০টি টেস্ট আনলকড)`;
           medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm";
         } else {
-          medBadge.innerHTML = `🩺 মেডিকেল: ফ্রি ট্রায়াল (০৫/৫)`;
           medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-brand-950/80 text-brand-300 border border-brand-800 shadow-sm";
         }
       }
 
       const varBadge = document.getElementById('var-unlocked-badge');
       if (varBadge) {
+        const varComp = (appState.completedVar && appState.completedVar.length) || 0;
+        const varMax = appState.isVersityPaid ? 100 : 5;
+        const varTier = appState.isVersityPaid ? '👑 প্রিমিয়াম' : 'ফ্রি';
+        const varNextBn = appState.unlockedVar < 10 ? '০' + toBengaliNum(appState.unlockedVar) : toBengaliNum(appState.unlockedVar);
+        varBadge.innerHTML = `🏛️ ভার্সিটি: ${varTier} (${toBengaliNum(varComp)}/${toBengaliNum(varMax)} সম্পন্ন • টেস্ট ${varNextBn} উন্মুক্ত)`;
         if (appState.isVersityPaid) {
-          varBadge.innerHTML = `🏛️ ভার্সিটি: 👑 প্রিমিয়াম (১০০টি টেস্ট আনলকড)`;
           varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-teal-950/80 text-teal-300 border border-teal-800 shadow-sm";
         } else {
-          varBadge.innerHTML = `🏛️ ভার্সিটি: ফ্রি ট্রায়াল (০৫/৫)`;
           varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-950/80 text-blue-300 border border-blue-800 shadow-sm";
         }
       }
@@ -1788,6 +1833,15 @@
 
       // Show selected view
       if (stream === 'medical' || stream === 'versity') {
+        // Restore independent test ID for this stream and validate
+        let targetId = getCurrentStreamTestId(stream);
+        if (!isTestUnlocked(stream, targetId)) {
+          targetId = getMaxUnlocked(stream);
+          setCurrentStreamTestId(stream, targetId);
+        } else {
+          appState.currentTestId = targetId;
+        }
+
         document.getElementById('view-model-tests').classList.remove('hidden');
         updateStreamHeadings();
         updateUnlockedBadges();
@@ -1891,15 +1945,20 @@
       const maxTest = 100;
       const stream = appState.currentStream;
       const paid = isStreamPaid(stream);
+      const completedList = (stream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
 
       for (let i = 1; i <= maxTest; i++) {
         const opt = document.createElement('option');
         opt.value = i;
         const unlocked = isTestUnlocked(stream, i);
+        const isCompleted = completedList.includes(i);
         const isFree = i <= 5;
+        const bnNum = i < 10 ? '০' + toBengaliNum(i) : toBengaliNum(i);
 
-        let label = `টেস্ট ${i < 10 ? '০' + i : i} `;
-        if (unlocked) {
+        let label = `টেস্ট ${bnNum} `;
+        if (isCompleted) {
+          label += '✓ [সম্পন্ন • পুনরায় দিন]';
+        } else if (unlocked) {
           label += isFree ? '✓ [ফ্রি]' : '✓ [উন্মুক্ত]';
         } else if (i > 5 && !paid) {
           label += '🔒 [প্রিমিয়াম - ৳৪৯৯]';
@@ -1918,18 +1977,19 @@
 
 
     function onTestDropdownChange(testId) {
-      const unlocked = isTestUnlocked(appState.currentStream, testId);
+      const numId = Number(testId);
+      const unlocked = isTestUnlocked(appState.currentStream, numId);
       if (!unlocked) {
-        if (testId > 5 && !isStreamPaid(appState.currentStream)) {
-          openBkashPaywallModal(appState.currentStream, testId);
+        if (numId > 5 && !isStreamPaid(appState.currentStream)) {
+          openBkashPaywallModal(appState.currentStream, numId);
         } else {
-          showLockedModal(testId);
+          showLockedModal(numId);
         }
         // Reset dropdown back to current test
         document.getElementById('model-test-dropdown').value = appState.currentTestId;
         return;
       }
-      appState.currentTestId = testId;
+      setCurrentStreamTestId(appState.currentStream, numId);
       loadCurrentSelectedTest();
     }
 
@@ -2470,7 +2530,7 @@
         testToStart = appState.pendingUnlockTestId;
       }
       appState.pendingUnlockTestId = null;
-      appState.currentTestId = testToStart;
+      setCurrentStreamTestId(appState.currentStream, testToStart);
       const dropdown = document.getElementById('model-test-dropdown');
       if (dropdown) dropdown.value = appState.currentTestId;
 
@@ -2579,7 +2639,7 @@
               if (appState.pendingUnlockTestId) {
                 const target = appState.pendingUnlockTestId;
                 appState.pendingUnlockTestId = null;
-                appState.currentTestId = target;
+                setCurrentStreamTestId(appState.currentStream, target);
                 document.getElementById('model-test-dropdown').value = target;
                 loadCurrentSelectedTest();
               }
@@ -2631,7 +2691,7 @@
       if (appState.timerInterval) clearInterval(appState.timerInterval);
 
       const stream = appState.currentStream;
-      const testId = appState.currentTestId;
+      const testId = Number(appState.currentTestId);
       const tests = (stream === 'medical') ? appState.medicalTests : appState.versityTests;
       let current = null;
       if (tests && tests.length > 0) {
@@ -2644,20 +2704,37 @@
       appState.examStatus = 'ready';
       appState.userAnswers = {};
 
-      // Check if current test is unlocked
+      // Check if current test is unlocked & completed
       const unlocked = isTestUnlocked(stream, testId);
       const isPaid = isStreamPaid(stream);
+      const completedList = (stream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
+      const isCompleted = completedList.includes(testId);
       const startBtn = document.getElementById('btn-start-exam');
 
+      // Update retake banner visibility
+      const retakeBanner = document.getElementById('start-exam-retake-banner');
+      if (retakeBanner) {
+        if (isCompleted) {
+          retakeBanner.classList.remove('hidden');
+        } else {
+          retakeBanner.classList.add('hidden');
+        }
+      }
+
       if (startBtn) {
+        const testBn = testId < 10 ? '০' + toBengaliNum(testId) : toBengaliNum(testId);
         if (!unlocked && testId > 5 && !isPaid) {
           startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-black text-base sm:text-lg shadow-xl shadow-pink-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 mx-auto animate-pulse";
-          startBtn.innerHTML = `<span>👑 বিকাশ দিয়ে টেস্ট ${testId < 10 ? '০' + testId : testId} আনলক করুন (৳৪৯৯)</span>`;
+          startBtn.innerHTML = `<span>👑 বিকাশ দিয়ে টেস্ট ${testBn} আনলক করুন (৳৪৯৯)</span>`;
           startBtn.onclick = () => openBkashPaywallModal(stream, testId);
         } else if (!unlocked) {
           startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-slate-800 text-slate-400 font-black text-base sm:text-lg border border-slate-700 transition cursor-not-allowed mx-auto flex items-center justify-center gap-2";
-          startBtn.innerHTML = `<span>🔒 টেস্ট ${testId < 10 ? '০' + testId : testId} লকড (পূর্ববর্তী টেস্ট সম্পন্ন করুন)</span>`;
+          startBtn.innerHTML = `<span>🔒 টেস্ট ${testBn} লকড (পূর্ববর্তী টেস্ট সম্পন্ন করুন)</span>`;
           startBtn.onclick = () => showLockedModal(testId);
+        } else if (isCompleted) {
+          startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-black text-lg shadow-xl shadow-teal-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 mx-auto flex items-center justify-center gap-2";
+          startBtn.innerHTML = `<span>🔄 পুনরায় পরীক্ষা দিন (Retake Test #${testBn})</span>`;
+          startBtn.onclick = () => startActiveExam();
         } else {
           startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-lg shadow-xl glow-brand transition transform hover:-translate-y-0.5 active:translate-y-0 mx-auto";
           startBtn.innerHTML = `🚀 পরীক্ষা শুরু করো (Start Exam)`;
@@ -3333,30 +3410,21 @@
     }
 
     function retakeCurrentExam() {
-      openCustomModal({
-        title: "পরীক্ষা পুনরায় শুরু করবেন?",
-        subtitle: "বর্তমান চিহ্নিত উত্তরপত্র রিসেট হবে",
-        icon: "🔄",
-        iconTheme: "blue",
-        detailsHtml: `
-          <div class="text-xs text-slate-300 leading-relaxed text-center p-3.5 bg-blue-950/40 border border-blue-800/50 rounded-2xl">
-            আপনি কি বর্তমান পরীক্ষাটি আবার নতুন করে শুরু করতে চান? আপনার পূর্ববর্তী চিহ্নিত উত্তরপত্র এবং টাইমার পুনরায় সম্পূর্ণ সময় থেকে শুরু হবে।
-          </div>
-        `,
-        confirmText: "হ্যাঁ, পুনরায় শুরু করো",
-        cancelText: "বাতিল",
-        showCancel: true,
-        onConfirm: () => {
-          loadCurrentSelectedTest();
-        }
-      });
+      // Direct frictionless restart of active test
+      if (appState.timerInterval) clearInterval(appState.timerInterval);
+      appState.examStatus = 'ready';
+      appState.userAnswers = {};
+      loadCurrentSelectedTest();
+      startActiveExam();
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+      showToast("🔄 পরীক্ষাটি পুনরায় শুরু হয়েছে। শুভকামনা!", "info");
     }
 
     function loadNextUnlockedExam() {
       const nextId = appState.currentTestId + 1;
       if (nextId <= 100) {
         if (isTestUnlocked(appState.currentStream, nextId)) {
-          appState.currentTestId = nextId;
+          setCurrentStreamTestId(appState.currentStream, nextId);
           document.getElementById('model-test-dropdown').value = nextId;
           loadCurrentSelectedTest();
         } else if (nextId > 5 && !isStreamPaid(appState.currentStream)) {
@@ -3407,27 +3475,51 @@
         : "📋 ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্টের অগ্রগতি (১–৫ ফ্রি • ৬–১০০ প্রিমিয়াম)";
 
       const paid = isStreamPaid(appState.currentStream);
+      const completedList = (appState.currentStream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
 
       for (let i = 1; i <= 100; i++) {
         const unlocked = isTestUnlocked(appState.currentStream, i);
+        const isCompleted = completedList.includes(i);
         const card = document.createElement('div');
         const isFree = i <= 5;
+        const bnI = toBengaliNum(i);
 
         if (unlocked) {
-          card.className = "cursor-pointer p-3 rounded-xl border border-emerald-500/60 bg-emerald-950/40 hover:bg-emerald-900/60 transition text-center shadow group";
-          card.onclick = () => {
-            appState.currentTestId = i;
-            document.getElementById('model-test-dropdown').value = i;
-            toggleTestGridModal();
-            loadCurrentSelectedTest();
-          };
-          card.innerHTML = `
-            <div class="flex items-center justify-between text-[10px] font-bold">
-              <span class="text-emerald-300">টেস্ট #${i}</span>
-              <span class="${isFree ? 'text-teal-300' : 'text-amber-300'}">${isFree ? '🎁 ফ্রি' : '👑 প্রিমিয়াম'}</span>
-            </div>
-            <div class="text-xs font-black text-white mt-1 group-hover:text-emerald-300">উন্মুক্ত ✓</div>
-          `;
+          if (isCompleted) {
+            // Completed Test (Available for unlimited retakes)
+            card.className = "cursor-pointer p-3 rounded-xl border border-teal-500/80 bg-teal-950/60 hover:bg-teal-900/80 transition text-center shadow group";
+            card.onclick = () => {
+              setCurrentStreamTestId(appState.currentStream, i);
+              document.getElementById('model-test-dropdown').value = i;
+              toggleTestGridModal();
+              loadCurrentSelectedTest();
+            };
+            card.innerHTML = `
+              <div class="flex items-center justify-between text-[10px] font-bold">
+                <span class="text-teal-300">টেস্ট #${bnI}</span>
+                <span class="text-[10px] bg-teal-500/25 text-teal-200 px-1.5 py-0.5 rounded font-bold">✓ সম্পন্ন</span>
+              </div>
+              <div class="text-xs font-bold text-teal-200 mt-1 flex items-center justify-center gap-1 group-hover:scale-105 transition">
+                🔄 পুনরায় দিন
+              </div>
+            `;
+          } else {
+            // Newly Unlocked Test (Not yet attempted)
+            card.className = "cursor-pointer p-3 rounded-xl border border-emerald-500/60 bg-emerald-950/40 hover:bg-emerald-900/60 transition text-center shadow group";
+            card.onclick = () => {
+              setCurrentStreamTestId(appState.currentStream, i);
+              document.getElementById('model-test-dropdown').value = i;
+              toggleTestGridModal();
+              loadCurrentSelectedTest();
+            };
+            card.innerHTML = `
+              <div class="flex items-center justify-between text-[10px] font-bold">
+                <span class="text-emerald-300">টেস্ট #${bnI}</span>
+                <span class="${isFree ? 'text-teal-300' : 'text-amber-300'}">${isFree ? '🎁 ফ্রি' : '👑 প্রিমিয়াম'}</span>
+              </div>
+              <div class="text-xs font-black text-white mt-1 group-hover:text-emerald-300">উন্মুক্ত (শুরু করুন →)</div>
+            `;
+          }
         } else {
           if (!isFree && !paid) {
             // Unpurchased Premium Test Card
@@ -3438,7 +3530,7 @@
             };
             card.innerHTML = `
               <div class="flex items-center justify-between text-[10px] font-bold">
-                <span class="text-pink-300">টেস্ট #${i}</span>
+                <span class="text-pink-300">টেস্ট #${bnI}</span>
                 <span class="text-pink-400 font-extrabold">👑 ৳৪৯৯</span>
               </div>
               <div class="text-xs font-bold text-pink-200 mt-1 flex items-center justify-center gap-1 group-hover:scale-105 transition">🔒 আনলক করুন</div>
@@ -3449,7 +3541,7 @@
             card.onclick = () => showLockedModal(i);
             card.innerHTML = `
               <div class="flex items-center justify-between text-[10px] font-semibold text-slate-400">
-                <span>টেস্ট #${i}</span>
+                <span>টেস্ট #${bnI}</span>
                 <span>${isFree ? 'ফ্রি' : 'প্রিমিয়াম'}</span>
               </div>
               <div class="text-xs font-bold text-slate-500 mt-1 flex items-center justify-center gap-1">🔒 লকড</div>
@@ -3857,6 +3949,8 @@
         const sessionData = {
           currentStream: appState.currentStream,
           currentTestId: appState.currentTestId,
+          currentMedTestId: appState.currentMedTestId,
+          currentVarTestId: appState.currentVarTestId,
           examStatus: appState.examStatus,
           userAnswers: appState.userAnswers,
           timerSecondsRemaining: appState.timerSecondsRemaining,
@@ -3878,6 +3972,8 @@
         if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering'].includes(session.currentStream)) {
           appState.currentStream = session.currentStream;
         }
+        if (session.currentMedTestId) appState.currentMedTestId = session.currentMedTestId;
+        if (session.currentVarTestId) appState.currentVarTestId = session.currentVarTestId;
         if (session.currentTestId && session.currentTestId >= 1 && session.currentTestId <= 100) {
           appState.currentTestId = session.currentTestId;
         }
