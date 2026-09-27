@@ -2,7 +2,7 @@
 <html lang="bn" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Admission Test BD | AI-Powered Exam Preparation & National Merit Ranking</title>
   <meta name="description" content="বাংলাদেশ শীর্ষস্থানীয় এডমিশন টেস্ট পোর্টাল: মেডিকেল ও ভার্সিটি ১০০ মডেল টেস্ট, বিগত ১৫ বছরের প্রশ্ন, ২০০০ পাঠ্যবই তথ্য এবং রিয়েল-টাইম জাতীয় ও সেশন মেধা তালিকা।">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -74,6 +74,10 @@
   </script>
 
   <style>
+    *, html, body, button, a, select, input, textarea, label, [role="button"], .cursor-pointer, .opt-btn, .q-filter-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
     html, body {
       overflow-x: hidden;
       max-width: 100vw;
@@ -92,9 +96,21 @@
     .touch-scroll {
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
+      touch-action: pan-x pan-y manipulation;
     }
-    button, a {
-      -webkit-tap-highlight-color: transparent;
+    button, [role="button"], .cursor-pointer {
+      -webkit-touch-callout: none;
+      cursor: pointer;
+      user-select: none;
+    }
+    button:active, [role="button"]:active {
+      transform: scale(0.98);
+      opacity: 0.92;
+      transition: transform 0.05s ease, opacity 0.05s ease;
+    }
+    .opt-btn:active {
+      transform: scale(0.99);
+      border-color: #10b981;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -382,6 +398,22 @@
           </button>
         </div>
 
+        <!-- Mobile-Friendly Quick Test Navigation Bar -->
+        <div id="start-card-nav-row" class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-3 border-t border-slate-800/80">
+          <button id="btn-start-prev-test" onclick="navigateAdjacentTest(-1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>← পূর্ববর্তী টেস্ট</span>
+          </button>
+          <button onclick="returnToTestStart(1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>🔙 টেস্ট ০১</span>
+          </button>
+          <button onclick="toggleTestGridModal()" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-teal-300 hover:text-teal-200 border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>📋 ১০০ টেস্ট তালিকা</span>
+          </button>
+          <button id="btn-start-next-test" onclick="navigateAdjacentTest(1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>পরবর্তী টেস্ট →</span>
+          </button>
+        </div>
+
       </div>
 
       <!-- ============================================== -->
@@ -549,9 +581,17 @@
 
           <!-- Action Buttons -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 mt-6 pt-4 border-t border-slate-800/80">
-            <button onclick="retakeCurrentExam()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
-              <span>🔄</span> আবার পরীক্ষা দিন
-            </button>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="retakeCurrentExam()" class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>🔄</span> এই টেস্টটি পুনরায় দিন
+              </button>
+              <button onclick="returnToTestStart(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>🔙</span> টেস্ট ০১-এ ফিরুন
+              </button>
+              <button onclick="toggleTestGridModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 hover:text-emerald-300 border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>📋</span> সব টেস্ট তালিকা
+              </button>
+            </div>
 
             <button id="btn-goto-next-test" onclick="loadNextUnlockedExam()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center justify-center gap-1.5 min-h-[44px]">
               <span>পরবর্তী টেস্টে যান (Next Test)</span>
@@ -611,6 +651,24 @@
           <div id="results-review-feed" class="space-y-4">
             <!-- Review cards will be dynamically rendered here -->
           </div>
+        </div>
+
+        <!-- Bottom Action Bar (After 100 Questions Review Feed) -->
+        <div class="bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-xl">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="retakeCurrentExam()" class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>🔄</span> এই টেস্টটি পুনরায় দিন
+            </button>
+            <button onclick="returnToTestStart(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>🔙</span> টেস্ট ০১-এ ফিরুন
+            </button>
+            <button onclick="toggleTestGridModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 hover:text-emerald-300 border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>📋</span> সব টেস্ট তালিকা
+            </button>
+          </div>
+          <button onclick="loadNextUnlockedExam()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+            <span>পরবর্তী টেস্টে যান →</span>
+          </button>
         </div>
 
       </div>
@@ -842,7 +900,8 @@
   <!-- 100 TESTS GRID MODAL (All 100 Tests Status) -->
   <!-- ============================================== -->
   <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
+    <div class="fixed inset-0" onclick="toggleTestGridModal()"></div>
+    <div class="relative z-10 bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
       
       <div class="p-3.5 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2">
         <div>
@@ -1502,10 +1561,35 @@
       }
     }
 
+    function sanitizeSequentialList(list) {
+      if (!Array.isArray(list)) return [];
+      const clean = [];
+      for (let t = 1; t <= 100; t++) {
+        if (list.includes(t)) {
+          clean.push(t);
+        } else {
+          break;
+        }
+      }
+      return clean;
+    }
+
     // ============================================
     // INITIALIZATION & DATA FETCHING
     // ============================================
     function initApp() {
+      // Purge legacy shared key if it lingered from previous versions
+      try {
+        if (localStorage.getItem('admission_completed_tests')) {
+          localStorage.removeItem('admission_completed_tests');
+        }
+        // Sanitize completed lists to ensure strict sequential integrity
+        appState.completedMed = sanitizeSequentialList(appState.completedMed);
+        appState.completedVar = sanitizeSequentialList(appState.completedVar);
+        localStorage.setItem('admission_completed_med', JSON.stringify(appState.completedMed));
+        localStorage.setItem('admission_completed_var', JSON.stringify(appState.completedVar));
+      } catch (e) {}
+
       // Sync unlocked counters purely from sequential completion progress
       appState.unlockedMed = getMaxUnlocked('medical');
       appState.unlockedVar = getMaxUnlocked('versity');
@@ -2089,6 +2173,7 @@
         btnCancel.classList.add('hidden');
       }
 
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -2102,6 +2187,7 @@
       const card = document.getElementById('app-action-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
@@ -2109,6 +2195,7 @@
 
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
         if (confirmed && typeof customModalCallback === 'function') {
           const cb = customModalCallback;
           customModalCallback = null;
@@ -2188,7 +2275,47 @@
           return;
         }
 
-        // 3. No modal open -> Show Exit Confirmation Dialog
+        // 3. If on Exam Results Card, return to Test Start screen for this test cleanly!
+        const resultsCard = document.getElementById('exam-results-card');
+        if (resultsCard && !resultsCard.classList.contains('hidden')) {
+          loadCurrentSelectedTest();
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+          return;
+        }
+
+        // 4. If an exam is currently running, ask to confirm exit from active exam
+        if (appState.examStatus === 'running') {
+          openCustomModal({
+            title: "পরীক্ষা বাতিল করতে চান?",
+            subtitle: "চলতি পরীক্ষা বন্ধ হয়ে যাবে",
+            icon: "⚠️",
+            iconTheme: "rose",
+            detailsHtml: `
+              <div class="text-xs text-slate-300 leading-relaxed text-center p-3.5 bg-rose-950/40 border border-rose-800/50 rounded-2xl">
+                আপনি কি নিশ্চিত যে বর্তমান পরীক্ষাটি বাতিল করে টেস্ট তালিকায় ফিরে যেতে চান? আপনার চিহ্নিত উত্তরপত্র সংরক্ষিত হবে না।
+              </div>
+            `,
+            confirmText: "হ্যাঁ, পরীক্ষা বাতিল করো",
+            cancelText: "না, পরীক্ষা চালিয়ে যাও",
+            showCancel: true,
+            onConfirm: () => {
+              if (appState.timerInterval) clearInterval(appState.timerInterval);
+              appState.examStatus = 'ready';
+              appState.userAnswers = {};
+              saveSessionState();
+              loadCurrentSelectedTest();
+            }
+          });
+          return;
+        }
+
+        // 5. If on another stream/view, return to model tests
+        if (appState.currentStream !== 'medical' && appState.currentStream !== 'versity') {
+          switchStream('medical');
+          return;
+        }
+
+        // 6. Only when on main test start screen with nothing running: Show website exit prompt
         promptExitConfirmation();
       });
     }
@@ -2347,6 +2474,7 @@
       if (feedback) feedback.classList.add('hidden');
 
       if (!modal) return;
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         if (card) {
@@ -2361,12 +2489,14 @@
       const card = document.getElementById('bkash-paywall-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
       }, 150);
     }
 
@@ -2752,6 +2882,31 @@
       document.getElementById('exam-start-card').classList.remove('hidden');
       document.getElementById('exam-active-card').classList.add('hidden');
       document.getElementById('exam-results-card').classList.add('hidden');
+
+      // Update quick navigation buttons on start card
+      const prevBtn = document.getElementById('btn-start-prev-test');
+      const nextBtn = document.getElementById('btn-start-next-test');
+      if (prevBtn) {
+        if (testId <= 1) {
+          prevBtn.classList.add('opacity-40', 'pointer-events-none');
+        } else {
+          prevBtn.classList.remove('opacity-40', 'pointer-events-none');
+        }
+      }
+      if (nextBtn) {
+        const nextId = testId + 1;
+        if (nextId > 100 || !isTestUnlocked(stream, nextId)) {
+          nextBtn.classList.add('opacity-40');
+        } else {
+          nextBtn.classList.remove('opacity-40');
+        }
+      }
+
+      // Ensure dropdown value is in sync
+      const dd = document.getElementById('model-test-dropdown');
+      if (dd && Number(dd.value) !== testId) {
+        dd.value = testId;
+      }
 
       // Auto-trigger paywall modal if user selects unpaid test > 5
       if (!unlocked && testId > 5 && !isPaid) {
@@ -3449,6 +3604,33 @@
       }
     }
 
+    function returnToTestStart(testId = 1) {
+      const numId = Number(testId) || 1;
+      const stream = appState.currentStream;
+      if (!isTestUnlocked(stream, numId)) {
+        if (numId > 5 && !isStreamPaid(stream)) {
+          openBkashPaywallModal(stream, numId);
+        } else {
+          showLockedModal(numId);
+        }
+        return;
+      }
+      setCurrentStreamTestId(stream, numId);
+      const dd = document.getElementById('model-test-dropdown');
+      if (dd) dd.value = numId;
+      loadCurrentSelectedTest();
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+      const bn = numId < 10 ? '০' + toBengaliNum(numId) : toBengaliNum(numId);
+      showToast(`🔙 টেস্ট #${bn}-এ ফিরে যাওয়া হয়েছে`, "info");
+    }
+
+    function navigateAdjacentTest(offset) {
+      const currentId = Number(appState.currentTestId) || 1;
+      const targetId = currentId + offset;
+      if (targetId < 1 || targetId > 100) return;
+      returnToTestStart(targetId);
+    }
+
     // ============================================
     // 100 TESTS GRID MODAL
     // ============================================
@@ -4048,6 +4230,7 @@
       const modal = document.getElementById('auth-modal');
       const card = document.getElementById('auth-modal-card');
       if (!modal || !card) return;
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -4059,12 +4242,14 @@
       const modal = document.getElementById('auth-modal');
       const card = document.getElementById('auth-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
       }, 150);
     }
 
@@ -4252,6 +4437,7 @@
         if (w) w.value = '';
       }
 
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -4264,12 +4450,14 @@
       const card = document.getElementById('admin-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
         if (window.location.hash === '#admin') {
           history.replaceState(null, null, ' ');
         }
