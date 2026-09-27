@@ -460,6 +460,17 @@
           </div>
         </div>
 
+        <!-- Active Exam Stream & Curriculum Watermark Banner -->
+        <div id="exam-active-stream-banner" class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-emerald-950/80 border-emerald-700/80 text-emerald-300 shadow-md">
+          <div class="flex items-center gap-2">
+            <span id="active-exam-icon" class="text-base sm:text-lg">🩺</span>
+            <span id="active-exam-title" class="text-white font-extrabold text-xs sm:text-sm">মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট ০১</span>
+          </div>
+          <span id="active-exam-badge" class="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-emerald-500/30 text-emerald-200">
+            মেডিকেল সিলেবাস: বায়োলজি ৩০ • রসায়ন ২৫ • পদার্থ ২০ • ইংরেজি ১৫ • সাধারণ জ্ঞান ১০ (কোনো গণিত নেই)
+          </span>
+        </div>
+
         <!-- Question Filter Tabs -->
         <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 custom-scrollbar touch-scroll text-xs font-semibold flex-nowrap -mx-3 px-3 sm:mx-0 sm:px-0">
           <button onclick="filterQuestionsBySubject('All', this)" class="q-filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-white border border-slate-700 active-filter">সব বিষয় (১০০)</button>
@@ -1611,16 +1622,17 @@
       const seasonSel = document.getElementById('season-selector');
       if (seasonSel) seasonSel.value = appState.selectedSession;
 
+      // If not resuming an active exam, ALWAYS cleanly default to 'medical' stream
+      if (!sessionRestored || !sessionRestored.shouldResume) {
+        appState.currentStream = 'medical';
+        appState.currentTestId = getCurrentStreamTestId('medical');
+      }
+
       updateUnlockedBadges();
       populateTestDropdown();
 
-      if (!sessionRestored || !sessionRestored.shouldResume) {
-        if (appState.currentStream === 'medical' || appState.currentStream === 'versity') {
-          loadCurrentSelectedTest();
-        } else {
-          switchStream(appState.currentStream);
-        }
-      }
+      // ALWAYS synchronize the full UI, nav button styles, headers, and test cards
+      switchStream(appState.currentStream || 'medical');
 
       loadAllPlatformData().then(() => {
         if (sessionRestored && sessionRestored.shouldResume) {
@@ -1778,8 +1790,10 @@
       try {
         const medRes = await fetch('/data/medical_100_tests.json');
         appState.medicalTests = await medRes.json();
-        populateTestDropdown();
-        loadCurrentSelectedTest();
+        if (appState.currentStream === 'medical') {
+          populateTestDropdown();
+          loadCurrentSelectedTest();
+        }
       } catch (err) {
         console.warn("Medical tests load error:", err);
       }
@@ -1886,28 +1900,32 @@
     // ============================================
     // STREAM SWITCHER (Medical -> Varsity -> Past 15 -> Textbooks -> Tricks -> Engineering)
     // ============================================
-    function switchStream(stream) {
-      appState.currentStream = stream;
-
-      // Update Nav Button Styles
+    function syncNavButtons(stream) {
       const navButtons = [
-        { id: 'nav-btn-medical', stream: 'medical' },
-        { id: 'nav-btn-versity', stream: 'versity' },
-        { id: 'nav-btn-past', stream: 'past_15years' },
-        { id: 'nav-btn-kb', stream: 'textbooks' },
-        { id: 'nav-btn-nocalc', stream: 'nocalc' },
-        { id: 'nav-btn-engineering', stream: 'engineering' }
+        { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-kb', stream: 'textbooks', activeClass: 'bg-amber-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-engineering', stream: 'engineering', activeClass: 'bg-slate-700 text-white shadow-md font-bold' }
       ];
 
       navButtons.forEach(btn => {
         const el = document.getElementById(btn.id);
         if (!el) return;
         if (btn.stream === stream) {
-          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap bg-brand-600 text-white shadow-md font-bold";
+          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap " + btn.activeClass;
         } else {
           el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80";
         }
       });
+    }
+
+    function switchStream(stream) {
+      appState.currentStream = stream;
+
+      // Update Nav Button Styles immediately
+      syncNavButtons(stream);
 
       // Hide all views
       ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering'].forEach(id => {
@@ -1917,6 +1935,16 @@
 
       // Show selected view
       if (stream === 'medical' || stream === 'versity') {
+        // Clean exam state if switching streams
+        if (appState.timerInterval) {
+          clearInterval(appState.timerInterval);
+          appState.timerInterval = null;
+        }
+        appState.examStatus = 'ready';
+        appState.userAnswers = {};
+        const qFeedContainer = document.getElementById('questions-feed-container');
+        if (qFeedContainer) qFeedContainer.innerHTML = '';
+
         // Restore independent test ID for this stream and validate
         let targetId = getCurrentStreamTestId(stream);
         if (!isTestUnlocked(stream, targetId)) {
@@ -1952,22 +1980,69 @@
       const heroTitle = document.getElementById('hero-title');
       const startBadge = document.getElementById('start-badge-stream');
       const f4 = document.getElementById('q-filter-subj4');
+      const lockTag = document.getElementById('lock-rule-tag');
+      const subtext = document.getElementById('test-selector-subtext');
 
       if (appState.currentStream === 'medical') {
-        heading.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট নির্বাচন";
-        heroTitle.innerHTML = 'মেডিকেল <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ</span>';
-        if (startBadge) startBadge.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট";
+        if (heading) heading.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট নির্বাচন";
+        if (heroTitle) heroTitle.innerHTML = 'মেডিকেল <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ (পিওর মেডিকেল • কোনো গণিত নেই)</span>';
+        if (startBadge) {
+          startBadge.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট (বায়োলজি ৩০ • কেমিস্ট্রি ২৫ • ফিজিক্স ২০ • ইংলিশ ১৫ • জিকে ১০)";
+          startBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase tracking-wider";
+        }
+        if (lockTag) {
+          lockTag.innerText = "মেডিকেল সিকোয়েন্সিয়াল লক";
+          lockTag.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800 font-bold";
+        }
+        if (subtext) subtext.innerText = "মেডিকেল টেস্ট ০১ সম্পন্ন করলে টেস্ট ০২ স্বয়ংক্রিয়ভাবে আনলক হবে।";
         if (f4) {
           f4.innerText = "ইংরেজি ও জিকে";
           f4.onclick = function() { filterQuestionsBySubject('English_GK', this); };
         }
       } else {
-        heading.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান ১০০ মডেল টেস্ট নির্বাচন";
-        heroTitle.innerHTML = 'ভার্সিটি ও সমন্বিত গুচ্ছ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-200">১০০ মডেল টেস্ট সিরিজ (DU • GST • Agri)</span>';
-        if (startBadge) startBadge.innerText = "ভার্সিটি ও গুচ্ছ বিজ্ঞান মডেল টেস্ট";
+        if (heading) heading.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান ১০০ মডেল টেস্ট নির্বাচন";
+        if (heroTitle) heroTitle.innerHTML = 'ভার্সিটি ও সমন্বিত গুচ্ছ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-200">১০০ মডেল টেস্ট সিরিজ (DU • GST • Agri)</span>';
+        if (startBadge) {
+          startBadge.innerText = "ভার্সিটি ও গুচ্ছ বিজ্ঞান মডেল টেস্ট (ফিজিক্স ২৫ • কেমিস্ট্রি ২৫ • উচ্চতর গণিত ২৫ • বায়োলজি ২৫)";
+          startBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-950 text-blue-300 border border-blue-800 uppercase tracking-wider";
+        }
+        if (lockTag) {
+          lockTag.innerText = "ভার্সিটি সিকোয়েন্সিয়াল লক";
+          lockTag.className = "text-[10px] px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-800 font-bold";
+        }
+        if (subtext) subtext.innerText = "ভার্সিটি টেস্ট ০১ সম্পন্ন করলে টেস্ট ০২ স্বয়ংক্রিয়ভাবে আনলক হবে।";
         if (f4) {
           f4.innerText = "উচ্চতর গণিত";
           f4.onclick = function() { filterQuestionsBySubject('HigherMath', this); };
+        }
+      }
+    }
+
+    function updateExamActiveStreamBanner() {
+      const banner = document.getElementById('exam-active-stream-banner');
+      const icon = document.getElementById('active-exam-icon');
+      const title = document.getElementById('active-exam-title');
+      const badge = document.getElementById('active-exam-badge');
+      if (!banner) return;
+
+      const current = appState.currentTestObj;
+      const testName = (current && current.test_name_bn) ? current.test_name_bn : ("মডেল টেস্ট #" + appState.currentTestId);
+
+      if (appState.currentStream === 'medical') {
+        banner.className = "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-emerald-950/80 border-emerald-700/80 text-emerald-300 shadow-md";
+        if (icon) icon.innerText = "🩺";
+        if (title) title.innerText = testName;
+        if (badge) {
+          badge.className = "px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-emerald-500/30 text-emerald-200";
+          badge.innerText = "মেডিকেল সিলেবাস: বায়োলজি ৩০ • রসায়ন ২৫ • পদার্থ ২০ • ইংরেজি ১৫ • সাধারণ জ্ঞান ১০ (কোনো গণিত নেই)";
+        }
+      } else {
+        banner.className = "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-blue-950/80 border-blue-700/80 text-blue-300 shadow-md";
+        if (icon) icon.innerText = "🏛️";
+        if (title) title.innerText = testName;
+        if (badge) {
+          badge.className = "px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-blue-500/30 text-blue-200";
+          badge.innerText = "ভার্সিটি ও গুচ্ছ সিলেবাস: পদার্থ ২৫ • রসায়ন ২৫ • উচ্চতর গণিত ২৫ • জীববিজ্ঞান ২৫";
         }
       }
     }
@@ -2818,21 +2893,51 @@
     // ============================================
     function loadCurrentSelectedTest() {
       // Stop any existing timer
-      if (appState.timerInterval) clearInterval(appState.timerInterval);
+      if (appState.timerInterval) {
+        clearInterval(appState.timerInterval);
+        appState.timerInterval = null;
+      }
 
-      const stream = appState.currentStream;
-      const testId = Number(appState.currentTestId);
-      const tests = (stream === 'medical') ? appState.medicalTests : appState.versityTests;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      if (appState.currentStream === 'medical' || appState.currentStream === 'versity') {
+        // stream valid
+      } else {
+        appState.currentStream = 'medical';
+      }
+
+      const testId = Number(appState.currentTestId) || 1;
       let current = null;
-      if (tests && tests.length > 0) {
-        current = tests.find(t => t.test_id === testId) || tests[0];
+
+      if (stream === 'medical') {
+        const tests = appState.medicalTests;
+        if (tests && tests.length > 0) {
+          current = tests.find(t => t.test_id === testId) || tests[0];
+        }
+        // Strict Medical Integrity Guarantee:
+        // Must be stream medical and MUST contain ZERO math questions
+        if (!current || current.stream !== 'medical' || (current.questions && current.questions.some(q => (q.subject || '').toLowerCase().includes('math') || (q.subject || '').includes('গণিত')))) {
+          current = DEFAULT_MED_TEST_1;
+        }
+      } else {
+        const tests = appState.versityTests;
+        if (tests && tests.length > 0) {
+          current = tests.find(t => t.test_id === testId) || tests[0];
+        }
+        if (!current || current.stream !== 'versity') {
+          current = DEFAULT_VAR_TEST_1;
+        }
       }
-      if (!current) {
-        current = (stream === 'medical') ? DEFAULT_MED_TEST_1 : DEFAULT_VAR_TEST_1;
-      }
+
       appState.currentTestObj = current;
       appState.examStatus = 'ready';
       appState.userAnswers = {};
+
+      // Clear rendered questions to ensure no cross-stream lingering cards
+      const qFeedContainer = document.getElementById('questions-feed-container');
+      if (qFeedContainer) qFeedContainer.innerHTML = '';
+
+      // Update stream headings and badges
+      updateStreamHeadings();
 
       // Check if current test is unlocked & completed
       const unlocked = isTestUnlocked(stream, testId);
@@ -2918,8 +3023,9 @@
     // START EXAM FLOW & COUNTDOWN TIMER
     // ============================================
     function startActiveExam() {
-      const stream = appState.currentStream;
-      const testId = appState.currentTestId;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
+      const testId = Number(appState.currentTestId) || 1;
 
       // Strict lock and paywall validation
       if (!isTestUnlocked(stream, testId)) {
@@ -2930,7 +3036,23 @@
         }
         return;
       }
-      const current = appState.currentTestObj;
+
+      // Hardened Test Object Assertion
+      let current = appState.currentTestObj;
+      if (stream === 'medical') {
+        if (!current || current.stream !== 'medical' || (current.questions && current.questions.some(q => (q.subject || '').toLowerCase().includes('math') || (q.subject || '').includes('গণিত')))) {
+          const medTests = appState.medicalTests || [DEFAULT_MED_TEST_1];
+          current = medTests.find(t => t.test_id === testId) || DEFAULT_MED_TEST_1;
+          appState.currentTestObj = current;
+        }
+      } else {
+        if (!current || current.stream !== 'versity') {
+          const varTests = appState.versityTests || [DEFAULT_VAR_TEST_1];
+          current = varTests.find(t => t.test_id === testId) || DEFAULT_VAR_TEST_1;
+          appState.currentTestObj = current;
+        }
+      }
+
       if (!current || !current.questions) {
         showToast("প্রশ্ন লোড করতে পারছে না।", "error");
         return;
@@ -2952,6 +3074,10 @@
       document.getElementById('total-questions-pill').innerText = current.questions.length;
       const progBar = document.getElementById('exam-progress-bar');
       if (progBar) progBar.style.width = '0%';
+
+      // Update Exam Active Stream Watermark Banner
+      updateExamActiveStreamBanner();
+      updateStreamHeadings();
 
       // Render all questions
       renderQuestionsFeed(current.questions);
@@ -3029,7 +3155,17 @@
       if (!container) return;
       container.innerHTML = '';
 
-      questions.forEach((q, idx) => {
+      // ZERO TOLERANCE SAFETY GUARD:
+      // If stream is Medical, strictly purge any math question immediately
+      let validQuestions = questions;
+      if (appState.currentStream === 'medical') {
+        validQuestions = questions.filter(q => {
+          const s = (q.subject || '').toLowerCase();
+          return !s.includes('math') && !s.includes('গণিত');
+        });
+      }
+
+      validQuestions.forEach((q, idx) => {
         const card = document.createElement('div');
         card.id = `q-card-${idx}`;
         card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-md space-y-3 transition";
@@ -3606,7 +3742,8 @@
 
     function returnToTestStart(testId = 1) {
       const numId = Number(testId) || 1;
-      const stream = appState.currentStream;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
       if (!isTestUnlocked(stream, numId)) {
         if (numId > 5 && !isStreamPaid(stream)) {
           openBkashPaywallModal(stream, numId);
@@ -4177,7 +4314,19 @@
     }
 
     function resumeActiveExam() {
-      const current = appState.currentTestObj;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
+      const testId = Number(appState.currentTestId) || 1;
+
+      let current = null;
+      if (stream === 'medical') {
+        const tests = appState.medicalTests || [DEFAULT_MED_TEST_1];
+        current = tests.find(t => t.test_id === testId) || DEFAULT_MED_TEST_1;
+      } else {
+        const tests = appState.versityTests || [DEFAULT_VAR_TEST_1];
+        current = tests.find(t => t.test_id === testId) || DEFAULT_VAR_TEST_1;
+      }
+      appState.currentTestObj = current;
       if (!current || !current.questions) return;
 
       appState.examStatus = 'running';
@@ -4186,6 +4335,8 @@
       document.getElementById('exam-results-card').classList.add('hidden');
       document.getElementById('exam-active-card').classList.remove('hidden');
 
+      updateExamActiveStreamBanner();
+      updateStreamHeadings();
       renderQuestionsFeed(current.questions);
 
       const totalQ = current.questions.length;

@@ -2,7 +2,7 @@
 <html lang="bn" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Admission Test BD | AI-Powered Exam Preparation & National Merit Ranking</title>
   <meta name="description" content="বাংলাদেশ শীর্ষস্থানীয় এডমিশন টেস্ট পোর্টাল: মেডিকেল ও ভার্সিটি ১০০ মডেল টেস্ট, বিগত ১৫ বছরের প্রশ্ন, ২০০০ পাঠ্যবই তথ্য এবং রিয়েল-টাইম জাতীয় ও সেশন মেধা তালিকা।">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -74,6 +74,10 @@
   </script>
 
   <style>
+    *, html, body, button, a, select, input, textarea, label, [role="button"], .cursor-pointer, .opt-btn, .q-filter-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
     html, body {
       overflow-x: hidden;
       max-width: 100vw;
@@ -92,9 +96,21 @@
     .touch-scroll {
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
+      touch-action: pan-x pan-y manipulation;
     }
-    button, a {
-      -webkit-tap-highlight-color: transparent;
+    button, [role="button"], .cursor-pointer {
+      -webkit-touch-callout: none;
+      cursor: pointer;
+      user-select: none;
+    }
+    button:active, [role="button"]:active {
+      transform: scale(0.98);
+      opacity: 0.92;
+      transition: transform 0.05s ease, opacity 0.05s ease;
+    }
+    .opt-btn:active {
+      transform: scale(0.99);
+      border-color: #10b981;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -382,6 +398,22 @@
           </button>
         </div>
 
+        <!-- Mobile-Friendly Quick Test Navigation Bar -->
+        <div id="start-card-nav-row" class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-3 border-t border-slate-800/80">
+          <button id="btn-start-prev-test" onclick="navigateAdjacentTest(-1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>← পূর্ববর্তী টেস্ট</span>
+          </button>
+          <button onclick="returnToTestStart(1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>🔙 টেস্ট ০১</span>
+          </button>
+          <button onclick="toggleTestGridModal()" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-teal-300 hover:text-teal-200 border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>📋 ১০০ টেস্ট তালিকা</span>
+          </button>
+          <button id="btn-start-next-test" onclick="navigateAdjacentTest(1)" class="px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 min-h-[40px]">
+            <span>পরবর্তী টেস্ট →</span>
+          </button>
+        </div>
+
       </div>
 
       <!-- ============================================== -->
@@ -426,6 +458,17 @@
           <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden">
             <div id="exam-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
           </div>
+        </div>
+
+        <!-- Active Exam Stream & Curriculum Watermark Banner -->
+        <div id="exam-active-stream-banner" class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-emerald-950/80 border-emerald-700/80 text-emerald-300 shadow-md">
+          <div class="flex items-center gap-2">
+            <span id="active-exam-icon" class="text-base sm:text-lg">🩺</span>
+            <span id="active-exam-title" class="text-white font-extrabold text-xs sm:text-sm">মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট ০১</span>
+          </div>
+          <span id="active-exam-badge" class="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-emerald-500/30 text-emerald-200">
+            মেডিকেল সিলেবাস: বায়োলজি ৩০ • রসায়ন ২৫ • পদার্থ ২০ • ইংরেজি ১৫ • সাধারণ জ্ঞান ১০ (কোনো গণিত নেই)
+          </span>
         </div>
 
         <!-- Question Filter Tabs -->
@@ -549,9 +592,17 @@
 
           <!-- Action Buttons -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 mt-6 pt-4 border-t border-slate-800/80">
-            <button onclick="retakeCurrentExam()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
-              <span>🔄</span> আবার পরীক্ষা দিন
-            </button>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="retakeCurrentExam()" class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>🔄</span> এই টেস্টটি পুনরায় দিন
+              </button>
+              <button onclick="returnToTestStart(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>🔙</span> টেস্ট ০১-এ ফিরুন
+              </button>
+              <button onclick="toggleTestGridModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 hover:text-emerald-300 border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+                <span>📋</span> সব টেস্ট তালিকা
+              </button>
+            </div>
 
             <button id="btn-goto-next-test" onclick="loadNextUnlockedExam()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center justify-center gap-1.5 min-h-[44px]">
               <span>পরবর্তী টেস্টে যান (Next Test)</span>
@@ -611,6 +662,24 @@
           <div id="results-review-feed" class="space-y-4">
             <!-- Review cards will be dynamically rendered here -->
           </div>
+        </div>
+
+        <!-- Bottom Action Bar (After 100 Questions Review Feed) -->
+        <div class="bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-xl">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="retakeCurrentExam()" class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>🔄</span> এই টেস্টটি পুনরায় দিন
+            </button>
+            <button onclick="returnToTestStart(1)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>🔙</span> টেস্ট ০১-এ ফিরুন
+            </button>
+            <button onclick="toggleTestGridModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 hover:text-emerald-300 border border-slate-700 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+              <span>📋</span> সব টেস্ট তালিকা
+            </button>
+          </div>
+          <button onclick="loadNextUnlockedExam()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand hover:from-brand-500 hover:to-teal-400 transition flex items-center justify-center gap-1.5 min-h-[44px]">
+            <span>পরবর্তী টেস্টে যান →</span>
+          </button>
         </div>
 
       </div>
@@ -842,7 +911,8 @@
   <!-- 100 TESTS GRID MODAL (All 100 Tests Status) -->
   <!-- ============================================== -->
   <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
+    <div class="fixed inset-0" onclick="toggleTestGridModal()"></div>
+    <div class="relative z-10 bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
       
       <div class="p-3.5 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2">
         <div>
@@ -1502,10 +1572,35 @@
       }
     }
 
+    function sanitizeSequentialList(list) {
+      if (!Array.isArray(list)) return [];
+      const clean = [];
+      for (let t = 1; t <= 100; t++) {
+        if (list.includes(t)) {
+          clean.push(t);
+        } else {
+          break;
+        }
+      }
+      return clean;
+    }
+
     // ============================================
     // INITIALIZATION & DATA FETCHING
     // ============================================
     function initApp() {
+      // Purge legacy shared key if it lingered from previous versions
+      try {
+        if (localStorage.getItem('admission_completed_tests')) {
+          localStorage.removeItem('admission_completed_tests');
+        }
+        // Sanitize completed lists to ensure strict sequential integrity
+        appState.completedMed = sanitizeSequentialList(appState.completedMed);
+        appState.completedVar = sanitizeSequentialList(appState.completedVar);
+        localStorage.setItem('admission_completed_med', JSON.stringify(appState.completedMed));
+        localStorage.setItem('admission_completed_var', JSON.stringify(appState.completedVar));
+      } catch (e) {}
+
       // Sync unlocked counters purely from sequential completion progress
       appState.unlockedMed = getMaxUnlocked('medical');
       appState.unlockedVar = getMaxUnlocked('versity');
@@ -1527,16 +1622,17 @@
       const seasonSel = document.getElementById('season-selector');
       if (seasonSel) seasonSel.value = appState.selectedSession;
 
+      // If not resuming an active exam, ALWAYS cleanly default to 'medical' stream
+      if (!sessionRestored || !sessionRestored.shouldResume) {
+        appState.currentStream = 'medical';
+        appState.currentTestId = getCurrentStreamTestId('medical');
+      }
+
       updateUnlockedBadges();
       populateTestDropdown();
 
-      if (!sessionRestored || !sessionRestored.shouldResume) {
-        if (appState.currentStream === 'medical' || appState.currentStream === 'versity') {
-          loadCurrentSelectedTest();
-        } else {
-          switchStream(appState.currentStream);
-        }
-      }
+      // ALWAYS synchronize the full UI, nav button styles, headers, and test cards
+      switchStream(appState.currentStream || 'medical');
 
       loadAllPlatformData().then(() => {
         if (sessionRestored && sessionRestored.shouldResume) {
@@ -1694,8 +1790,10 @@
       try {
         const medRes = await fetch('/data/medical_100_tests.json');
         appState.medicalTests = await medRes.json();
-        populateTestDropdown();
-        loadCurrentSelectedTest();
+        if (appState.currentStream === 'medical') {
+          populateTestDropdown();
+          loadCurrentSelectedTest();
+        }
       } catch (err) {
         console.warn("Medical tests load error:", err);
       }
@@ -1802,28 +1900,32 @@
     // ============================================
     // STREAM SWITCHER (Medical -> Varsity -> Past 15 -> Textbooks -> Tricks -> Engineering)
     // ============================================
-    function switchStream(stream) {
-      appState.currentStream = stream;
-
-      // Update Nav Button Styles
+    function syncNavButtons(stream) {
       const navButtons = [
-        { id: 'nav-btn-medical', stream: 'medical' },
-        { id: 'nav-btn-versity', stream: 'versity' },
-        { id: 'nav-btn-past', stream: 'past_15years' },
-        { id: 'nav-btn-kb', stream: 'textbooks' },
-        { id: 'nav-btn-nocalc', stream: 'nocalc' },
-        { id: 'nav-btn-engineering', stream: 'engineering' }
+        { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-kb', stream: 'textbooks', activeClass: 'bg-amber-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-engineering', stream: 'engineering', activeClass: 'bg-slate-700 text-white shadow-md font-bold' }
       ];
 
       navButtons.forEach(btn => {
         const el = document.getElementById(btn.id);
         if (!el) return;
         if (btn.stream === stream) {
-          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap bg-brand-600 text-white shadow-md font-bold";
+          el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap " + btn.activeClass;
         } else {
           el.className = "px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80";
         }
       });
+    }
+
+    function switchStream(stream) {
+      appState.currentStream = stream;
+
+      // Update Nav Button Styles immediately
+      syncNavButtons(stream);
 
       // Hide all views
       ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering'].forEach(id => {
@@ -1833,6 +1935,16 @@
 
       // Show selected view
       if (stream === 'medical' || stream === 'versity') {
+        // Clean exam state if switching streams
+        if (appState.timerInterval) {
+          clearInterval(appState.timerInterval);
+          appState.timerInterval = null;
+        }
+        appState.examStatus = 'ready';
+        appState.userAnswers = {};
+        const qFeedContainer = document.getElementById('questions-feed-container');
+        if (qFeedContainer) qFeedContainer.innerHTML = '';
+
         // Restore independent test ID for this stream and validate
         let targetId = getCurrentStreamTestId(stream);
         if (!isTestUnlocked(stream, targetId)) {
@@ -1868,22 +1980,69 @@
       const heroTitle = document.getElementById('hero-title');
       const startBadge = document.getElementById('start-badge-stream');
       const f4 = document.getElementById('q-filter-subj4');
+      const lockTag = document.getElementById('lock-rule-tag');
+      const subtext = document.getElementById('test-selector-subtext');
 
       if (appState.currentStream === 'medical') {
-        heading.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট নির্বাচন";
-        heroTitle.innerHTML = 'মেডিকেল <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ</span>';
-        if (startBadge) startBadge.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট";
+        if (heading) heading.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট নির্বাচন";
+        if (heroTitle) heroTitle.innerHTML = 'মেডিকেল <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">১০০ মডেল টেস্ট সিরিজ (পিওর মেডিকেল • কোনো গণিত নেই)</span>';
+        if (startBadge) {
+          startBadge.innerText = "মেডিকেল পূর্ণাঙ্গ মডেল টেস্ট (বায়োলজি ৩০ • কেমিস্ট্রি ২৫ • ফিজিক্স ২০ • ইংলিশ ১৫ • জিকে ১০)";
+          startBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase tracking-wider";
+        }
+        if (lockTag) {
+          lockTag.innerText = "মেডিকেল সিকোয়েন্সিয়াল লক";
+          lockTag.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800 font-bold";
+        }
+        if (subtext) subtext.innerText = "মেডিকেল টেস্ট ০১ সম্পন্ন করলে টেস্ট ০২ স্বয়ংক্রিয়ভাবে আনলক হবে।";
         if (f4) {
           f4.innerText = "ইংরেজি ও জিকে";
           f4.onclick = function() { filterQuestionsBySubject('English_GK', this); };
         }
       } else {
-        heading.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান ১০০ মডেল টেস্ট নির্বাচন";
-        heroTitle.innerHTML = 'ভার্সিটি ও সমন্বিত গুচ্ছ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-200">১০০ মডেল টেস্ট সিরিজ (DU • GST • Agri)</span>';
-        if (startBadge) startBadge.innerText = "ভার্সিটি ও গুচ্ছ বিজ্ঞান মডেল টেস্ট";
+        if (heading) heading.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ বিজ্ঞান ১০০ মডেল টেস্ট নির্বাচন";
+        if (heroTitle) heroTitle.innerHTML = 'ভার্সিটি ও সমন্বিত গুচ্ছ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-200">১০০ মডেল টেস্ট সিরিজ (DU • GST • Agri)</span>';
+        if (startBadge) {
+          startBadge.innerText = "ভার্সিটি ও গুচ্ছ বিজ্ঞান মডেল টেস্ট (ফিজিক্স ২৫ • কেমিস্ট্রি ২৫ • উচ্চতর গণিত ২৫ • বায়োলজি ২৫)";
+          startBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-950 text-blue-300 border border-blue-800 uppercase tracking-wider";
+        }
+        if (lockTag) {
+          lockTag.innerText = "ভার্সিটি সিকোয়েন্সিয়াল লক";
+          lockTag.className = "text-[10px] px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-800 font-bold";
+        }
+        if (subtext) subtext.innerText = "ভার্সিটি টেস্ট ০১ সম্পন্ন করলে টেস্ট ০২ স্বয়ংক্রিয়ভাবে আনলক হবে।";
         if (f4) {
           f4.innerText = "উচ্চতর গণিত";
           f4.onclick = function() { filterQuestionsBySubject('HigherMath', this); };
+        }
+      }
+    }
+
+    function updateExamActiveStreamBanner() {
+      const banner = document.getElementById('exam-active-stream-banner');
+      const icon = document.getElementById('active-exam-icon');
+      const title = document.getElementById('active-exam-title');
+      const badge = document.getElementById('active-exam-badge');
+      if (!banner) return;
+
+      const current = appState.currentTestObj;
+      const testName = (current && current.test_name_bn) ? current.test_name_bn : ("মডেল টেস্ট #" + appState.currentTestId);
+
+      if (appState.currentStream === 'medical') {
+        banner.className = "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-emerald-950/80 border-emerald-700/80 text-emerald-300 shadow-md";
+        if (icon) icon.innerText = "🩺";
+        if (title) title.innerText = testName;
+        if (badge) {
+          badge.className = "px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-emerald-500/30 text-emerald-200";
+          badge.innerText = "মেডিকেল সিলেবাস: বায়োলজি ৩০ • রসায়ন ২৫ • পদার্থ ২০ • ইংরেজি ১৫ • সাধারণ জ্ঞান ১০ (কোনো গণিত নেই)";
+        }
+      } else {
+        banner.className = "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold border transition bg-blue-950/80 border-blue-700/80 text-blue-300 shadow-md";
+        if (icon) icon.innerText = "🏛️";
+        if (title) title.innerText = testName;
+        if (badge) {
+          badge.className = "px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-black/40 border border-blue-500/30 text-blue-200";
+          badge.innerText = "ভার্সিটি ও গুচ্ছ সিলেবাস: পদার্থ ২৫ • রসায়ন ২৫ • উচ্চতর গণিত ২৫ • জীববিজ্ঞান ২৫";
         }
       }
     }
@@ -2089,6 +2248,7 @@
         btnCancel.classList.add('hidden');
       }
 
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -2102,6 +2262,7 @@
       const card = document.getElementById('app-action-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
@@ -2109,6 +2270,7 @@
 
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
         if (confirmed && typeof customModalCallback === 'function') {
           const cb = customModalCallback;
           customModalCallback = null;
@@ -2188,7 +2350,47 @@
           return;
         }
 
-        // 3. No modal open -> Show Exit Confirmation Dialog
+        // 3. If on Exam Results Card, return to Test Start screen for this test cleanly!
+        const resultsCard = document.getElementById('exam-results-card');
+        if (resultsCard && !resultsCard.classList.contains('hidden')) {
+          loadCurrentSelectedTest();
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+          return;
+        }
+
+        // 4. If an exam is currently running, ask to confirm exit from active exam
+        if (appState.examStatus === 'running') {
+          openCustomModal({
+            title: "পরীক্ষা বাতিল করতে চান?",
+            subtitle: "চলতি পরীক্ষা বন্ধ হয়ে যাবে",
+            icon: "⚠️",
+            iconTheme: "rose",
+            detailsHtml: `
+              <div class="text-xs text-slate-300 leading-relaxed text-center p-3.5 bg-rose-950/40 border border-rose-800/50 rounded-2xl">
+                আপনি কি নিশ্চিত যে বর্তমান পরীক্ষাটি বাতিল করে টেস্ট তালিকায় ফিরে যেতে চান? আপনার চিহ্নিত উত্তরপত্র সংরক্ষিত হবে না।
+              </div>
+            `,
+            confirmText: "হ্যাঁ, পরীক্ষা বাতিল করো",
+            cancelText: "না, পরীক্ষা চালিয়ে যাও",
+            showCancel: true,
+            onConfirm: () => {
+              if (appState.timerInterval) clearInterval(appState.timerInterval);
+              appState.examStatus = 'ready';
+              appState.userAnswers = {};
+              saveSessionState();
+              loadCurrentSelectedTest();
+            }
+          });
+          return;
+        }
+
+        // 5. If on another stream/view, return to model tests
+        if (appState.currentStream !== 'medical' && appState.currentStream !== 'versity') {
+          switchStream('medical');
+          return;
+        }
+
+        // 6. Only when on main test start screen with nothing running: Show website exit prompt
         promptExitConfirmation();
       });
     }
@@ -2347,6 +2549,7 @@
       if (feedback) feedback.classList.add('hidden');
 
       if (!modal) return;
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         if (card) {
@@ -2361,12 +2564,14 @@
       const card = document.getElementById('bkash-paywall-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
       }, 150);
     }
 
@@ -2688,21 +2893,51 @@
     // ============================================
     function loadCurrentSelectedTest() {
       // Stop any existing timer
-      if (appState.timerInterval) clearInterval(appState.timerInterval);
+      if (appState.timerInterval) {
+        clearInterval(appState.timerInterval);
+        appState.timerInterval = null;
+      }
 
-      const stream = appState.currentStream;
-      const testId = Number(appState.currentTestId);
-      const tests = (stream === 'medical') ? appState.medicalTests : appState.versityTests;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      if (appState.currentStream === 'medical' || appState.currentStream === 'versity') {
+        // stream valid
+      } else {
+        appState.currentStream = 'medical';
+      }
+
+      const testId = Number(appState.currentTestId) || 1;
       let current = null;
-      if (tests && tests.length > 0) {
-        current = tests.find(t => t.test_id === testId) || tests[0];
+
+      if (stream === 'medical') {
+        const tests = appState.medicalTests;
+        if (tests && tests.length > 0) {
+          current = tests.find(t => t.test_id === testId) || tests[0];
+        }
+        // Strict Medical Integrity Guarantee:
+        // Must be stream medical and MUST contain ZERO math questions
+        if (!current || current.stream !== 'medical' || (current.questions && current.questions.some(q => (q.subject || '').toLowerCase().includes('math') || (q.subject || '').includes('গণিত')))) {
+          current = DEFAULT_MED_TEST_1;
+        }
+      } else {
+        const tests = appState.versityTests;
+        if (tests && tests.length > 0) {
+          current = tests.find(t => t.test_id === testId) || tests[0];
+        }
+        if (!current || current.stream !== 'versity') {
+          current = DEFAULT_VAR_TEST_1;
+        }
       }
-      if (!current) {
-        current = (stream === 'medical') ? DEFAULT_MED_TEST_1 : DEFAULT_VAR_TEST_1;
-      }
+
       appState.currentTestObj = current;
       appState.examStatus = 'ready';
       appState.userAnswers = {};
+
+      // Clear rendered questions to ensure no cross-stream lingering cards
+      const qFeedContainer = document.getElementById('questions-feed-container');
+      if (qFeedContainer) qFeedContainer.innerHTML = '';
+
+      // Update stream headings and badges
+      updateStreamHeadings();
 
       // Check if current test is unlocked & completed
       const unlocked = isTestUnlocked(stream, testId);
@@ -2753,6 +2988,31 @@
       document.getElementById('exam-active-card').classList.add('hidden');
       document.getElementById('exam-results-card').classList.add('hidden');
 
+      // Update quick navigation buttons on start card
+      const prevBtn = document.getElementById('btn-start-prev-test');
+      const nextBtn = document.getElementById('btn-start-next-test');
+      if (prevBtn) {
+        if (testId <= 1) {
+          prevBtn.classList.add('opacity-40', 'pointer-events-none');
+        } else {
+          prevBtn.classList.remove('opacity-40', 'pointer-events-none');
+        }
+      }
+      if (nextBtn) {
+        const nextId = testId + 1;
+        if (nextId > 100 || !isTestUnlocked(stream, nextId)) {
+          nextBtn.classList.add('opacity-40');
+        } else {
+          nextBtn.classList.remove('opacity-40');
+        }
+      }
+
+      // Ensure dropdown value is in sync
+      const dd = document.getElementById('model-test-dropdown');
+      if (dd && Number(dd.value) !== testId) {
+        dd.value = testId;
+      }
+
       // Auto-trigger paywall modal if user selects unpaid test > 5
       if (!unlocked && testId > 5 && !isPaid) {
         openBkashPaywallModal(stream, testId);
@@ -2763,8 +3023,9 @@
     // START EXAM FLOW & COUNTDOWN TIMER
     // ============================================
     function startActiveExam() {
-      const stream = appState.currentStream;
-      const testId = appState.currentTestId;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
+      const testId = Number(appState.currentTestId) || 1;
 
       // Strict lock and paywall validation
       if (!isTestUnlocked(stream, testId)) {
@@ -2775,7 +3036,23 @@
         }
         return;
       }
-      const current = appState.currentTestObj;
+
+      // Hardened Test Object Assertion
+      let current = appState.currentTestObj;
+      if (stream === 'medical') {
+        if (!current || current.stream !== 'medical' || (current.questions && current.questions.some(q => (q.subject || '').toLowerCase().includes('math') || (q.subject || '').includes('গণিত')))) {
+          const medTests = appState.medicalTests || [DEFAULT_MED_TEST_1];
+          current = medTests.find(t => t.test_id === testId) || DEFAULT_MED_TEST_1;
+          appState.currentTestObj = current;
+        }
+      } else {
+        if (!current || current.stream !== 'versity') {
+          const varTests = appState.versityTests || [DEFAULT_VAR_TEST_1];
+          current = varTests.find(t => t.test_id === testId) || DEFAULT_VAR_TEST_1;
+          appState.currentTestObj = current;
+        }
+      }
+
       if (!current || !current.questions) {
         showToast("প্রশ্ন লোড করতে পারছে না।", "error");
         return;
@@ -2797,6 +3074,10 @@
       document.getElementById('total-questions-pill').innerText = current.questions.length;
       const progBar = document.getElementById('exam-progress-bar');
       if (progBar) progBar.style.width = '0%';
+
+      // Update Exam Active Stream Watermark Banner
+      updateExamActiveStreamBanner();
+      updateStreamHeadings();
 
       // Render all questions
       renderQuestionsFeed(current.questions);
@@ -2874,7 +3155,17 @@
       if (!container) return;
       container.innerHTML = '';
 
-      questions.forEach((q, idx) => {
+      // ZERO TOLERANCE SAFETY GUARD:
+      // If stream is Medical, strictly purge any math question immediately
+      let validQuestions = questions;
+      if (appState.currentStream === 'medical') {
+        validQuestions = questions.filter(q => {
+          const s = (q.subject || '').toLowerCase();
+          return !s.includes('math') && !s.includes('গণিত');
+        });
+      }
+
+      validQuestions.forEach((q, idx) => {
         const card = document.createElement('div');
         card.id = `q-card-${idx}`;
         card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-md space-y-3 transition";
@@ -3449,6 +3740,34 @@
       }
     }
 
+    function returnToTestStart(testId = 1) {
+      const numId = Number(testId) || 1;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
+      if (!isTestUnlocked(stream, numId)) {
+        if (numId > 5 && !isStreamPaid(stream)) {
+          openBkashPaywallModal(stream, numId);
+        } else {
+          showLockedModal(numId);
+        }
+        return;
+      }
+      setCurrentStreamTestId(stream, numId);
+      const dd = document.getElementById('model-test-dropdown');
+      if (dd) dd.value = numId;
+      loadCurrentSelectedTest();
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+      const bn = numId < 10 ? '০' + toBengaliNum(numId) : toBengaliNum(numId);
+      showToast(`🔙 টেস্ট #${bn}-এ ফিরে যাওয়া হয়েছে`, "info");
+    }
+
+    function navigateAdjacentTest(offset) {
+      const currentId = Number(appState.currentTestId) || 1;
+      const targetId = currentId + offset;
+      if (targetId < 1 || targetId > 100) return;
+      returnToTestStart(targetId);
+    }
+
     // ============================================
     // 100 TESTS GRID MODAL
     // ============================================
@@ -3995,7 +4314,19 @@
     }
 
     function resumeActiveExam() {
-      const current = appState.currentTestObj;
+      const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
+      appState.currentStream = stream;
+      const testId = Number(appState.currentTestId) || 1;
+
+      let current = null;
+      if (stream === 'medical') {
+        const tests = appState.medicalTests || [DEFAULT_MED_TEST_1];
+        current = tests.find(t => t.test_id === testId) || DEFAULT_MED_TEST_1;
+      } else {
+        const tests = appState.versityTests || [DEFAULT_VAR_TEST_1];
+        current = tests.find(t => t.test_id === testId) || DEFAULT_VAR_TEST_1;
+      }
+      appState.currentTestObj = current;
       if (!current || !current.questions) return;
 
       appState.examStatus = 'running';
@@ -4004,6 +4335,8 @@
       document.getElementById('exam-results-card').classList.add('hidden');
       document.getElementById('exam-active-card').classList.remove('hidden');
 
+      updateExamActiveStreamBanner();
+      updateStreamHeadings();
       renderQuestionsFeed(current.questions);
 
       const totalQ = current.questions.length;
@@ -4048,6 +4381,7 @@
       const modal = document.getElementById('auth-modal');
       const card = document.getElementById('auth-modal-card');
       if (!modal || !card) return;
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -4059,12 +4393,14 @@
       const modal = document.getElementById('auth-modal');
       const card = document.getElementById('auth-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
       }, 150);
     }
 
@@ -4252,6 +4588,7 @@
         if (w) w.value = '';
       }
 
+      modal.style.pointerEvents = '';
       modal.classList.remove('hidden');
       requestAnimationFrame(() => {
         card.classList.remove('scale-95', 'opacity-0');
@@ -4264,12 +4601,14 @@
       const card = document.getElementById('admin-modal-card');
       if (!modal || modal.classList.contains('hidden')) return;
 
+      modal.style.pointerEvents = 'none';
       if (card) {
         card.classList.remove('scale-100', 'opacity-100');
         card.classList.add('scale-95', 'opacity-0');
       }
       setTimeout(() => {
         modal.classList.add('hidden');
+        modal.style.pointerEvents = '';
         if (window.location.hash === '#admin') {
           history.replaceState(null, null, ' ');
         }
