@@ -1741,6 +1741,13 @@
 
     async function syncPaymentStatus() {
       try {
+        // Ad Traffic Optimization: Skip DB check on initial visit for brand-new users with no payment history
+        const hasHistory = appState.userEmail ||
+                           localStorage.getItem('admission_paid_med') === 'true' ||
+                           localStorage.getItem('admission_paid_var') === 'true' ||
+                           localStorage.getItem('admission_has_pending') === 'true';
+        if (!hasHistory) return;
+
         const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
         const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
         if (res.ok) {
