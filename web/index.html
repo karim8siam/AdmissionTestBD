@@ -1668,10 +1668,19 @@
     }
 
     let paymentPollInterval = null;
+    let paymentPollCount = 0;
 
     function startPaymentStatusPolling() {
       if (paymentPollInterval) clearInterval(paymentPollInterval);
+      paymentPollCount = 0;
       paymentPollInterval = setInterval(async () => {
+        paymentPollCount++;
+        // Stop polling after 25 attempts (~5 minutes) if no update
+        if (paymentPollCount > 25) {
+          clearInterval(paymentPollInterval);
+          paymentPollInterval = null;
+          return;
+        }
         try {
           const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
           const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
@@ -1698,6 +1707,8 @@
 
             if (!data.has_pending) {
               localStorage.removeItem('admission_has_pending');
+              clearInterval(paymentPollInterval);
+              paymentPollInterval = null;
             }
 
             if (newlyUnlocked) {
@@ -1725,7 +1736,7 @@
         } catch (e) {
           // quiet polling
         }
-      }, 5000);
+      }, 12000);
     }
 
     async function syncPaymentStatus() {
@@ -1742,25 +1753,16 @@
 
           if (isMed) {
             localStorage.setItem('admission_paid_med', 'true');
-          } else {
-            localStorage.removeItem('admission_paid_med');
+            appState.unlockedMed = getMaxUnlocked('medical');
           }
           if (isVar) {
             localStorage.setItem('admission_paid_var', 'true');
-          } else {
-            localStorage.removeItem('admission_paid_var');
-          }
-          appState.unlockedMed = getMaxUnlocked('medical');
-          appState.unlockedVar = getMaxUnlocked('versity');
-
-          if (data.has_pending) {
-            localStorage.setItem('admission_has_pending', 'true');
-          } else {
-            localStorage.removeItem('admission_has_pending');
+            appState.unlockedVar = getMaxUnlocked('versity');
           }
 
           updateUnlockedBadges();
           populateTestDropdown();
+          loadCurrentSelectedTest();
           renderTestGridCards();
 
           // If paywall modal is currently open, refresh its view
@@ -1769,8 +1771,8 @@
             selectBkashPackage(selectedBkashPackage);
           }
 
-          // If student has pending claims or unpaid tests, keep polling in background
-          if (data.has_pending || localStorage.getItem('admission_has_pending') === 'true' || !appState.isMedicalPaid || !appState.isVersityPaid) {
+          // ONLY poll if student has an active submitted claim awaiting admin approval
+          if (data.has_pending || localStorage.getItem('admission_has_pending') === 'true') {
             startPaymentStatusPolling();
           }
         }
@@ -1785,64 +1787,94 @@
       initApp();
     }
 
-    async function loadAllPlatformData() {
-      // 1. Fetch Medical tests first for immediate UI readiness
-      try {
-        const medRes = await fetch('/data/medical_100_tests.json');
-        appState.medicalTests = await medRes.json();
-        if (appState.currentStream === 'medical') {
-          populateTestDropdown();
-          loadCurrentSelectedTest();
-        }
-      } catch (err) {
-        console.warn("Medical tests load error:", err);
-      }
+    // Datasets tracking for lazy on-demand loading
+    const loadedDatasets = {
+      medical: false,
+      versity: false,
+      past_15years: false,
+      nocalc: false,
+      textbooks: false
+    };
 
-      // 2. Fetch remaining data progressively in background without blocking
-      fetch('/data/versity_100_tests.json')
-        .then(r => r.json())
-        .then(data => {
-          appState.versityTests = data;
+    async function loadStreamDataset(stream) {
+      if (stream === 'medical' && !loadedDatasets.medical) {
+        try {
+          const medRes = await fetch('/data/medical_100_tests.json');
+          appState.medicalTests = await medRes.json();
+          loadedDatasets.medical = true;
+          if (appState.currentStream === 'medical') {
+            populateTestDropdown();
+            loadCurrentSelectedTest();
+            if (typeof renderTestGridCards === 'function') renderTestGridCards();
+          }
+        } catch (err) {
+          console.warn("Medical tests load error:", err);
+        }
+      } else if (stream === 'versity' && !loadedDatasets.versity) {
+        try {
+          const varRes = await fetch('/data/versity_100_tests.json');
+          appState.versityTests = await varRes.json();
+          loadedDatasets.versity = true;
           if (appState.currentStream === 'versity') {
             populateTestDropdown();
             loadCurrentSelectedTest();
+            if (typeof renderTestGridCards === 'function') renderTestGridCards();
           }
-        })
-        .catch(e => console.warn("Varsity data error:", e));
-
-      fetch('/data/past_15years_tests.json')
-        .then(r => r.json())
-        .then(data => {
+        } catch (e) {
+          console.warn("Varsity data error:", e);
+        }
+      } else if (stream === 'past_15years' && !loadedDatasets.past_15years) {
+        try {
+          const pastRes = await fetch('/data/past_15years_tests.json');
+          const data = await pastRes.json();
           if (data && (data.medical || data.versity)) {
             appState.past15YearsData = data;
           } else if (Array.isArray(data)) {
             appState.past15YearsData = { medical: data, versity: [] };
           }
+          loadedDatasets.past_15years = true;
           populatePastYearSelect();
           if (appState.currentStream === 'past_15years') renderPastYearView();
-        })
-        .catch(e => console.warn("Past 15 years error:", e));
-
-      fetch('/data/nocalc_tricks_kb.json')
-        .then(r => r.json())
-        .then(data => {
-          appState.nocalcTricks = data;
+        } catch (e) {
+          console.warn("Past 15 years error:", e);
+        }
+      } else if (stream === 'nocalc' && !loadedDatasets.nocalc) {
+        try {
+          const res = await fetch('/data/nocalc_tricks_kb.json');
+          appState.nocalcTricks = await res.json();
+          loadedDatasets.nocalc = true;
           renderNocalcTricks();
-        })
-        .catch(e => console.warn("Tricks error:", e));
-
-      fetch('/data/medical_textbooks_kb.json')
-        .then(r => r.json())
-        .then(data => {
-          appState.textbookKb = data;
+        } catch (e) {
+          console.warn("Tricks error:", e);
+        }
+      } else if (stream === 'textbooks' && !loadedDatasets.textbooks) {
+        try {
+          const res = await fetch('/data/medical_textbooks_kb.json');
+          appState.textbookKb = await res.json();
+          loadedDatasets.textbooks = true;
           if (appState.currentStream === 'textbooks') renderKbFacts();
-        })
-        .catch(e => console.warn("Textbooks error:", e));
+        } catch (e) {
+          console.warn("Textbooks error:", e);
+        }
+      }
     }
 
-    // ============================================
-    // ADMISSION SESSION MANAGEMENT
-    // ============================================
+    async function loadAllPlatformData() {
+      // 1. Immediately load ONLY the active stream dataset
+      const activeStream = appState.currentStream || 'medical';
+      await loadStreamDataset(activeStream);
+
+      // 2. Schedule gentle sequential background prefetching after 3 seconds of idle time
+      setTimeout(() => {
+        const remainingStreams = ['medical', 'versity', 'past_15years', 'nocalc', 'textbooks'].filter(s => s !== activeStream);
+        let p = Promise.resolve();
+        remainingStreams.forEach(stream => {
+          p = p.then(() => new Promise(resolve => setTimeout(resolve, 1000)))
+               .then(() => loadStreamDataset(stream));
+        });
+      }, 3000);
+    }
+
     function changeAdmissionSession(newSession) {
       appState.selectedSession = newSession;
       localStorage.setItem('admission_selected_session', newSession);
@@ -1923,6 +1955,11 @@
 
     function switchStream(stream) {
       appState.currentStream = stream;
+
+      // Ensure this stream dataset is loaded on-demand
+      if (typeof loadStreamDataset === "function" && !loadedDatasets[stream]) {
+        loadStreamDataset(stream);
+      }
 
       // Update Nav Button Styles immediately
       syncNavButtons(stream);
