@@ -54,7 +54,7 @@ Vercel Settings-এ গিয়ে **Environment Variables** ট্যাবে �
 - **Key**: `DATABASE_URL`
 - **Value**: আপনার Neon PostgreSQL Connection String:
   ```text
-  postgresql://neondb_owner:npg_YIR9cGa5MqOP@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require
+  postgresql://neondb_owner:<YOUR_NEON_PASSWORD>@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require
   ```
 
 ### ধাপ ৩: Deploy

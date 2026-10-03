@@ -3,7 +3,7 @@ import psycopg2
 import psycopg2.extras
 import os
 
-NEON_URL = "postgresql://neondb_owner:npg_YIR9cGa5MqOP@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require"
+NEON_URL = os.environ.get("DATABASE_URL", "postgresql://neondb_owner:YOUR_PASSWORD@ep-spring-lake-b45687pc-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require")
 SQLITE_PATH = "/Users/karimsiam/.gemini/antigravity/scratch/medical-100-test-series/data/admission_ranking.db"
 
 print("Connecting to Neon PostgreSQL...")
