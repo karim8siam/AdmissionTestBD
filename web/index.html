@@ -3444,7 +3444,12 @@
       updateUnlockedBadges();
       populateTestDropdown();
 
-      // Render Scoreboard & Review Feed immediately
+      // Switch to Results view FIRST - Instant 0ms transition!
+      document.getElementById('exam-active-card').classList.add('hidden');
+      document.getElementById('exam-results-card').classList.remove('hidden');
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+
+      // Render Scoreboard header & stats immediately
       renderExamScoreboard({
         score,
         percentage,
@@ -3457,16 +3462,16 @@
         nextUnlocked
       });
 
-      // Switch to Results view
-      document.getElementById('exam-active-card').classList.add('hidden');
-      document.getElementById('exam-results-card').classList.remove('hidden');
-
-      window.scrollTo({ top: 120, behavior: 'smooth' });
-
       // Trigger Confetti Celebration on good score / unlock
       if (typeof confetti === 'function') {
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       }
+
+      // Defer heavy 100-question review cards and KaTeX rendering so UI responds instantly
+      setTimeout(() => {
+        renderReviewCards(current.questions);
+        renderSubjectAutopsyChart(current.questions);
+      }, 10);
 
       // Live ranking sync with Neon PostgreSQL database
       const mode = (appState.currentStream === 'medical') ? 'FullExam' : ((appState.currentStream === 'versity') ? 'GSTExam' : 'Past15Years');
@@ -3566,21 +3571,15 @@
         }
       }
 
-      // Render Review Cards
-      renderReviewCards(current.questions);
-
-      // Render Subject Chart
-      renderSubjectAutopsyChart(current.questions);
     }
 
     function renderReviewCards(questions) {
       const container = document.getElementById('results-review-feed');
       if (!container) return;
-      container.innerHTML = '';
 
       const optionLetters = ['ক', 'খ', 'গ', 'ঘ'];
 
-      questions.forEach((q, idx) => {
+      const cardsHtml = questions.map((q, idx) => {
         const studentAns = appState.userAnswers[idx];
         const correctIndex = (q.correct_index !== undefined) ? q.correct_index : 0;
         const opts = q.options ? q.options : [q.option_a, q.option_b, q.option_c, q.option_d];
@@ -3622,37 +3621,37 @@
           `;
         });
 
-        const card = document.createElement('div');
-        card.className = `bg-slate-900 border ${cardBorder} rounded-2xl p-4 sm:p-5 shadow space-y-3`;
-        card.innerHTML = `
-          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-white text-sm">প্রশ্ন ${idx + 1}</span>
-              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">${q.subject || ''}</span>
-              ${q.chapter ? `<span class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800/60 text-slate-400">${q.chapter}</span>` : ''}
+        return `
+          <div class="bg-slate-900 border ${cardBorder} rounded-2xl p-4 sm:p-5 shadow space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-white text-sm">প্রশ্ন ${idx + 1}</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">${q.subject || ''}</span>
+                ${q.chapter ? `<span class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800/60 text-slate-400">${q.chapter}</span>` : ''}
+              </div>
+              ${statusBadge}
             </div>
-            ${statusBadge}
-          </div>
 
-          <div class="text-sm sm:text-base font-semibold text-white leading-relaxed pt-1">
-            ${q.question_bn || ''}
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-            ${optionsHtml}
-          </div>
-
-          <div class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 bg-slate-950/50 rounded-xl p-3 space-y-1">
-            <div class="font-bold text-brand-400 flex items-center gap-1.5">
-              <span>📚 পাঠ্যবই নির্ভুল ব্যাখ্যা:</span>
+            <div class="text-sm sm:text-base font-semibold text-white leading-relaxed pt-1">
+              ${q.question_bn || ''}
             </div>
-            <p class="leading-relaxed text-slate-300 font-medium">${q.explanation || 'এনসিটিবি পাঠ্যবই অনুসারে সঠিক উত্তর ব্যাখ্যা প্রদান করা হলো।'}</p>
-            ${q.book_reference ? `<div class="text-[11px] text-slate-400 font-semibold pt-1">রেফারেন্স: ${q.book_reference}</div>` : ''}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              ${optionsHtml}
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 bg-slate-950/50 rounded-xl p-3 space-y-1">
+              <div class="font-bold text-brand-400 flex items-center gap-1.5">
+                <span>📚 পাঠ্যবই নির্ভুল ব্যাখ্যা:</span>
+              </div>
+              <p class="leading-relaxed text-slate-300 font-medium">${q.explanation || 'এনসিটিবি পাঠ্যবই অনুসারে সঠিক উত্তর ব্যাখ্যা প্রদান করা হলো।'}</p>
+              ${q.book_reference ? `<div class="text-[11px] text-slate-400 font-semibold pt-1">রেফারেন্স: ${q.book_reference}</div>` : ''}
+            </div>
           </div>
         `;
+      }).join('');
 
-        container.appendChild(card);
-      });
+      container.innerHTML = cardsHtml;
 
       if (window.renderMathInElement) {
         window.renderMathInElement(container, {
