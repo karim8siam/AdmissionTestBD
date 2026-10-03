@@ -1193,8 +1193,9 @@ class handler(http.server.BaseHTTPRequestHandler):
         submission_code = f"SUB-{uuid.uuid4().hex[:10].upper()}"
 
         import psycopg2.extras
-        conn = get_db_connection()
+        conn = None
         try:
+            conn = get_db_connection()
             c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
             c.execute("""
@@ -1247,7 +1248,11 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.send_json_response({"status": "error", "message": str(e)}, status=500)
             return
         finally:
-            conn.close()
+            if conn:
+                try:
+                    conn.close()
+                except Exception:
+                    pass
 
         result = {
             "status": "success",
