@@ -239,6 +239,7 @@
         <button id="nav-btn-nocalc" onclick="switchStream('nocalc')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>⚡</span>
           <span>ক্যালকুলেটরবিহীন স্পিড ট্রিকস</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-900/60 text-amber-300 font-bold">১১২টি হ্যাকস</span>
         </button>
 
 
@@ -822,14 +823,62 @@
     <!-- ============================================== -->
     <div id="view-nocalc" class="hidden space-y-6">
 
-      <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-lg flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-xl font-bold shrink-0">
-          ⚡
+      <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 rounded-2xl p-5 border border-amber-500/30 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              ⚡
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-lg sm:text-xl font-black text-white">স্পিড ক্যালকুলেশন ও নো-ক্যালকুলেটর হ্যাকস ইঞ্জিন</h2>
+                <span id="nocalc-total-badge" class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">১১২টি হ্যাকস</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">ঢাকা বিশ্ববিদ্যালয় 'ক' ইউনিট, মেডিকেল, গুচ্ছ ও কৃষি গুচ্ছে ক্যালকুলেটর ছাড়া ১৫ সেকেন্ডে নির্ভুল সমাধানের ১০০+ বৈজ্ঞানিক টেকনিক।</p>
+            </div>
+          </div>
         </div>
-        <div>
-          <h2 class="text-base sm:text-lg font-black text-white">ঢাকা বিশ্ববিদ্যালয় 'ক' ইউনিট ও গুচ্ছ স্পিড ম্যাথ ইঞ্জিন</h2>
-          <p class="text-xs text-slate-400">ক্যালকুলেটর ছাড়া ১৫ সেকেন্ডে বড় গুণ, লগারিদম, বর্গমূল ও পিএইচ নির্ণয়ের বৈজ্ঞানিক টেকনিক।</p>
+
+        <!-- Search & Filter Controls -->
+        <div class="mt-4 pt-4 border-t border-slate-800/80 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
+              🔍
+            </span>
+            <input 
+              id="nocalc-search-input" 
+              type="text" 
+              oninput="onNocalcSearchInput(this.value)"
+              placeholder="ট্রিক বা সূত্র খুঁজুন (যেমন: pH, বর্গমূল, লিমিট, রোধ, ইন্টিগ্রেশন, লেন্স)..." 
+              class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700/80 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition"
+            />
+          </div>
+
+          <!-- Category filter buttons -->
+          <div class="flex flex-wrap gap-1.5 shrink-0" id="nocalc-category-filters">
+            <button onclick="filterNocalcCategory('all')" data-cat="all" class="nocalc-cat-btn active px-3 py-1.5 rounded-xl text-xs font-bold transition bg-amber-600 text-white shadow">
+              সবগুলো (১১২)
+            </button>
+            <button onclick="filterNocalcCategory('math')" data-cat="math" class="nocalc-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+              উচ্চতর গণিত (৩২)
+            </button>
+            <button onclick="filterNocalcCategory('physics')" data-cat="physics" class="nocalc-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+              পদার্থবিজ্ঞান (২৮)
+            </button>
+            <button onclick="filterNocalcCategory('chemistry')" data-cat="chemistry" class="nocalc-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+              রসায়ন (২৭)
+            </button>
+            <button onclick="filterNocalcCategory('arithmetic')" data-cat="arithmetic" class="nocalc-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+              দ্রুত হিসাব (২৫)
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Result count & status -->
+      <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+        <span id="nocalc-results-count">প্রদর্শিত হচ্ছে ১১২টি ট্রিকস</span>
+        <span class="text-amber-400/80 text-[11px] font-medium hidden sm:inline">💡 তাৎক্ষণিক রিয়েলটাইম সার্চ ও ফিল্টারিং</span>
       </div>
 
       <div id="nocalc-tricks-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1196,12 +1245,20 @@
         }
       } else if (stream === 'nocalc' && !loadedDatasets.nocalc) {
         try {
-          const res = await fetch('/data/nocalc_tricks_kb.json');
+          let res = await fetch('/data/nocalc_tricks_kb.json');
+          if (!res.ok) res = await fetch('data/nocalc_tricks_kb.json');
           appState.nocalcTricks = await res.json();
           loadedDatasets.nocalc = true;
           renderNocalcTricks();
         } catch (e) {
-          console.warn("Tricks error:", e);
+          try {
+            const res2 = await fetch('data/nocalc_tricks_kb.json');
+            appState.nocalcTricks = await res2.json();
+            loadedDatasets.nocalc = true;
+            renderNocalcTricks();
+          } catch(e2) {
+            console.warn("Tricks error:", e, e2);
+          }
         }
       } else if (stream === 'textbooks' && !loadedDatasets.textbooks) {
         try {
@@ -1339,6 +1396,7 @@
         renderKbFacts();
       } else if (stream === 'nocalc') {
         document.getElementById('view-nocalc').classList.remove('hidden');
+        if (appState.nocalcTricks && appState.nocalcTricks.length > 0) renderNocalcTricks();
       } else if (stream === 'engineering') {
         document.getElementById('view-engineering').classList.remove('hidden');
         if (window.EngineeringPractice) EngineeringPractice.open();
@@ -3121,33 +3179,105 @@
     }
 
     // ============================================
-    // NO-CALCULATOR SPEED MATH TRICKS
+    // NO-CALCULATOR SPEED MATH TRICKS ENGINE (112 HACKS)
     // ============================================
+    let currentNocalcFilter = 'all';
+    let currentNocalcQuery = '';
+
+    function filterNocalcCategory(cat) {
+      currentNocalcFilter = cat;
+      document.querySelectorAll('.nocalc-cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = "nocalc-cat-btn active px-3 py-1.5 rounded-xl text-xs font-bold transition bg-amber-600 text-white shadow";
+        } else {
+          btn.className = "nocalc-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700";
+        }
+      });
+      renderNocalcTricks();
+    }
+
+    function onNocalcSearchInput(val) {
+      currentNocalcQuery = (val || '').trim().toLowerCase();
+      renderNocalcTricks();
+    }
+
     function renderNocalcTricks() {
       const container = document.getElementById('nocalc-tricks-grid');
       if (!container || !appState.nocalcTricks) return;
+
+      const allTricks = appState.nocalcTricks;
+      let filtered = allTricks;
+
+      if (currentNocalcFilter !== 'all') {
+        filtered = filtered.filter(t => t.category_en === currentNocalcFilter);
+      }
+
+      if (currentNocalcQuery) {
+        filtered = filtered.filter(t => {
+          const text = [
+            t.title,
+            t.title_bn,
+            t.technique,
+            t.rule_bn,
+            t.example,
+            t.exam_application,
+            t.category
+          ].filter(Boolean).join(' ').toLowerCase();
+          return text.includes(currentNocalcQuery);
+        });
+      }
+
+      const countEl = document.getElementById('nocalc-results-count');
+      if (countEl) {
+        countEl.textContent = `প্রদর্শিত হচ্ছে ${filtered.length}টি ট্রিকস (মোট ${allTricks.length}টির মধ্যে)`;
+      }
+
       container.innerHTML = '';
 
-      appState.nocalcTricks.forEach((trick, idx) => {
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-1 md:col-span-2 text-center py-12 bg-slate-900/60 rounded-2xl border border-slate-800 space-y-2">
+            <div class="text-3xl">🔍</div>
+            <p class="text-slate-300 text-sm font-semibold">কোনো ট্রিকস খুঁজে পাওয়া যায়নি</p>
+            <p class="text-slate-500 text-xs">ভিন্ন কিওয়ার্ড দিয়ে সার্চ করুন অথবা ক্যাটাগরি ফিল্টার রিসেট করুন।</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((trick, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow space-y-3";
+        card.className = "bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 shadow space-y-3 transition duration-150 flex flex-col justify-between";
         card.innerHTML = `
-          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
-            <span class="px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 font-bold">
-              ট্রিক #${idx + 1}
-            </span>
-            <span class="text-slate-400 font-semibold">${trick.category || 'ঢাবি ক ইউনিট'}</span>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800/80 pb-2.5">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 font-bold">
+                হ্যাক #${trick.id || (idx + 1)}
+              </span>
+              <span class="text-slate-400 text-[11px] font-semibold px-2 py-0.5 bg-slate-800/80 rounded-md">
+                ${trick.category || 'ক্যালকুলেটর হ্যাক'}
+              </span>
+            </div>
+
+            <h3 class="text-sm sm:text-base font-bold text-white leading-snug">
+              ${trick.title_bn || trick.title || ''}
+            </h3>
+
+            <div class="text-xs sm:text-sm text-slate-200 bg-slate-950 p-3.5 rounded-xl border border-slate-800/80 leading-relaxed font-mono whitespace-pre-line">
+              ${trick.technique || trick.rule_bn || trick.description || ''}
+            </div>
+
+            ${trick.example ? `
+              <div class="text-xs text-emerald-300 font-medium bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/40 whitespace-pre-line leading-relaxed">
+                <strong class="text-white">উদাহরণ:</strong> ${trick.example}
+              </div>
+            ` : ''}
           </div>
 
-          <h3 class="text-sm sm:text-base font-bold text-white">${trick.title_bn || ''}</h3>
-
-          <div class="text-xs sm:text-sm text-slate-300 bg-slate-950 p-3.5 rounded-xl border border-slate-800 font-mono leading-relaxed">
-            ${trick.technique || trick.description || ''}
-          </div>
-
-          ${trick.example ? `
-            <div class="text-xs text-emerald-300 font-medium bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
-              <strong class="text-white">উদাহরণ:</strong> ${trick.example}
+          ${trick.exam_application ? `
+            <div class="mt-2 text-[11px] text-cyan-300/90 bg-cyan-950/20 px-3 py-2 rounded-xl border border-cyan-900/40 flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold shrink-0">🎯 প্রয়োগ:</span>
+              <span>${trick.exam_application}</span>
             </div>
           ` : ''}
         `;
