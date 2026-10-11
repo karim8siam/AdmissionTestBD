@@ -8,7 +8,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js for AI Exam Analytics -->
@@ -152,7 +152,7 @@
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-md">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-14 sm:h-16 gap-2">
-        
+
         <!-- Logo & Branding -->
         <div class="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onclick="switchStream('medical')">
           <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-base sm:text-xl shadow-lg glow-brand shrink-0">
@@ -205,7 +205,7 @@
           <span>মেডিকেল ১০০ মডেল টেস্ট</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-950/80 text-brand-200">লাইভ</span>
         </button>
-        
+
         <button id="nav-btn-versity" onclick="switchStream('versity')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>🏛️</span>
           <span>ভার্সিটি ও গুচ্ছ বিজ্ঞান ১০০ টেস্ট</span>
@@ -294,7 +294,7 @@
 
       <!-- Test Navigation / Selection Bar -->
       <div class="bg-slate-900/90 rounded-2xl p-3.5 sm:p-5 border border-slate-800 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
-        
+
         <!-- Left: Test Selector & Lock Summary -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-500 flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
@@ -323,11 +323,8 @@
             <span>১০০ টেস্টের গ্রিড তালিকা</span>
           </button>
 
-          <!-- bKash Premium Unlock Button -->
-          <button id="btn-open-paywall" onclick="openBkashPaywallModal(appState.currentStream)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-bold text-xs shadow-lg shadow-pink-500/25 flex items-center gap-1.5 transition">
-            <span>👑 প্রিমিয়াম আনলক</span>
-            <span class="bg-black/30 px-1.5 py-0.5 rounded text-[10px]">৳৪৯৯</span>
-          </button>
+
+
         </div>
 
       </div>
@@ -505,7 +502,7 @@
 
         <!-- Top Score & Unlock Congratulation Banner -->
         <div id="results-banner-card" class="bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 rounded-3xl p-6 sm:p-8 border border-emerald-800/80 shadow-2xl relative overflow-hidden">
-          
+
           <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
             <div class="space-y-2 text-center md:text-left">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-bold">
@@ -527,7 +524,7 @@
 
           <!-- Dual Real-time Ranking Grid: Session Ranking + All-Time Ranking -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-slate-800 relative z-10">
-            
+
             <!-- Session Ranking Card -->
             <div class="bg-slate-950/80 rounded-2xl p-4 border border-brand-500/40 flex items-center justify-between gap-4">
               <div class="flex items-center gap-3">
@@ -610,17 +607,8 @@
             </button>
           </div>
 
-          <!-- Test 5 Completion Teaser Card (Invites to unlock 95 tests for 499 BDT) -->
-          <div id="results-paywall-teaser" class="hidden mt-6 p-6 rounded-3xl bg-gradient-to-br from-pink-950/80 via-slate-900 to-purple-950/80 border-2 border-pink-500/60 text-center relative overflow-hidden shadow-2xl">
-            <div class="text-4xl mb-2">🎉</div>
-            <h3 class="text-lg sm:text-xl font-black text-white">অভিনন্দন! আপনি সফলভাবে ফ্রি ৫টি মডেল টেস্ট সম্পন্ন করেছেন</h3>
-            <p class="text-xs sm:text-sm text-pink-200 mt-2 max-w-xl mx-auto leading-relaxed">
-              পরবর্তী ৯৫টি এক্সক্লুসিভ মডেল টেস্ট (টেস্ট ৬ থেকে ১০০), লাইভ জাতীয় মেধা তালিকায় স্থায়ী অবস্থান এবং সম্পূর্ণ পাঠ্যবই ব্যাখ্যা পেতে মাত্র ৳৪৯৯ দিয়ে প্রিমিয়াম ব্যাচ আনলক করুন।
-            </p>
-            <button onclick="openBkashPaywallModal(appState.currentStream, 6)" class="mt-4 px-8 py-3 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-400 hover:to-rose-500 text-white font-black shadow-xl shadow-pink-500/40 text-xs sm:text-sm transition transform hover:scale-105 active:scale-95 inline-flex items-center gap-2">
-              <span>📱 bKash দিয়ে বাকি ৯৫টি টেস্ট আনলক করুন (৳৪৯৯)</span>
-            </button>
-          </div>
+
+
 
         </div>
 
@@ -690,7 +678,7 @@
     <!-- VIEW 2: PAST 15 YEARS TESTS (2010 - 2025) -->
     <!-- ============================================== -->
     <div id="view-past-15years" class="hidden space-y-6">
-      
+
       <!-- Past 15 Years Header -->
       <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
@@ -742,7 +730,7 @@
             <span>👁️</span>
             <span id="past-show-answer-text">উত্তরপত্র দেখুন (Show Answers)</span>
           </button>
-          
+
           <button onclick="startPastYearExam()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg transition flex items-center gap-1.5">
             <span>⏱️</span>
             <span>টাইমড পরীক্ষা শুরু করো</span>
@@ -761,7 +749,7 @@
     <!-- VIEW 3: TEXTBOOK KNOWLEDGE BASE (2,000 Facts) -->
     <!-- ============================================== -->
     <div id="view-textbooks-kb" class="hidden space-y-6">
-      
+
       <!-- Textbook KB Header & Search Bar -->
       <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-lg space-y-4">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -826,7 +814,7 @@
     <!-- VIEW 4: NO-CALCULATOR SPEED TRICKS -->
     <!-- ============================================== -->
     <div id="view-nocalc" class="hidden space-y-6">
-      
+
       <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-lg flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-xl font-bold shrink-0">
           ⚡
@@ -847,7 +835,7 @@
     <!-- VIEW 5: ENGINEERING STREAM (Placed at sequence end) -->
     <!-- ============================================== -->
     <div id="view-engineering" class="hidden space-y-6">
-      
+
       <div class="bg-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-800 text-center space-y-4 max-w-2xl mx-auto shadow-2xl">
         <div class="w-16 h-16 rounded-2xl bg-slate-800 text-slate-400 border border-slate-700 flex items-center justify-center text-3xl font-black mx-auto">
           📐
@@ -897,13 +885,7 @@
         </a>
       </div>
 
-      <!-- Discrete Admin Entry -->
-      <div>
-        <button onclick="openAdminModal()" class="text-[11px] text-slate-400 hover:text-brand-400 transition flex items-center gap-1 bg-slate-900/60 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-800 min-h-[36px]">
-          <span>🔐</span>
-          <span>অ্যাডমিন প্যানেল</span>
-        </button>
-      </div>
+
     </div>
   </footer>
 
@@ -913,7 +895,7 @@
   <div id="grid-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="toggleTestGridModal()"></div>
     <div class="relative z-10 bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden">
-      
+
       <div class="p-3.5 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2">
         <div>
           <h3 id="grid-modal-title" class="text-sm sm:text-lg font-bold text-white flex items-center gap-2">
@@ -934,7 +916,7 @@
         <div class="flex items-center gap-2.5 sm:gap-3">
           <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> আনলকড</span>
           <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span> 🔒 লকড</span>
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> 👑 প্রিমিয়াম</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> ধারাবাহিক লক</span>
         </div>
         <button onclick="toggleTestGridModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 text-white font-semibold min-h-[36px]">বন্ধ করুন</button>
       </div>
@@ -943,196 +925,9 @@
   </div>
 
   <!-- ============================================== -->
-  <!-- PREMIUM BKASH PAYWALL & ENROLLMENT MODAL (MOBILE OPTIMIZED) -->
+
   <!-- ============================================== -->
-  <div id="bkash-paywall-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-2.5 sm:p-4 transition-all duration-200">
-    <div class="fixed inset-0" onclick="closeBkashPaywallModal()"></div>
-    <div id="bkash-paywall-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-pink-500/40 rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-pink-950/60 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-3 sm:space-y-4">
-      
-      <!-- Ambient Background Accents -->
-      <div class="absolute -top-20 -right-20 w-44 h-44 bg-pink-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-20 -left-20 w-44 h-44 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- Header with bKash Badge -->
-      <div class="flex items-start justify-between gap-2 sm:gap-3">
-        <div class="flex items-center gap-2.5 sm:gap-3">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-inner">
-            📱
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5 sm:gap-2">
-              <h3 class="text-base sm:text-xl font-black text-white">প্রিমিয়াম মডেল টেস্ট আনলক</h3>
-              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-pink-600 text-white shadow-sm">bKash</span>
-            </div>
-            <p class="text-[11px] sm:text-xs text-slate-300 font-medium">প্রথম ৫টি টেস্ট ফ্রি! বাকি ৯৫টি টেস্টের জন্য ফি পরিশোধ করুন</p>
-          </div>
-        </div>
-        <button onclick="closeBkashPaywallModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition shrink-0">✕</button>
-      </div>
-
-      <!-- Package Selector (3-col mobile friendly) -->
-      <div class="space-y-1.5">
-        <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider">প্যাকেজ নির্বাচন করুন:</div>
-        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-          <!-- Medical Pack -->
-          <div id="pkg-opt-medical" onclick="selectBkashPackage('medical')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition flex flex-col justify-between ring-1 ring-pink-500">
-            <div class="text-[11px] sm:text-xs font-bold text-pink-300">🩺 মেডিকেল</div>
-            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৪৯৯</div>
-            <div id="pkg-status-medical" class="text-[9px] sm:text-[10px] text-pink-200">৯৫ টেস্ট</div>
-          </div>
-          <!-- Versity Pack -->
-          <div id="pkg-opt-versity" onclick="selectBkashPackage('versity')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80 flex flex-col justify-between">
-            <div class="text-[11px] sm:text-xs font-bold text-slate-300">🏛️ ভার্সিটি</div>
-            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৪৯৯</div>
-            <div id="pkg-status-versity" class="text-[9px] sm:text-[10px] text-slate-400">৯৫ টেস্ট</div>
-          </div>
-          <!-- Combo Pack -->
-          <div id="pkg-opt-combo" onclick="selectBkashPackage('combo')" class="cursor-pointer p-2 sm:p-3 rounded-xl border border-purple-500/40 bg-purple-950/30 text-center hover:border-purple-400 transition opacity-80 relative overflow-hidden flex flex-col justify-between">
-            <span class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-pink-500 text-slate-950 text-[8px] sm:text-[9px] font-black px-1 sm:px-1.5 py-0.2 rounded-bl">মেগা ছাড়</span>
-            <div class="text-[11px] sm:text-xs font-bold text-purple-300">⚡ কম্বো</div>
-            <div class="text-sm sm:text-base font-black text-white my-0.5">৳৭৯৯</div>
-            <div id="pkg-status-combo" class="text-[9px] sm:text-[10px] text-purple-200">২০০ টেস্ট</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 1. Confirmed / Approved Subscription State -->
-      <div id="paywall-confirmed-section" class="hidden p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-emerald-950/80 via-slate-900 to-slate-950 border border-emerald-500/50 space-y-3 sm:space-y-4 text-center">
-        <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-center text-2xl sm:text-3xl shadow-lg shadow-emerald-950/50">
-          👑
-        </div>
-        <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-700 text-xs font-bold shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>পেমেন্ট নিশ্চিত ও সাবস্ক্রিপশন সক্রিয়</span>
-          </div>
-          <h4 id="paywall-confirmed-title" class="text-base sm:text-lg font-black text-white pt-1">মেডিকেল ১০০ মডেল টেস্ট</h4>
-          <p id="paywall-confirmed-desc" class="text-xs text-slate-300 leading-relaxed max-w-sm mx-auto">
-            আপনার বিকাশ পেমেন্ট সফলভাবে অনুমোদিত হয়েছে! আপনি এখন এই স্ট্রিমের সকল (১ থেকে ১০০) মডেল টেস্টে অংশ নিতে পারবেন।
-          </p>
-        </div>
-
-        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs flex items-center justify-around font-mono">
-          <div>
-            <div class="text-[10px] text-slate-400 font-sans">স্ট্যাটাস:</div>
-            <div class="font-bold text-emerald-400">✓ অনুমোদিত (Verified)</div>
-          </div>
-          <div class="h-6 w-px bg-slate-800"></div>
-          <div>
-            <div class="text-[10px] text-slate-400 font-sans">উন্মুক্ত টেস্ট:</div>
-            <div id="paywall-confirmed-count" class="font-bold text-white">৯৫টি প্রিমিয়াম (মোট ১০০)</div>
-          </div>
-        </div>
-
-        <!-- Primary Action: Start Exam Now -->
-        <button id="btn-start-confirmed-test" onclick="startConfirmedTest()" class="w-full py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-950/60 transition flex items-center justify-center gap-2 min-h-[46px]">
-          <span>🚀 সরাসরি মডেল টেস্ট শুরু করুন</span>
-        </button>
-
-        <!-- Cross-sell / Other Package Notice (e.g. if student bought Medical, show that Versity is locked) -->
-        <div id="paywall-cross-package-notice" class="pt-2 border-t border-slate-800/80 text-left">
-          <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-2">
-            <div class="text-[11px] text-slate-300">
-              <span class="font-bold text-amber-300">💡 অন্য স্ট্রিম:</span>
-              <span id="paywall-cross-package-text">ভার্সিটি ও সমন্বিত গুচ্ছ টেস্টগুলো এখনো লক করা আছে।</span>
-            </div>
-            <button id="btn-switch-cross-pack" onclick="switchModalToOtherPackage()" class="shrink-0 px-3 py-1.5 rounded-lg bg-pink-600 hover:bg-pink-500 text-white text-[11px] font-bold transition">
-              আনলক করুন
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Pending Verification State -->
-      <div id="paywall-pending-section" class="hidden p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-amber-950/80 via-slate-900 to-slate-950 border border-amber-500/50 space-y-3 sm:space-y-4 text-center">
-        <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-2xl sm:text-3xl shadow-lg shadow-amber-950/50 animate-pulse">
-          ⏳
-        </div>
-        <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-700 text-xs font-bold shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>পেমেন্ট অনুরোধ যাচাইাধীন (Pending)</span>
-          </div>
-          <h4 class="text-base sm:text-lg font-black text-white pt-1">অ্যাডমিন অনুমোদনের অপেক্ষা চলছে</h4>
-          <p class="text-xs text-slate-300 leading-relaxed max-w-sm mx-auto">
-            আপনার বিকাশ ট্রানজেকশন তথ্য ইতিমধ্যে জমা নেওয়া হয়েছে। অ্যাডমিন প্যানেল থেকে যাচাই সম্পন্ন হওয়ামাত্রই টেস্ট স্বয়ংক্রিয়ভাবে আনলক হয়ে যাবে। আপনাকে পুনরায় টাকা পাঠাতে হবে না।
-          </p>
-        </div>
-
-        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs space-y-1.5 font-mono text-left">
-          <div class="flex justify-between items-center">
-            <span class="text-slate-400 font-sans">অনুরোধকৃত প্যাকেজ:</span>
-            <span id="paywall-pending-pkg-name" class="font-bold text-white uppercase font-sans">মেডিকেল (৯৫ টেস্ট)</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-slate-400 font-sans">যাচাই স্ট্যাটাস:</span>
-            <span class="font-bold text-amber-300 font-sans flex items-center gap-1">
-              <span class="inline-block animate-spin text-[10px]">↻</span> অপেক্ষা করা হচ্ছে...
-            </span>
-          </div>
-        </div>
-
-        <button onclick="closeBkashPaywallModal()" class="w-full py-2.5 sm:py-3 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 font-bold text-xs transition min-h-[44px]">
-          ঠিক আছে, অপেক্ষা করছি
-        </button>
-      </div>
-
-      <!-- 3. Unpaid Send Money Form Section -->
-      <div id="paywall-unpaid-section" class="space-y-3 sm:space-y-3.5">
-        <!-- Personal bKash Account Display & Copy Card -->
-        <div class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-pink-950/60 via-slate-900 to-pink-950/60 border border-pink-500/40 flex items-center justify-between gap-2 sm:gap-3">
-          <div class="min-w-0">
-            <div class="text-[10px] sm:text-[11px] font-semibold text-pink-300 flex items-center gap-1.5 truncate">
-              <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse shrink-0"></span>
-              <span class="truncate">পার্সোনাল বিকাশ (Send Money):</span>
-            </div>
-            <div id="bkash-number-text" class="text-xl sm:text-2xl font-black text-white tracking-wider sm:tracking-widest mt-0.5 font-mono select-all">01644265766</div>
-          </div>
-          <button id="btn-copy-bkash" onclick="copyBkashNumber()" class="px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-pink-600 hover:bg-pink-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-pink-600/30 transition flex items-center gap-1.5 shrink-0 min-h-[44px]">
-            <span>📋</span>
-            <span id="btn-copy-bkash-text">কপি</span>
-          </button>
-        </div>
-
-        <!-- Send Money Instructions -->
-        <div class="p-2.5 sm:p-3 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-1 sm:space-y-1.5 text-xs text-slate-300 leading-relaxed">
-          <div class="font-bold text-slate-200 flex items-center gap-1.5 text-[11px]">
-            <span>💡</span> <span>ফি পরিশোধের নিয়মাবলি:</span>
-          </div>
-          <ol class="list-decimal list-inside space-y-1 text-slate-400 pl-1 text-[11px]">
-            <li>আপনার bKash অ্যাপে <strong class="text-pink-300">Send Money</strong> সিলেক্ট করুন।</li>
-            <li>প্রাপক নাম্বারে <strong class="text-white font-mono select-all">01644265766</strong> দিন এবং নির্বাচিত ফি (<span id="instruction-fee-text" class="text-white font-bold">৳৪৯৯</span>) পাঠান।</li>
-            <li>টাকা পাঠানোর পর প্রাপ্ত <strong class="text-amber-300 font-mono">TrxID</strong> এবং আপনার বিকাশ নাম্বার নিচে দিন। অ্যাডমিন যাচাই করলেই টেস্টগুলো আনলক হয়ে যাবে।</li>
-          </ol>
-        </div>
-
-        <!-- Verification Input Form -->
-        <div class="space-y-2 sm:space-y-2.5">
-          <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">আপনার বিকাশ মোবাইল নাম্বার:</label>
-            <input id="pay-sender-number" type="tel" placeholder="01XXXXXXXXX (যে নাম্বার থেকে পাঠিয়েছেন)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500 min-h-[44px]">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">bKash Transaction ID (TrxID):</label>
-            <input id="pay-trx-id" type="text" placeholder="যেমন: 9K27XZ89 (TrxID)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-pink-500 uppercase font-mono min-h-[44px]">
-          </div>
-          <div id="paywall-feedback-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 pt-1">
-          <button onclick="closeBkashPaywallModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 font-bold transition text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
-            পরে করব
-          </button>
-          <button id="btn-submit-payment" onclick="submitBkashPayment()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-extrabold shadow-lg shadow-pink-600/30 transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[46px]">
-            <span>🚀 ভেরিফাই ও আনলক করো</span>
-          </button>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
 
   <!-- ============================================== -->
   <!-- USER AUTH MODAL (MOBILE FRIENDLY) -->
@@ -1140,7 +935,7 @@
   <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeAuthModal()"></div>
     <div id="auth-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-black/90 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-3 sm:space-y-4">
-      
+
       <!-- Top glow -->
       <div class="absolute -top-16 -right-16 w-36 h-36 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -1152,7 +947,7 @@
           </div>
           <div>
             <h3 id="auth-modal-title" class="text-base sm:text-xl font-black text-white">শিক্ষার্থী একাউন্ট</h3>
-            <p class="text-xs text-slate-400">ভিন্ন ডিভাইসে আপনার প্রিমিয়াম সাবস্ক্রিপশন সিঙ্ক করুন</p>
+            <p class="text-xs text-slate-400">আপনার শিক্ষার্থী প্রোফাইলে লগইন করুন</p>
           </div>
         </div>
         <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition shrink-0">✕</button>
@@ -1200,253 +995,17 @@
   </div>
 
   <!-- ============================================== -->
-  <!-- ADMIN PANEL & PAYMENT APPROVAL MODAL (RESPONSIVE) -->
-  <!-- ============================================== -->
-  <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-2.5 sm:p-6 transition-all duration-200">
-    <div class="fixed inset-0" onclick="closeAdminModal()"></div>
-    <div id="admin-modal-card" class="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-5xl w-full max-h-[92dvh] flex flex-col shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
-      
-      <!-- Admin Login State (4-Step Security Gate) -->
-      <div id="admin-login-view" class="p-4 sm:p-8 max-w-lg mx-auto w-full my-auto space-y-3 sm:space-y-4 overflow-y-auto custom-scrollbar">
-        <div class="text-center space-y-1.5">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-2xl sm:text-3xl mx-auto shadow-inner">
-            🛡️
-          </div>
-          <div>
-            <h3 class="text-base sm:text-xl font-black text-white">অ্যাডমিন ৪-ধাপ নিরাপত্তা যাচাই</h3>
-            <p class="text-xs text-slate-400">অনুমোদিত অ্যাডমিন এক্সেসের জন্য ৪টি সিকিউরিটি লেয়ার পূরণ করুন</p>
-          </div>
-        </div>
-
-        <!-- 4 Step Mini Cards (2x2 on mobile, 4-col on desktop) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[10px] font-bold">
-          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-brand-500/40 text-brand-400">
-            <span class="block text-xs">🔑</span>ধাপ ১: Master
-          </div>
-          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-teal-500/40 text-teal-400">
-            <span class="block text-xs">🛡️</span>ধাপ ২: Secondary
-          </div>
-          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-purple-500/40 text-purple-400">
-            <span class="block text-xs">🔢</span>ধাপ ৩: PIN
-          </div>
-          <div class="p-2 sm:p-1.5 rounded-xl bg-slate-950 border border-amber-500/40 text-amber-400">
-            <span class="block text-xs">🤐</span>ধাপ ৪: Secret
-          </div>
-        </div>
-
-        <form onsubmit="event.preventDefault(); handleAdminLoginSubmit();" class="space-y-3 pt-1">
-          <!-- Step 1: Master Password 1 -->
-          <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">
-              🔑 ধাপ ১: Master Password 1
-            </label>
-            <input id="admin-input-master" type="password" required placeholder="Master Password 1 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[44px]">
-          </div>
-
-          <!-- Step 2: Secondary Password 2 -->
-          <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">
-              🛡️ ধাপ ২: Secondary Password 2
-            </label>
-            <input id="admin-input-secondary" type="password" required placeholder="Secondary Password 2 লিখুন..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[44px]">
-          </div>
-
-          <!-- Step 3 & 4 in 2 columns -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            <div>
-              <label class="block text-[11px] font-bold text-slate-300 mb-1">
-                🔢 ধাপ ৩: Security PIN
-              </label>
-              <input id="admin-input-pin" type="password" inputmode="numeric" required placeholder="Security PIN" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono text-center min-h-[44px]">
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-bold text-slate-300 mb-1">
-                🤐 ধাপ ৪: Secret Word
-              </label>
-              <input id="admin-input-word" type="text" required placeholder="Secret Word" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-center font-mono min-h-[44px]">
-            </div>
-          </div>
-
-          <div id="admin-login-feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
-
-          <button id="btn-admin-login-submit" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg glow-brand transition flex items-center justify-center gap-2 min-h-[46px]">
-            <span>🛡️ ৪-ধাপ নিরাপত্তা যাচাই ও প্রবেশ</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- Admin Dashboard State -->
-      <div id="admin-dashboard-view" class="hidden flex flex-col flex-1 overflow-hidden">
-        
-        <!-- Header -->
-        <div class="p-3 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-2 sm:gap-3 bg-slate-950/60">
-          <div class="flex items-center gap-2 sm:gap-3">
-            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-lg sm:text-xl shrink-0">
-              📊
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5 sm:gap-2">
-                <h3 class="text-sm sm:text-lg font-black text-white">অ্যাডমিন ড্যাশবোর্ড</h3>
-                <span class="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold">লাইভ</span>
-              </div>
-              <p class="text-[10px] sm:text-xs text-slate-400">পেমেন্ট রিকোয়েস্ট ও SMS ম্যানেজমেন্ট</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 sm:gap-2">
-            <button onclick="refreshAdminData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition min-h-[36px]">
-              <span>↻</span> <span class="hidden sm:inline">রিফ্রেশ</span>
-            </button>
-            <button onclick="handleAdminLogout()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-800 text-rose-300 text-xs font-bold transition min-h-[36px]">
-              লগআউট
-            </button>
-            <button onclick="closeAdminModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold ml-1">✕</button>
-          </div>
-        </div>
-
-        <!-- Metrics Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 p-3 sm:p-5 bg-slate-950/30 border-b border-slate-800">
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
-            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">মোট সংগৃহীত ফি</p>
-            <p id="adm-metric-revenue" class="text-base sm:text-2xl font-black text-emerald-400 font-mono mt-0.5">৳০</p>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
-            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">অনুমোদিত শিক্ষার্থী</p>
-            <p id="adm-metric-verified" class="text-base sm:text-2xl font-black text-white font-mono mt-0.5">০ জন</p>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
-            <p class="text-[10px] sm:text-[11px] text-amber-400 font-semibold">পেন্ডিং রিকোয়েস্ট</p>
-            <p id="adm-metric-pending" class="text-base sm:text-2xl font-black text-amber-400 font-mono mt-0.5">০ টি</p>
-          </div>
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-4 shadow-inner">
-            <p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold">মোট পরীক্ষা সাবমিট</p>
-            <p id="adm-metric-exams" class="text-base sm:text-2xl font-black text-teal-400 font-mono mt-0.5">০ টি</p>
-          </div>
-        </div>
-
-        <!-- Sub Tabs (Claims vs SMS Logs) -->
-        <div class="flex items-center px-3 sm:px-5 pt-2 sm:pt-3 border-b border-slate-800 gap-2 bg-slate-900/50">
-          <button id="adm-tab-claims" onclick="switchAdminTab('claims')" class="px-3 sm:px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-            <span>📋</span> পেমেন্ট রিকোয়েস্ট (<span id="adm-claims-count">0</span>)
-          </button>
-          <button id="adm-tab-sms" onclick="switchAdminTab('sms')" class="px-3 sm:px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-            <span>📱</span> বিকাশ SMS লগ (<span id="adm-sms-count">0</span>)
-          </button>
-        </div>
-
-        <!-- Table Container -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-3 sm:p-5">
-          <!-- Claims Table -->
-          <div id="adm-claims-container" class="space-y-3">
-            <!-- Search Bar & Direct Unlock Button -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-950/80 p-2.5 sm:p-3 rounded-2xl border border-slate-800">
-              <div class="relative flex-1">
-                <input id="adm-claims-search" oninput="filterAdminClaims(this.value)" type="text" placeholder="🔍 TrxID, বিকাশ নাম্বার বা ইমেইল খুঁজুন..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono min-h-[40px]">
-              </div>
-              <button onclick="toggleManualEnrollForm()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold text-xs border border-brand-500/40 flex items-center justify-center gap-1.5 transition shrink-0 min-h-[40px]">
-                <span>➕</span> <span>সরাসরি শিক্ষার্থী আনলক</span>
-              </button>
-            </div>
-
-            <!-- Manual Direct Enroll Card (Collapsible) -->
-            <div id="adm-manual-enroll-card" class="hidden p-3.5 sm:p-4 bg-slate-950 border border-brand-500/40 rounded-2xl space-y-3 shadow-xl">
-              <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
-                  <span class="text-brand-400">⚡</span> <span>সরাসরি শিক্ষার্থীকে সাবস্ক্রিপশন প্রদান (যোগাযোগকারী শিক্ষার্থীদের জন্য)</span>
-                </h4>
-                <button onclick="toggleManualEnrollForm()" class="text-slate-400 hover:text-white text-xs">✕</button>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
-                <div class="sm:col-span-2">
-                  <label class="block text-[10px] text-slate-400 mb-1">শিক্ষার্থীর ইমেইল / বিকাশ নাম্বার / আইডি:</label>
-                  <input id="manual-student-identifier" type="text" placeholder="student@gmail.com বা 017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
-                </div>
-                <div>
-                  <label class="block text-[10px] text-slate-400 mb-1">প্যাকেজ নির্বাচন করুন:</label>
-                  <select id="manual-student-package" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
-                    <option value="combo" selected>🌟 উভয় / কম্বো (সব টেস্ট)</option>
-                    <option value="medical">🩺 মেডিকেল (৯৫ টেস্ট)</option>
-                    <option value="versity">🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
-                  </select>
-                </div>
-                <div class="flex items-end">
-                  <button onclick="submitManualEnrollment()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-500 hover:to-teal-500 text-slate-950 font-black text-xs shadow-lg transition min-h-[44px] flex items-center justify-center">
-                    ✓ সরাসরি আনলক করুন
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Desktop Table View -->
-            <div class="hidden sm:block overflow-x-auto">
-              <table class="w-full text-left text-xs">
-                <thead>
-                  <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
-                    <th class="pb-3 pr-2">তারিখ ও সময়</th>
-                    <th class="pb-3 px-2">শিক্ষার্থী / ইমেইল</th>
-                    <th class="pb-3 px-2">বিকাশ নাম্বার</th>
-                    <th class="pb-3 px-2">প্যাকেজ ও ফি</th>
-                    <th class="pb-3 px-2">TrxID</th>
-                    <th class="pb-3 px-2">স্ট্যাটাস</th>
-                    <th class="pb-3 pl-2 text-right">পদক্ষেপ (Action)</th>
-                  </tr>
-                </thead>
-                <tbody id="adm-claims-tbody" class="divide-y divide-slate-800/60 font-medium">
-                  <!-- Populated dynamically -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Mobile Touch-Optimized Cards View -->
-            <div id="adm-claims-cards-mobile" class="sm:hidden space-y-3">
-              <!-- Populated dynamically on mobile -->
-            </div>
-
-            <div id="adm-claims-empty" class="hidden text-center py-10 text-slate-500 text-xs">
-              কোনো পেমেন্ট রিকোয়েস্ট পাওয়া যায়নি।
-            </div>
-          </div>
-
-          <!-- SMS Logs Table -->
-          <div id="adm-sms-container" class="hidden space-y-3">
-            <!-- Desktop SMS Table View -->
-            <div class="hidden sm:block overflow-x-auto">
-              <table class="w-full text-left text-xs">
-                <thead>
-                  <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
-                    <th class="pb-3 pr-2">সময়</th>
-                    <th class="pb-3 px-2">প্রেরক নাম্বার</th>
-                    <th class="pb-3 px-2">পরিমাণ</th>
-                    <th class="pb-3 px-2">TrxID</th>
-                    <th class="pb-3 px-2">ম্যাচিং স্ট্যাটাস</th>
-                    <th class="pb-3 pl-2">মূল SMS বার্তা</th>
-                  </tr>
-                </thead>
-                <tbody id="adm-sms-tbody" class="divide-y divide-slate-800/60 font-mono text-[11px]">
-                  <!-- Populated dynamically -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Mobile SMS Cards View -->
-            <div id="adm-sms-cards-mobile" class="sm:hidden space-y-3">
-              <!-- Populated dynamically on mobile -->
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
 
   <!-- ============================================== -->
-  <!-- PREMIUM CUSTOM ACTION & CONFIRMATION MODAL -->
+
+
+  <!-- ============================================== -->
+
   <!-- ============================================== -->
   <div id="app-action-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-all duration-200">
     <div class="fixed inset-0" onclick="closeCustomModal(false)"></div>
     <div id="app-action-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-black/90 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-4">
-      
+
       <!-- Ambient Glow Behind Icon -->
       <div id="app-action-modal-glow" class="absolute -top-16 -left-16 w-36 h-36 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -1503,7 +1062,7 @@
       unlockedMed: 1,
       unlockedVar: 1,
       studentId: localStorage.getItem('admission_student_id') || ('stu_' + Math.random().toString(36).substring(2, 10)),
-      
+
       // Loaded data stores
       medicalTests: [DEFAULT_MED_TEST_1],
       versityTests: [DEFAULT_VAR_TEST_1],
@@ -1531,12 +1090,6 @@
       kbPageSize: 24,
 
       chartInstance: null,
-
-      // Payment & Enrollment State (Personal bKash Automation)
-      isMedicalPaid: localStorage.getItem('admission_paid_med') === 'true',
-      isVersityPaid: localStorage.getItem('admission_paid_var') === 'true',
-      pendingPackages: JSON.parse(localStorage.getItem('admission_pending_pkgs') || '[]'),
-      pendingUnlockTestId: null,
 
       // User Authentication State
       userToken: localStorage.getItem('admission_user_token') || null,
@@ -1640,7 +1193,6 @@
         }
       });
 
-      syncPaymentStatus();
 
       // Listeners for seamless session saving & exam exit protection
       window.addEventListener('beforeunload', (e) => {
@@ -1655,137 +1207,8 @@
         if (document.visibilityState === 'hidden') saveSessionState();
       });
 
-      // Admin hash listener
-      window.addEventListener('hashchange', () => {
-        if (window.location.hash === '#admin') openAdminModal();
-      });
-      if (window.location.hash === '#admin') {
-        openAdminModal();
-      }
-
       // Initialize Mobile Back Exit Protection & Modal Trap
       setupMobileExitGuard();
-    }
-
-    let paymentPollInterval = null;
-    let paymentPollCount = 0;
-
-    function startPaymentStatusPolling() {
-      if (paymentPollInterval) clearInterval(paymentPollInterval);
-      paymentPollCount = 0;
-      paymentPollInterval = setInterval(async () => {
-        paymentPollCount++;
-        // Stop polling after 25 attempts (~5 minutes) if no update
-        if (paymentPollCount > 25) {
-          clearInterval(paymentPollInterval);
-          paymentPollInterval = null;
-          return;
-        }
-        try {
-          const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
-          const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
-          if (res.ok) {
-            const data = await res.json();
-            let newlyUnlocked = false;
-
-            const isMed = !!(data.medical_enrolled || data.combo_enrolled);
-            const isVar = !!(data.versity_enrolled || data.combo_enrolled);
-            appState.pendingPackages = data.pending_packages || [];
-
-            if (isMed && !appState.isMedicalPaid) {
-              appState.isMedicalPaid = true;
-              localStorage.setItem('admission_paid_med', 'true');
-              appState.unlockedMed = getMaxUnlocked('medical');
-              newlyUnlocked = true;
-            }
-            if (isVar && !appState.isVersityPaid) {
-              appState.isVersityPaid = true;
-              localStorage.setItem('admission_paid_var', 'true');
-              appState.unlockedVar = getMaxUnlocked('versity');
-              newlyUnlocked = true;
-            }
-
-            if (!data.has_pending) {
-              localStorage.removeItem('admission_has_pending');
-              clearInterval(paymentPollInterval);
-              paymentPollInterval = null;
-            }
-
-            if (newlyUnlocked) {
-              if (appState.isMedicalPaid && appState.isVersityPaid) {
-                clearInterval(paymentPollInterval);
-                paymentPollInterval = null;
-              }
-              updateUnlockedBadges();
-              populateTestDropdown();
-              loadCurrentSelectedTest();
-              renderTestGridCards();
-
-              // Refresh modal view if open
-              const paywallModal = document.getElementById('bkash-paywall-modal');
-              if (paywallModal && !paywallModal.classList.contains('hidden')) {
-                selectBkashPackage(selectedBkashPackage);
-              }
-
-              if (typeof confetti === 'function') {
-                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-              }
-              showToast("🎉 অভিনন্দন! আপনার পেমেন্ট অনুমোদিত হয়েছে এবং মডেল টেস্ট আনলক করা হয়েছে!", "success");
-            }
-          }
-        } catch (e) {
-          // quiet polling
-        }
-      }, 12000);
-    }
-
-    async function syncPaymentStatus() {
-      try {
-        // Ad Traffic Optimization: Skip DB check on initial visit for brand-new users with no payment history
-        const hasHistory = appState.userEmail ||
-                           localStorage.getItem('admission_paid_med') === 'true' ||
-                           localStorage.getItem('admission_paid_var') === 'true' ||
-                           localStorage.getItem('admission_has_pending') === 'true';
-        if (!hasHistory) return;
-
-        const emailQuery = appState.userEmail ? `&email=${encodeURIComponent(appState.userEmail)}` : '';
-        const res = await fetch(`/api/payment/status?student_id=${appState.studentId}${emailQuery}`);
-        if (res.ok) {
-          const data = await res.json();
-          const isMed = !!(data.medical_enrolled || data.combo_enrolled);
-          const isVar = !!(data.versity_enrolled || data.combo_enrolled);
-          appState.isMedicalPaid = isMed;
-          appState.isVersityPaid = isVar;
-          appState.pendingPackages = data.pending_packages || [];
-
-          if (isMed) {
-            localStorage.setItem('admission_paid_med', 'true');
-            appState.unlockedMed = getMaxUnlocked('medical');
-          }
-          if (isVar) {
-            localStorage.setItem('admission_paid_var', 'true');
-            appState.unlockedVar = getMaxUnlocked('versity');
-          }
-
-          updateUnlockedBadges();
-          populateTestDropdown();
-          loadCurrentSelectedTest();
-          renderTestGridCards();
-
-          // If paywall modal is currently open, refresh its view
-          const paywallModal = document.getElementById('bkash-paywall-modal');
-          if (paywallModal && !paywallModal.classList.contains('hidden')) {
-            selectBkashPackage(selectedBkashPackage);
-          }
-
-          // ONLY poll if student has an active submitted claim awaiting admin approval
-          if (data.has_pending || localStorage.getItem('admission_has_pending') === 'true') {
-            startPaymentStatusPolling();
-          }
-        }
-      } catch (e) {
-        console.warn('Payment status sync offline, using local cache.');
-      }
     }
 
     if (document.readyState === 'loading') {
@@ -1885,7 +1308,7 @@
     function changeAdmissionSession(newSession) {
       appState.selectedSession = newSession;
       localStorage.setItem('admission_selected_session', newSession);
-      
+
       const badge = document.getElementById('start-badge-session');
       if (badge) badge.innerText = `সেশন: ${newSession}`;
 
@@ -1893,46 +1316,13 @@
     }
 
     function updateUnlockedBadges() {
-      const medBadge = document.getElementById('med-unlocked-badge');
-      if (medBadge) {
-        const medComp = (appState.completedMed && appState.completedMed.length) || 0;
-        const medMax = appState.isMedicalPaid ? 100 : 5;
-        const medTier = appState.isMedicalPaid ? '👑 প্রিমিয়াম' : 'ফ্রি';
-        const medNextBn = appState.unlockedMed < 10 ? '০' + toBengaliNum(appState.unlockedMed) : toBengaliNum(appState.unlockedMed);
-        medBadge.innerHTML = `🩺 মেডিকেল: ${medTier} (${toBengaliNum(medComp)}/${toBengaliNum(medMax)} সম্পন্ন • টেস্ট ${medNextBn} উন্মুক্ত)`;
-        if (appState.isMedicalPaid) {
-          medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm";
-        } else {
-          medBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-brand-950/80 text-brand-300 border border-brand-800 shadow-sm";
-        }
-      }
-
-      const varBadge = document.getElementById('var-unlocked-badge');
-      if (varBadge) {
-        const varComp = (appState.completedVar && appState.completedVar.length) || 0;
-        const varMax = appState.isVersityPaid ? 100 : 5;
-        const varTier = appState.isVersityPaid ? '👑 প্রিমিয়াম' : 'ফ্রি';
-        const varNextBn = appState.unlockedVar < 10 ? '০' + toBengaliNum(appState.unlockedVar) : toBengaliNum(appState.unlockedVar);
-        varBadge.innerHTML = `🏛️ ভার্সিটি: ${varTier} (${toBengaliNum(varComp)}/${toBengaliNum(varMax)} সম্পন্ন • টেস্ট ${varNextBn} উন্মুক্ত)`;
-        if (appState.isVersityPaid) {
-          varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-teal-950/80 text-teal-300 border border-teal-800 shadow-sm";
-        } else {
-          varBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-950/80 text-blue-300 border border-blue-800 shadow-sm";
-        }
-      }
-
-      const paywallBtn = document.getElementById('btn-open-paywall');
-      if (paywallBtn) {
-        const stream = appState.currentStream;
-        const isPaid = (stream === 'medical') ? appState.isMedicalPaid : ((stream === 'versity') ? appState.isVersityPaid : true);
-        if (isPaid && (stream === 'medical' || stream === 'versity')) {
-          paywallBtn.className = "px-3.5 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 font-bold text-xs flex items-center gap-1.5 transition";
-          const streamName = stream === 'medical' ? 'মেডিকেল' : 'ভার্সিটি';
-          paywallBtn.innerHTML = `<span>👑 ${streamName} প্রিমিয়াম সক্রিয়</span><span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-200">✓</span>`;
-        } else {
-          paywallBtn.className = "px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-bold text-xs shadow-lg shadow-pink-500/25 flex items-center gap-1.5 transition animate-pulse";
-          paywallBtn.innerHTML = `<span>👑 প্রিমিয়াম আনলক</span><span class="bg-black/30 px-1.5 py-0.5 rounded text-[10px]">৳৪৯৯</span>`;
-        }
+      for (const [stream, id, icon, title] of [
+        ['medical', 'med-unlocked-badge', '🩺', 'মেডিকেল'],
+        ['versity', 'var-unlocked-badge', '🏛️', 'ভার্সিটি']
+      ]) {
+        const badge = document.getElementById(id);
+        const completed = stream === 'medical' ? appState.completedMed : appState.completedVar;
+        if (badge) badge.innerText = `${icon} ${title}: সম্পূর্ণ ফ্রি (${toBengaliNum((completed || []).length)}/১০০ সম্পন্ন • টেস্ট ${toBengaliNum(getMaxUnlocked(stream))} উন্মুক্ত)`;
       }
     }
 
@@ -2092,51 +1482,23 @@
     }
 
     // ============================================
-    // STREAM PAYMENT & SEQUENTIAL LOCK VERIFICATION
-    // (Tests 1-5 are 100% Free; Tests 6-100 require 499 BDT)
+    // FREE FULL-TEST SEQUENTIAL PROGRESSION
+    // All 100 tests are free.
     // ============================================
-    function isStreamPaid(stream) {
-      if (stream === 'medical') return !!appState.isMedicalPaid;
-      if (stream === 'versity') return !!appState.isVersityPaid;
-      return true;
-    }
+
 
     function getMaxUnlocked(stream) {
-      if (stream === 'past_15years' || stream === 'textbooks' || stream === 'nocalc') return 100;
-      const isPaid = isStreamPaid(stream);
-      const maxAllowed = isPaid ? 100 : 5;
-      const completedList = (stream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
-
-      // Sequential check:
-      // Test 1 is always unlocked for everybody.
-      // Test N is unlocked IF AND ONLY IF Test N-1 was submitted and completed!
-      let unlockedSoFar = 1;
-      for (let t = 1; t <= 100; t++) {
-        if (completedList.includes(t)) {
-          unlockedSoFar = t + 1;
-        } else {
-          break; // Next test is locked until t is submitted!
-        }
-      }
-
-      // If unpaid, cap progression at Test 5
-      if (!isPaid && unlockedSoFar > 5) {
-        unlockedSoFar = 5;
-      }
-      return Math.min(maxAllowed, unlockedSoFar);
+      // Sequential progression applies only to full medical and varsity tests.
+      if (stream !== 'medical' && stream !== 'versity') return 100;
+      const completed = stream === 'medical' ? (appState.completedMed || []) : (appState.completedVar || []);
+      let next = 1;
+      while (next <= 100 && completed.includes(next)) next++;
+      return Math.min(next, 100);
     }
 
     function isTestUnlocked(stream, testId) {
-      if (stream === 'past_15years' || stream === 'textbooks' || stream === 'nocalc') return true;
       const id = Number(testId);
-      const isPaid = isStreamPaid(stream);
-
-      // 1. Tests 6 to 100 strictly require payment for this stream
-      if (id > 5 && !isPaid) {
-        return false;
-      }
-
-      // 2. Sequential Progression Rule: Each test is locked until the previous test is given & submitted
+      if (!Number.isInteger(id) || id < 1 || id > 100) return false;
       return id <= getMaxUnlocked(stream);
     }
 
@@ -2147,7 +1509,6 @@
 
       const maxTest = 100;
       const stream = appState.currentStream;
-      const paid = isStreamPaid(stream);
       const completedList = (stream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
 
       for (let i = 1; i <= maxTest; i++) {
@@ -2155,16 +1516,13 @@
         opt.value = i;
         const unlocked = isTestUnlocked(stream, i);
         const isCompleted = completedList.includes(i);
-        const isFree = i <= 5;
         const bnNum = i < 10 ? '০' + toBengaliNum(i) : toBengaliNum(i);
 
         let label = `টেস্ট ${bnNum} `;
         if (isCompleted) {
           label += '✓ [সম্পন্ন • পুনরায় দিন]';
         } else if (unlocked) {
-          label += isFree ? '✓ [ফ্রি]' : '✓ [উন্মুক্ত]';
-        } else if (i > 5 && !paid) {
-          label += '🔒 [প্রিমিয়াম - ৳৪৯৯]';
+          label += '✓ [ফ্রি]';
         } else {
           label += '🔒 [ধারাবাহিক লকড]';
         }
@@ -2183,11 +1541,7 @@
       const numId = Number(testId);
       const unlocked = isTestUnlocked(appState.currentStream, numId);
       if (!unlocked) {
-        if (numId > 5 && !isStreamPaid(appState.currentStream)) {
-          openBkashPaywallModal(appState.currentStream, numId);
-        } else {
-          showLockedModal(numId);
-        }
+        showLockedModal(numId);
         // Reset dropdown back to current test
         document.getElementById('model-test-dropdown').value = appState.currentTestId;
         return;
@@ -2238,7 +1592,7 @@
       iconEl.innerText = icon || '📝';
       titleEl.innerText = title || '';
       subtitleEl.innerText = subtitle || '';
-      
+
       if (detailsHtml) {
         detailsEl.innerHTML = detailsHtml;
         detailsEl.classList.remove('hidden');
@@ -2249,7 +1603,7 @@
       // Configure Theme Colors
       iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-inner ';
       glowEl.className = 'absolute -top-16 -left-16 w-36 h-36 rounded-full blur-3xl pointer-events-none ';
-      
+
       if (confirmClass) {
         btnConfirm.className = confirmClass;
       } else {
@@ -2389,7 +1743,7 @@
           return;
         }
 
-        // 2. If any other modal is open (Paywall, 100 Tests Grid, Auth, Admin, Lock notice), close it!
+        // 2. If any other modal is open (100 Tests Grid, Auth, Lock notice), close it!
         if (closeAnyOpenModal()) {
           return;
         }
@@ -2442,13 +1796,6 @@
     function closeAnyOpenModal() {
       let closed = false;
 
-      // Paywall Modal
-      const paywall = document.getElementById('bkash-paywall-modal');
-      if (paywall && !paywall.classList.contains('hidden')) {
-        closeBkashPaywallModal();
-        closed = true;
-      }
-
       // 100 Tests Grid Modal
       const grid = document.getElementById('grid-modal');
       if (grid && !grid.classList.contains('hidden')) {
@@ -2460,13 +1807,6 @@
       const auth = document.getElementById('auth-modal');
       if (auth && !auth.classList.contains('hidden')) {
         closeAuthModal();
-        closed = true;
-      }
-
-      // Admin Modal
-      const admin = document.getElementById('admin-panel-modal');
-      if (admin && !admin.classList.contains('hidden')) {
-        closeAdminModal();
         closed = true;
       }
 
@@ -2571,368 +1911,6 @@
     }
 
     // ============================================
-    // PERSONAL BKASH PAYWALL & ENROLLMENT CONTROLLER
-    // ============================================
-    let selectedBkashPackage = 'medical';
-
-    function openBkashPaywallModal(stream = 'medical', targetTestId = null) {
-      if (targetTestId) {
-        appState.pendingUnlockTestId = targetTestId;
-      }
-      if (stream === 'combo') {
-        selectBkashPackage('combo');
-      } else if (stream === 'versity') {
-        selectBkashPackage('versity');
-      } else {
-        selectBkashPackage('medical');
-      }
-
-      const modal = document.getElementById('bkash-paywall-modal');
-      const card = document.getElementById('bkash-paywall-card');
-      const feedback = document.getElementById('paywall-feedback-msg');
-      if (feedback) feedback.classList.add('hidden');
-
-      if (!modal) return;
-      modal.style.pointerEvents = '';
-      modal.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        if (card) {
-          card.classList.remove('scale-95', 'opacity-0');
-          card.classList.add('scale-100', 'opacity-100');
-        }
-      });
-    }
-
-    function closeBkashPaywallModal() {
-      const modal = document.getElementById('bkash-paywall-modal');
-      const card = document.getElementById('bkash-paywall-card');
-      if (!modal || modal.classList.contains('hidden')) return;
-
-      modal.style.pointerEvents = 'none';
-      if (card) {
-        card.classList.remove('scale-100', 'opacity-100');
-        card.classList.add('scale-95', 'opacity-0');
-      }
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.style.pointerEvents = '';
-      }, 150);
-    }
-
-    function selectBkashPackage(pkg) {
-      selectedBkashPackage = pkg;
-      const optMed = document.getElementById('pkg-opt-medical');
-      const optVar = document.getElementById('pkg-opt-versity');
-      const optCombo = document.getElementById('pkg-opt-combo');
-
-      const statusMed = document.getElementById('pkg-status-medical');
-      const statusVar = document.getElementById('pkg-status-versity');
-      const statusCombo = document.getElementById('pkg-status-combo');
-
-      const isMedPaid = !!appState.isMedicalPaid;
-      const isVarPaid = !!appState.isVersityPaid;
-      const isComboPaid = isMedPaid && isVarPaid;
-
-      const pendingPkgs = appState.pendingPackages || [];
-      const isMedPending = !isMedPaid && (pendingPkgs.includes('medical') || pendingPkgs.includes('combo'));
-      const isVarPending = !isVarPaid && (pendingPkgs.includes('versity') || pendingPkgs.includes('combo'));
-      const isComboPending = !isComboPaid && (pendingPkgs.includes('combo') || (isMedPending && isVarPending));
-
-      // 1. Update subtext inside top package cards
-      if (statusMed) {
-        statusMed.innerHTML = isMedPaid 
-          ? `<span class="text-emerald-400 font-bold">✓ আনলকড</span>` 
-          : (isMedPending ? `<span class="text-amber-400 font-bold">⏳ যাচাইাধীন</span>` : `৯৫ টেস্ট`);
-      }
-      if (statusVar) {
-        statusVar.innerHTML = isVarPaid 
-          ? `<span class="text-teal-400 font-bold">✓ আনলকড</span>` 
-          : (isVarPending ? `<span class="text-amber-400 font-bold">⏳ যাচাইাধীন</span>` : `৯৫ টেস্ট`);
-      }
-      if (statusCombo) {
-        statusCombo.innerHTML = isComboPaid 
-          ? `<span class="text-emerald-400 font-bold">✓ আনলকড</span>` 
-          : (isComboPending ? `<span class="text-amber-400 font-bold">⏳ যাচাইাধীন</span>` : `২০০ টেস্ট`);
-      }
-
-      // 2. Active selection border styling
-      const pkgCards = [
-        { el: optMed, id: 'medical', activeClass: "cursor-pointer p-2 sm:p-3 rounded-xl border border-pink-500 bg-pink-950/40 text-center transition ring-1 ring-pink-500 flex flex-col justify-between" },
-        { el: optVar, id: 'versity', activeClass: "cursor-pointer p-2 sm:p-3 rounded-xl border border-teal-500 bg-teal-950/40 text-center transition ring-1 ring-teal-500 flex flex-col justify-between" },
-        { el: optCombo, id: 'combo', activeClass: "cursor-pointer p-2 sm:p-3 rounded-xl border border-purple-500 bg-purple-950/50 text-center transition ring-1 ring-purple-500 relative overflow-hidden flex flex-col justify-between" }
-      ];
-
-      pkgCards.forEach(c => {
-        if (!c.el) return;
-        if (c.id === pkg) {
-          c.el.className = c.activeClass;
-        } else {
-          c.el.className = "cursor-pointer p-2 sm:p-3 rounded-xl border border-slate-700 bg-slate-900/60 text-center hover:border-slate-500 transition opacity-80 flex flex-col justify-between";
-        }
-      });
-
-      // 3. Determine if selected package is Confirmed, Pending, or Unpaid
-      let isCurrentConfirmed = false;
-      let isCurrentPending = false;
-
-      if (pkg === 'medical') {
-        isCurrentConfirmed = isMedPaid;
-        isCurrentPending = isMedPending;
-      } else if (pkg === 'versity') {
-        isCurrentConfirmed = isVarPaid;
-        isCurrentPending = isVarPending;
-      } else if (pkg === 'combo') {
-        isCurrentConfirmed = isComboPaid;
-        isCurrentPending = isComboPending;
-      }
-
-      const confirmedSection = document.getElementById('paywall-confirmed-section');
-      const pendingSection = document.getElementById('paywall-pending-section');
-      const unpaidSection = document.getElementById('paywall-unpaid-section');
-
-      if (isCurrentConfirmed) {
-        // STATE 1: ALREADY APPROVED / CONFIRMED
-        // NEVER show bKash number or send money form!
-        if (confirmedSection) confirmedSection.classList.remove('hidden');
-        if (pendingSection) pendingSection.classList.add('hidden');
-        if (unpaidSection) unpaidSection.classList.add('hidden');
-
-        const confirmedTitle = document.getElementById('paywall-confirmed-title');
-        const confirmedDesc = document.getElementById('paywall-confirmed-desc');
-        const confirmedCount = document.getElementById('paywall-confirmed-count');
-        const crossNotice = document.getElementById('paywall-cross-package-notice');
-        const crossText = document.getElementById('paywall-cross-package-text');
-        const crossBtn = document.getElementById('btn-switch-cross-pack');
-
-        if (pkg === 'medical') {
-          if (confirmedTitle) confirmedTitle.innerText = "🩺 মেডিকেল ১০০ মডেল টেস্ট";
-          if (confirmedDesc) confirmedDesc.innerText = "আপনার বিকাশ পেমেন্ট সফলভাবে অনুমোদিত হয়েছে! আপনি এখন মেডিকেল ১০০টি মডেল টেস্টের সবগুলোতে অংশ নিতে পারবেন।";
-          if (confirmedCount) confirmedCount.innerText = "৯৫টি প্রিমিয়াম (মোট ১০০টি টেস্ট আনলকড)";
-
-          if (!isVarPaid) {
-            if (crossNotice) crossNotice.classList.remove('hidden');
-            if (crossText) crossText.innerText = "ভার্সিটি ও সমন্বিত গুচ্ছ টেস্টগুলো এখনো লক করা আছে।";
-            if (crossBtn) {
-              crossBtn.innerText = "ভার্সিটি আনলক (৳৪৯৯)";
-              crossBtn.onclick = () => selectBkashPackage('versity');
-            }
-          } else {
-            if (crossNotice) crossNotice.classList.add('hidden');
-          }
-        } else if (pkg === 'versity') {
-          if (confirmedTitle) confirmedTitle.innerText = "🏛️ ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্ট";
-          if (confirmedDesc) confirmedDesc.innerText = "আপনার বিকাশ পেমেন্ট সফলভাবে অনুমোদিত হয়েছে! আপনি এখন ভার্সিটি ও সমন্বিত গুচ্ছ ১০০টি মডেল টেস্টের সবগুলোতে অংশ নিতে পারবেন।";
-          if (confirmedCount) confirmedCount.innerText = "৯৫টি প্রিমিয়াম (মোট ১০০টি টেস্ট আনলকড)";
-
-          if (!isMedPaid) {
-            if (crossNotice) crossNotice.classList.remove('hidden');
-            if (crossText) crossText.innerText = "মেডিকেল মডেল টেস্টগুলো এখনো লক করা আছে।";
-            if (crossBtn) {
-              crossBtn.innerText = "মেডিকেল আনলক (৳৪৯৯)";
-              crossBtn.onclick = () => selectBkashPackage('medical');
-            }
-          } else {
-            if (crossNotice) crossNotice.classList.add('hidden');
-          }
-        } else if (pkg === 'combo') {
-          if (confirmedTitle) confirmedTitle.innerText = "⚡ অল-ইন-ওয়ান কম্বো প্যাক";
-          if (confirmedDesc) confirmedDesc.innerText = "আপনার কম্বো সাবস্ক্রিপশন সক্রিয়! মেডিকেল ১০০ এবং ভার্সিটি ১০০ সহ মোট ২০০টি মডেল টেস্ট আনলক করা হয়েছে।";
-          if (confirmedCount) confirmedCount.innerText = "২০০টি টেস্ট আনলকড (মেডিকেল ১০০ + ভার্সিটি ১০০)";
-          if (crossNotice) crossNotice.classList.add('hidden');
-        }
-      } else if (isCurrentPending) {
-        // STATE 2: PENDING ADMIN VERIFICATION
-        if (confirmedSection) confirmedSection.classList.add('hidden');
-        if (pendingSection) pendingSection.classList.remove('hidden');
-        if (unpaidSection) unpaidSection.classList.add('hidden');
-
-        const pendingPkgName = document.getElementById('paywall-pending-pkg-name');
-        if (pendingPkgName) {
-          if (pkg === 'medical') pendingPkgName.innerText = "মেডিকেল (৯৫ টেস্ট)";
-          else if (pkg === 'versity') pendingPkgName.innerText = "ভার্সিটি ও গুচ্ছ (৯৫ টেস্ট)";
-          else pendingPkgName.innerText = "কম্বো (মেডিকেল + ভার্সিটি)";
-        }
-      } else {
-        // STATE 3: UNPAID - SHOW SEND MONEY INSTRUCTIONS & INPUT FORM
-        if (confirmedSection) confirmedSection.classList.add('hidden');
-        if (pendingSection) pendingSection.classList.add('hidden');
-        if (unpaidSection) unpaidSection.classList.remove('hidden');
-
-        const feeText = document.getElementById('instruction-fee-text');
-        if (feeText) {
-          feeText.innerText = (pkg === 'combo') ? "৳৭৯৯" : "৳৪৯৯";
-        }
-      }
-    }
-
-    function startConfirmedTest() {
-      closeBkashPaywallModal();
-      const targetStream = (selectedBkashPackage === 'versity') ? 'versity' : 'medical';
-      if (appState.currentStream !== targetStream && (selectedBkashPackage === 'medical' || selectedBkashPackage === 'versity')) {
-        switchStream(targetStream);
-      }
-      const stream = appState.currentStream;
-      const maxUnlocked = (stream === 'medical') ? appState.unlockedMed : appState.unlockedVar;
-      
-      let testToStart = maxUnlocked;
-      if (appState.pendingUnlockTestId && isTestUnlocked(stream, appState.pendingUnlockTestId)) {
-        testToStart = appState.pendingUnlockTestId;
-      }
-      appState.pendingUnlockTestId = null;
-      setCurrentStreamTestId(appState.currentStream, testToStart);
-      const dropdown = document.getElementById('model-test-dropdown');
-      if (dropdown) dropdown.value = appState.currentTestId;
-
-      loadCurrentSelectedTest();
-      startActiveExam();
-    }
-
-    function switchModalToOtherPackage() {
-      if (selectedBkashPackage === 'medical') {
-        selectBkashPackage('versity');
-      } else {
-        selectBkashPackage('medical');
-      }
-    }
-
-    function copyBkashNumber() {
-      const num = "01644265766";
-      navigator.clipboard.writeText(num).then(() => {
-        const textEl = document.getElementById('btn-copy-bkash-text');
-        if (textEl) {
-          textEl.innerText = "✓ কপি হয়েছে!";
-          setTimeout(() => { textEl.innerText = "কপি করুন"; }, 2500);
-        }
-        showToast("বিকাশ নাম্বার '01644265766' ক্লিপবোর্ডে কপি করা হয়েছে।", "success");
-      }).catch(() => {
-        showToast("বিকাশ নাম্বার: 01644265766", "info");
-      });
-    }
-
-    async function submitBkashPayment() {
-      const senderNumber = document.getElementById('pay-sender-number').value.trim();
-      const trxId = document.getElementById('pay-trx-id').value.trim().toUpperCase();
-      const feedback = document.getElementById('paywall-feedback-msg');
-      const btn = document.getElementById('btn-submit-payment');
-
-      if (!trxId || trxId.length < 6) {
-        if (feedback) {
-          feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "⚠️ অনুগ্রহ করে SMS-এ প্রাপ্ত সঠিক ও পূর্ণাঙ্গ TrxID লিখুন (কমপক্ষে ৬-১২ ডিজিট/অক্ষর)।";
-        }
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> ভেরিফিকেশন চলছে...`;
-
-      try {
-        const res = await fetch('/api/payment/verify-trx', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            student_id: appState.studentId,
-            student_name: appState.userName || 'পরীক্ষার্থী',
-            student_email: appState.userEmail || '',
-            package: selectedBkashPackage,
-            sender_number: senderNumber || '01644265766',
-            trx_id: trxId
-          })
-        });
-        const result = await res.json();
-
-        if (res.ok) {
-          if (result.verified === true || result.status === 'verified') {
-            if (selectedBkashPackage === 'combo') {
-              appState.isMedicalPaid = true;
-              appState.isVersityPaid = true;
-              localStorage.setItem('admission_paid_med', 'true');
-              localStorage.setItem('admission_paid_var', 'true');
-            } else if (selectedBkashPackage === 'medical') {
-              appState.isMedicalPaid = true;
-              localStorage.setItem('admission_paid_med', 'true');
-            } else if (selectedBkashPackage === 'versity') {
-              appState.isVersityPaid = true;
-              localStorage.setItem('admission_paid_var', 'true');
-            }
-
-            // Remove from pending packages
-            if (appState.pendingPackages) {
-              appState.pendingPackages = appState.pendingPackages.filter(p => p !== selectedBkashPackage);
-              localStorage.setItem('admission_pending_pkgs', JSON.stringify(appState.pendingPackages));
-            }
-            if (!appState.pendingPackages || appState.pendingPackages.length === 0) {
-              localStorage.removeItem('admission_has_pending');
-            }
-
-            appState.unlockedMed = getMaxUnlocked('medical');
-            appState.unlockedVar = getMaxUnlocked('versity');
-
-            updateUnlockedBadges();
-            populateTestDropdown();
-            renderTestGridCards();
-            selectBkashPackage(selectedBkashPackage);
-
-            if (feedback) {
-              feedback.className = "text-xs p-3 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-200 block";
-              feedback.innerText = result.message || "অভিনন্দন! আপনার পেমেন্ট সফলভাবে ভেরিফাই হয়েছে।";
-            }
-
-            showToast("🎉 অভিনন্দন! প্রিমিয়াম মডেল টেস্ট আনলক হয়েছে।", "success");
-            if (typeof confetti === 'function') {
-              confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            }
-
-            setTimeout(() => {
-              closeBkashPaywallModal();
-              if (appState.pendingUnlockTestId) {
-                const target = appState.pendingUnlockTestId;
-                appState.pendingUnlockTestId = null;
-                setCurrentStreamTestId(appState.currentStream, target);
-                document.getElementById('model-test-dropdown').value = target;
-                loadCurrentSelectedTest();
-              }
-            }, 1800);
-          } else if (result.pending === true || result.status === 'pending') {
-            // STRICTLY PENDING! NEVER UNLOCK UNTIL SMS FORWARDER ARRIVES OR ADMIN APPROVES!
-            if (!appState.pendingPackages) appState.pendingPackages = [];
-            if (!appState.pendingPackages.includes(selectedBkashPackage)) {
-              appState.pendingPackages.push(selectedBkashPackage);
-            }
-            localStorage.setItem('admission_pending_pkgs', JSON.stringify(appState.pendingPackages));
-            localStorage.setItem('admission_has_pending', 'true');
-
-            selectBkashPackage(selectedBkashPackage);
-            if (feedback) {
-              feedback.className = "text-xs p-3 rounded-xl bg-amber-950/80 border border-amber-800 text-amber-200 block";
-              feedback.innerText = result.message || "পেমেন্ট অনুরোধ জমা নেওয়া হয়েছে। এসএমএস যাচাই বা অ্যাডমিন প্যানেল থেকে অনুমোদন দিলে টেস্টগুলো আনলক হবে।";
-            }
-            showToast("পেমেন্ট অনুরোধ পাঠানো হয়েছে। অ্যাডমিন অনুমোদন সাপেক্ষে আনলক হবে।", "info");
-            startPaymentStatusPolling();
-          } else {
-            if (feedback) {
-              feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-              feedback.innerText = result.message || "পেমেন্ট ভেরিফিকেশন ব্যর্থ হয়েছে। TrxID সঠিক আছে কিনা যাচাই করুন।";
-            }
-          }
-        } else {
-          if (feedback) {
-            feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-            feedback.innerText = (result && result.message) ? result.message : "পেমেন্ট ভেরিফিকেশন ব্যর্থ হয়েছে। TrxID সঠিক আছে কিনা যাচাই করুন।";
-          }
-        }
-      } catch (err) {
-        if (feedback) {
-          feedback.className = "text-xs p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "সার্ভার সংযোগে সমস্যা। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।";
-        }
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<span>🚀 ভেরিফাই ও আনলক করো</span>`;
-      }
-    }
-
-    // ============================================
     // LOAD SELECTED TEST DETAILS (Shows Start Card)
     // ============================================
     function loadCurrentSelectedTest() {
@@ -2985,7 +1963,6 @@
 
       // Check if current test is unlocked & completed
       const unlocked = isTestUnlocked(stream, testId);
-      const isPaid = isStreamPaid(stream);
       const completedList = (stream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
       const isCompleted = completedList.includes(testId);
       const startBtn = document.getElementById('btn-start-exam');
@@ -3002,11 +1979,7 @@
 
       if (startBtn) {
         const testBn = testId < 10 ? '০' + toBengaliNum(testId) : toBengaliNum(testId);
-        if (!unlocked && testId > 5 && !isPaid) {
-          startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 hover:from-pink-500 hover:to-rose-400 text-white font-black text-base sm:text-lg shadow-xl shadow-pink-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 mx-auto animate-pulse";
-          startBtn.innerHTML = `<span>👑 বিকাশ দিয়ে টেস্ট ${testBn} আনলক করুন (৳৪৯৯)</span>`;
-          startBtn.onclick = () => openBkashPaywallModal(stream, testId);
-        } else if (!unlocked) {
+        if (!unlocked) {
           startBtn.className = "w-full sm:w-auto px-10 py-4 rounded-2xl bg-slate-800 text-slate-400 font-black text-base sm:text-lg border border-slate-700 transition cursor-not-allowed mx-auto flex items-center justify-center gap-2";
           startBtn.innerHTML = `<span>🔒 টেস্ট ${testBn} লকড (পূর্ববর্তী টেস্ট সম্পন্ন করুন)</span>`;
           startBtn.onclick = () => showLockedModal(testId);
@@ -3057,10 +2030,6 @@
         dd.value = testId;
       }
 
-      // Auto-trigger paywall modal if user selects unpaid test > 5
-      if (!unlocked && testId > 5 && !isPaid) {
-        openBkashPaywallModal(stream, testId);
-      }
     }
 
     // ============================================
@@ -3071,13 +2040,9 @@
       appState.currentStream = stream;
       const testId = Number(appState.currentTestId) || 1;
 
-      // Strict lock and paywall validation
+      // Sequential progression validation
       if (!isTestUnlocked(stream, testId)) {
-        if (testId > 5 && !isStreamPaid(stream)) {
-          openBkashPaywallModal(stream, testId);
-        } else {
-          showLockedModal(testId);
-        }
+        showLockedModal(testId);
         return;
       }
 
@@ -3542,35 +2507,16 @@
       // Unlock Notice & Button
       const notice = document.getElementById('results-unlock-notice');
       const nextBtn = document.getElementById('btn-goto-next-test');
-      const paywallTeaser = document.getElementById('results-paywall-teaser');
-
-      if (appState.currentTestId === 5 && !isStreamPaid(appState.currentStream)) {
-        if (paywallTeaser) paywallTeaser.classList.remove('hidden');
-        if (notice) {
-          notice.innerHTML = `<span>🎁</span> আপনি সফলভাবে ফ্রি ৫টি মডেল টেস্ট সম্পন্ন করেছেন!`;
-          notice.className = "text-xs sm:text-sm text-pink-300 font-bold flex items-center justify-center md:justify-start gap-1.5";
-        }
-        if (nextBtn) {
-          nextBtn.classList.remove('hidden');
-          nextBtn.innerHTML = `<span>📱 বাকি ৯৫টি টেস্ট আনলক (৳৪৯৯)</span> <span>→</span>`;
-          nextBtn.onclick = () => openBkashPaywallModal(appState.currentStream, 6);
-        }
-      } else {
-        if (paywallTeaser) paywallTeaser.classList.add('hidden');
-        if (nextBtn) {
-          nextBtn.innerHTML = `<span>পরবর্তী টেস্টে যান (Next Test)</span> <span>→</span>`;
-          nextBtn.onclick = () => loadNextUnlockedExam();
-        }
-        if (data.nextUnlocked) {
-          notice.innerHTML = `<span>🎉</span> অভিনন্দন! টেস্ট ০${appState.currentTestId + 1} সফলভাবে আনলক হয়েছে!`;
-          notice.className = "text-xs sm:text-sm text-emerald-400 font-bold flex items-center justify-center md:justify-start gap-1.5";
-          if (nextBtn) nextBtn.classList.remove('hidden');
-        } else {
-          notice.innerHTML = `<span>✓</span> টেস্ট সম্পন্ন হয়েছে।`;
-          notice.className = "text-xs sm:text-sm text-slate-400 font-bold flex items-center justify-center md:justify-start gap-1.5";
-        }
+      if (nextBtn) {
+        nextBtn.innerHTML = `<span>পরবর্তী টেস্টে যান (Next Test)</span> <span>→</span>`;
+        nextBtn.onclick = () => loadNextUnlockedExam();
+        nextBtn.classList.toggle('hidden', appState.currentTestId >= 100);
       }
-
+      if (notice) {
+        notice.innerHTML = data.nextUnlocked
+          ? `<span>🎉</span> টেস্ট ${toBengaliNum(appState.currentTestId + 1)} বিনামূল্যে আনলক হয়েছে!`
+          : `<span>✓</span> টেস্ট সম্পন্ন হয়েছে।`;
+      }
     }
 
     function renderReviewCards(questions) {
@@ -3761,8 +2707,7 @@
           setCurrentStreamTestId(appState.currentStream, nextId);
           document.getElementById('model-test-dropdown').value = nextId;
           loadCurrentSelectedTest();
-        } else if (nextId > 5 && !isStreamPaid(appState.currentStream)) {
-          openBkashPaywallModal(appState.currentStream, nextId);
+
         } else {
           showLockedModal(nextId);
         }
@@ -3788,11 +2733,7 @@
       const stream = (appState.currentStream === 'versity') ? 'versity' : 'medical';
       appState.currentStream = stream;
       if (!isTestUnlocked(stream, numId)) {
-        if (numId > 5 && !isStreamPaid(stream)) {
-          openBkashPaywallModal(stream, numId);
-        } else {
-          showLockedModal(numId);
-        }
+        showLockedModal(numId);
         return;
       }
       setCurrentStreamTestId(stream, numId);
@@ -3833,17 +2774,15 @@
 
       const modalTitle = document.getElementById('grid-modal-title');
       modalTitle.innerText = (appState.currentStream === 'medical') 
-        ? "📋 মেডিকেল ১০০ মডেল টেস্টের অগ্রগতি (১–৫ ফ্রি • ৬–১০০ প্রিমিয়াম)" 
-        : "📋 ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্টের অগ্রগতি (১–৫ ফ্রি • ৬–১০০ প্রিমিয়াম)";
+        ? "📋 মেডিকেল ১০০ মডেল টেস্টের অগ্রগতি (সব টেস্ট ফ্রি)"
+        : "📋 ভার্সিটি ও সমন্বিত গুচ্ছ ১০০ মডেল টেস্টের অগ্রগতি (সব টেস্ট ফ্রি)";
 
-      const paid = isStreamPaid(appState.currentStream);
       const completedList = (appState.currentStream === 'medical') ? (appState.completedMed || []) : (appState.completedVar || []);
 
       for (let i = 1; i <= 100; i++) {
         const unlocked = isTestUnlocked(appState.currentStream, i);
         const isCompleted = completedList.includes(i);
         const card = document.createElement('div');
-        const isFree = i <= 5;
         const bnI = toBengaliNum(i);
 
         if (unlocked) {
@@ -3877,38 +2816,22 @@
             card.innerHTML = `
               <div class="flex items-center justify-between text-[10px] font-bold">
                 <span class="text-emerald-300">টেস্ট #${bnI}</span>
-                <span class="${isFree ? 'text-teal-300' : 'text-amber-300'}">${isFree ? '🎁 ফ্রি' : '👑 প্রিমিয়াম'}</span>
+                <span class="text-teal-300">🎁 ফ্রি</span>
               </div>
               <div class="text-xs font-black text-white mt-1 group-hover:text-emerald-300">উন্মুক্ত (শুরু করুন →)</div>
             `;
           }
         } else {
-          if (!isFree && !paid) {
-            // Unpurchased Premium Test Card
-            card.className = "cursor-pointer p-3 rounded-xl border border-pink-500/50 bg-pink-950/20 hover:border-pink-500 hover:bg-pink-950/40 transition text-center shadow group";
-            card.onclick = () => {
-              toggleTestGridModal();
-              openBkashPaywallModal(appState.currentStream, i);
-            };
-            card.innerHTML = `
-              <div class="flex items-center justify-between text-[10px] font-bold">
-                <span class="text-pink-300">টেস্ট #${bnI}</span>
-                <span class="text-pink-400 font-extrabold">👑 ৳৪৯৯</span>
-              </div>
-              <div class="text-xs font-bold text-pink-200 mt-1 flex items-center justify-center gap-1 group-hover:scale-105 transition">🔒 আনলক করুন</div>
-            `;
-          } else {
             // Sequentially Locked Test Card
             card.className = "cursor-pointer p-3 rounded-xl border border-slate-800 bg-slate-950/60 text-center opacity-60 hover:opacity-100 transition";
             card.onclick = () => showLockedModal(i);
             card.innerHTML = `
               <div class="flex items-center justify-between text-[10px] font-semibold text-slate-400">
                 <span>টেস্ট #${bnI}</span>
-                <span>${isFree ? 'ফ্রি' : 'প্রিমিয়াম'}</span>
+                <span>ফ্রি</span>
               </div>
               <div class="text-xs font-bold text-slate-500 mt-1 flex items-center justify-center gap-1">🔒 লকড</div>
             `;
-          }
         }
         container.appendChild(card);
       }
@@ -4519,14 +3442,6 @@
           appState.userEmail = data.email;
           appState.userName = data.name || data.email;
 
-          if (data.medical_enrolled) {
-            appState.isMedicalPaid = true;
-            localStorage.setItem('admission_paid_med', 'true');
-          }
-          if (data.versity_enrolled) {
-            appState.isVersityPaid = true;
-            localStorage.setItem('admission_paid_var', 'true');
-          }
 
           updateUnlockedBadges();
           populateTestDropdown();
@@ -4567,10 +3482,7 @@
       if (!container) return;
 
       if (appState.userEmail) {
-        const isCombo = appState.isMedicalPaid && appState.isVersityPaid;
-        const isMed = appState.isMedicalPaid;
-        const isVar = appState.isVersityPaid;
-        const badgeText = isCombo ? '★ কম্বো' : (isMed ? '★ মেডিকেল' : (isVar ? '★ ভার্সিটি' : 'ফ্রি মেম্বার'));
+        const badgeText = 'ফ্রি মেম্বার';
 
         container.innerHTML = `
           <div class="relative group">
@@ -4599,548 +3511,6 @@
             <span class="sm:hidden">লগইন</span>
           </button>
         `;
-      }
-    }
-
-    // ============================================
-    // ADMIN PANEL & PAYMENT APPROVAL SYSTEM
-    // ============================================
-    let adminClaimsCache = [];
-    let adminSmsCache = [];
-
-    function openAdminModal() {
-      const modal = document.getElementById('admin-panel-modal');
-      const card = document.getElementById('admin-modal-card');
-      if (!modal || !card) return;
-
-      const adminToken = sessionStorage.getItem('admission_admin_token');
-      if (adminToken) {
-        document.getElementById('admin-login-view').classList.add('hidden');
-        document.getElementById('admin-dashboard-view').classList.remove('hidden');
-        loadAdminData();
-      } else {
-        document.getElementById('admin-login-view').classList.remove('hidden');
-        document.getElementById('admin-dashboard-view').classList.add('hidden');
-        const m = document.getElementById('admin-input-master');
-        const s = document.getElementById('admin-input-secondary');
-        const p = document.getElementById('admin-input-pin');
-        const w = document.getElementById('admin-input-word');
-        if (m) m.value = '';
-        if (s) s.value = '';
-        if (p) p.value = '';
-        if (w) w.value = '';
-      }
-
-      modal.style.pointerEvents = '';
-      modal.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        card.classList.remove('scale-95', 'opacity-0');
-        card.classList.add('scale-100', 'opacity-100');
-      });
-    }
-
-    function closeAdminModal() {
-      const modal = document.getElementById('admin-panel-modal');
-      const card = document.getElementById('admin-modal-card');
-      if (!modal || modal.classList.contains('hidden')) return;
-
-      modal.style.pointerEvents = 'none';
-      if (card) {
-        card.classList.remove('scale-100', 'opacity-100');
-        card.classList.add('scale-95', 'opacity-0');
-      }
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.style.pointerEvents = '';
-        if (window.location.hash === '#admin') {
-          history.replaceState(null, null, ' ');
-        }
-      }, 150);
-    }
-
-    async function handleAdminLoginSubmit() {
-      const masterInput = document.getElementById('admin-input-master');
-      const secondaryInput = document.getElementById('admin-input-secondary');
-      const pinInput = document.getElementById('admin-input-pin');
-      const wordInput = document.getElementById('admin-input-word');
-      const feedback = document.getElementById('admin-login-feedback');
-      const btn = document.getElementById('btn-admin-login-submit');
-
-      const master_password_1 = masterInput ? masterInput.value.trim() : '';
-      const secondary_password_2 = secondaryInput ? secondaryInput.value.trim() : '';
-      const security_pin = pinInput ? pinInput.value.trim() : '';
-      const security_word = wordInput ? wordInput.value.trim() : '';
-
-      if (!master_password_1 || !secondary_password_2 || !security_pin || !security_word) {
-        if (feedback) {
-          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "৪টি সিকিউরিটি ফিল্ডই পূরণ করা আবশ্যক!";
-        }
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> নিরাপত্তা যাচাই চলছে...`;
-
-      try {
-        const res = await fetch('/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            master_password_1,
-            secondary_password_2,
-            security_pin,
-            security_word
-          })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          sessionStorage.setItem('admission_admin_token', data.token);
-          if (feedback) feedback.classList.add('hidden');
-          document.getElementById('admin-login-view').classList.add('hidden');
-          document.getElementById('admin-dashboard-view').classList.remove('hidden');
-          loadAdminData();
-          showToast("৪-ধাপ নিরাপত্তা যাচাই সফল! অ্যাডমিন প্যানেলে স্বাগতম।", "success");
-        } else {
-          if (feedback) {
-            feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-            feedback.innerText = data.message || "নিরাপত্তা যাচাই ব্যর্থ হয়েছে! তথ্য পরীক্ষা করুন।";
-          }
-        }
-      } catch (e) {
-        if (feedback) {
-          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "সার্ভার সংযোগে ত্রুটি।";
-        }
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<span>🛡️ ৪-ধাপ নিরাপত্তা যাচাই ও প্রবেশ</span>`;
-      }
-    }
-
-    function handleAdminLogout() {
-      sessionStorage.removeItem('admission_admin_token');
-      document.getElementById('admin-dashboard-view').classList.add('hidden');
-      document.getElementById('admin-login-view').classList.remove('hidden');
-      showToast("অ্যাডমিন প্যানেল থেকে লগআউট করা হয়েছে।", "info");
-    }
-
-    async function loadAdminData() {
-      const token = sessionStorage.getItem('admission_admin_token');
-      if (!token) return;
-
-      try {
-        const res = await fetch('/api/admin/payments', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.status === 401) {
-          sessionStorage.removeItem('admission_admin_token');
-          document.getElementById('admin-dashboard-view').classList.add('hidden');
-          document.getElementById('admin-login-view').classList.remove('hidden');
-          return;
-        }
-        const data = await res.json();
-        if (!data.success) return;
-
-        const m = data.metrics || {};
-        document.getElementById('adm-metric-revenue').innerText = `৳${(m.total_revenue || 0).toLocaleString()}`;
-        document.getElementById('adm-metric-verified').innerText = `${m.verified_students || 0} জন`;
-        document.getElementById('adm-metric-pending').innerText = `${m.pending_claims || 0} টি`;
-        document.getElementById('adm-metric-exams').innerText = `${m.total_exams || 0} টি`;
-
-        adminClaimsCache = data.claims || [];
-        adminSmsCache = data.sms_logs || [];
-
-        document.getElementById('adm-claims-count').innerText = adminClaimsCache.length;
-        document.getElementById('adm-sms-count').innerText = adminSmsCache.length;
-
-        renderAdminClaimsTable(adminClaimsCache);
-        renderAdminSmsTable(adminSmsCache);
-      } catch (e) {
-        console.error("Admin data load error:", e);
-        showToast("অ্যাডমিন ডেটা লোড করতে সমস্যা হয়েছে।", "error");
-      }
-    }
-
-    function renderAdminClaimsTable(claims) {
-      const tbody = document.getElementById('adm-claims-tbody');
-      const cardsMobile = document.getElementById('adm-claims-cards-mobile');
-      const empty = document.getElementById('adm-claims-empty');
-      if (tbody) tbody.innerHTML = '';
-      if (cardsMobile) cardsMobile.innerHTML = '';
-
-      if (!claims || claims.length === 0) {
-        if (empty) empty.classList.remove('hidden');
-        return;
-      }
-      if (empty) empty.classList.add('hidden');
-
-      claims.forEach(c => {
-        let statusBadge = '';
-        if (c.status === 'verified') {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">✓ অনুমোদিত</span>';
-        } else if (c.status === 'rejected') {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 text-[10px] font-bold">✕ বাতিল</span>';
-        } else {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold animate-pulse">⏳ অপেক্ষমান</span>';
-        }
-
-        const dateStr = (c.created_at || c.enrolled_at) ? new Date(c.created_at || c.enrolled_at).toLocaleString('bn-BD', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
-        const pkg = c.package || c.package_type || 'medical';
-        const amt = c.amount || (pkg === 'combo' ? 799 : 499);
-
-        // 1. Desktop Table Row
-        if (tbody) {
-          const tr = document.createElement('tr');
-          tr.className = "hover:bg-slate-800/40 transition";
-          let actionButtons = '';
-          let packageCol = '';
-
-          if (c.status === 'pending') {
-            packageCol = `
-              <div class="space-y-1">
-                <select id="claim-pkg-${c.id}" class="bg-slate-950 border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 font-bold focus:ring-1 focus:ring-emerald-500">
-                  <option value="medical" ${pkg === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট)</option>
-                  <option value="versity" ${pkg === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট)</option>
-                  <option value="combo" ${pkg === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট)</option>
-                </select>
-                <div class="text-[10px] text-slate-400">অনুরোধ: <span class="font-bold text-slate-300 uppercase">${pkg}</span> (৳${amt})</div>
-              </div>
-            `;
-            actionButtons = `
-              <div class="flex items-center justify-end gap-1.5">
-                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 transition flex items-center gap-1.5">
-                  <span>✓</span> <span>অনুমোদন ও আনলক</span>
-                </button>
-                <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 transition">
-                  ✕ বাতিল
-                </button>
-              </div>
-            `;
-          } else if (c.status === 'verified') {
-            packageCol = `
-              <div>
-                <span class="font-bold ${pkg === 'combo' ? 'text-purple-300' : (pkg === 'medical' ? 'text-emerald-300' : 'text-teal-300')} uppercase">${pkg === 'combo' ? 'উভয় / কম্বো' : (pkg === 'medical' ? 'মেডিকেল' : 'ভার্সিটি')}</span>
-                <span class="text-[11px] text-slate-400 ml-1">৳${amt}</span>
-              </div>
-            `;
-            actionButtons = `
-              <div class="space-y-0.5 text-right">
-                <span class="text-xs text-emerald-400 font-bold flex items-center justify-end gap-1">
-                  <span>🔓</span> <span>${pkg === 'combo' ? 'উভয় টেস্ট আনলকড' : (pkg === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
-                </span>
-                <span class="text-[10px] text-slate-500">অনুমোদিত</span>
-              </div>
-            `;
-          } else {
-            packageCol = `
-              <div>
-                <span class="font-bold text-slate-400 uppercase">${pkg}</span>
-                <span class="text-[11px] text-slate-500 ml-1">৳${amt}</span>
-              </div>
-            `;
-            actionButtons = `
-              <div class="flex items-center justify-end gap-1">
-                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-400 text-[10px] border border-slate-700 transition">
-                  পুনরায় অনুমোদন
-                </button>
-              </div>
-            `;
-          }
-
-          tr.innerHTML = `
-            <td class="py-2.5 pr-2 text-slate-400 text-[11px] whitespace-nowrap">${dateStr}</td>
-            <td class="py-2.5 px-2">
-              <div class="font-bold text-white text-xs">${c.student_name || 'পরীক্ষার্থী'}</div>
-              <div class="text-[10px] text-slate-400 truncate max-w-[140px]">${c.student_email || c.student_id || '-'}</div>
-            </td>
-            <td class="py-2.5 px-2 font-mono text-slate-300 font-bold">${c.sender_number || '-'}</td>
-            <td class="py-2.5 px-2">${packageCol}</td>
-            <td class="py-2.5 px-2 font-mono font-black text-amber-300 text-xs tracking-wider">${c.trx_id || '-'}</td>
-            <td class="py-2.5 px-2">${statusBadge}</td>
-            <td class="py-2.5 pl-2 text-right">${actionButtons}</td>
-          `;
-          tbody.appendChild(tr);
-        }
-
-        // 2. Mobile Responsive Card
-        if (cardsMobile) {
-          const card = document.createElement('div');
-          card.className = "bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shadow-md";
-
-          let mobAction = '';
-          if (c.status === 'pending') {
-            mobAction = `
-              <div class="space-y-1.5 pt-1">
-                <label class="block text-[10px] text-slate-400 font-bold">অনুমোদন প্যাকেজ নির্বাচন:</label>
-                <select id="claim-pkg-mob-${c.id}" class="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-xl p-2.5 font-bold focus:ring-1 focus:ring-emerald-500">
-                  <option value="medical" ${pkg === 'medical' ? 'selected' : ''}>🩺 মেডিকেল (৯৫ টেস্ট - ৳৪৯৯)</option>
-                  <option value="versity" ${pkg === 'versity' ? 'selected' : ''}>🏛️ ভার্সিটি (৯৫ টেস্ট - ৳৪৯৯)</option>
-                  <option value="combo" ${pkg === 'combo' ? 'selected' : ''}>🌟 উভয় / কম্বো (সব টেস্ট - ৳৭৯৯)</option>
-                </select>
-              </div>
-              <div class="grid grid-cols-3 gap-2 pt-1">
-                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="col-span-2 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-950/40 flex items-center justify-center gap-1.5 min-h-[44px]">
-                  <span>✓</span> <span>অনুমোদন ও আনলক</span>
-                </button>
-                <button onclick="rejectClaim('${c.trx_id}', ${c.id})" class="py-2.5 rounded-xl bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 font-bold text-xs border border-slate-700 flex items-center justify-center min-h-[44px]">
-                  ✕ বাতিল
-                </button>
-              </div>
-            `;
-          } else if (c.status === 'verified') {
-            mobAction = `
-              <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-950/30 border border-emerald-900/50 text-xs">
-                <span class="text-emerald-300 font-bold flex items-center gap-1">
-                  <span>🔓</span> <span>${pkg === 'combo' ? 'উভয় টেস্ট আনলকড' : (pkg === 'medical' ? 'মেডিকেল আনলকড' : 'ভার্সিটি আনলকড')}</span>
-                </span>
-                <span class="text-slate-400 text-[10px]">ফি: ৳${amt}</span>
-              </div>
-            `;
-          } else {
-            mobAction = `
-              <div class="flex items-center justify-between pt-1">
-                <span class="text-xs text-rose-400 font-semibold">আবেদনটি বাতিল</span>
-                <button onclick="approveClaim('${c.trx_id}', ${c.id})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-slate-300 text-xs font-bold border border-slate-700">
-                  পুনরায় অনুমোদন
-                </button>
-              </div>
-            `;
-          }
-
-
-          card.innerHTML = `
-            <div class="flex items-start justify-between gap-2 border-b border-slate-800/80 pb-2">
-              <div>
-                <div class="font-bold text-white text-sm">${c.student_name || 'পরীক্ষার্থী'}</div>
-                <div class="text-[11px] text-slate-400 truncate max-w-[200px]">${c.student_email || c.student_id || '-'}</div>
-                <div class="text-[10px] text-slate-500 mt-0.5">${dateStr}</div>
-              </div>
-              <div>${statusBadge}</div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 font-mono">
-              <div>
-                <div class="text-[10px] text-slate-400 font-sans">প্রেরক বিকাশ:</div>
-                <div class="font-bold text-white tracking-wider">${c.sender_number || '-'}</div>
-              </div>
-              <div>
-                <div class="text-[10px] text-slate-400 font-sans">TrxID:</div>
-                <div class="font-black text-amber-300 tracking-wider">${c.trx_id || '-'}</div>
-              </div>
-            </div>
-
-            ${mobAction}
-          `;
-          cardsMobile.appendChild(card);
-        }
-      });
-    }
-
-    function renderAdminSmsTable(smsLogs) {
-      const tbody = document.getElementById('adm-sms-tbody');
-      const cardsMobile = document.getElementById('adm-sms-cards-mobile');
-      if (tbody) tbody.innerHTML = '';
-      if (cardsMobile) cardsMobile.innerHTML = '';
-
-      if (!smsLogs || smsLogs.length === 0) {
-        if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 font-sans text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</td></tr>`;
-        if (cardsMobile) cardsMobile.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">এখনও কোনো ফরওয়ার্ডেড SMS আসেনি।</div>`;
-        return;
-      }
-
-      smsLogs.forEach(s => {
-        const dateStr = s.received_at ? new Date(s.received_at).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-';
-        const sAmt = (s.amount !== undefined && s.amount !== null && s.amount !== '') ? s.amount : (s.parsed_amount || '০');
-        const sTrx = s.trx_id || s.parsed_trx_id || '-';
-        const sRaw = s.raw_sms || s.raw_message || '-';
-        const sMatched = s.matched_claim_id || s.claimed_by_student_id;
-        const sSender = s.sender || s.parsed_sender || '-';
-
-        if (tbody) {
-          const tr = document.createElement('tr');
-          tr.className = "hover:bg-slate-800/40 transition";
-          tr.innerHTML = `
-            <td class="py-2 pr-2 text-slate-400 whitespace-nowrap">${dateStr}</td>
-            <td class="py-2 px-2 text-slate-300">${sSender}</td>
-            <td class="py-2 px-2 font-bold text-emerald-400">৳${sAmt}</td>
-            <td class="py-2 px-2 text-amber-300 font-bold">${sTrx}</td>
-            <td class="py-2 px-2">${sMatched ? `<span class="text-emerald-400">✓ ক্লেইম #${sMatched}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</td>
-            <td class="py-2 pl-2 text-slate-400 truncate max-w-xs" title="${sRaw}">${sRaw}</td>
-          `;
-          tbody.appendChild(tr);
-        }
-
-        if (cardsMobile) {
-          const card = document.createElement('div');
-          card.className = "bg-slate-950 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs font-mono";
-          card.innerHTML = `
-            <div class="flex items-center justify-between text-[11px] font-sans border-b border-slate-800/80 pb-1.5">
-              <span class="text-slate-400">${dateStr}</span>
-              <span>${sMatched ? `<span class="text-emerald-400 font-bold">✓ ক্লেইম #${sMatched}</span>` : `<span class="text-slate-500">আনক্লেইমড</span>`}</span>
-            </div>
-            <div class="grid grid-cols-3 gap-2 py-1">
-              <div>
-                <div class="text-[9px] text-slate-400 font-sans">প্রেরক:</div>
-                <div class="text-slate-200 font-bold">${sSender}</div>
-              </div>
-              <div>
-                <div class="text-[9px] text-slate-400 font-sans">পরিমাণ:</div>
-                <div class="text-emerald-400 font-black">৳${sAmt}</div>
-              </div>
-              <div>
-                <div class="text-[9px] text-slate-400 font-sans">TrxID:</div>
-                <div class="text-amber-300 font-bold">${sTrx}</div>
-              </div>
-            </div>
-            <div class="p-2 rounded-xl bg-slate-900/80 text-[10px] text-slate-400 font-sans leading-relaxed break-all">
-              ${sRaw}
-            </div>
-          `;
-          cardsMobile.appendChild(card);
-        }
-      });
-
-    }
-
-    function switchAdminTab(tab) {
-      const claimsTab = document.getElementById('adm-tab-claims');
-      const smsTab = document.getElementById('adm-tab-sms');
-      const claimsContainer = document.getElementById('adm-claims-container');
-      const smsContainer = document.getElementById('adm-sms-container');
-
-      if (tab === 'claims') {
-        claimsTab.className = "px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5";
-        smsTab.className = "px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5";
-        claimsContainer.classList.remove('hidden');
-        smsContainer.classList.add('hidden');
-      } else {
-        smsTab.className = "px-4 py-2 border-b-2 border-brand-500 text-brand-400 font-bold text-xs sm:text-sm flex items-center gap-1.5";
-        claimsTab.className = "px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5";
-        smsContainer.classList.remove('hidden');
-        claimsContainer.classList.add('hidden');
-      }
-    }
-
-    function refreshAdminData() {
-      loadAdminData();
-      showToast("অ্যাডমিন ডেটা রিফ্রেশ করা হয়েছে।", "info");
-    }
-
-    async function approveClaim(trxId, claimId) {
-      const token = sessionStorage.getItem('admission_admin_token');
-      if (!token) return;
-
-      const pkgSelect = document.getElementById(`claim-pkg-${claimId}`) || document.getElementById(`claim-pkg-mob-${claimId}`);
-      const selectedPackage = pkgSelect ? pkgSelect.value : undefined;
-
-      try {
-        const res = await fetch('/api/admin/approve-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            trx_id: trxId,
-            claim_id: claimId,
-            package: selectedPackage
-          })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          showToast(data.message || "পেমেন্ট সফলভাবে অনুমোদিত হয়েছে এবং টেস্ট আনলক হয়েছে!", "success");
-          loadAdminData();
-          syncPaymentStatus();
-        } else {
-          showToast(data.error || "অনুমোদন ব্যর্থ হয়েছে।", "error");
-        }
-      } catch (e) {
-        showToast("সার্ভার সংযোগে সমস্যা।", "error");
-      }
-    }
-
-    function toggleManualEnrollForm() {
-      const card = document.getElementById('adm-manual-enroll-card');
-      if (card) card.classList.toggle('hidden');
-    }
-
-    async function submitManualEnrollment() {
-      const token = sessionStorage.getItem('admission_admin_token');
-      if (!token) return;
-
-      const idInput = document.getElementById('manual-student-identifier');
-      const pkgSelect = document.getElementById('manual-student-package');
-      const identifier = idInput ? idInput.value.trim() : '';
-      const package = pkgSelect ? pkgSelect.value : 'combo';
-
-      if (!identifier) {
-        showToast("শিক্ষার্থীর ইমেইল, বিকাশ নাম্বার বা আইডি লিখুন।", "error");
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/admin/manual-enroll', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ identifier, package })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          showToast(data.message || "সাবস্ক্রিপশন সফলভাবে প্রদান করা হয়েছে!", "success");
-          if (idInput) idInput.value = '';
-          toggleManualEnrollForm();
-          loadAdminData();
-          syncPaymentStatus();
-        } else {
-          showToast(data.message || "ত্রুটি ঘটেছে।", "error");
-        }
-      } catch (e) {
-        showToast("সার্ভার সংযোগে সমস্যা।", "error");
-      }
-    }
-
-    function filterAdminClaims(query) {
-      const q = (query || '').toLowerCase().trim();
-      if (!q) {
-        renderAdminClaimsTable(adminClaimsCache);
-        return;
-      }
-      const filtered = adminClaimsCache.filter(c => {
-        return (c.trx_id && c.trx_id.toLowerCase().includes(q)) ||
-               (c.sender_number && c.sender_number.includes(q)) ||
-               (c.student_email && c.student_email.toLowerCase().includes(q)) ||
-               (c.student_name && c.student_name.toLowerCase().includes(q)) ||
-               (c.student_id && c.student_id.toLowerCase().includes(q));
-      });
-      renderAdminClaimsTable(filtered);
-    }
-
-    async function rejectClaim(trxId, claimId) {
-      const token = sessionStorage.getItem('admission_admin_token');
-      if (!token) return;
-
-      try {
-        const res = await fetch('/api/admin/reject-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ trx_id: trxId, claim_id: claimId })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          showToast("পেমেন্ট রিকোয়েস্ট বাতিল করা হয়েছে।", "info");
-          loadAdminData();
-        } else {
-          showToast(data.error || "বাতিল করতে সমস্যা হয়েছে।", "error");
-        }
-      } catch (e) {
-        showToast("সার্ভার সংযোগে সমস্যা।", "error");
       }
     }
 
