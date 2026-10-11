@@ -7,10 +7,10 @@
   const trackTitle = track => track === 'buet' ? 'BUET প্রিলি অনুশীলন' : 'CKRUET PCM অনুশীলন';
   const subjectNames = {Chemistry:'রসায়ন',Physics:'পদার্থবিজ্ঞান',HigherMath:'উচ্চতর গণিত'};
   let data = null, loading = null, state = {track:'buet',book:null,search:'',attempt:null}, timer = null;
-  const storageKey = 'admission_engineering_attempt_v1';
+  const storageKey = 'admission_engineering_attempt_v2';
   function read(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; } }
   function save() { try { localStorage.setItem(storageKey,JSON.stringify(state.attempt)); } catch {} }
-  function progress() { return read('admission_engineering_progress_v1',{}); }
+  function progress() { return read('admission_engineering_progress_v2',{}); }
   function bookById(id) { return data?.books.find(b=>b.id===id); }
   function selection(attempt=state.attempt) {
     const book=bookById(attempt?.book),chapter=book?.chapters.find(c=>c.id===attempt?.chapter),set=chapter?.sets.find(s=>s.id===attempt?.set);
@@ -20,7 +20,7 @@
   }
   async function load() {
     if(data) return data;
-    if(!loading) loading=fetch('/data/engineering_practice.json?v=1').then(r=>{if(!r.ok) throw new Error('load');return r.json();}).then(d=>{if(!Array.isArray(d.books))throw new Error('shape');data=d;return d;}).finally(()=>{loading=null;});
+    if(!loading) loading=fetch('/data/engineering_practice.json?v=2').then(r=>{if(!r.ok) throw new Error('load');return r.json();}).then(d=>{if(!Array.isArray(d.books))throw new Error('shape');data=d;return d;}).finally(()=>{loading=null;});
     return loading;
   }
   const chapterLoads=new Map();
@@ -134,7 +134,7 @@
   function finish() {
     if(state.attempt?.status!=='running')return;clearInterval(timer);state.attempt.status='submitted';state.attempt.finishedAt=Date.now();save();
     const result=score(),done=progress();done[`${state.track}:${state.attempt.set}`]={score:result.score,total:result.total,at:Date.now()};
-    try{localStorage.setItem('admission_engineering_progress_v1',JSON.stringify(done));}catch{}
+    try{localStorage.setItem('admission_engineering_progress_v2',JSON.stringify(done));}catch{}
     renderResult();window.scrollTo({top:0,behavior:'smooth'});
   }
   function score() {

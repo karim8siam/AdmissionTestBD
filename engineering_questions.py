@@ -84,8 +84,8 @@ def application(cid, k, mode):
         (f'{k} kg বস্তু 6 m/s থেকে 2 m/s-এ ধীর হয়। ঘর্ষণ ছাড়া অন্য কোনো বল কাজ না করলে ঘর্ষণের কাজ কত J?',-16*k,'কাজ-শক্তি উপপাদ্য W=½m(v²−u²)=½k(4−36)।'),
         (f'{20*k} N/m স্প্রিংকে 0.2 m সংকুচিত করে মসৃণ তলে {k} kg বস্তু ছাড়া হলো। স্প্রিংয়ের স্বাভাবিক দৈর্ঘ্যে বস্তুর বেগের বর্গ কত m²/s²?',F(4,5),'½Kx²=½mv²; v²=Kx²/m=(20k)(0.04)/k=0.8।')],
       'physics-1-06': [
-        (f'পৃথিবীর ব্যাসার্ধ R, পৃষ্ঠে g={10*k} m/s²। কেন্দ্র থেকে 3R ব্যাসার্ধের বৃত্তাকার কক্ষপথে v²/R কত m/s²?',F(10*k,3),'v²=GM/(3R), g=GM/R²; v²/R=g/3।'),
-        (f'সমঘনত্বের পৃথিবীর পৃষ্ঠে g={10*k} m/s²। R/4 গভীরতায় g কত m/s²?',F(15*k,2),'সমঘনত্বের মডেলে g(d)=g₀(1−d/R); d=R/4 হলে 3g₀/4।')],
+        (f'এক গোলাকার গ্রহের ব্যাসার্ধ R, পৃষ্ঠে g={10*k} m/s²। কেন্দ্র থেকে 3R ব্যাসার্ধের বৃত্তাকার কক্ষপথে v²/R কত m/s²?',F(10*k,3),'v²=GM/(3R), g=GM/R²; v²/R=g/3।'),
+        (f'সমঘনত্বের এক গোলাকার গ্রহের পৃষ্ঠে g={10*k} m/s²। R/4 গভীরতায় g কত m/s²?',F(15*k,2),'সমঘনত্বের মডেলে g(d)=g₀(1−d/R); d=R/4 হলে 3g₀/4।')],
       'physics-1-07': [
         (f'এক তারের দৈর্ঘ্য {k} m, ক্ষেত্রফল 2×10⁻⁶ m², Young modulus 2×10¹¹ Pa। 40 N টানে দৈর্ঘ্য বৃদ্ধি কত mm?',F(k,10),'ΔL=FL/(AY)=40k/(4×10⁵) m=k×10⁻⁴ m=0.1k mm।'),
         (f'ঘনত্ব {600*k} kg/m³ বস্তুকে ঘনত্ব {1000*k} kg/m³ তরলে ভাসালে আয়তনের কত অংশ ডুবে থাকবে?',F(3,5),'ভাসমান সাম্যে ρবস্তু Vg=ρতরল Vডুব g; অনুপাত=ρবস্তু/ρতরল।')],
@@ -175,7 +175,20 @@ def chapter_pool(book, chapter, track):
               'মেনিস্কাসের সমতলে':['মেনিস্কাসের অনেক উপরে','মেনিস্কাসের অনেক নিচে','যেকোনো উচ্চতায়'],
               'অস্তিত্ব নেই':['0','1','2']}
             q=item(cid,stem,[answer]+distractors[answer],answer,solution,'original_concept',[family])
-        else:q=numeric(cid,stem,answer,solution,family)
+        else:
+            q=numeric(cid,stem,answer,solution,family)
+            if 'সম্ভাবনা' in stem:
+                # All four options are admissible probabilities; no giveaway by domain.
+                from original_practice import item, fmt
+                a=F(answer)
+                candidates=[a,a/2,(a+1)/2,1-a,(2*a+1)/3,a/3]
+                values=[]
+                for x in candidates:
+                    if 0<=x<=1 and x not in values:values.append(x)
+                    if len(values)==4:break
+                assert len(values)==4
+                q=item(cid,stem,[fmt(x) for x in values],fmt(a),solution+f' তাই উত্তর {fmt(a)}।','worked_numerical',[f'{cid}-numeric-{family+1}'])
+
         q.update(subject=subject,chapter_id=cid,origin='original_practice',review_status='formula_checked_not_teacher_reviewed',difficulty=level,problem_family_id=family,source_files=['engineering_questions.py','original_practice.py'],book_reference='HSC অধ্যায়ের মৌলিক অনুশীলনী · বিগত পরীক্ষার প্রশ্ন বা বইয়ের উদ্ধৃতি নয়')
         questions.append(q)
     if subject in ('Physics','HigherMath'):
