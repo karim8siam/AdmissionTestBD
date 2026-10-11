@@ -9,6 +9,10 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <link rel="apple-touch-icon" href="/assets/logo.svg">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js for AI Exam Analytics -->
@@ -156,10 +160,8 @@
       <div class="flex items-center justify-between h-14 sm:h-16 gap-2">
 
         <!-- Logo & Branding -->
-        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onclick="switchStream('medical')">
-          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-base sm:text-xl shadow-lg glow-brand shrink-0">
-            A
-          </div>
+        <div class="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink-0" onclick="switchStream('medical')">
+          <img src="/assets/logo.svg" alt="Admission Test BD Logo" class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl shadow-lg glow-brand shrink-0 object-contain" width="44" height="44">
           <div>
             <div class="flex items-center gap-1.5 sm:gap-2">
               <span class="font-black text-base sm:text-xl tracking-tight text-white">ADMISSION<span class="text-brand-400">BD</span></span>
@@ -169,7 +171,7 @@
           </div>
         </div>
 
-        <!-- Admission Season Selector & Auth (Mobile Friendly) -->
+        <!-- Admission Season Selector (Mobile Friendly) -->
         <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <div class="flex items-center gap-1 sm:gap-2 bg-slate-800/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700/80 shadow-inner">
             <span class="text-xs text-brand-400 font-bold flex items-center gap-1">
@@ -193,9 +195,6 @@
               🏛️ ভার্সিটি ও গুচ্ছ: টেস্ট ০১ আনলকড
             </span>
           </div>
-
-          <!-- User Auth Widget (Sign In / Sign Up & Profile) -->
-          <div id="user-auth-widget" class="shrink-0"></div>
         </div>
 
       </div>
@@ -919,70 +918,7 @@
   <!-- ============================================== -->
 
 
-  <!-- ============================================== -->
-  <!-- USER AUTH MODAL (MOBILE FRIENDLY) -->
-  <!-- ============================================== -->
-  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-all duration-200">
-    <div class="fixed inset-0" onclick="closeAuthModal()"></div>
-    <div id="auth-modal-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto custom-scrollbar p-4 sm:p-7 shadow-2xl shadow-black/90 relative z-10 transform scale-95 opacity-0 transition-all duration-200 space-y-3 sm:space-y-4">
 
-      <!-- Top glow -->
-      <div class="absolute -top-16 -right-16 w-36 h-36 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-      <!-- Header -->
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-300 flex items-center justify-center text-xl sm:text-2xl shrink-0 shadow-inner">
-            👤
-          </div>
-          <div>
-            <h3 id="auth-modal-title" class="text-base sm:text-xl font-black text-white">শিক্ষার্থী একাউন্ট</h3>
-            <p class="text-xs text-slate-400">আপনার শিক্ষার্থী প্রোফাইলে লগইন করুন</p>
-          </div>
-        </div>
-        <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center text-sm font-bold transition shrink-0">✕</button>
-      </div>
-
-      <!-- Auth Tab Toggle (Login / Signup) -->
-      <div class="flex items-center bg-slate-950 p-1 rounded-2xl border border-slate-800 text-xs font-bold">
-        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl bg-brand-600 text-white shadow transition min-h-[42px]">
-          লগইন (Sign In)
-        </button>
-        <button id="auth-tab-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 rounded-xl text-slate-400 hover:text-white transition min-h-[42px]">
-          নতুন একাউন্ট (Sign Up)
-        </button>
-      </div>
-
-      <!-- Form Inputs -->
-      <form id="auth-form" onsubmit="event.preventDefault(); handleAuthSubmit();" class="space-y-3 pt-1">
-        <div id="auth-name-container" class="hidden">
-          <label class="block text-[11px] font-bold text-slate-300 mb-1">আপনার নাম (ঐচ্ছিক):</label>
-          <input id="auth-input-name" type="text" placeholder="যেমন: আবরার সাকিব" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-slate-300 mb-1">ইমেইল এড্রেস:</label>
-          <input id="auth-input-email" type="email" required placeholder="name@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-slate-300 mb-1">পাসওয়ার্ড:</label>
-          <input id="auth-input-password" type="password" required minlength="6" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 min-h-[44px]">
-        </div>
-
-        <div id="auth-feedback-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
-
-        <div class="pt-1">
-          <button id="btn-auth-submit" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-black shadow-lg glow-brand transition text-xs sm:text-sm flex items-center justify-center gap-2 min-h-[46px]">
-            <span>লগইন করুন</span>
-          </button>
-        </div>
-      </form>
-
-      <p class="text-[11px] text-center text-slate-400 leading-relaxed">
-        💡 এক ডিভাইসে একবার সাবস্ক্রিপশন নিলে ডেটা স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে। অন্য ডিভাইসে পড়ার ক্ষেত্রে শুধুমাত্র এই ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করবেন।
-      </p>
-
-    </div>
-  </div>
 
   <!-- ============================================== -->
 
@@ -3342,179 +3278,16 @@
     }
 
     // ============================================
-    // USER AUTHENTICATION & MULTI-DEVICE SYNC
+    // AUTH STUBS (Login & Sign Up disabled per request)
     // ============================================
-    let currentAuthMode = 'login';
-
-    function openAuthModal() {
-      const modal = document.getElementById('auth-modal');
-      const card = document.getElementById('auth-modal-card');
-      if (!modal || !card) return;
-      modal.style.pointerEvents = '';
-      modal.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        card.classList.remove('scale-95', 'opacity-0');
-        card.classList.add('scale-100', 'opacity-100');
-      });
-    }
-
-    function closeAuthModal() {
-      const modal = document.getElementById('auth-modal');
-      const card = document.getElementById('auth-modal-card');
-      if (!modal || modal.classList.contains('hidden')) return;
-      modal.style.pointerEvents = 'none';
-      if (card) {
-        card.classList.remove('scale-100', 'opacity-100');
-        card.classList.add('scale-95', 'opacity-0');
-      }
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.style.pointerEvents = '';
-      }, 150);
-    }
-
-    function switchAuthTab(mode) {
-      currentAuthMode = mode;
-      const loginTab = document.getElementById('auth-tab-login');
-      const signupTab = document.getElementById('auth-tab-signup');
-      const nameContainer = document.getElementById('auth-name-container');
-      const submitBtn = document.getElementById('btn-auth-submit');
-      const feedback = document.getElementById('auth-feedback-msg');
-      if (feedback) feedback.classList.add('hidden');
-
-      if (mode === 'signup') {
-        loginTab.className = "flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition";
-        signupTab.className = "flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition";
-        nameContainer.classList.remove('hidden');
-        submitBtn.innerHTML = `<span>নতুন একাউন্ট তৈরি করুন</span>`;
-      } else {
-        loginTab.className = "flex-1 py-2 rounded-xl bg-brand-600 text-white shadow transition";
-        signupTab.className = "flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition";
-        nameContainer.classList.add('hidden');
-        submitBtn.innerHTML = `<span>লগইন করুন</span>`;
-      }
-    }
-
-    async function handleAuthSubmit() {
-      const emailInput = document.getElementById('auth-input-email');
-      const passInput = document.getElementById('auth-input-password');
-      const nameInput = document.getElementById('auth-input-name');
-      const feedback = document.getElementById('auth-feedback-msg');
-      const btn = document.getElementById('btn-auth-submit');
-
-      const email = emailInput ? emailInput.value.trim() : '';
-      const password = passInput ? passInput.value.trim() : '';
-      const name = nameInput ? nameInput.value.trim() : '';
-
-      if (!email || !password) {
-        if (feedback) {
-          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "ইমেইল এবং পাসওয়ার্ড আবশ্যক।";
-        }
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = `<span class="inline-block animate-spin mr-1">↻</span> অনুগ্রহ করে অপেক্ষা করুন...`;
-
-      const endpoint = currentAuthMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
-      const payload = {
-        email,
-        password,
-        name: name || undefined,
-        student_id: appState.studentId
-      };
-
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          localStorage.setItem('admission_user_token', data.token);
-          localStorage.setItem('admission_user_email', data.email);
-          if (data.name) localStorage.setItem('admission_user_name', data.name);
-          if (data.student_id) {
-            localStorage.setItem('admission_student_id', data.student_id);
-            appState.studentId = data.student_id;
-          }
-          appState.userToken = data.token;
-          appState.userEmail = data.email;
-          appState.userName = data.name || data.email;
-
-
-          updateUnlockedBadges();
-          populateTestDropdown();
-          updateAuthUI();
-          closeAuthModal();
-
-          showToast(`স্বাগতম ${data.name || data.email}! আপনার একাউন্ট সক্রিয় হয়েছে।`, "success");
-        } else {
-          if (feedback) {
-            feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-            feedback.innerText = data.error || "প্রক্রিয়াটি সম্পন্ন করা যায়নি।";
-          }
-        }
-      } catch (e) {
-        if (feedback) {
-          feedback.className = "text-xs p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 block";
-          feedback.innerText = "সার্ভার সংযোগে সমস্যা হয়েছে।";
-        }
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<span>${currentAuthMode === 'signup' ? 'নতুন একাউন্ট তৈরি করুন' : 'লগইন করুন'}</span>`;
-      }
-    }
-
-    function handleUserLogout() {
-      localStorage.removeItem('admission_user_token');
-      localStorage.removeItem('admission_user_email');
-      localStorage.removeItem('admission_user_name');
-      appState.userToken = null;
-      appState.userEmail = null;
-      appState.userName = null;
-      updateAuthUI();
-      showToast("সফলভাবে লগআউট করা হয়েছে।", "info");
-    }
-
+    function openAuthModal() {}
+    function closeAuthModal() {}
+    function switchAuthTab() {}
+    function handleAuthSubmit() {}
+    function handleUserLogout() {}
     function updateAuthUI() {
       const container = document.getElementById('user-auth-widget');
-      if (!container) return;
-
-      if (appState.userEmail) {
-        const badgeText = 'ফ্রি মেম্বার';
-
-        container.innerHTML = `
-          <div class="relative group">
-            <button class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-white font-bold transition">
-              <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40 flex items-center justify-center text-[10px] sm:text-[11px] shrink-0">👤</span>
-              <span class="max-w-[70px] sm:max-w-[130px] truncate">${appState.userName || appState.userEmail}</span>
-              <span class="text-[10px] text-slate-400">▼</span>
-            </button>
-            <div class="absolute right-0 mt-1 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 hidden group-hover:block z-50 space-y-1">
-              <div class="px-3 py-2 border-b border-slate-800">
-                <p class="text-[10px] text-slate-400">লগইন প্রোফাইল</p>
-                <p class="text-xs font-bold text-white truncate">${appState.userEmail}</p>
-                <p class="text-[10px] text-emerald-400 font-bold mt-1 font-mono">${badgeText}</p>
-              </div>
-              <button onclick="handleUserLogout()" class="w-full text-left px-3 py-2 text-xs text-rose-400 hover:bg-rose-950/40 hover:text-rose-300 rounded-xl transition flex items-center gap-2">
-                <span>🚪</span> লগআউট করুন
-              </button>
-            </div>
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <button onclick="openAuthModal()" class="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-600/90 to-teal-600/90 hover:from-brand-500 hover:to-teal-500 text-white text-xs font-extrabold shadow-sm transition border border-emerald-500/30 shrink-0 min-h-[36px]">
-            <span>👤</span>
-            <span class="hidden sm:inline">লগইন / সাইন-আপ</span>
-            <span class="sm:hidden">লগইন</span>
-          </button>
-        `;
-      }
+      if (container) container.innerHTML = '';
     }
 
     // ============================================
