@@ -143,6 +143,7 @@
       50% { opacity: 0.5; transform: scale(1.05); }
     }
   </style>
+  <link rel="stylesheet" href="/assets/chapter-practice.css">
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white overflow-x-hidden">
 
@@ -210,6 +211,10 @@
           <span>🏛️</span>
           <span>ভার্সিটি ও গুচ্ছ বিজ্ঞান ১০০ টেস্ট</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300">DU • GST • Agri</span>
+        </button>
+
+        <button id="nav-btn-chapters" onclick="switchStream('chapters')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
+          <span>📖</span><span>অধ্যায়ভিত্তিক অনুশীলন</span><span class="text-[9px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded">ফ্রি</span>
         </button>
 
         <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
@@ -856,6 +861,8 @@
 
     </div>
 
+    <section id="view-chapter-practice" class="hidden" aria-label="অধ্যায়ভিত্তিক অনুশীলন"></section>
+
   </main>
 
   <!-- ============================================== -->
@@ -1176,7 +1183,7 @@
       if (seasonSel) seasonSel.value = appState.selectedSession;
 
       // If not resuming an active exam, ALWAYS cleanly default to 'medical' stream
-      if (!sessionRestored || !sessionRestored.shouldResume) {
+      if ((!sessionRestored || !sessionRestored.shouldResume) && appState.currentStream !== 'chapters') {
         appState.currentStream = 'medical';
         appState.currentTestId = getCurrentStreamTestId('medical');
       }
@@ -1333,6 +1340,7 @@
       const navButtons = [
         { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-chapters', stream: 'chapters', activeClass: 'bg-teal-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-kb', stream: 'textbooks', activeClass: 'bg-amber-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' },
@@ -1351,7 +1359,14 @@
     }
 
     function switchStream(stream) {
+      if (window.ChapterPractice && ChapterPractice.guardNavigation(stream)) return;
+      if (appState.examStatus === 'running' && stream !== appState.currentStream) {
+        openCustomModal({title: 'চলতি পরীক্ষা বাতিল করে বিভাগ বদলাবে?', subtitle: 'উত্তরপত্র জমা না দিলে ফলাফল সংরক্ষিত হবে না।', icon: '⚠️', confirmText: 'বাতিল করে এগিয়ে যান', cancelText: 'পরীক্ষায় ফিরে যান', showCancel: true,
+          onConfirm: () => {clearInterval(appState.timerInterval); appState.timerInterval = null; appState.examStatus = 'ready'; appState.userAnswers = {}; switchStream(stream);}});
+        return;
+      }
       appState.currentStream = stream;
+      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters');
 
       // Ensure this stream dataset is loaded on-demand
       if (typeof loadStreamDataset === "function" && !loadedDatasets[stream]) {
@@ -1362,7 +1377,7 @@
       syncNavButtons(stream);
 
       // Hide all views
-      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering'].forEach(id => {
+      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering', 'view-chapter-practice'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
@@ -1393,6 +1408,9 @@
         updateUnlockedBadges();
         populateTestDropdown();
         loadCurrentSelectedTest();
+      } else if (stream === 'chapters') {
+        document.getElementById('view-chapter-practice').classList.remove('hidden');
+        if (window.ChapterPractice) ChapterPractice.open();
       } else if (stream === 'past_15years') {
         document.getElementById('view-past-15years').classList.remove('hidden');
         renderPastYearView();
@@ -3254,7 +3272,7 @@
         const session = JSON.parse(raw);
         if (!session) return false;
 
-        if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering'].includes(session.currentStream)) {
+        if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering', 'chapters'].includes(session.currentStream)) {
           appState.currentStream = session.currentStream;
         }
         if (session.currentMedTestId) appState.currentMedTestId = session.currentMedTestId;
@@ -3545,5 +3563,6 @@
     }
   </script>
 
+  <script src="/assets/chapter-practice.js"></script>
 </body>
 </html>
