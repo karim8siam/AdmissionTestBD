@@ -1,10 +1,11 @@
-"""Build chapter practice from existing, explicitly tagged question banks only.
+"""Build chapter practice from tagged banks and explicit original practice material.
 
-No questions are generated, guessed into chapters, or repeated to meet targets.
+Retain existing questions and fill deficits with separately attributed original items.
 Run from the repository root: python build_chapter_practice.py
 """
 import ast
 import collections
+import copy
 import hashlib
 import json
 import re
@@ -87,7 +88,7 @@ def catalog():
     # Explicit gaps: these subjects may be required by some varsity units, but there is no bank.
     books.extend([
         {"id": "bangla", "subject": "Bangla", "paper": "", "title": "বাংলা · ভর্তি প্রস্তুতি",
-         "kind": "topics", "tracks": ["versity"], "chapters": [], "note": "এই বিষয়ে প্রশ্নব্যাংক এখনো যুক্ত হয়নি।"},
+         "kind": "topics", "tracks": ["versity"], "chapters": [{"id": f"bangla-{i:02}", "number": i, "title": t} for i,t in enumerate(["ধ্বনি ও বর্ণ", "সন্ধি", "সমাস", "শব্দ ও পদ", "কারক ও বিভক্তি", "বাক্য ও ক্রিয়া", "বানান ও শুদ্ধ প্রয়োগ", "সাহিত্য পরিচিতি"],1)], "note": "ভর্তি প্রস্তুতির বিষয়ভিত্তিক অনুশীলন; বাংলা ১ম পত্রের পূর্ণ পাঠতালিকা নয়।"},
         {"id": "ict", "subject": "ICT", "paper": "", "title": "তথ্য ও যোগাযোগ প্রযুক্তি",
          "kind": "textbook", "tracks": ["versity"], "chapters": [
              {"id": f"ict-{i:02}", "number": i, "title": t} for i,t in enumerate([
@@ -163,9 +164,21 @@ def build():
                            "book_reference": q.get("book_reference", ""),
                            "source_files": sorted({c[4] for c in candidates})})
         report["duplicate_entries_removed"] += len(candidates) - 1
+    from original_practice import make_original_questions
+    originals = make_original_questions(books)
     for book in books:
         for chapter in book["chapters"]:
-            questions = sorted(pools[chapter["id"]], key=lambda q:q["id"])
+            cid = chapter["id"]
+            existing = sorted(pools[cid], key=lambda q:q["id"])
+            target = 300 if book["subject"] == "Chemistry" else 100
+            seen = {norm(q["question_bn"]) for q in existing}
+            additions = [q for q in originals[cid] if norm(q["question_bn"]) not in seen]
+            questions = existing[:target] + additions[:max(0, target-len(existing))]
+            assert len(questions) == target, (cid, len(questions), target)
+            chapter["existing_questions"] = min(len(existing), target)
+            chapter["original_questions"] = len(questions)-chapter["existing_questions"]
+            chapter["question_format_note"] = ("মৌলিক প্রশ্নে দুই-বক্তব্যভিত্তিক ধারণা যাচাই রয়েছে।" if book["subject"] not in ("Physics", "HigherMath") else "মৌলিক প্রশ্নে সূত্রভিত্তিক সংখ্যাগত অনুশীলন রয়েছে; একই ধারণার ভিন্ন সংখ্যাগত সমস্যা থাকতে পারে।")
+            report["original_questions_added"] += chapter["original_questions"]
             target = 300 if book["subject"] == "Chemistry" else 100
             chapter["available_questions"] = len(questions)
             chapter["target_questions"] = target
@@ -174,19 +187,34 @@ def build():
                                "question_ids": [q["id"] for q in questions[i*100:(i+1)*100]]}
                                for i in range(3 if target == 300 else 1)]
         book["available_questions"] = sum(len(c["questions"]) for c in book["chapters"])
-    data = {"version": 1, "books": books, "sources": [
+    data = {"version": 2, "books": books, "sources": [
         {"title": "College HSC subject/paper syllabus and chapter references", "url": "https://www.skisc.edu.bd/public/Syllabus%202025/National%20Curriculum/HSC-syllabus-science.pdf"},
         {"title": "Chemistry first-paper chapter catalogue", "url": "https://www.oriole.com.bd/academic/class-11-12/class-11-12-chemistry-1"},
         {"title": "Chemistry second-paper chapter catalogue", "url": "https://www.oriole.com.bd/academic/class-11-12/class-11-12-chemistry-2"}], "audit": dict(report)}
+    # Keep catalogue tiny; download only the chosen chapter's questions.
+    manifest = copy.deepcopy(data)
+    for book in manifest["books"]:
+        for chapter in book["chapters"]:
+            payload = next(c for b in books for c in b["chapters"] if c["id"] == chapter["id"])
+            body = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+            digest = hashlib.sha256(body.encode()).hexdigest()[:12]
+            chapter["questions_url"] = f'/data/chapter_practice/{chapter["id"]}-{digest}.json'
+            chapter["question_count"] = len(chapter.pop("questions"))
+            for question_set in chapter["sets"]:
+                question_set["question_count"] = len(question_set.pop("question_ids"))
+            for directory in ["data", "public/data"]:
+                destination = ROOT / directory / "chapter_practice"
+                destination.mkdir(exist_ok=True)
+                (destination / f'{chapter["id"]}-{digest}.json').write_text(body)
     for directory in ["data", "public/data"]:
-        (ROOT / directory / "chapter_practice.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
-    rows = ["# Chapter practice coverage", "", "Generated from existing repository banks. No new questions or book PDFs were imported.", "",
+        (ROOT / directory / "chapter_practice.json").write_text(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+    rows = ["# Chapter practice coverage", "", "Existing repository questions plus original chapter practice. No book PDFs or claimed textbook quotations were imported.", "",
             "100 questions per chapter target; chemistry targets three disjoint 100-question sets per chapter.",
-            "Short banks produce shorter sets; empty sets remain unavailable. Broad and conflicting labels are excluded.", "",
-            "Deduplication and structural checks are not a factual review of every answer.", "", "| Book | Chapter | Available distinct questions | Published | Target |", "|---|---|---:|---:|---:|"]
+            "Every listed chapter/topic has exactly 100 questions; chemistry has three disjoint 100-question sets. Broad/conflicting legacy labels are excluded.", "",
+            "Original items use explicit concept/misconception pairs and worked numerical templates. Distinct items may test shared concepts; numerical variants are not distinct learning outcomes. Structural and arithmetic checks do not replace independent educational review.", "", "| Book | Chapter | Existing retained | Original added | Published | Target |", "|---|---|---:|---:|---:|---:|"]
     for book in books:
         for c in book["chapters"]:
-            rows.append(f'| {book["title"]} | {c["number"]}. {c["title"]} | {c["available_questions"]} | {len(c["questions"])} | {c["target_questions"]} |')
+            rows.append(f'| {book["title"]} | {c["number"]}. {c["title"]} | {c["existing_questions"]} | {c["original_questions"]} | {len(c["questions"])} | {c["target_questions"]} |')
     rows += ["", "## Audit", ""] + [f"- {k}: {v}" for k,v in report.items()]
     (ROOT / "CHAPTER_PRACTICE_COVERAGE.md").write_text('\n'.join(rows) + '\n')
     print(json.dumps({"books": len(books), "chapters": sum(len(b["chapters"]) for b in books),

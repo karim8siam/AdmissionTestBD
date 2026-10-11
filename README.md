@@ -20,12 +20,14 @@ The root, public and web copies of index.html must remain identical.
 
 ## Chapter practice
 
-Run `python build_chapter_practice.py` to rebuild `data/chapter_practice.json` and its public copy from the existing structured question banks. The builder removes repeated question texts, rejects answer/chapter conflicts and excludes broad/unmapped chapter labels. It does not establish factual correctness of every source answer.
+Run `python build_chapter_practice.py` to rebuild the small catalogue and chapter payloads in `data/` and `public/data/`. Existing structured banks are retained after deduplication and conflict checks. Deficits are filled by `original_practice.py` using author-written concept/misconception pairs in `content/original_facts.txt` and worked numerical templates.
 
-Targets: one set of up to 100 questions per chapter; chemistry has three disjoint sets of up to 100 questions per chapter. Short banks remain short. Empty sets are disabled. See `CHAPTER_PRACTICE_COVERAGE.md` for actual coverage.
+Every listed chapter/topic has exactly 100 questions. Each chemistry chapter has three disjoint sets of exactly 100 questions. Coverage: 107 chapters/topics, 12,700 questions, including 1,308 retained bank items and 11,392 original practice items. See `CHAPTER_PRACTICE_COVERAGE.md` for per-chapter figures.
 
-Shared textbook content is used by both admission tracks; progress is keyed independently by track and set. Chapter progress and active attempts are saved on the current device and do not update full-test sequential progress or national rankings. The active timer uses an absolute deadline and survives reload.
+Original concept questions combine two distinct statements; each unordered concept pair is used once in a chapter. Numerical questions use distinct input cases across four exercise families per chapter. Distinct questions may share concepts: these counts are not counts of distinct learning outcomes. New questions are labelled original practice, not quoted textbooks or past exams. Arithmetic/structure checks are not independent subject-specialist verification. The repository's nominal 2,000-entry knowledge file contains repeated content and is not treated as 2,000 unique source facts.
 
-Catalogue references are listed in the generated dataset. No external book PDFs or newly generated questions are included. Bangla and ICT are shown as coverage gaps because the current repository has no questions for them. The varsity section covers science preparation and supplemental admission topics; individual university units may require different subjects.
+Only catalogue metadata loads when browsing. Question data is fetched on demand for the chosen chapter using content-hashed URLs. Medical and Varsity Science share suitable textbook content but save progress independently. Chapter practice is unrestricted and never updates full-test locks or rankings. Attempts/progress use v2 storage keys so old short-set scores are not presented as completion of new 100-question sets.
 
-Chapter JS/CSS copies in assets/, public/assets/ and web/assets/ must remain identical.
+Bangla contains eight admission-preparation topics, not a complete first-paper literature textbook. ICT contains six chapters. Individual university units may require different subjects. Catalogue sources are references for chapter organisation, not claims that every original question was checked against those books.
+
+Chapter JS/CSS copies in assets/, public/assets/ and web/assets/ must remain identical. Run `python verify_chapter_practice.py` for coverage, uniqueness, payload/provenance and numerical sanity checks.
