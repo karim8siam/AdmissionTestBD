@@ -144,6 +144,7 @@
     }
   </style>
   <link rel="stylesheet" href="/assets/chapter-practice.css?v=2">
+  <link rel="stylesheet" href="/assets/engineering-practice.css?v=1">
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white overflow-x-hidden">
 
@@ -199,7 +200,7 @@
 
       </div>
 
-      <!-- Main Navigation Tabs: Stream Order Medical -> Varsity -> Engineering (Last) -> 15 Years -> Textbooks -> Tricks -->
+      <!-- Main Navigation Tabs: Medical, Varsity, Chapters, Engineering, Past Papers, Books, Tricks -->
       <nav class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto py-2 custom-scrollbar touch-scroll border-t border-slate-800/60 text-xs sm:text-sm font-semibold flex-nowrap -mx-3 px-3 sm:mx-0 sm:px-0">
         <button id="nav-btn-medical" onclick="switchStream('medical')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap bg-brand-600 text-white shadow-md font-bold">
           <span>🩺</span>
@@ -215,6 +216,13 @@
 
         <button id="nav-btn-chapters" onclick="switchStream('chapters')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>📖</span><span>অধ্যায়ভিত্তিক অনুশীলন</span><span class="text-[9px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded">ফ্রি</span>
+        </button>
+
+        <!-- Engineering PCM practice -->
+        <button id="nav-btn-engineering" onclick="switchStream('engineering')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-300 hover:bg-slate-800/40">
+          <span>📐</span>
+          <span>ইঞ্জিনিয়ারিং ভর্তি (BUET/CKRUET)</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-950 text-violet-300 border border-violet-800">ফ্রি</span>
         </button>
 
         <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
@@ -234,12 +242,7 @@
           <span>ক্যালকুলেটরবিহীন স্পিড ট্রিকস</span>
         </button>
 
-        <!-- Engineering Stream (Placed at the end of the sequence) -->
-        <button id="nav-btn-engineering" onclick="switchStream('engineering')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-300 hover:bg-slate-800/40">
-          <span>📐</span>
-          <span>ইঞ্জিনিয়ারিং ভর্তি (BUET/CKRUET)</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">শীঘ্রই আসছে</span>
-        </button>
+
       </nav>
 
     </div>
@@ -839,27 +842,7 @@
     <!-- ============================================== -->
     <!-- VIEW 5: ENGINEERING STREAM (Placed at sequence end) -->
     <!-- ============================================== -->
-    <div id="view-engineering" class="hidden space-y-6">
-
-      <div class="bg-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-800 text-center space-y-4 max-w-2xl mx-auto shadow-2xl">
-        <div class="w-16 h-16 rounded-2xl bg-slate-800 text-slate-400 border border-slate-700 flex items-center justify-center text-3xl font-black mx-auto">
-          📐
-        </div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold">
-          <span>⏳</span> প্রস্তুতি চলছে / Coming Soon
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-black text-white">ইঞ্জিনিয়ারিং ভর্তি প্রস্তুতি (বুয়েট ও সিকেআরইউইটি)</h2>
-        <p class="text-xs sm:text-sm text-slate-400">
-          বুয়েট, রুয়েট, কুয়েট ও চুয়েট-এর লিখিত এবং প্রিলিমিনারি কনসেপচুয়াল প্রশ্নব্যাংক এবং স্পেশাল ইঞ্জিনিয়ারিং মডেল টেস্ট তৈরির কাজ প্রক্রিয়াধীন রয়েছে। খুব শীঘ্রই এটি লাইভ হবে।
-        </p>
-        <div class="pt-4">
-          <button onclick="switchStream('medical')" class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg transition">
-            মেডিকেল ১০০ টেস্টে ফিরে যান
-          </button>
-        </div>
-      </div>
-
-    </div>
+    <section id="view-engineering" class="hidden" aria-label="ইঞ্জিনিয়ারিং অনুশীলন"></section>
 
     <section id="view-chapter-practice" class="hidden" aria-label="অধ্যায়ভিত্তিক অনুশীলন"></section>
 
@@ -1360,13 +1343,14 @@
 
     function switchStream(stream) {
       if (window.ChapterPractice && ChapterPractice.guardNavigation(stream)) return;
+      if (window.EngineeringPractice && EngineeringPractice.guardNavigation(stream)) return;
       if (appState.examStatus === 'running' && stream !== appState.currentStream) {
         openCustomModal({title: 'চলতি পরীক্ষা বাতিল করে বিভাগ বদলাবে?', subtitle: 'উত্তরপত্র জমা না দিলে ফলাফল সংরক্ষিত হবে না।', icon: '⚠️', confirmText: 'বাতিল করে এগিয়ে যান', cancelText: 'পরীক্ষায় ফিরে যান', showCancel: true,
           onConfirm: () => {clearInterval(appState.timerInterval); appState.timerInterval = null; appState.examStatus = 'ready'; appState.userAnswers = {}; switchStream(stream);}});
         return;
       }
       appState.currentStream = stream;
-      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters');
+      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters' || stream === 'engineering');
 
       // Ensure this stream dataset is loaded on-demand
       if (typeof loadStreamDataset === "function" && !loadedDatasets[stream]) {
@@ -1421,6 +1405,7 @@
         document.getElementById('view-nocalc').classList.remove('hidden');
       } else if (stream === 'engineering') {
         document.getElementById('view-engineering').classList.remove('hidden');
+        if (window.EngineeringPractice) EngineeringPractice.open();
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3564,5 +3549,6 @@
   </script>
 
   <script src="/assets/chapter-practice.js?v=2"></script>
+  <script src="/assets/engineering-practice.js?v=1"></script>
 </body>
 </html>

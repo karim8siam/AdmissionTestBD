@@ -31,3 +31,9 @@ Only catalogue metadata loads when browsing. Question data is fetched on demand 
 Bangla contains eight admission-preparation topics, not a complete first-paper literature textbook. ICT contains six chapters. Individual university units may require different subjects. Catalogue sources are references for chapter organisation, not claims that every original question was checked against those books.
 
 Chapter JS/CSS copies in assets/, public/assets/ and web/assets/ must remain identical. Run `python verify_chapter_practice.py` for coverage, uniqueness, payload/provenance and numerical sanity checks.
+
+## Engineering practice
+
+The Engineering navigation item provides separate BUET historical preliminary and CKRUET custom PCM tracks. Each has six book/paper groups and 51 chapters: 100 questions per Mathematics/Physics chapter and three disjoint 100-question Chemistry sets per chapter. One 100-question mixed set per track reuses its chapter bank. Questions are original parameterised practice; a shared Chemistry concept core means 14,200 chapter entries represent 11,920 distinct question stems, not 14,200 distinct learning outcomes. Independent teacher review and a complete authenticated ten-year archive are not claimed. References and session-specific format notes are available directly in the site.
+
+Rebuild with `python build_engineering.py`; validate with `python verify_engineering.py`. UI assets and HTML are mirrored in root/public/web, and hashed chapter payloads load on demand. Engineering attempts/progress have independent local-storage keys and never change Medical/Varsity test unlocks.

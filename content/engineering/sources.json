@@ -1,0 +1,89 @@
+{
+  "researched_on": "2026-10-11",
+  "sources": [
+    {
+      "id": "ckruet-2023-24-prospectus",
+      "url": "https://www.ruet.ac.bd/public/storage/notices/ckruet-admission-2023-24-brochure-english.pdf",
+      "kind": "official_prospectus",
+      "inspection": "Read rules, timetable and distribution table. PCM 25 each and English 25; 500 marks; 150 minutes; negative 25% of question marks.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "buet-2025-26-prospectus-mirror",
+      "url": "https://eduresultbd.com/wp-content/uploads/2025/10/buet-admission-test-Prospectus-2025-26.pdf",
+      "kind": "university_document_on_third_party_mirror",
+      "inspection": "Downloaded and visually inspected PDF page 3: written PCM 20 each, 600 marks, 180 minutes. Official admission endpoint timed out. Latest 2026-27 BUET rules not verified.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "buet-preli-introduction",
+      "url": "https://www.thedailystar.net/city/news/buet-introduces-preliminary-tests-admission-2084469",
+      "kind": "news_report",
+      "inspection": "2020-21 session introduction of preliminary screening. Do not treat originally announced dates as final exam dates.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "ruet-2020-21-notice",
+      "url": "https://www.ruet.ac.bd/notice/new-date-of-ruet-kuet-cuet-ug-admission-test-session-2020-21",
+      "kind": "official_notice",
+      "inspection": "September 15, 2021 notice identifies combined admission for 2020-21. A secondary report that says the cluster began only in 2021-22 conflicts with this primary record.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "kuet-current",
+      "url": "https://admission.kuet.ac.bd/",
+      "kind": "official_admission_page",
+      "inspection": "Observed October 11, 2026: page identifies KUET 2026-27 and MCQ. A KUET page alone is not evidence of a current CKRUET combined exam. Download link resolved to the same page; detailed prospectus not obtained.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "aap-recommended-books",
+      "url": "https://aapathshala.com/media/files/resource/Course_PlanChapterwise_Complete_Preparation_ygQqPiX.pdf",
+      "kind": "coaching_provider_recommendation",
+      "inspection": "Page 11 of 2021 course plan recommends Ishaq/Tapan/Giasuddin; Hazari/Abu Salek/Guha; Ketab/Rafiqul; Udvash and Aspect engineering banks. Historical recommendation, not a contemporary readership survey or evidence that full books have been read.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "udvash-publisher",
+      "url": "https://udvash.com/courseDetailsEngineering",
+      "kind": "publisher_course_page",
+      "inspection": "Concept, practice and engineering/BUET/CKRUET bank previews listed. Two attempted Drive previews returned 404. Full contents not obtained.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "buet-preli-2023-scan",
+      "url": "https://codehorsebd.com/buet-preli-admission-question-solution-2022-23/",
+      "kind": "third_party_question_scan",
+      "inspection": "Downloaded scan images. Read selected math/physics and chemistry pages, not all shifts. Printed heading identifies compiled 2022-23 preliminary material. Answers not independently verified.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "buet-preli-2024-scan",
+      "url": "https://codehorsebd.com/buet-preli-admission-question-solution-2023-24/",
+      "kind": "third_party_question_scan",
+      "inspection": "Visually read five question pages covering numbered items 1-100. Manual primary chapter tags supplied separately; mixed chapter problems retain secondary tags. Heading says compiled preliminary material, not an official authenticated shift paper. Do not interpret as all shifts or a ten-year frequency analysis. Answer-key pages exist but answers are not independently verified.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "ckruet-2024-book-match",
+      "url": "https://codehorsebd.com/cuet-kuet-ruet-question-solution-2023-24/",
+      "kind": "third_party_textbook_match_compilation",
+      "inspection": "Read selected tables matching questions to textbook pages. Physics table explicitly names Shahjahan Rahman Selim and Zakaria Touhid. This is a compiled question-to-book mapping, not an authenticated original paper.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "satt-buet-audit",
+      "url": "https://sattacademy.com/ques-bank/buet/mcq",
+      "kind": "aggregator_not_accepted_as_verified_paper",
+      "inspection": "MCQ page displayed BUET-2017 numerical written-style items with an answer and no four choices. Type and year labels alone are insufficient for import.",
+      "paper_questions_imported": 0
+    },
+    {
+      "id": "nonacademy-audit",
+      "url": "https://www.nonacademyplus.com/",
+      "kind": "provider_page_not_accepted_as_paper",
+      "inspection": "Question solution titles shown without usable paper links in extracted page. Generic India/Physics Wallah copy also present. Not sufficient to establish authentic Bangladesh papers.",
+      "paper_questions_imported": 0
+    }
+  ]
+}

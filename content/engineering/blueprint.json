@@ -1,0 +1,546 @@
+{
+  "status": "implemented_original_practice",
+  "tracks": [
+    {
+      "id": "buet-preli",
+      "label": "BUET historical preliminary MCQ practice",
+      "current_exam_equivalence": false
+    },
+    {
+      "id": "ckruet-pcm",
+      "label": "CKRUET historical PCM practice",
+      "current_exam_equivalence": false,
+      "omitted_official_subjects": [
+        "English"
+      ]
+    }
+  ],
+  "subjects": [
+    "HigherMath",
+    "Physics",
+    "Chemistry"
+  ],
+  "books": [
+    {
+      "id": "chemistry-1",
+      "title": "রসায়ন ১ম পত্র",
+      "subject": "Chemistry",
+      "paper": "1st Paper",
+      "chapters": [
+        {
+          "id": "chemistry-1-01",
+          "number": 1,
+          "title": "ল্যাবরেটরির নিরাপদ ব্যবহার",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "chemistry-1-02",
+          "number": 2,
+          "title": "গুণগত রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "chemistry-1-03",
+          "number": 3,
+          "title": "পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "chemistry-1-04",
+          "number": 4,
+          "title": "রাসায়নিক পরিবর্তন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "chemistry-1-05",
+          "number": 5,
+          "title": "কর্মমুখী রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 3
+        }
+      ]
+    },
+    {
+      "id": "chemistry-2",
+      "title": "রসায়ন ২য় পত্র",
+      "subject": "Chemistry",
+      "paper": "2nd Paper",
+      "chapters": [
+        {
+          "id": "chemistry-2-01",
+          "number": 1,
+          "title": "পরিবেশ রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 5
+        },
+        {
+          "id": "chemistry-2-02",
+          "number": 2,
+          "title": "জৈব রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 10
+        },
+        {
+          "id": "chemistry-2-03",
+          "number": 3,
+          "title": "পরিমাণগত রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "chemistry-2-04",
+          "number": 4,
+          "title": "তড়িৎ রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "chemistry-2-05",
+          "number": 5,
+          "title": "অর্থনৈতিক রসায়ন",
+          "sets_per_track": 3,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        }
+      ]
+    },
+    {
+      "id": "physics-1",
+      "title": "পদার্থবিজ্ঞান ১ম পত্র",
+      "subject": "Physics",
+      "paper": "1st Paper",
+      "chapters": [
+        {
+          "id": "physics-1-01",
+          "number": 1,
+          "title": "ভৌতজগৎ ও পরিমাপ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-1-02",
+          "number": 2,
+          "title": "ভেক্টর",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 3
+        },
+        {
+          "id": "physics-1-03",
+          "number": 3,
+          "title": "গতিবিদ্যা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-1-04",
+          "number": 4,
+          "title": "নিউটনিয়ান বলবিদ্যা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-1-05",
+          "number": 5,
+          "title": "কাজ, শক্তি ও ক্ষমতা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-1-06",
+          "number": 6,
+          "title": "মহাকর্ষ ও অভিকর্ষ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 3
+        },
+        {
+          "id": "physics-1-07",
+          "number": 7,
+          "title": "পদার্থের গাঠনিক ধর্ম",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-1-08",
+          "number": 8,
+          "title": "পর্যায়বৃত্ত গতি",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-1-09",
+          "number": 9,
+          "title": "তরঙ্গ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-1-10",
+          "number": 10,
+          "title": "আদর্শ গ্যাস ও গতিতত্ত্ব",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        }
+      ]
+    },
+    {
+      "id": "physics-2",
+      "title": "পদার্থবিজ্ঞান ২য় পত্র",
+      "subject": "Physics",
+      "paper": "2nd Paper",
+      "chapters": [
+        {
+          "id": "physics-2-01",
+          "number": 1,
+          "title": "তাপগতিবিদ্যা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "physics-2-02",
+          "number": 2,
+          "title": "স্থির তড়িৎ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "physics-2-03",
+          "number": 3,
+          "title": "চল তড়িৎ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-2-04",
+          "number": 4,
+          "title": "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চুম্বকত্ব",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-2-05",
+          "number": 5,
+          "title": "তাড়িৎচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-2-06",
+          "number": 6,
+          "title": "জ্যামিতিক আলোকবিজ্ঞান",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-2-07",
+          "number": 7,
+          "title": "ভৌত আলোকবিজ্ঞান",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "physics-2-08",
+          "number": 8,
+          "title": "আধুনিক পদার্থবিজ্ঞানের সূচনা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-2-09",
+          "number": 9,
+          "title": "পরমাণু মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-2-10",
+          "number": 10,
+          "title": "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "physics-2-11",
+          "number": 11,
+          "title": "জ্যোতির্বিজ্ঞান",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        }
+      ]
+    },
+    {
+      "id": "math-1",
+      "title": "উচ্চতর গণিত ১ম পত্র",
+      "subject": "HigherMath",
+      "paper": "math-1",
+      "chapters": [
+        {
+          "id": "math-1-01",
+          "number": 1,
+          "title": "ম্যাট্রিক্স ও নির্ণায়ক",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "math-1-02",
+          "number": 2,
+          "title": "ভেক্টর",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-1-03",
+          "number": 3,
+          "title": "সরলরেখা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "math-1-04",
+          "number": 4,
+          "title": "বৃত্ত",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 3
+        },
+        {
+          "id": "math-1-05",
+          "number": 5,
+          "title": "বিন্যাস ও সমাবেশ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-1-06",
+          "number": 6,
+          "title": "ত্রিকোণমিতিক অনুপাত",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "math-1-07",
+          "number": 7,
+          "title": "সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-1-08",
+          "number": 8,
+          "title": "ফাংশন ও ফাংশনের লেখচিত্র",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "math-1-09",
+          "number": 9,
+          "title": "অন্তরীকরণ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 3
+        },
+        {
+          "id": "math-1-10",
+          "number": 10,
+          "title": "যোগজীকরণ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 5
+        }
+      ]
+    },
+    {
+      "id": "math-2",
+      "title": "উচ্চতর গণিত ২য় পত্র",
+      "subject": "HigherMath",
+      "paper": "math-2",
+      "chapters": [
+        {
+          "id": "math-2-01",
+          "number": 1,
+          "title": "বাস্তব সংখ্যা ও অসমতা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-2-02",
+          "number": 2,
+          "title": "রৈখিক প্রোগ্রামিং",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-2-03",
+          "number": 3,
+          "title": "জটিল সংখ্যা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "math-2-04",
+          "number": 4,
+          "title": "বহুপদী ও বহুপদী সমীকরণ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 2
+        },
+        {
+          "id": "math-2-05",
+          "number": 5,
+          "title": "দ্বিপদী বিস্তৃতি",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        },
+        {
+          "id": "math-2-06",
+          "number": 6,
+          "title": "কণিক",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 4
+        },
+        {
+          "id": "math-2-07",
+          "number": 7,
+          "title": "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 5
+        },
+        {
+          "id": "math-2-08",
+          "number": 8,
+          "title": "স্থিতিবিদ্যা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "math-2-09",
+          "number": 9,
+          "title": "সমতলে বস্তুকণার গতি",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 1
+        },
+        {
+          "id": "math-2-10",
+          "number": 10,
+          "title": "বিস্তার পরিমাপ ও সম্ভাবনা",
+          "sets_per_track": 1,
+          "questions_per_set": 100,
+          "status": "implemented_original_practice",
+          "sample_2024_primary_count": 0
+        }
+      ]
+    }
+  ],
+  "initial_mixed_tests_per_track": 1,
+  "questions_per_mixed_test": 100,
+  "mixed_distribution": {
+    "HigherMath": 34,
+    "Physics": 33,
+    "Chemistry": 33
+  },
+  "distribution_status": "Observed historical BUET sample; CKRUET is custom PCM distribution, not official.",
+  "chemistry_three_sets": "Carried forward from user chapter requirement; each paper contains 5 chapters in existing catalogue.",
+  "unique_chapter_questions_target_per_track": 7100,
+  "past_paper_questions_imported": 0,
+  "original_engineering_questions_authored": 11920,
+  "live_site_changed": "deployment_pending",
+  "review_status": "authored_and_formula_checks_not_teacher_reviewed"
+}

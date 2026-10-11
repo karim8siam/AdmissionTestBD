@@ -1,0 +1,737 @@
+{
+  "source_id": "buet-preli-2024-scan",
+  "scope": "One third-party compilation, 100 numbered items; not all shifts; not historical frequency proof.",
+  "contains_question_text": false,
+  "tags": [
+    {
+      "paper_item_number": 1,
+      "primary_chapter_id": "math-1-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 2,
+      "primary_chapter_id": "math-1-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 3,
+      "primary_chapter_id": "math-1-09",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 4,
+      "primary_chapter_id": "math-1-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 5,
+      "primary_chapter_id": "math-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 6,
+      "primary_chapter_id": "math-2-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 7,
+      "primary_chapter_id": "math-1-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 8,
+      "primary_chapter_id": "math-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 9,
+      "primary_chapter_id": "math-1-01",
+      "secondary_chapter_ids": [
+        "math-1-03"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 10,
+      "primary_chapter_id": "math-1-09",
+      "secondary_chapter_ids": [
+        "math-1-04"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 11,
+      "primary_chapter_id": "math-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 12,
+      "primary_chapter_id": "math-1-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 13,
+      "primary_chapter_id": "math-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 14,
+      "primary_chapter_id": "math-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 15,
+      "primary_chapter_id": "math-1-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 16,
+      "primary_chapter_id": "math-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 17,
+      "primary_chapter_id": "math-2-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 18,
+      "primary_chapter_id": "math-2-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 19,
+      "primary_chapter_id": "math-2-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 20,
+      "primary_chapter_id": "math-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 21,
+      "primary_chapter_id": "math-2-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 22,
+      "primary_chapter_id": "math-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 23,
+      "primary_chapter_id": "math-1-10",
+      "secondary_chapter_ids": [
+        "math-1-06"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 24,
+      "primary_chapter_id": "math-1-09",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 25,
+      "primary_chapter_id": "math-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 26,
+      "primary_chapter_id": "math-2-09",
+      "secondary_chapter_ids": [
+        "physics-1-03"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 27,
+      "primary_chapter_id": "math-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 28,
+      "primary_chapter_id": "math-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 29,
+      "primary_chapter_id": "math-1-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 30,
+      "primary_chapter_id": "math-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 31,
+      "primary_chapter_id": "math-2-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 32,
+      "primary_chapter_id": "math-2-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 33,
+      "primary_chapter_id": "math-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 34,
+      "primary_chapter_id": "math-1-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 35,
+      "primary_chapter_id": "physics-1-05",
+      "secondary_chapter_ids": [
+        "physics-1-02"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 36,
+      "primary_chapter_id": "physics-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 37,
+      "primary_chapter_id": "physics-1-09",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 38,
+      "primary_chapter_id": "physics-2-09",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 39,
+      "primary_chapter_id": "physics-2-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 40,
+      "primary_chapter_id": "physics-2-09",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 41,
+      "primary_chapter_id": "physics-2-07",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 42,
+      "primary_chapter_id": "physics-1-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 43,
+      "primary_chapter_id": "physics-1-01",
+      "secondary_chapter_ids": [
+        "physics-1-06"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 44,
+      "primary_chapter_id": "physics-1-02",
+      "secondary_chapter_ids": [
+        "physics-1-04"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 45,
+      "primary_chapter_id": "physics-1-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 46,
+      "primary_chapter_id": "physics-1-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 47,
+      "primary_chapter_id": "physics-2-05",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 48,
+      "primary_chapter_id": "physics-1-07",
+      "secondary_chapter_ids": [
+        "physics-1-06"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 49,
+      "primary_chapter_id": "physics-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 50,
+      "primary_chapter_id": "physics-2-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 51,
+      "primary_chapter_id": "physics-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 52,
+      "primary_chapter_id": "physics-1-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 53,
+      "primary_chapter_id": "physics-1-01",
+      "secondary_chapter_ids": [
+        "physics-1-10"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 54,
+      "primary_chapter_id": "physics-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 55,
+      "primary_chapter_id": "physics-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 56,
+      "primary_chapter_id": "physics-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 57,
+      "primary_chapter_id": "physics-1-04",
+      "secondary_chapter_ids": [
+        "physics-1-05"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 58,
+      "primary_chapter_id": "physics-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 59,
+      "primary_chapter_id": "physics-1-10",
+      "secondary_chapter_ids": [
+        "physics-2-01"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 60,
+      "primary_chapter_id": "physics-1-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 61,
+      "primary_chapter_id": "physics-2-10",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 62,
+      "primary_chapter_id": "physics-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 63,
+      "primary_chapter_id": "physics-2-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 64,
+      "primary_chapter_id": "physics-2-08",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 65,
+      "primary_chapter_id": "physics-2-06",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 66,
+      "primary_chapter_id": "physics-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 67,
+      "primary_chapter_id": "physics-1-06",
+      "secondary_chapter_ids": [
+        "physics-1-03"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 68,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 69,
+      "primary_chapter_id": "chemistry-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 70,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 71,
+      "primary_chapter_id": "chemistry-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 72,
+      "primary_chapter_id": "chemistry-1-05",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 73,
+      "primary_chapter_id": "chemistry-1-04",
+      "secondary_chapter_ids": [
+        "chemistry-2-03"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 74,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 75,
+      "primary_chapter_id": "chemistry-2-03",
+      "secondary_chapter_ids": [
+        "chemistry-2-04"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 76,
+      "primary_chapter_id": "chemistry-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 77,
+      "primary_chapter_id": "chemistry-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 78,
+      "primary_chapter_id": "chemistry-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 79,
+      "primary_chapter_id": "chemistry-2-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 80,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 81,
+      "primary_chapter_id": "chemistry-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 82,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 83,
+      "primary_chapter_id": "chemistry-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 84,
+      "primary_chapter_id": "chemistry-1-05",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 85,
+      "primary_chapter_id": "chemistry-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 86,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 87,
+      "primary_chapter_id": "chemistry-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 88,
+      "primary_chapter_id": "chemistry-2-01",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 89,
+      "primary_chapter_id": "chemistry-2-01",
+      "secondary_chapter_ids": [
+        "chemistry-2-03"
+      ],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 90,
+      "primary_chapter_id": "chemistry-2-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 91,
+      "primary_chapter_id": "chemistry-1-05",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 92,
+      "primary_chapter_id": "chemistry-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 93,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 94,
+      "primary_chapter_id": "chemistry-1-04",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 95,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 96,
+      "primary_chapter_id": "chemistry-1-03",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 97,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 98,
+      "primary_chapter_id": "chemistry-2-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 99,
+      "primary_chapter_id": "chemistry-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    },
+    {
+      "paper_item_number": 100,
+      "primary_chapter_id": "chemistry-1-02",
+      "secondary_chapter_ids": [],
+      "review_status": "provisional_manual_tag",
+      "answer_verified": false
+    }
+  ]
+}
