@@ -1245,14 +1245,14 @@
         }
       } else if (stream === 'nocalc' && !loadedDatasets.nocalc) {
         try {
-          let res = await fetch('/data/nocalc_tricks_kb.json');
-          if (!res.ok) res = await fetch('data/nocalc_tricks_kb.json');
+          let res = await fetch('/data/nocalc_tricks_kb.json?v=112');
+          if (!res.ok) res = await fetch('data/nocalc_tricks_kb.json?v=112');
           appState.nocalcTricks = await res.json();
           loadedDatasets.nocalc = true;
           renderNocalcTricks();
         } catch (e) {
           try {
-            const res2 = await fetch('data/nocalc_tricks_kb.json');
+            const res2 = await fetch('data/nocalc_tricks_kb.json?v=112');
             appState.nocalcTricks = await res2.json();
             loadedDatasets.nocalc = true;
             renderNocalcTricks();
