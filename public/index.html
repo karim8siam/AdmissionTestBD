@@ -224,28 +224,28 @@
         <button id="nav-btn-engineering" onclick="switchStream('engineering')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-300 hover:bg-slate-800/40">
           <span>📐</span>
           <span>ইঞ্জিনিয়ারিং ভর্তি (BUET/CKRUET)</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-950 text-violet-300 border border-violet-800">ফ্রি</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-950 text-violet-300 border border-violet-800 font-bold">ফ্রি</span>
         </button>
 
-        <!-- 5. 2000+ Information -->
+        <!-- 5. Previous Year Questions (বিগত ১৫ বছরের প্রশ্ন) -->
+        <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
+          <span>📜</span>
+          <span>বিগত ১৫ বছরের প্রশ্ন (২০১০-২০২৫)</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-900/60 text-purple-300">আনলক মুক্ত</span>
+        </button>
+
+        <!-- 6. 2000+ Information -->
         <button id="nav-btn-kb" onclick="switchStream('textbooks')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>📚</span>
           <span>পাঠ্যবই নলেজ বেস (২,০০০ তথ্য)</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-900/60 text-amber-300">এনসিটিবি</span>
         </button>
 
-        <!-- 6. Calculator hacks -->
+        <!-- 7. Calculator hacks -->
         <button id="nav-btn-nocalc" onclick="switchStream('nocalc')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>⚡</span>
           <span>ক্যালকুলেটরবিহীন স্পিড ট্রিকস</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-900/60 text-amber-300 font-bold">১১২টি হ্যাকস</span>
-        </button>
-
-        <!-- 7. Past 15 years -->
-        <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
-          <span>📜</span>
-          <span>বিগত ১৫ বছরের প্রশ্ন (২০১০-২০২৫)</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-900/60 text-purple-300">আনলক মুক্ত</span>
         </button>
 
 
@@ -912,20 +912,17 @@
           A
         </div>
         <div>
-          <div class="flex items-center gap-2 justify-center md:justify-start flex-wrap">
-            <p class="text-sm font-black text-white">Admission Test BD &copy; 2025-2026</p>
-            <span class="text-[10px] font-extrabold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-500/40">World's Biggest Admission Library</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">বাংলাদেশ জাতীয় মেডিকেল, ভার্সিটি ও ইঞ্জিনিয়ারিং মেধা যাচাই প্ল্যাটফর্ম · বিশ্বের সর্ববৃহৎ ভর্তি লাইব্রেরি</p>
+          <p class="text-sm font-bold text-white">Admission Test BD &copy; 2025-2026</p>
+          <p class="text-xs text-slate-400 mt-0.5">বাংলাদেশ জাতীয় মেডিকেল, ভার্সিটি ও ইঞ্জিনিয়ারিং মেধা যাচাই প্ল্যাটফর্ম</p>
         </div>
       </div>
 
       <!-- Contact Info & Community Links -->
       <div class="flex flex-wrap items-center justify-center md:justify-end gap-2 sm:gap-3 text-xs text-slate-300">
-        <!-- Website: World's Biggest Library -->
-        <a href="https://www.admissiontestbd.online" class="flex items-center gap-1.5 hover:text-amber-300 transition bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-amber-500/30 shadow-sm group">
+        <!-- Open STEM Library: World's Biggest Library -->
+        <a href="https://openstemlibrary.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-amber-300 transition bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-amber-500/30 shadow-sm group">
           <span class="text-amber-400">📚</span>
-          <span class="font-bold text-white">admissiontestbd.online</span>
+          <span class="font-bold text-white">Open STEM Library</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-extrabold">World's Biggest Library</span>
         </a>
 
@@ -1344,9 +1341,9 @@
         { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-engineering', stream: 'engineering', activeClass: 'bg-violet-700 text-white shadow-md font-bold' },
+        { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-kb', stream: 'textbooks', activeClass: 'bg-amber-600 text-white shadow-md font-bold' },
-        { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' },
-        { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' }
+        { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' }
       ];
 
       navButtons.forEach(btn => {
