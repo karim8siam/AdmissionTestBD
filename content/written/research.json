@@ -1,0 +1,70 @@
+{
+  "researched_on": "2026-10-12",
+  "status": "planning_only",
+  "sources": [
+    {
+      "id": "du-official-2025-26-format",
+      "url": "https://www.du.ac.bd/du_post_details/post/25400",
+      "status": "official_format_read",
+      "scope": "40-mark written section, 45 minutes; session-specific"
+    },
+    {
+      "id": "buet-2025-26-prospectus-mirror",
+      "url": "https://eduresultbd.com/wp-content/uploads/2025/10/buet-admission-test-Prospectus-2025-26.pdf",
+      "status": "mirror_downloaded_and_visually_checked",
+      "pages": [
+        3,
+        7
+      ],
+      "scope": "20 questions per PCM subject, 600 marks, three hours; official origin requires mirror attribution"
+    },
+    {
+      "id": "buet-recent-written-previews",
+      "url": "https://chorcha.net/question-bank/buet-admission-question-bank",
+      "status": "public_previews_inspected",
+      "sessions": [
+        "2023-24",
+        "2024-25",
+        "2025-26"
+      ],
+      "complete": false,
+      "scope": "Samples only; incomplete and mixed-institution entries excluded from ingestion"
+    },
+    {
+      "id": "buet-2019-directory",
+      "url": "https://www.admissionwar.com/buet-question-bank-and-solutions/",
+      "status": "directory_read",
+      "complete": false
+    },
+    {
+      "id": "buet-2019-scan",
+      "url": "https://mahfuzmarufgp45.wordpress.com/wp-content/uploads/2023/03/buet-admission-question-2019.pdf",
+      "status": "compilation_downloaded_first_page_visually_checked",
+      "session": "2019-20",
+      "complete_paper_verified": false
+    },
+    {
+      "id": "buet-2024-generic-pdf",
+      "url": "https://www.drabsiddiq.com/wp-content/uploads/2025/01/বুয়েট-ভর্তি-পরীক্ষার-প্রশ্ন-সমাধান-২০২৩-২০২৪-।-BUET-Admission-Question-2023-2024-.pdf",
+      "status": "downloaded_first_page_visually_checked",
+      "written_benchmark_eligible": false,
+      "reason": "First page contains MCQ, not written"
+    },
+    {
+      "id": "du-2024-written",
+      "url": "https://sattacademy.com/ques-bank/dhaka-university/সাধারণ-গণিত/written",
+      "status": "secondary_samples_inspected",
+      "complete": false,
+      "scope": "Year-specific linked pages inspected; incomplete equations require scan verification"
+    },
+    {
+      "id": "du-2025-physics-written",
+      "url": "https://sattacademy.com/ques-bank/dhaka-university/পদার্থবিদ্যা/2025/written",
+      "status": "secondary_samples_inspected",
+      "complete": false,
+      "scope": "Conservation, circuit and photoelectric methods; some missing figures/data"
+    }
+  ],
+  "full_recent_corpus_verified": false,
+  "website_changes_deployed": false
+}
