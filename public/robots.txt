@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /public/
+Disallow: /web/
+
+Sitemap: https://www.admissiontestbd.online/sitemap.xml

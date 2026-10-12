@@ -14,6 +14,8 @@ Open http://localhost:8080. Configure `DATABASE_URL` for Neon PostgreSQL to enab
 
 Deploy this repository to Vercel using the existing `vercel.json`, and configure `DATABASE_URL` in the project environment.
 
+Search metadata, canonical URLs, `robots.txt`, `sitemap.xml`, structured data and the public trust pages are committed with the site. Run `python3 verify_seo_readiness.py` before deployment. Account-specific Search Console and AdSense setup, including safe creation of `ads.txt`, is documented in `GOOGLE_SERVICES_SETUP.md`.
+
 The public admin panel, payment routes, SMS webhook and paid-access checks have been removed. Existing historical enrollment and payment records are retained in the database; no migration deletes student records.
 
 The root, public and web copies of index.html must remain identical.
