@@ -39,10 +39,11 @@
     const root=$('view-chapter-practice');root.dataset.track=state.track;
     root.innerHTML=`<div class="cp-head"><div class="cp-eyebrow">অধ্যায়ভিত্তিক অনুশীলন · সম্পূর্ণ ফ্রি</div>
       <h1>একটি অধ্যায়, মনোযোগী প্রস্তুতি</h1><p>তোমার ভর্তি লক্ষ্য বেছে নাও, তারপর বই ও অধ্যায় নির্বাচন করো। যেকোনো উপলব্ধ সেট দিয়ে শুরু করা যাবে—আগের কোনো টেস্ট শেষ করার শর্ত নেই।</p>
-      <div class="cp-tabs" role="tablist" aria-label="ভর্তি প্রস্তুতির লক্ষ্য"><button role="tab" aria-selected="${state.track==='medical'}" data-cp-track="medical">🩺 মেডিকেল</button><button role="tab" aria-selected="${state.track==='versity'}" data-cp-track="versity">🏛️ ভার্সিটি বিজ্ঞান</button></div></div><div id="cp-content"></div>`;
+      <div class="cp-tabs" role="tablist" aria-label="ভর্তি প্রস্তুতির লক্ষ্য"><button role="tab" aria-selected="${state.track==='medical'}" data-cp-track="medical">🩺 মেডিকেল</button><button role="tab" aria-selected="${state.track==='versity'}" data-cp-track="versity">🏛️ ভার্সিটি বিজ্ঞান</button><button role="tab" aria-selected="${state.track==='engineering'}" data-cp-track="engineering">⚙️ ইঞ্জিনিয়ারিং</button></div></div><div id="cp-content"></div>`;
   }
   function renderCatalog() {
     renderHeader();
+    if(state.track==='engineering'){ $('cp-content').innerHTML='<section id="view-engineering-chapters"></section>';EngineeringChapters.open();return;}
     const book=bookById(state.book),container=$('cp-content');
     if(book && book.tracks.includes(state.track)) {renderBook(book);return;}
     state.book=null;
@@ -129,11 +130,15 @@
     openCustomModal({title,subtitle:'অধ্যায়ভিত্তিক অনুশীলন',icon:'📝',confirmText:'নিশ্চিত করুন',cancelText:'ফিরে যান',showCancel:true,onConfirm});
   }
   function abandon(){clearInterval(timer);state.attempt=null;save();}
-  async function open() {
+  let openRequest=0;
+  async function open(track) {
+    const request=++openRequest;
+    if(track)state.track=track;
+    if(state.track==='engineering'){renderCatalog();return;}
     const root=$('view-chapter-practice');root.innerHTML='<div class="cp-empty" role="status">বই ও অধ্যায় লোড হচ্ছে…</div>';
     try {
       await load();
-      if(appState.currentStream!=='chapters')return;
+      if(appState.currentStream!=='chapters'||request!==openRequest)return;
       if(!state.attempt){const saved=read(storageKey,null);if(saved&&['medical','versity'].includes(saved.track)&&bookById(saved.book)?.tracks.includes(saved.track)) {await loadChapter(saved.book,saved.chapter);if(!selection(saved)?.questions.length)throw new Error('saved attempt');state.attempt=saved;state.track=saved.track;state.book=saved.book;}}
       if(state.attempt?.status==='running')renderExam();else if(state.attempt?.status==='submitted')renderResult();else renderCatalog();
     } catch {root.innerHTML='<div class="cp-error" role="alert">অধ্যায়ের প্রশ্ন লোড করা যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন। <button class="cp-button" data-cp-retry>আবার চেষ্টা</button></div>';}
@@ -146,7 +151,7 @@
   document.addEventListener('click',event=>{
     const target=event.target.closest('#view-chapter-practice button');if(!target)return;
     const d=target.dataset;
-    if(d.cpTrack){if(state.attempt?.status==='running'){confirmAction('চলতি পরীক্ষা বাতিল করে লক্ষ্য বদলাবে?',()=>{abandon();state.track=d.cpTrack;state.book=null;renderCatalog();});return;}abandon();state.track=d.cpTrack;state.book=null;state.search='';renderCatalog();}
+    if(d.cpTrack){if(window.EngineeringChapters?.guardAction(()=>{abandon();state.track=d.cpTrack;state.book=null;renderCatalog();}))return;if(state.attempt?.status==='running'){confirmAction('চলতি পরীক্ষা বাতিল করে লক্ষ্য বদলাবে?',()=>{abandon();state.track=d.cpTrack;state.book=null;renderCatalog();});return;}abandon();state.track=d.cpTrack;state.book=null;state.search='';renderCatalog();}
     else if(d.cpBook){state.book=d.cpBook;state.search='';renderCatalog();focusHeading();}
     else if('cpHome'in d){state.book=null;state.search='';renderCatalog();focusHeading();}
     else if(d.cpSet)start(d.cpChapter,d.cpSet);

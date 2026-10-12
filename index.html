@@ -223,7 +223,7 @@
         <!-- 4. Engineering -->
         <button id="nav-btn-engineering" onclick="switchStream('engineering')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-300 hover:bg-slate-800/40">
           <span>📐</span>
-          <span>ইঞ্জিনিয়ারিং ভর্তি (BUET/CKRUET)</span>
+          <span>ইঞ্জিনিয়ারিং ১০০ মডেল টেস্ট</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-950 text-violet-300 border border-violet-800 font-bold">ফ্রি</span>
         </button>
 
@@ -1357,8 +1357,9 @@
       });
     }
 
-    function switchStream(stream) {
+    function switchStream(stream, chapterTrack) {
       if (window.ChapterPractice && ChapterPractice.guardNavigation(stream)) return;
+      if (window.EngineeringChapters && EngineeringChapters.guardNavigation(stream)) return;
       if (window.EngineeringPractice && EngineeringPractice.guardNavigation(stream)) return;
       if (appState.examStatus === 'running' && stream !== appState.currentStream) {
         openCustomModal({title: 'চলতি পরীক্ষা বাতিল করে বিভাগ বদলাবে?', subtitle: 'উত্তরপত্র জমা না দিলে ফলাফল সংরক্ষিত হবে না।', icon: '⚠️', confirmText: 'বাতিল করে এগিয়ে যান', cancelText: 'পরীক্ষায় ফিরে যান', showCancel: true,
@@ -1410,7 +1411,7 @@
         loadCurrentSelectedTest();
       } else if (stream === 'chapters') {
         document.getElementById('view-chapter-practice').classList.remove('hidden');
-        if (window.ChapterPractice) ChapterPractice.open();
+        if (window.ChapterPractice) ChapterPractice.open(chapterTrack);
       } else if (stream === 'past_15years') {
         document.getElementById('view-past-15years').classList.remove('hidden');
         renderPastYearView();
@@ -3474,7 +3475,9 @@
     }
   </script>
 
-  <script src="/assets/chapter-practice.js?v=2"></script>
-  <script src="/assets/engineering-practice.js?v=2"></script>
+  <script src="/assets/chapter-practice.js?v=3"></script>
+  <script src="/assets/engineering-practice.js?v=3"></script>
+  <link rel="stylesheet" href="/assets/engineering-chapters.css?v=3">
+  <script src="/assets/engineering-chapters.js?v=3"></script>
 </body>
 </html>

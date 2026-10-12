@@ -1,15 +1,29 @@
-# Engineering practice coverage
+# Engineering revision 3
 
 {
-  "chapter_entries": 14200,
-  "unique_questions": 11920,
-  "unique_stems": 11920,
-  "chapter_questions_per_track": 7100,
-  "mixed_tests": 2,
-  "question_families": "4 foundation and 2 application families per math/physics chapter; Chemistry concept-pair and application families. Numerical variants share methods.",
-  "shared_chemistry_core": true,
+  "chapter_questions_per_track": 6549,
+  "distinct_questions_in_core": 6549,
+  "chapters_per_track": 51,
+  "authored_methods": 710,
+  "model_tests_per_track": 100,
+  "questions_per_model": 100,
+  "model_usage": {
+    "buet": {
+      "question_appearances": 10000,
+      "distinct_questions_used": 6084,
+      "max_repeat_across_papers": 5
+    },
+    "ckruet": {
+      "question_appearances": 10000,
+      "distinct_questions_used": 6273,
+      "max_repeat_across_papers": 5
+    }
+  },
   "teacher_reviewed": false,
-  "authenticated_past_paper_questions": 0
+  "authenticated_past_paper_questions": 0,
+  "shared_core_between_tracks": true,
+  "parameter_variants_in_chapters": true,
+  "chapter_targets_complete": false
 }
 
-All 51 PCM chapters per track are available. Mathematics/Physics: 100 per chapter. Chemistry: three disjoint sets of 100 per chapter. Mixed practice reuses chapter questions. Track progress is separate; Chemistry shares an authored concept core. No authentic past-paper question bank or full ten-year analysis is claimed.
+Chapter practice is separate from model tests. All 200 model papers pass the structural review gate. No model repeats a problem family within itself. Chemistry shortfalls are displayed rather than filled with fact-pair permutations. See data/engineering_quality.json for actual coverage and limits.
