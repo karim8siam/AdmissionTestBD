@@ -75,7 +75,7 @@
       <h3>${esc(q.question_bn)}</h3><div class="cp-options" role="group" aria-label="প্রশ্ন ${index+1} এর উত্তর">${q.options.map((option,i)=>`<button class="cp-option ${review&&i===q.correct_index?'cp-correct':review&&answer===i?'cp-wrong':''}" ${review?'disabled':`data-cp-answer="${i}" data-cp-index="${index}"`} aria-pressed="${answer===i}"><span class="cp-letter">${letters[i]}.</span><span>${esc(option)}</span></button>`).join('')}</div>
       ${!review?`<button class="cp-button" style="margin-top:10px" data-cp-clear="${index}">উত্তর মুছুন</button>`:`<div class="cp-explanation"><strong>সঠিক উত্তর: ${letters[q.correct_index]}. ${esc(q.options[q.correct_index])}</strong><p>${esc(q.explanation||'এই প্রশ্নের বিস্তারিত ব্যাখ্যা এখনো যুক্ত হয়নি।')}</p>${q.book_reference?`<p class="cp-muted">রেফারেন্স: ${esc(q.book_reference)}</p>`:''}</div>`}</article>`;
   }
-  function math() { if(window.renderMathInElement)window.renderMathInElement($('cp-content'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false}); }
+  function math() { window.renderMathContent?.($('cp-content')); }
   async function start(chapterId,setId) {
     const track=state.track,bookId=state.book;
     if(state.attempt?.status==='running')return;

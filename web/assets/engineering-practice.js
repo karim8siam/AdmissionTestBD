@@ -85,7 +85,7 @@
       <h3>${esc(q.question_bn)}</h3><div class="ep-options" role="group" aria-label="প্রশ্ন ${index+1} এর উত্তর">${q.options.map((option,i)=>`<button class="ep-option ${review&&i===q.correct_index?'ep-correct':review&&answer===i?'ep-wrong':''}" ${review?'disabled':`data-ep-answer="${i}" data-ep-index="${index}"`} aria-pressed="${answer===i}"><span class="ep-letter">${letters[i]}.</span><span>${esc(option)}</span></button>`).join('')}</div>
       ${!review?`<button class="ep-button" style="margin-top:10px" data-ep-clear="${index}">উত্তর মুছুন</button>`:`<div class="ep-explanation"><strong>সঠিক উত্তর: ${letters[q.correct_index]}. ${esc(q.options[q.correct_index])}</strong><p>${esc(q.explanation||'এই প্রশ্নের বিস্তারিত ব্যাখ্যা এখনো যুক্ত হয়নি।')}</p>${q.book_reference?`<p class="ep-muted">রেফারেন্স: ${esc(q.book_reference)}</p>`:''}<p class="ep-muted">প্রশ্ন ID: ${esc(q.id)} · ${q.difficulty==='hard'?'প্রয়োগ / চ্যালেঞ্জ':'মাঝারি অনুশীলন'} (সম্পাদকীয় অনুমান)</p><a class="ep-button" href="mailto:shahriyarkarimsiam@gmail.com?subject=${encodeURIComponent('Engineering question review: '+q.id)}&amp;body=${encodeURIComponent(q.question_bn+'\n\nসমস্যা / সংশোধন: ')}">প্রশ্নে সমস্যা জানাও ↗</a></div>`}</article>`;
   }
-  function math() { if(window.renderMathInElement)window.renderMathInElement($('ep-content'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false}); }
+  function math() { window.renderMathContent?.($('ep-content')); }
   async function start(chapterId,setId) {
     const track=state.track,bookId=state.book;
     const book=bookById(bookId),chapter=book?.chapters.find(c=>c.id===chapterId);
