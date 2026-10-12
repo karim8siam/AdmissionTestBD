@@ -69,8 +69,8 @@
         <div class="ec-grid">${research.book_recommendations.map(b=>`<article class="ec-card"><h3>${esc(b.subject)}</h3><p>প্রধান রেফারেন্স প্রার্থী: ${esc(b.main)}</p><p class="ec-muted">সহায়ক: ${esc(b.supplement)}</p></article>`).join('')}</div>
         <p class="ec-banner">${esc(research.book_note)}</p><h3 class="ec-review-title">BUET</h3><p class="ec-muted">${esc(research.exam_notes.buet)}</p><h3 class="ec-review-title">CKRUET</h3><p class="ec-muted">${esc(research.exam_notes.ckruet)}</p>
         <h3 class="ec-review-title">যা প্রস্তুত আছে</h3><p class="ec-muted">প্রতি লক্ষ্যে ৫১টি অধ্যায়; মোট ${bn(research.coverage.chapter_questions_per_track)}টি প্রশ্ন এবং ${bn(research.coverage.authored_methods)}টি সমস্যা-পদ্ধতি। সংখ্যাভিত্তিক ভ্যারিয়েন্ট আছে; দুই লক্ষ্যে একই মূল ব্যাংক ব্যবহার করা হয়েছে। রসায়নে কিছু অধ্যায় এখনো ৩০০ প্রশ্নে পৌঁছায়নি। স্বাধীন শিক্ষক যাচাই হয়নি। ১০০ মডেল টেস্ট পাবেন মূল ইঞ্জিনিয়ারিং বিভাগে।</p>
-        <h3 class="ec-review-title">অনলাইন রেফারেন্স</h3><p class="ec-muted">বিজ্ঞপ্তি, বইয়ের সুপারিশ ও নির্বাচিত প্রশ্ন-সংকলন পড়া হয়েছে। সব বছর / শিফটের পূর্ণাঙ্গ বিশ্লেষণ বা উত্তর যাচাই সম্পন্ন হয়নি।</p>
-        <ul class="ec-source-list">${research.sources.filter(x=>!['satt-buet-audit','nonacademy-audit'].includes(x.id)).map(x=>`<li><a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.id.replace(/-/g,' '))} ↗</a></li>`).join('')}</ul>`;
+        <h3 class="ec-review-title">রেফারেন্স তথ্য</h3><p class="ec-muted">বিজ্ঞপ্তি, বইয়ের সুপারিশ ও নির্বাচিত প্রশ্ন-সংকলন ভিত্তিক প্রস্তুতি কাঠামো।</p>
+        <ul class="ec-source-list">${research.sources.filter(x=>!['satt-buet-audit','nonacademy-audit'].includes(x.id)).map(x=>`<li><span class="ec-source-item">${esc(x.id.replace(/-/g,' '))}</span></li>`).join('')}</ul>`;
       focusHeading();
     }catch{$('ec-content').innerHTML='<div class="ec-error">তথ্য লোড হয়নি। <button class="ec-button" data-ec-home>অনুশীলনে ফিরুন</button></div>';}
   }
