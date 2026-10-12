@@ -89,6 +89,7 @@ def validate(data):
         for q in qs:
             assert q['id'] not in seen;seen.add(q['id'])
             assert len(q['statement'])>80 and len(q['solution_steps'])>=3
+            assert all(len(step)>=16 for step in q['solution_steps']), 'Incomplete solution fragment'
             assert all(q.get(k) for k in ['chapter','hint','final_answer','check_id'])
             assert len(q['rubric'])==3 and all(c['marks']>0 and c['label'] for c in q['rubric'])
             assert near(sum(c['marks'] for c in q['rubric']),10 if track=='buet' else 2.5)

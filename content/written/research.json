@@ -66,7 +66,7 @@
     }
   ],
   "full_recent_corpus_verified": false,
-  "website_changes_deployed": false,
+  "website_changes_deployed": true,
   "release_scope": {
     "original_written_sets": 2,
     "questions_per_set": 20,
@@ -77,5 +77,14 @@
     ],
     "teacher_reviewed": false,
     "engineering_archive": "external_source_links_and_partial_previews"
-  }
+  },
+  "verified_deployment_commit": "3dd71f9d58f2d0fa15e1425bc89acc7a0d37e9e5",
+  "live_checks": [
+    "BUET timed 20 questions",
+    "notes and timer restored after reload",
+    "submission and rubric self-score",
+    "DU 20 questions with practice hints",
+    "engineering eight source entries and CKRUET filter",
+    "medical archive restored with 100 questions"
+  ]
 }
