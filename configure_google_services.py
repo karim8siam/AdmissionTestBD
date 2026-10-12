@@ -54,7 +54,32 @@ def main() -> None:
     if publisher_id:
         lines.extend([
             f'  <meta name="google-adsense-account" content="{publisher_id}">',
-            f'  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={publisher_id}" crossorigin="anonymous"></script>',
+            '  <script>',
+            '    (function() {',
+            '      var adLoaded = false;',
+            '      function loadAdSense() {',
+            '        if (adLoaded) return;',
+            '        adLoaded = true;',
+            '        var s = document.createElement("script");',
+            f'        s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={publisher_id}";',
+            '        s.async = true;',
+            '        s.crossOrigin = "anonymous";',
+            '        document.head.appendChild(s);',
+            '      }',
+            '      if (/bot|google|crawler|spider|mediapartners/i.test(navigator.userAgent)) {',
+            '        loadAdSense();',
+            '      } else {',
+            '        ["scroll", "touchstart", "mousemove", "keydown", "click"].forEach(function(e) {',
+            '          window.addEventListener(e, loadAdSense, { once: true, passive: true });',
+            '        });',
+            '        if ("requestIdleCallback" in window) {',
+            '          requestIdleCallback(function() { setTimeout(loadAdSense, 3000); });',
+            '        } else {',
+            '          setTimeout(loadAdSense, 3500);',
+            '        }',
+            '      }',
+            '    })();',
+            '  </script>',
         ])
     lines.append(END)
     replacement = "\n".join(lines)
