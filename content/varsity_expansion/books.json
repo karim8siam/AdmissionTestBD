@@ -1,0 +1,886 @@
+{
+  "checked_on": "2026-10-12",
+  "source": "https://www.ebookbou.edu.bd/hsc.php",
+  "license_note": "BOU website states CC BY 4.0 unless otherwise specified. Links only; no textbook copies redistributed.",
+  "note": "BOU modular HSC reference books. Standard NCTB edition/short-syllabus mapping is not yet complete.",
+  "books": [
+    {
+      "id": "bou-1",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫১ বাংলা প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1851_2026.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-2",
+      "title": "Course Code: 1852 English One",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1852_2026.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-3",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৩ তথ্য ও যোগাযোগ প্রযুক্তি",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc3_1.php#hsc1853",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "তথ্য ও যোগাযোগ প্রযুক্তি : প্রাথমিক ধারণা",
+          "pages": "১-১১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-01.pdf"
+        },
+        {
+          "title": "তথ্য ও যোগাযোগ প্রযুক্তি : বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
+          "pages": "১২-৩৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-02.pdf"
+        },
+        {
+          "title": "কমিউনিকেশন সিস্টেম",
+          "pages": "৩৪-৬৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-03.pdf"
+        },
+        {
+          "title": "নেটওয়ার্কিৎ",
+          "pages": "৬৪-৮১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-04.pdf"
+        },
+        {
+          "title": "সংখ্যা পদ্ধতি",
+          "pages": "৮২-১১৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-05.pdf"
+        },
+        {
+          "title": "বুলিয়ান অ্যালজেবরা ও ডিজিটাল ডিভাইস",
+          "pages": "১১৮-১৪৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-06.pdf"
+        },
+        {
+          "title": "ওয়েব ডিজাইন পরিচিতি এবং HTML",
+          "pages": "১৫০-১৮৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-07.pdf"
+        },
+        {
+          "title": "প্রোগ্রামিং এর ভাষা",
+          "pages": "১৮৫-২১০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-08.pdf"
+        },
+        {
+          "title": "সি প্রোগ্রামিং",
+          "pages": "২১১-২৫৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-09.pdf"
+        },
+        {
+          "title": "ডাটাবেজ ম্যানেজমেন্ট সিস্টেম",
+          "pages": "২৫৭-২৮৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1853/Unit-10.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-4",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৫ ইতিহাস প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1855_2026.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-5",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৬ ইসলামের ইতিহাস ও সংস্কৃতি প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1856_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-6",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৭ পৌরনীতি ও সুশাসন প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1857_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-7",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৮ অর্থনীতি প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1858_2022.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-8",
+      "title": "কোর্স কোড: এইচএসসি-১৮৫৯ সমাজবিজ্ঞান প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1859_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-9",
+      "title": "কোর্স কোড: ১৮৬০ যুক্তিবিদ্যা প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1860_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-10",
+      "title": "কোর্স কোড: ১৮৬১ ইসলাম শিক্ষা ১ম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1861_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-11",
+      "title": "কোর্স কোড: এইচএসসি-১৮৬২ সমাজকর্ম প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1862_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-12",
+      "title": "কোর্স কোড: এইচএসসি-১৮৭৫ ভূগোল প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc3_3.php#hsc1875",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "প্রাকৃতিক ভূগোল",
+          "pages": "০১-১১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-01.pdf"
+        },
+        {
+          "title": "পৃথিবীর গঠন",
+          "pages": "১২-২৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-02.pdf"
+        },
+        {
+          "title": "পৃথিবীর ভূমিরুপ",
+          "pages": "২৭-৫৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-03.pdf"
+        },
+        {
+          "title": "ভূমিরুপ পরিবর্তন",
+          "pages": "৫৪-৭১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-04.pdf"
+        },
+        {
+          "title": "বিচূর্নীভবন ও নগ্নীভবন",
+          "pages": "৭২-৮৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-05.pdf"
+        },
+        {
+          "title": "নদী ও ভূমিক্ষয়",
+          "pages": "৮৫-১০৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-06.pdf"
+        },
+        {
+          "title": "বায়ুমন্ডল এবং প্রাকৃতিক পরিবেশ দূষণ",
+          "pages": "১০৪-১২৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-07.pdf"
+        },
+        {
+          "title": "আবহাওয়া এবং জলবায়ু",
+          "pages": "১২৬-১৪৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-08.pdf"
+        },
+        {
+          "title": "জলবায়ু অঞ্চলসমূহ ও জলবায়ু পরিবর্তন",
+          "pages": "১৪৮-১৬৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-09.pdf"
+        },
+        {
+          "title": "বারিমন্ডল",
+          "pages": "১৬৮-১৯১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-10.pdf"
+        },
+        {
+          "title": "সমুদ্র স্রোত",
+          "pages": "১৯২-২০৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-11.pdf"
+        },
+        {
+          "title": "জোয়ার ও ভাঁটা",
+          "pages": "২১০-২১৮",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-12.pdf"
+        },
+        {
+          "title": "জীবমন্ডল",
+          "pages": "২১৯-২৩৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-13.pdf"
+        },
+        {
+          "title": "জিআইএস ও দূর অনুধাবন",
+          "pages": "২৩৫-২৪৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1875/Unit-14.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-13",
+      "title": "কোর্স কোড: এইচএসসি-১৮৮৫ ব্যবসায় সংগঠন ও ব্যবস্থাপনা প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc3_3.php#hsc1885",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "ব্যবসায়ের মৌলিক ধারণা",
+          "pages": "১-২৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-01.pdf"
+        },
+        {
+          "title": "ব্যবসায় পরিবেশ",
+          "pages": "২৫-৩৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-02.pdf"
+        },
+        {
+          "title": "একমালিকানা ব্যবসায়",
+          "pages": "৩৫-৪৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-03.pdf"
+        },
+        {
+          "title": "অংশীদারি ব্যবসায়",
+          "pages": "৪৫-৬৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-04.pdf"
+        },
+        {
+          "title": "যৌথ মূলধনী ব্যবসায়",
+          "pages": "৬৫-১০৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-05.pdf"
+        },
+        {
+          "title": "সমবায় সমিতি",
+          "pages": "১০৫-১২৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-06.pdf"
+        },
+        {
+          "title": "রাষ্ট্রীয় ব্যবসায়",
+          "pages": "১২৫-১৪২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-07.pdf"
+        },
+        {
+          "title": "ব্যবসায়ের আইনগত দিক",
+          "pages": "১৪৩-১৬৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-08.pdf"
+        },
+        {
+          "title": "ব্যবসায় উদ্যোগ গ্রহণে সহায়ক সেবা",
+          "pages": "১৬৭-১৯০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-09.pdf"
+        },
+        {
+          "title": "ব্যবসায় উদ্যোগ",
+          "pages": "১৯১-২২০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-10.pdf"
+        },
+        {
+          "title": "ব্যবসায়ে তথ্য ও যোগাযোগ প্রযুক্তির ব্যবহার",
+          "pages": "২২১-২২৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-11.pdf"
+        },
+        {
+          "title": "ব্যবসায় নৈতিকতা ও সামাজিক দায়বদ্ধতা",
+          "pages": "২৪৫-২৬৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1885/Unit-12.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-14",
+      "title": "কোর্স কোড: এইচএসসি-১৮৮৬ হিসাববিজ্ঞান প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc3_4.php#hsc1886",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "হিসাববিজ্ঞান পরিচিতি",
+          "pages": "০১-২৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-01.pdf"
+        },
+        {
+          "title": "হিসাবের বইসমূহ",
+          "pages": "২৬-৯১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-02.pdf"
+        },
+        {
+          "title": "ব্যাংক সমন্বয় বিবরণী",
+          "pages": "৯২-১০৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-03.pdf"
+        },
+        {
+          "title": "রেওয়ামিল",
+          "pages": "১০৮-১৩৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-04.pdf"
+        },
+        {
+          "title": "হিসাববিজ্ঞানের নীতিমালা",
+          "pages": "১৩৪-১৪১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-05.pdf"
+        },
+        {
+          "title": "প্রাপ্য হিসাবসমুহের হিসাবরক্ষণ",
+          "pages": "১৪২-১৬৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-06.pdf"
+        },
+        {
+          "title": "কার্যপত্র",
+          "pages": "১৬৪-১৯৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-07.pdf"
+        },
+        {
+          "title": "দৃশ্যমান ও অদৃশ্যমান সম্পদের হিসাবরক্ষণ",
+          "pages": "১৯৪-২১৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-08.pdf"
+        },
+        {
+          "title": "আর্থিক বিবরণী",
+          "pages": "২১৮-২৫৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-09.pdf"
+        },
+        {
+          "title": "একতরফা দাখিলা পদ্ধতি",
+          "pages": "২৫৪-২৮২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1886/Unit-10.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-15",
+      "title": "কোর্স কোড: এইচএসসি-১৮৮৭ ফিন্যান্স, ব্যাংকিং ও বিমা প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc3_4.php#hsc1887",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "প্রাথমিক পরিচিতি",
+          "pages": "২-২৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-01.pdf"
+        },
+        {
+          "title": "আর্থিক বাজারের আইনগত দিকসমূহ",
+          "pages": "২৫-৪২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-02.pdf"
+        },
+        {
+          "title": "অর্থের সময় মূল্য",
+          "pages": "৪৩-৭১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-03.pdf"
+        },
+        {
+          "title": "আর্থিক বিশ্লেষণ",
+          "pages": "৭২-৮৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-04.pdf"
+        },
+        {
+          "title": "স্বল্প ও মধ্যমেয়াদি অর্থায়ন",
+          "pages": "৯০-১২১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-05.pdf"
+        },
+        {
+          "title": "দীর্ঘমেয়াদি অর্থায়ন",
+          "pages": "১২২-১৩৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-06.pdf"
+        },
+        {
+          "title": "মূলধন ব্যয়",
+          "pages": "১৩৭-১৫২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-07.pdf"
+        },
+        {
+          "title": "মূলধন বাজেটিং ও বিনিয়োগ সিদ্ধান্ত",
+          "pages": "১৫৩-১৭৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-08.pdf"
+        },
+        {
+          "title": "ঝুঁকি এবং মুনাফার হার",
+          "pages": "১৭৫-১৮৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1887/Unit-09.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-16",
+      "title": "কোর্স কোড: এইচএসসি-১৮৮৮ উৎপাদন ব্যবস্থাপনা ও বিপণন প্রথম পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_1888_2022.pdf",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-17",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫১ বাংলা দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2851_2026.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-18",
+      "title": "Course Code: HSC-2852 ENGLISH TWO",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2852_2022.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-19",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫৫ ইতিহাস দ্বিতীয় পত্র (স্টাডি গাইড)",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2855_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-20",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫৬ ইসলামের ইতিহাস ও সংস্কৃতি দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2856_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-21",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫৭ পেীরনীতি ও সুশাসন দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2857_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-22",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫৮ অর্থনীতি দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2858_2022.pdf",
+      "tracks": [
+        "humanities",
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-23",
+      "title": "কোর্স কোড: এইচএসসি-২৮৫৯ সমাজবিজ্ঞান দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2859_2025.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-24",
+      "title": "কোর্স কোড: এইচএসসি-২৮৬০ যুক্তিবিদ্যা দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2860_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-25",
+      "title": "কোর্স কোড: এইচএসসি-২৮৬১ ইসলাম শিক্ষা দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2861_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-26",
+      "title": "কোর্স কোড: এইচএসসি-২৮৬২ সমাজকর্ম দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2862_2022.pdf",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    },
+    {
+      "id": "bou-27",
+      "title": "কোর্স কোড: এইচএসসি-২৮৭৫ ভূগোল দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc4_4.php#hsc2875",
+      "tracks": [
+        "humanities"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "মানব ভুগোল",
+          "pages": "০১-০৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-01.pdf"
+        },
+        {
+          "title": "আঞ্চলিক ভূগোল",
+          "pages": "০৬-৩৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-02.pdf"
+        },
+        {
+          "title": "জনসংখ্যা",
+          "pages": "৩৫-৬৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-03.pdf"
+        },
+        {
+          "title": "বসতি",
+          "pages": "৬৪-৮৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-04.pdf"
+        },
+        {
+          "title": "কৃষি",
+          "pages": "৮৭-১১৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-05.pdf"
+        },
+        {
+          "title": "বাংলাদেশের কৃষি",
+          "pages": "১১৭-১৪৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-06.pdf"
+        },
+        {
+          "title": "খনিজ ও শক্তি সম্পদ",
+          "pages": "১৫০-১৭০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-07.pdf"
+        },
+        {
+          "title": "বাংলাদেশের খনিজ ও শক্তি সম্পদ",
+          "pages": "১৭১-১৮০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-08.pdf"
+        },
+        {
+          "title": "শিল্প",
+          "pages": "১৮১-২০৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-09.pdf"
+        },
+        {
+          "title": "বাংলাদেশের পরিবহন ও যোগাযোগ",
+          "pages": "২০৭-২১৮",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-10.pdf"
+        },
+        {
+          "title": "ব্যবহারিক ভূগোল",
+          "pages": "২৬১-২৮৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2875/Unit-13.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-28",
+      "title": "কোর্স কোড: এইচএসসি-২৮৮৫ ব্যবসায় সংগঠন ও ব্যবস্থাপনা দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc4_5.php#hsc2885",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "ব্যবস্থাপনার প্রাথমিক পরিচিতি",
+          "pages": "০১-২২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-01.pdf"
+        },
+        {
+          "title": "ব্যবস্থাপনার নীতি",
+          "pages": "২৩-৩৮",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-02.pdf"
+        },
+        {
+          "title": "পরিকল্পনা প্রণয়ন ও সিদ্ধান্ত গ্রহণ",
+          "pages": "৩৯-৬৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-03.pdf"
+        },
+        {
+          "title": "সংগঠিতকরণ",
+          "pages": "৬৫-৮৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-04.pdf"
+        },
+        {
+          "title": "কর্মীসংস্থান",
+          "pages": "৮৫-১০৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-05.pdf"
+        },
+        {
+          "title": "নেতৃত্ব",
+          "pages": "১০৫-১২৪",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-06.pdf"
+        },
+        {
+          "title": "প্রেষণা",
+          "pages": "১২৫-১৪৬",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-07.pdf"
+        },
+        {
+          "title": "যোগাযোগ",
+          "pages": "১৪৭-১৭০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-08.pdf"
+        },
+        {
+          "title": "সমন্বয়সাধন",
+          "pages": "১৭১-১৮২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-09.pdf"
+        },
+        {
+          "title": "নিয়ন্ত্রণ",
+          "pages": "১৮৩-২০১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2885/Unit-10.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-29",
+      "title": "কোর্স কোড: এইচএসসি-২৮৮৬ হিসাববিজ্ঞান দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc4_5.php#hsc2886",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "হস্তান্তরযোগ্য ঋণ দলিল",
+          "pages": "১-৩০",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-01.pdf"
+        },
+        {
+          "title": "অব্যবসায়ী প্রতিষ্ঠারের হিসাব",
+          "pages": "৩১-৭৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-02.pdf"
+        },
+        {
+          "title": "অনাদায়ী ও সন্দেহযুক্ত পাওনা সঞ্চিতি",
+          "pages": "৭৬-৮৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-03.pdf"
+        },
+        {
+          "title": "অবচয় হিসাব",
+          "pages": "৮৪-১১৮",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-04.pdf"
+        },
+        {
+          "title": "অংশীদারী প্রতিষ্ঠনের হিসাব",
+          "pages": "১১৯-১৬২",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-05.pdf"
+        },
+        {
+          "title": "উৎপাদন ব্যয় হিসাব, দরপত্র, মঞ্জুরী ও বেতন",
+          "pages": "১৬৩-১৯৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-06.pdf"
+        },
+        {
+          "title": "কোম্পাণীর হিসাব",
+          "pages": "১৯৮-২৫৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-07.pdf"
+        },
+        {
+          "title": "অনুপাত বিশ্লেষণ",
+          "pages": "২২৯-২৫৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2886/Unit-08.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-30",
+      "title": "কোর্স কোড: এইচএসসি-২৮৮৭ ফিন্যান্স, ব্যাংকিং ও বিমা দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/wp/OS/hsc4_5.php#hsc2887",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": [
+        {
+          "title": "ব্যাংক ব্যবস্থার প্রাথমিক পরিচিতি",
+          "pages": "০১-২১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-01.pdf"
+        },
+        {
+          "title": "কেন্দ্রীয় ব্যাংক",
+          "pages": "২২-৪৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-02.pdf"
+        },
+        {
+          "title": "বানিজ্যিক ব্যাংক",
+          "pages": "৪৬-৬৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-03.pdf"
+        },
+        {
+          "title": "ব্যাংকিং হিসাব",
+          "pages": "৭০-৮৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-04.pdf"
+        },
+        {
+          "title": "হস্তান্তরযোগ্য ঋণের দলিল",
+          "pages": "৮৬-১০৫",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-05.pdf"
+        },
+        {
+          "title": "চেক, বিল অব এক্সচেঞ্জ এবং প্রমিসরি নোট",
+          "pages": "১০৬-১২৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-06.pdf"
+        },
+        {
+          "title": "ব্যাংক ফান্ড",
+          "pages": "১২৮-১৪৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-07.pdf"
+        },
+        {
+          "title": "বৈদেশিক বিনিময় ও বৈদেশিক মুদ্রা",
+          "pages": "১৪৮-১৬৯",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-08.pdf"
+        },
+        {
+          "title": "ইলেকট্রনিক ও আধুনিক ব্যাংকিং",
+          "pages": "১৭০-১৮১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-09.pdf"
+        },
+        {
+          "title": "বিমার মৌলিক ধারনা",
+          "pages": "১৮২-২০১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-10.pdf"
+        },
+        {
+          "title": "জীবন বিমা",
+          "pages": "২০২-২২১",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-11.pdf"
+        },
+        {
+          "title": "নৌ বিমা",
+          "pages": "২২২-২৩৭",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-12.pdf"
+        },
+        {
+          "title": "অগ্নি বিমা",
+          "pages": "২৩৮-২৫৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-13.pdf"
+        },
+        {
+          "title": "বিবিধ বিমা",
+          "pages": "২৫৪-২৬৩",
+          "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2887/Unit-14.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bou-31",
+      "title": "কোর্স কোড: এইচএসসি-২৮৮৮ উৎপাদন ব্যবস্থাপনা ও বিপণন দ্বিতীয় পত্র",
+      "url": "https://www.ebookbou.edu.bd/Books/Text/OS/HSC/hsc_2888_2022.pdf",
+      "tracks": [
+        "business"
+      ],
+      "publisher": "Bangladesh Open University",
+      "kind": "supplementary_hsc",
+      "mapping_status": "standard_hsc_mapping_pending",
+      "chapters": []
+    }
+  ]
+}

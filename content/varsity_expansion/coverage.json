@@ -1,0 +1,26 @@
+{
+  "humanities": {
+    "questions": 60,
+    "knowledge_points": 60,
+    "knowledge_target": 2000,
+    "topics": 6,
+    "complete_chapter_sets": 0,
+    "model_tests": 0,
+    "model_target": 100,
+    "archive_entries": 4,
+    "verified_complete_past_papers": 0,
+    "complete": false
+  },
+  "business": {
+    "questions": 110,
+    "knowledge_points": 110,
+    "knowledge_target": 2000,
+    "topics": 11,
+    "complete_chapter_sets": 0,
+    "model_tests": 0,
+    "model_target": 100,
+    "archive_entries": 3,
+    "verified_complete_past_papers": 0,
+    "complete": false
+  }
+}

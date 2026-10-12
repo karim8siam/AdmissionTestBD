@@ -39,7 +39,7 @@
     const root=$('view-chapter-practice');root.dataset.track=state.track;
     root.innerHTML=`<div class="cp-head"><div class="cp-eyebrow">অধ্যায়ভিত্তিক অনুশীলন · সম্পূর্ণ ফ্রি</div>
       <h1>একটি অধ্যায়, মনোযোগী প্রস্তুতি</h1><p>তোমার ভর্তি লক্ষ্য বেছে নাও, তারপর বই ও অধ্যায় নির্বাচন করো। যেকোনো উপলব্ধ সেট দিয়ে শুরু করা যাবে—আগের কোনো টেস্ট শেষ করার শর্ত নেই।</p>
-      <div class="cp-tabs" role="tablist" aria-label="ভর্তি প্রস্তুতির লক্ষ্য"><button role="tab" aria-selected="${state.track==='medical'}" data-cp-track="medical">🩺 মেডিকেল</button><button role="tab" aria-selected="${state.track==='versity'}" data-cp-track="versity">🏛️ ভার্সিটি বিজ্ঞান</button><button role="tab" aria-selected="${state.track==='engineering'}" data-cp-track="engineering">⚙️ ইঞ্জিনিয়ারিং</button></div></div><div id="cp-content"></div>`;
+      <div class="cp-tabs" role="tablist" aria-label="ভর্তি প্রস্তুতির লক্ষ্য"><button role="tab" aria-selected="${state.track==='medical'}" data-cp-track="medical">🩺 মেডিকেল</button><button role="tab" aria-selected="${state.track==='versity'}" data-cp-track="versity">🏛️ ভার্সিটি বিজ্ঞান</button><button role="tab" aria-selected="${state.track==='engineering'}" data-cp-track="engineering">⚙️ ইঞ্জিনিয়ারিং</button><button role="tab" aria-selected="false" data-cp-track="humanities">মানবিক</button><button role="tab" aria-selected="false" data-cp-track="business">ব্যবসায় শিক্ষা</button></div></div><div id="cp-content"></div>`;
   }
   function renderCatalog() {
     renderHeader();
@@ -151,6 +151,11 @@
   document.addEventListener('click',event=>{
     const target=event.target.closest('#view-chapter-practice button');if(!target)return;
     const d=target.dataset;
+    if(['humanities','business'].includes(d.cpTrack)){
+      const go=()=>{abandon();switchStream(d.cpTrack,'topics');};
+      if(window.EngineeringChapters?.guardAction(go))return;
+      if(state.attempt?.status==='running'){confirmAction('চলতি পরীক্ষা বাতিল করে লক্ষ্য বদলাবে?',go);return;}go();return;
+    }
     if(d.cpTrack){if(window.EngineeringChapters?.guardAction(()=>{abandon();state.track=d.cpTrack;state.book=null;renderCatalog();}))return;if(state.attempt?.status==='running'){confirmAction('চলতি পরীক্ষা বাতিল করে লক্ষ্য বদলাবে?',()=>{abandon();state.track=d.cpTrack;state.book=null;renderCatalog();});return;}abandon();state.track=d.cpTrack;state.book=null;state.search='';renderCatalog();}
     else if(d.cpBook){state.book=d.cpBook;state.search='';renderCatalog();focusHeading();}
     else if('cpHome'in d){state.book=null;state.search='';renderCatalog();focusHeading();}

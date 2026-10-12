@@ -220,6 +220,8 @@
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300">DU • GST • Agri</span>
         </button>
 
+<button id="nav-btn-humanities" onclick="switchStream('humanities')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">মানবিক প্রস্তুতি</button>
+<button id="nav-btn-business" onclick="switchStream('business')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">ব্যবসায় শিক্ষা প্রস্তুতি</button>
         <!-- 4. Engineering -->
         <button id="nav-btn-engineering" onclick="switchStream('engineering')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-300 hover:bg-slate-800/40">
           <span>📐</span>
@@ -731,6 +733,7 @@
       </div>
 
       <!-- Engineering archive contains source links, never invented exam papers. -->
+      <div class="flex flex-wrap gap-3 my-3"><button onclick="switchStream('humanities','archive')" class="px-3 py-2 rounded-lg bg-slate-800 text-teal-300">মানবিক · বিগত প্রশ্নের উৎস</button><button onclick="switchStream('business','archive')" class="px-3 py-2 rounded-lg bg-slate-800 text-amber-300">ব্যবসায় শিক্ষা · বিগত প্রশ্নের উৎস</button></div>
       <section id="engineering-archive" class="hidden" aria-label="ইঞ্জিনিয়ারিং বিগত প্রশ্নের উৎস"></section>
       <!-- Past Year Mode Switcher: Take Timed Test vs View Answers -->
       <div id="past-legacy-mode" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
@@ -900,6 +903,7 @@
     <!-- ============================================== -->
     <!-- VIEW 5: ENGINEERING STREAM (Placed at sequence end) -->
     <!-- ============================================== -->
+    <section id="view-varsity-expansion" class="hidden" aria-label="মানবিক ও ব্যবসায় শিক্ষা প্রস্তুতি"></section>
     <section id="view-written" class="hidden" aria-label="লিখিত প্রস্তুতি"></section>
     <section id="view-engineering" class="hidden" aria-label="ইঞ্জিনিয়ারিং অনুশীলন"></section>
 
@@ -1345,6 +1349,8 @@
         { id: 'nav-btn-chapters', stream: 'chapters', activeClass: 'bg-teal-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
+        { id: 'nav-btn-humanities', stream: 'humanities', activeClass: 'bg-teal-700 text-white shadow-md font-bold' },
+        { id: 'nav-btn-business', stream: 'business', activeClass: 'bg-amber-700 text-white shadow-md font-bold' },
         { id: 'nav-btn-engineering', stream: 'engineering', activeClass: 'bg-violet-700 text-white shadow-md font-bold' },
         { id: 'nav-btn-written', stream: 'written', activeClass: 'bg-cyan-700 text-white shadow-md font-bold' },
         { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
@@ -1374,10 +1380,10 @@
         return;
       }
       appState.currentStream = stream;
-      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters' || stream === 'engineering' || stream === 'written');
+      document.getElementById('hero-banner').classList.toggle('hidden', ['chapters','engineering','written','humanities','business'].includes(stream));
 
       // Ensure this stream dataset is loaded on-demand
-      if (typeof loadStreamDataset === "function" && stream !== 'written' && !loadedDatasets[stream]) {
+      if (typeof loadStreamDataset === "function" && !['written','humanities','business'].includes(stream) && !loadedDatasets[stream]) {
         loadStreamDataset(stream);
       }
 
@@ -1385,7 +1391,7 @@
       syncNavButtons(stream);
 
       // Hide all views
-      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering', 'view-written', 'view-chapter-practice'].forEach(id => {
+      ['view-varsity-expansion', 'view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering', 'view-written', 'view-chapter-practice'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
@@ -1416,6 +1422,9 @@
         updateUnlockedBadges();
         populateTestDropdown();
         loadCurrentSelectedTest();
+      } else if (stream === 'humanities' || stream === 'business') {
+        document.getElementById('view-varsity-expansion').classList.remove('hidden');
+        if (window.VarsityExpansion) VarsityExpansion.open(stream, chapterTrack);
       } else if (stream === 'chapters') {
         document.getElementById('view-chapter-practice').classList.remove('hidden');
         if (window.ChapterPractice) ChapterPractice.open(chapterTrack);
@@ -3498,7 +3507,9 @@
     }
   </script>
 
-  <script src="/assets/chapter-practice.js?v=3"></script>
+  <link rel="stylesheet" href="/assets/varsity-expansion.css?v=1">
+  <script src="/assets/varsity-expansion.js?v=1"></script>
+  <script src="/assets/chapter-practice.js?v=4"></script>
   <script src="/assets/engineering-practice.js?v=3"></script>
   <link rel="stylesheet" href="/assets/engineering-chapters.css?v=3">
   <script src="/assets/engineering-chapters.js?v=3"></script>
