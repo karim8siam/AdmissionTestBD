@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "scope": "original_pcm_pilot",
+  "teacher_reviewed": false,
+  "full_recent_corpus_calibrated": false,
+  "sets": [
+    {
+      "id": "buet-01",
+      "track": "buet",
+      "title": "BUET · PCM লিখিত সেট ১",
+      "count": 20,
+      "marks": 200,
+      "minutes": 90,
+      "questions_url": "/data/written/buet-01-221eb46b146d.json",
+      "subject_counts": {
+        "গণিত": 7,
+        "পদার্থবিজ্ঞান": 7,
+        "রসায়ন": 6
+      }
+    },
+    {
+      "id": "du-01",
+      "track": "du",
+      "title": "DU বিজ্ঞান · PCM লিখিত সেট ১",
+      "count": 20,
+      "marks": 50,
+      "minutes": 60,
+      "questions_url": "/data/written/du-01-ed354cc808c7.json",
+      "subject_counts": {
+        "গণিত": 7,
+        "পদার্থবিজ্ঞান": 7,
+        "রসায়ন": 6
+      }
+    }
+  ]
+}

@@ -228,7 +228,8 @@
         </button>
 
         <!-- 5. Previous Year Questions (বিগত ১৫ বছরের প্রশ্ন) -->
-        <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
+        <button id="nav-btn-written" onclick="switchStream('written')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">✍️ লিখিত প্রস্তুতি</button>
+          <button id="nav-btn-past" onclick="switchStream('past_15years')" class="px-3.5 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800/80">
           <span>📜</span>
           <span>বিগত ১৫ বছরের প্রশ্ন (২০১০-২০২৫)</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-900/60 text-purple-300">আনলক মুক্ত</span>
@@ -704,7 +705,7 @@
               <span id="past-year-stream-title">বিগত ১৫ বছরের প্রশ্নব্যাংক (২০১০ - ২০২৫)</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">লক মুক্ত / উন্মুক্ত</span>
             </h2>
-            <p class="text-xs text-slate-400">মেডিকেল ও ভার্সিটি/গুচ্ছ উভয় শাখার ১৫ বছরের ৩,০০০ প্রশ্নপত্র পূর্ণাঙ্গ টেস্ট ও উত্তরপত্র সহ। যেকোনো সেশন যখন ইচ্ছা পরীক্ষা দিন।</p>
+            <p class="text-xs text-slate-400">মেডিকেল ও ভার্সিটির বিদ্যমান প্রশ্নসেট এবং ইঞ্জিনিয়ারিংয়ের প্রকাশ্য MCQ ও লিখিত উৎস। ইঞ্জিনিয়ারিংয়ে পাওয়া সেশন ও অসম্পূর্ণ প্রিভিউ আলাদাভাবে চিহ্নিত।</p>
           </div>
         </div>
 
@@ -717,9 +718,10 @@
             <button id="past-btn-versity" onclick="switchPastSubStream('versity')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">
               🏛️ ভার্সিটি ও গুচ্ছ (১৫ বছর)
             </button>
+            <button id="past-btn-engineering" onclick="switchPastSubStream('engineering')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">⚙️ ইঞ্জিনিয়ারিং</button>
           </div>
 
-          <div class="flex items-center gap-1.5">
+          <div id="past-legacy-session" class="flex items-center gap-1.5">
             <span class="text-xs text-slate-400 font-semibold">সেশন:</span>
             <select id="past-year-select" onchange="loadPastYearTest(this.value)" class="bg-slate-950 border border-slate-700 text-xs sm:text-sm font-bold text-purple-300 rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-purple-500 focus:outline-none">
               <!-- Dynamically populated with 15 sessions -->
@@ -728,8 +730,10 @@
         </div>
       </div>
 
+      <!-- Engineering archive contains source links, never invented exam papers. -->
+      <section id="engineering-archive" class="hidden" aria-label="ইঞ্জিনিয়ারিং বিগত প্রশ্নের উৎস"></section>
       <!-- Past Year Mode Switcher: Take Timed Test vs View Answers -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+      <div id="past-legacy-mode" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
         <div class="flex items-center gap-2">
           <span id="past-year-active-badge" class="px-3 py-1 rounded-xl bg-purple-950 text-purple-300 border border-purple-800 text-xs font-bold">
             সেশন: ২০২৪-২০২৫
@@ -896,6 +900,7 @@
     <!-- ============================================== -->
     <!-- VIEW 5: ENGINEERING STREAM (Placed at sequence end) -->
     <!-- ============================================== -->
+    <section id="view-written" class="hidden" aria-label="লিখিত প্রস্তুতি"></section>
     <section id="view-engineering" class="hidden" aria-label="ইঞ্জিনিয়ারিং অনুশীলন"></section>
 
     <section id="view-chapter-practice" class="hidden" aria-label="অধ্যায়ভিত্তিক অনুশীলন"></section>
@@ -1341,6 +1346,7 @@
         { id: 'nav-btn-medical', stream: 'medical', activeClass: 'bg-brand-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-versity', stream: 'versity', activeClass: 'bg-blue-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-engineering', stream: 'engineering', activeClass: 'bg-violet-700 text-white shadow-md font-bold' },
+        { id: 'nav-btn-written', stream: 'written', activeClass: 'bg-cyan-700 text-white shadow-md font-bold' },
         { id: 'nav-btn-past', stream: 'past_15years', activeClass: 'bg-purple-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-kb', stream: 'textbooks', activeClass: 'bg-amber-600 text-white shadow-md font-bold' },
         { id: 'nav-btn-nocalc', stream: 'nocalc', activeClass: 'bg-emerald-600 text-white shadow-md font-bold' }
@@ -1358,6 +1364,7 @@
     }
 
     function switchStream(stream, chapterTrack) {
+      if (window.WrittenPractice && WrittenPractice.guardNavigation(stream)) return;
       if (window.ChapterPractice && ChapterPractice.guardNavigation(stream)) return;
       if (window.EngineeringChapters && EngineeringChapters.guardNavigation(stream)) return;
       if (window.EngineeringPractice && EngineeringPractice.guardNavigation(stream)) return;
@@ -1367,10 +1374,10 @@
         return;
       }
       appState.currentStream = stream;
-      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters' || stream === 'engineering');
+      document.getElementById('hero-banner').classList.toggle('hidden', stream === 'chapters' || stream === 'engineering' || stream === 'written');
 
       // Ensure this stream dataset is loaded on-demand
-      if (typeof loadStreamDataset === "function" && !loadedDatasets[stream]) {
+      if (typeof loadStreamDataset === "function" && stream !== 'written' && !loadedDatasets[stream]) {
         loadStreamDataset(stream);
       }
 
@@ -1378,7 +1385,7 @@
       syncNavButtons(stream);
 
       // Hide all views
-      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering', 'view-chapter-practice'].forEach(id => {
+      ['view-model-tests', 'view-past-15years', 'view-textbooks-kb', 'view-nocalc', 'view-engineering', 'view-written', 'view-chapter-practice'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
@@ -1412,6 +1419,9 @@
       } else if (stream === 'chapters') {
         document.getElementById('view-chapter-practice').classList.remove('hidden');
         if (window.ChapterPractice) ChapterPractice.open(chapterTrack);
+      } else if (stream === 'written') {
+        document.getElementById('view-written').classList.remove('hidden');
+        if (window.WrittenPractice) WrittenPractice.open();
       } else if (stream === 'past_15years') {
         document.getElementById('view-past-15years').classList.remove('hidden');
         renderPastYearView();
@@ -2875,6 +2885,17 @@
 
     function switchPastSubStream(substream) {
       appState.pastSubStream = substream;
+      const eng = substream === 'engineering';
+      ['past-legacy-session','past-legacy-mode','past-year-questions-container'].forEach(id => document.getElementById(id)?.classList.toggle('hidden',eng));
+      document.getElementById('engineering-archive')?.classList.toggle('hidden',!eng);
+      const engBtn=document.getElementById('past-btn-engineering');
+      if (engBtn) engBtn.className='px-3 py-1.5 rounded-lg text-xs font-bold transition '+(eng?'bg-violet-700 text-white':'text-slate-400 hover:text-white');
+      if (eng) {
+        ['past-btn-medical','past-btn-versity'].forEach(id => {const b=document.getElementById(id);if(b)b.className='px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition';});
+        document.getElementById('past-year-stream-title').innerText='ইঞ্জিনিয়ারিং বিগত প্রশ্ন · MCQ ও লিখিত উৎস';
+        if(window.EngineeringArchive) EngineeringArchive.open();
+        return;
+      }
       const btnMed = document.getElementById('past-btn-medical');
       const btnVar = document.getElementById('past-btn-versity');
       const titleEl = document.getElementById('past-year-stream-title');
@@ -2929,6 +2950,7 @@
     }
 
     function renderPastYearView() {
+      if (appState.pastSubStream === 'engineering') { switchPastSubStream('engineering'); return; }
       const list = getActivePastYearList();
       const pastObj = list.find(p => p.session === appState.activePastYear) || list[0];
       if (!pastObj) return;
@@ -3028,6 +3050,7 @@
     }
 
     function startPastYearExam() {
+      if (appState.pastSubStream === 'engineering') return;
       const list = getActivePastYearList();
       const pastObj = list.find(p => p.session === appState.activePastYear) || list[0];
       if (!pastObj) return;
@@ -3347,7 +3370,7 @@
         const session = JSON.parse(raw);
         if (!session) return false;
 
-        if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering', 'chapters'].includes(session.currentStream)) {
+        if (session.currentStream && ['medical', 'versity', 'past_15years', 'textbooks', 'nocalc', 'engineering', 'chapters', 'written'].includes(session.currentStream)) {
           appState.currentStream = session.currentStream;
         }
         if (session.currentMedTestId) appState.currentMedTestId = session.currentMedTestId;
@@ -3479,5 +3502,9 @@
   <script src="/assets/engineering-practice.js?v=3"></script>
   <link rel="stylesheet" href="/assets/engineering-chapters.css?v=3">
   <script src="/assets/engineering-chapters.js?v=3"></script>
+  <link rel="stylesheet" href="/assets/written-practice.css?v=1">
+  <script src="/assets/written-practice.js?v=1"></script>
+  <link rel="stylesheet" href="/assets/engineering-archive.css?v=1">
+  <script src="/assets/engineering-archive.js?v=1"></script>
 </body>
 </html>

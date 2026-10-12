@@ -1,0 +1,211 @@
+{
+  "status": "passed_initial_release_checks",
+  "question_count": 40,
+  "independent_numeric_checks": 37,
+  "editorial_only_checks": 3,
+  "negative_fixtures_rejected": 4,
+  "teacher_reviewed": false,
+  "full_recent_corpus_calibrated": false,
+  "checks": [
+    {
+      "id": "matrix",
+      "passed": true,
+      "method": "matrix multiplication for n=1..8"
+    },
+    {
+      "id": "circle",
+      "passed": true,
+      "method": "point and tangent-distance residuals"
+    },
+    {
+      "id": "pulley",
+      "passed": true,
+      "method": "finite differences of geometric constraints"
+    },
+    {
+      "id": "box",
+      "passed": true,
+      "method": "dense independent constrained optimization"
+    },
+    {
+      "id": "integral",
+      "passed": true,
+      "method": "numerical quadrature"
+    },
+    {
+      "id": "complex",
+      "passed": true,
+      "method": "both original distance constraints"
+    },
+    {
+      "id": "urn",
+      "passed": true,
+      "method": "exhaustive ordered sampling without replacement"
+    },
+    {
+      "id": "spring",
+      "passed": true,
+      "method": "uphill energy and downhill work residuals"
+    },
+    {
+      "id": "collision",
+      "passed": true,
+      "method": "momentum and separate energy stages"
+    },
+    {
+      "id": "bridge",
+      "passed": true,
+      "method": "independent conductance-matrix solve"
+    },
+    {
+      "id": "interference",
+      "passed": true,
+      "method": "path phase and screen displacement"
+    },
+    {
+      "id": "cycle",
+      "passed": true,
+      "method": "separate process heat-work sums"
+    },
+    {
+      "id": "rod",
+      "passed": true,
+      "method": "differential-equation solution and kinetic-energy loss"
+    },
+    {
+      "id": "photoelectric",
+      "passed": true,
+      "method": "solve two Einstein equations"
+    },
+    {
+      "id": "titration",
+      "passed": true,
+      "method": "exact hydrolysis quadratic and stoichiometric buffer ratio"
+    },
+    {
+      "id": "equilibrium",
+      "passed": true,
+      "method": "partial pressure and reaction quotient consistency"
+    },
+    {
+      "id": "carbonate",
+      "passed": true,
+      "method": "independent material-balance linear solve"
+    },
+    {
+      "id": "concentration",
+      "passed": true,
+      "method": "charge and zinc inventory conservation"
+    },
+    {
+      "id": "ions",
+      "passed": true,
+      "method": "editorial chemistry audit: restricted candidate ions, balanced precipitation, tetraammine Cu(II) and aluminate charges; not teacher-reviewed"
+    },
+    {
+      "id": "organic_b",
+      "passed": true,
+      "method": "editorial mechanism audit: carbon inventory, reductive ozonolysis, secondary ionic/radical intermediates; not teacher-reviewed"
+    },
+    {
+      "id": "roots",
+      "passed": true,
+      "method": "original quadratic roots substituted into transformed polynomial"
+    },
+    {
+      "id": "parabola",
+      "passed": true,
+      "method": "point inclusion and intersection discriminant"
+    },
+    {
+      "id": "inverse",
+      "passed": true,
+      "method": "numerical inverse-root derivatives"
+    },
+    {
+      "id": "trig",
+      "passed": true,
+      "method": "substitution of all allowed sine branches"
+    },
+    {
+      "id": "area",
+      "passed": true,
+      "method": "equal-area primitive and rejected roots"
+    },
+    {
+      "id": "books",
+      "passed": true,
+      "method": "exhaustive 720 distinct-book permutations"
+    },
+    {
+      "id": "variance",
+      "passed": true,
+      "method": "direct probability-weighted moments"
+    },
+    {
+      "id": "field",
+      "passed": true,
+      "method": "analytic curl and potential-gradient editorial crosscheck; endpoint evaluation"
+    },
+    {
+      "id": "acceleration",
+      "passed": true,
+      "method": "piecewise work integral; unstable-equilibrium caveat included"
+    },
+    {
+      "id": "projectile",
+      "passed": true,
+      "method": "trajectory root and velocity-vector norm"
+    },
+    {
+      "id": "gas",
+      "passed": true,
+      "method": "mole-weighted degree-of-freedom sums"
+    },
+    {
+      "id": "capacitor",
+      "passed": true,
+      "method": "signed node charge and initial-final energy"
+    },
+    {
+      "id": "doppler",
+      "passed": true,
+      "method": "two Doppler transformations"
+    },
+    {
+      "id": "decay",
+      "passed": true,
+      "method": "all three measurements and target back-substitution"
+    },
+    {
+      "id": "base",
+      "passed": true,
+      "method": "exact equilibrium residual and pH"
+    },
+    {
+      "id": "solubility",
+      "passed": true,
+      "method": "both solubility thresholds and material fraction"
+    },
+    {
+      "id": "hess",
+      "passed": true,
+      "method": "reverse Hess balance"
+    },
+    {
+      "id": "electrolysis",
+      "passed": true,
+      "method": "Faraday electron counts and current efficiency"
+    },
+    {
+      "id": "redox",
+      "passed": true,
+      "method": "element, charge and electron balance plus titration"
+    },
+    {
+      "id": "organic_d",
+      "passed": true,
+      "method": "editorial functional-group audit: Na/NaOH discrimination, PCC aldehyde and formula balance; not teacher-reviewed"
+    }
+  ]
+}

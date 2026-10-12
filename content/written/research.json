@@ -1,6 +1,6 @@
 {
   "researched_on": "2026-10-12",
-  "status": "planning_only",
+  "status": "initial_release_implemented",
   "sources": [
     {
       "id": "du-official-2025-26-format",
@@ -66,5 +66,16 @@
     }
   ],
   "full_recent_corpus_verified": false,
-  "website_changes_deployed": false
+  "website_changes_deployed": false,
+  "release_scope": {
+    "original_written_sets": 2,
+    "questions_per_set": 20,
+    "subjects": [
+      "math",
+      "physics",
+      "chemistry"
+    ],
+    "teacher_reviewed": false,
+    "engineering_archive": "external_source_links_and_partial_previews"
+  }
 }
