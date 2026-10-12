@@ -146,11 +146,36 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.5; transform: scale(1.05); }
     }
+    /* Google Translate Integration & Styling Fixes */
+    .goog-te-banner-frame.skiptranslate, .goog-te-banner-frame {
+      display: none !important;
+    }
+    body {
+      top: 0px !important;
+      position: static !important;
+    }
+    #google_translate_element {
+      display: none !important;
+    }
+    .goog-tooltip, .goog-tooltip:hover {
+      display: none !important;
+    }
+    .goog-text-highlight {
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    #goog-gt-tt, .goog-te-balloon-frame {
+      display: none !important;
+    }
   </style>
   <link rel="stylesheet" href="/assets/chapter-practice.css?v=2">
   <link rel="stylesheet" href="/assets/engineering-practice.css?v=1">
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white overflow-x-hidden">
+
+  <!-- Hidden Google Translate Element -->
+  <div id="google_translate_element" style="display:none;" aria-hidden="true"></div>
 
   <!-- ============================================== -->
   <!-- TOP NAVIGATION BAR -->
@@ -171,8 +196,17 @@
           </div>
         </div>
 
-        <!-- Admission Season Selector (Mobile Friendly) -->
-        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- Admission Season Selector & English Medium Toggle -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <!-- English Medium / Version Toggle Button -->
+          <button id="btn-lang-toggle" onclick="toggleLanguageTranslation()" translate="no"
+            class="notranslate flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-900/30 border border-blue-400/40 transition-all shrink-0 cursor-pointer"
+            title="English Medium / Version Students: Click to translate website to English">
+            <span class="text-sm">🇬🇧</span>
+            <span id="btn-lang-text">English <span class="hidden sm:inline">Version</span></span>
+          </button>
+
+          <!-- Admission Season Selector (Mobile Friendly) -->
           <div class="flex items-center gap-1 sm:gap-2 bg-slate-800/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700/80 shadow-inner">
             <span class="text-xs text-brand-400 font-bold flex items-center gap-1">
               <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping shrink-0"></span>
@@ -3496,6 +3530,139 @@
         }, 300);
       }, 4000);
     }
+
+    // ============================================
+    // GOOGLE TRANSLATE / ENGLISH VERSION LOGIC
+    // ============================================
+    function isEnglishTranslationActive() {
+      const match = document.cookie.match(/(^|;)\s*googtrans=([^;]+)/);
+      if (match && match[2].includes('/en')) return true;
+      if (localStorage.getItem('adts_lang_pref') === 'en') return true;
+      if (document.documentElement.classList.contains('translated-ltr')) return true;
+      return false;
+    }
+
+    function setGoogleTransCookie(val) {
+      const host = window.location.hostname;
+      document.cookie = 'googtrans=' + val + '; path=/;';
+      if (host) {
+        document.cookie = 'googtrans=' + val + '; domain=' + host + '; path=/;';
+        const parts = host.split('.');
+        if (parts.length > 2) {
+          const rootDomain = '.' + parts.slice(-2).join('.');
+          document.cookie = 'googtrans=' + val + '; domain=' + rootDomain + '; path=/;';
+        }
+      }
+    }
+
+    function clearGoogleTransCookies() {
+      const host = window.location.hostname;
+      const domains = ['', host, '.' + host];
+      if (host) {
+        const parts = host.split('.');
+        if (parts.length > 2) {
+          domains.push('.' + parts.slice(-2).join('.'));
+        }
+      }
+      domains.forEach(function(d) {
+        const domAttr = d ? '; domain=' + d : '';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + domAttr;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + domAttr;
+      });
+    }
+
+    function updateLanguageToggleBtn(isEn) {
+      const btn = document.getElementById('btn-lang-toggle');
+      if (!btn) return;
+      if (isEn) {
+        btn.className = "notranslate flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-900/30 border border-emerald-400/40 transition-all shrink-0 cursor-pointer";
+        btn.innerHTML = '<span class="text-sm">🇧🇩</span><span id="btn-lang-text">বাংলা <span class="hidden sm:inline">ভার্সন</span></span>';
+        btn.setAttribute('title', 'বাংলায় ফিরে যান (Switch back to Bangla)');
+      } else {
+        btn.className = "notranslate flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-900/30 border border-blue-400/40 transition-all shrink-0 cursor-pointer";
+        btn.innerHTML = '<span class="text-sm">🇬🇧</span><span id="btn-lang-text">English <span class="hidden sm:inline">Version</span></span>';
+        btn.setAttribute('title', 'English Medium / Version Students: Click to translate website to English');
+      }
+    }
+
+    function toggleLanguageTranslation() {
+      const currentlyEnglish = isEnglishTranslationActive();
+
+      if (currentlyEnglish) {
+        // Revert to original Bangla
+        localStorage.removeItem('adts_lang_pref');
+        clearGoogleTransCookies();
+        const combo = document.querySelector('.goog-te-combo');
+        if (combo) {
+          combo.value = 'bn';
+          combo.dispatchEvent(new Event('change'));
+        }
+        updateLanguageToggleBtn(false);
+        showToast('মূল বাংলা সংস্করণ লোড হচ্ছে...', 'info');
+        setTimeout(function() {
+          window.location.reload();
+        }, 300);
+      } else {
+        // Switch to English
+        localStorage.setItem('adts_lang_pref', 'en');
+        setGoogleTransCookie('/bn/en');
+        
+        const combo = document.querySelector('.goog-te-combo');
+        if (combo) {
+          combo.value = 'en';
+          combo.dispatchEvent(new Event('change'));
+          updateLanguageToggleBtn(true);
+          showToast('Translating to English for English Medium students...', 'success');
+        } else {
+          updateLanguageToggleBtn(true);
+          showToast('Translating to English for English Medium students...', 'success');
+          setTimeout(function() {
+            window.location.reload();
+          }, 350);
+        }
+      }
+    }
+
+    // Google Translate Element callback
+    function googleTranslateElementInit() {
+      try {
+        new google.translate.TranslateElement({
+          pageLanguage: 'bn',
+          includedLanguages: 'en,bn',
+          autoDisplay: false
+        }, 'google_translate_element');
+      } catch (e) {
+        console.warn('Google Translate initialization:', e);
+      }
+
+      if (localStorage.getItem('adts_lang_pref') === 'en' || isEnglishTranslationActive()) {
+        setTimeout(function() {
+          const combo = document.querySelector('.goog-te-combo');
+          if (combo && combo.value !== 'en') {
+            combo.value = 'en';
+            combo.dispatchEvent(new Event('change'));
+          }
+          updateLanguageToggleBtn(true);
+        }, 400);
+      }
+    }
+
+    // Initialize state on DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+      if (isEnglishTranslationActive()) {
+        updateLanguageToggleBtn(true);
+      }
+    });
+
+    // Observer to detect Google Translate language switch
+    if (window.MutationObserver) {
+      const observer = new MutationObserver(function() {
+        if (document.documentElement.classList.contains('translated-ltr')) {
+          updateLanguageToggleBtn(true);
+        }
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
   </script>
 
   <script src="/assets/chapter-practice.js?v=3"></script>
@@ -3506,5 +3673,7 @@
   <script src="/assets/written-practice.js?v=2"></script>
   <link rel="stylesheet" href="/assets/engineering-archive.css?v=1">
   <script src="/assets/engineering-archive.js?v=1"></script>
+  <!-- Google Translate Element API -->
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 </body>
 </html>
