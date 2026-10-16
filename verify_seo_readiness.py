@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent
 BASE = "https://www.admissiontestbd.online"
 PUBLIC_PAGES = {
     "/": ROOT / "index.html",
+    "/study-guide.html": ROOT / "study-guide.html",
     "/about.html": ROOT / "about.html",
     "/privacy.html": ROOT / "privacy.html",
     "/terms.html": ROOT / "terms.html",
@@ -109,7 +110,7 @@ def main() -> None:
         if mirror.read_bytes() != root_html:
             fail(f"{mirror.relative_to(ROOT)} is not identical to index.html")
 
-    for name in ("about.html", "privacy.html", "terms.html", "contact.html", "robots.txt", "sitemap.xml"):
+    for name in ("study-guide.html", "about.html", "privacy.html", "terms.html", "contact.html", "robots.txt", "sitemap.xml"):
         source = (ROOT / name).read_bytes()
         for prefix in ("public", "web"):
             mirror = ROOT / prefix / name
