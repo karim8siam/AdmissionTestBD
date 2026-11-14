@@ -826,10 +826,6 @@ portal_code = """<!DOCTYPE html>
 
       <!-- Contact Info -->
       <div class="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4 text-xs text-slate-300">
-        <a href="mailto:shahriyarkarimsiam@gmail.com" class="flex items-center gap-1.5 hover:text-brand-400 transition bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
-          <span>📧</span>
-          <span class="break-all font-mono">shahriyarkarimsiam@gmail.com</span>
-        </a>
         <a href="https://www.facebook.com/profile.php?id=61594973542595" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-blue-400 transition bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
           <span>🌐</span>
           <span>Facebook Page</span>
