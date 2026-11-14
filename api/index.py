@@ -172,26 +172,6 @@ class handler(http.server.BaseHTTPRequestHandler):
             self.serve_static_file(html_path, 'text/html; charset=utf-8')
             return
 
-        # 1.5 Service Worker (RichAds & Push Notifications)
-        if path in ('/sw.js', '/service-worker.js'):
-            sw_path = os.path.join(BASE_DIR, 'sw.js')
-            if os.path.isfile(sw_path):
-                try:
-                    with open(sw_path, 'rb') as f:
-                        content = f.read()
-                    self.send_response(200)
-                    self.send_header('Content-Type', 'application/javascript; charset=utf-8')
-                    self.send_header('Content-Length', str(len(content)))
-                    self.send_header('Service-Worker-Allowed', '/')
-                    self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    self.wfile.write(content)
-                    return
-                except Exception as e:
-                    self.send_json_response({"status": "error", "message": str(e)}, status=500)
-                    return
-
         # 2. Static Assets & Images (Support both /web/assets/ and /assets/)
         if path.startswith('/web/assets/') or path.startswith('/assets/'):
             clean_rel = path.lstrip('/')
