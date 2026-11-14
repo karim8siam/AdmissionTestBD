@@ -202,7 +202,21 @@ class handler(http.server.BaseHTTPRequestHandler):
                 elif path.startswith('/web/assets/'):
                     file_path = os.path.join(BASE_DIR, clean_rel.replace('web/', ''))
             if os.path.isfile(file_path):
-                ctype = 'image/jpeg' if file_path.lower().endswith(('.jpg', '.jpeg')) else ('image/png' if file_path.lower().endswith('.png') else 'application/octet-stream')
+                ext = file_path.lower()
+                if ext.endswith(('.jpg', '.jpeg')):
+                    ctype = 'image/jpeg'
+                elif ext.endswith('.png'):
+                    ctype = 'image/png'
+                elif ext.endswith('.svg'):
+                    ctype = 'image/svg+xml'
+                elif ext.endswith('.mp4'):
+                    ctype = 'video/mp4'
+                elif ext.endswith('.css'):
+                    ctype = 'text/css; charset=utf-8'
+                elif ext.endswith('.js'):
+                    ctype = 'application/javascript; charset=utf-8'
+                else:
+                    ctype = 'application/octet-stream'
                 self.serve_static_file(file_path, ctype)
                 return
             else:
