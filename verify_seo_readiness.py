@@ -110,7 +110,7 @@ def main() -> None:
         if mirror.read_bytes() != root_html:
             fail(f"{mirror.relative_to(ROOT)} is not identical to index.html")
 
-    for name in ("study-guide.html", "about.html", "privacy.html", "terms.html", "contact.html", "robots.txt", "sitemap.xml"):
+    for name in ("study-guide.html", "about.html", "privacy.html", "terms.html", "contact.html", "robots.txt", "sitemap.xml", "sw.js"):
         source = (ROOT / name).read_bytes()
         for prefix in ("public", "web"):
             mirror = ROOT / prefix / name

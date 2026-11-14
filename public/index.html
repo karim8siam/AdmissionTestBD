@@ -31,6 +31,9 @@
   <!-- GOOGLE-SERVICES-START: configured by configure_google_services.py -->
   <!-- GOOGLE-SERVICES-END -->
 
+  <!-- RICHADS-MONETIZATION-START: configured by configure_richads.py -->
+  <!-- RICHADS-MONETIZATION-END -->
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -3814,5 +3817,12 @@
   <script src="/assets/written-practice.js?v=2" defer></script>
   <link rel="stylesheet" href="/assets/engineering-archive.css?v=1">
   <script src="/assets/engineering-archive.js?v=1" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(function() {});
+      });
+    }
+  </script>
 </body>
 </html>
